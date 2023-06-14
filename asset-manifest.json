@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/marketplace-project/static/css/main.e6c13ad2.css",
+    "main.js": "/marketplace-project/static/js/main.2d857ff0.js",
+    "index.html": "/marketplace-project/index.html",
+    "main.e6c13ad2.css.map": "/marketplace-project/static/css/main.e6c13ad2.css.map",
+    "main.2d857ff0.js.map": "/marketplace-project/static/js/main.2d857ff0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.2d857ff0.js"
+  ]
+}
