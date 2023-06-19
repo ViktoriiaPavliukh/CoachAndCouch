@@ -1,8 +1,12 @@
+import React from "react";
+
+import { Header } from "./views"
+
+
+
 function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <Header />
   );
 }
 
