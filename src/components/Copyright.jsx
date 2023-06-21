@@ -1,7 +1,6 @@
-import React from "react";
-import { Link, Typography } from "@mui/material";
-
-import { siteName, siteDomain } from "../index";
+import React from 'react';
+import { Link, Typography } from '@mui/material';
+import { siteDomain, siteName } from 'defaults';
 
 export function Copyright() {
   return (
@@ -11,12 +10,12 @@ export function Copyright() {
       align="center"
       style={{ marginTop: '20px' }}
     >
-      {"Copyright © "}
+      {'Copyright © '}
       <Link color="inherit" href={siteDomain}>
         {siteName}
-      </Link>{" "}
+      </Link>{' '}
       {new Date().getFullYear()}
-      {"."}
+      {'.'}
     </Typography>
   );
 }
