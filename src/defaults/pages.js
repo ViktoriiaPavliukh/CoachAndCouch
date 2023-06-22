@@ -4,11 +4,15 @@ export const pages = [
     link: '',
   },
   {
-    title: 'Find mentors',
+    title: 'Find teachers',
     link: '',
   },
   {
-    title: 'Become a mentor',
+    title: 'Become a teacher',
+    link: 'registration',
+  },
+  {
+    title: 'Sign In',
     link: 'login',
   },
 ];
