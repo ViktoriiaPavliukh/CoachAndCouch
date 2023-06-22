@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/marketplace-project/static/js/main.a866c260.js",
+    "main.js": "/marketplace-project/static/js/main.97e620f1.js",
     "index.html": "/marketplace-project/index.html",
-    "main.a866c260.js.map": "/marketplace-project/static/js/main.a866c260.js.map"
+    "main.97e620f1.js.map": "/marketplace-project/static/js/main.97e620f1.js.map"
   },
   "entrypoints": [
-    "static/js/main.a866c260.js"
+    "static/js/main.97e620f1.js"
   ]
 }
