@@ -11,7 +11,7 @@ export default function Layout() {
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <CssBaseline />
-      <Container>
+      <Container disableGutters maxWidth={false}>
         <Header />
         <Outlet />
       </Container>

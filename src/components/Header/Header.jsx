@@ -11,7 +11,7 @@ import {
   Tooltip,
   MenuItem,
 } from '@mui/material';
-import { Adb as AdbIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { Menu as MenuIcon } from '@mui/icons-material';
 import { pages, settings } from 'defaults';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -41,7 +41,6 @@ export function Header() {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -57,7 +56,7 @@ export function Header() {
               textDecoration: 'none',
             }}
           >
-            MentorHUB
+            Coach&#x26;Couch
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -98,12 +97,11 @@ export function Header() {
                     handleCloseNavMenu(link);
                   }}
                 >
-                  <Typography textAlign="center">{title}</Typography>
+                  <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -120,7 +118,7 @@ export function Header() {
               textDecoration: 'none',
             }}
           >
-            MentorHUB
+            Coach&#x26;Couch
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map(({ title, link }) => (
@@ -129,7 +127,9 @@ export function Header() {
                 onClick={() => {
                   handleCloseNavMenu(link);
                 }}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', textTransform: 'lowercase', '&:first-letter': {
+                textTransform: 'capitalize',},
+                }}
               >
                 {title}
               </Button>
