@@ -3,10 +3,10 @@ import { styled } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import { changeTheme } from 'redux/theme/slice';
 import { lightTheme } from 'styles';
+import mainBg from '../../shared/images/bg.png';
 
 const StyledHomeContainer = styled('div')({
-  // backgroundImage: `url('../../shared/images/bg.png')`,
-  backgroundImage: `url('https://www.woods-furniture.co.uk/images/products/large/9031_2671.jpg')`,
+  backgroundImage: `url(${ mainBg })`,
   backgroundColor: lightTheme.palette.secondary.main,
   backgroundSize: 'cover',
   width: '100%',
