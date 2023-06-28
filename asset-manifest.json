@@ -1,10 +1,11 @@
 {
   "files": {
-    "main.js": "/marketplace-project/static/js/main.97e620f1.js",
+    "main.js": "/marketplace-project/static/js/main.ec6f5063.js",
+    "static/media/bg.png": "/marketplace-project/static/media/bg.bd774a85555e6ec09869.png",
     "index.html": "/marketplace-project/index.html",
-    "main.97e620f1.js.map": "/marketplace-project/static/js/main.97e620f1.js.map"
+    "main.ec6f5063.js.map": "/marketplace-project/static/js/main.ec6f5063.js.map"
   },
   "entrypoints": [
-    "static/js/main.97e620f1.js"
+    "static/js/main.ec6f5063.js"
   ]
 }
