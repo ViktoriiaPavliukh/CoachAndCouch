@@ -1,18 +1,26 @@
 export const pages = [
   {
-    title: 'About',
+    title: 'Викладачі',
     link: '',
   },
   {
-    title: 'Find teachers',
+    title: 'Бізнес',
     link: '',
   },
   {
-    title: 'Become a teacher',
+    title: 'Для дітей',
+    link: '',
+  },
+  {
+    title: 'Стати викладачем',
     link: 'registration',
   },
   {
-    title: 'Sign In',
-    link: 'login',
+    title: 'Контакти',
+    link: '',
   },
+  // {
+  //   title: 'Sign In',
+  //   link: 'login',
+  // },
 ];
