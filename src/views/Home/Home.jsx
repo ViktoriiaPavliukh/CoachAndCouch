@@ -1,24 +1,12 @@
-import { Button, Typography } from '@mui/material';
-import { styled } from '@mui/system';
+import { Button, Typography, Container } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { changeTheme } from 'redux/theme/slice';
-import { lightTheme } from 'styles';
-import mainBg from '../../shared/images/bg.png';
-
-const StyledHomeContainer = styled('div')({
-  backgroundImage: `url(${ mainBg })`,
-  backgroundColor: lightTheme.palette.secondary.main,
-  backgroundSize: 'cover',
-  width: '100%',
-  height: '100vh',
-  backgroundRepeat: 'no-repeat',
-});
 
 export function Home() {
   const dispatch = useDispatch();
 
   return (
-    <StyledHomeContainer>
+    <Container>
       <Typography component="h1" variant="h5">
         Home Page
       </Typography>
@@ -30,6 +18,6 @@ export function Home() {
       >
         Change theme
       </Button>
-    </StyledHomeContainer>
+    </Container>
   );
 }

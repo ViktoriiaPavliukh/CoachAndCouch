@@ -1,20 +1,17 @@
 import {
-  Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
   Link,
   Grid,
   Box,
   Typography,
   Container,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import { lightTheme } from 'styles';
 import { validationSchema } from 'defaults';
-import { Copyright } from 'components';
 
 export function SignIn() {
   const initialValues = {
@@ -37,14 +34,15 @@ export function SignIn() {
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'left',
+          backgroundColor: 'white',
+          maxWidth: '440px',
+          padding: '40px',
+          borderRadius: '16px',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Вхід
         </Typography>
         <Formik
           initialValues={initialValues}
@@ -60,7 +58,7 @@ export function SignIn() {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Введіть e-mail"
                 name="email"
                 autoComplete="email"
                 autoFocus
@@ -72,44 +70,54 @@ export function SignIn() {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Введіть пароль"
                 type="password"
                 id="password"
                 autoComplete="current-password"
                 helperText={<ErrorMessage name="password" />}
               />
-              <Field
+              {/* <Field
                 as={FormControlLabel}
                 name="remember"
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
+              <Grid container justifyContent="center" alignItems="center">
+                <Grid item >
+                  <Link href="#" variant="body2">
+                    Забули пароль?
+                  </Link>
+                </Grid>
+              </Grid>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 disable={props.isSubmitting ? 'true' : 'false'}
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, textTransform: 'capitalize', backgroundColor: lightTheme.palette.buttonColor.main }}
               >
-                {props.isSubmitting ? 'Loading' : 'Sign In'}
+                {props.isSubmitting ? 'Завантаження' : 'Увійти'}
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
+              <Grid container justifyContent="center" alignItems="center">
+                <Grid item xs={12}>
+                  <Grid container direction="column" justifyContent="center" alignItems="center" spacing={1}>
+                    <Grid item>
+                      <Typography>
+                        Новий користувач?
+                      </Typography>
+                    </Grid>
+                    <Grid item>
+                      <Link href="#" variant="body2" align="center">
+                        Створити аккаунт
+                      </Link>
+                    </Grid>
+                  </Grid>
                 </Grid>
               </Grid>
             </Form>
           )}
         </Formik>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }

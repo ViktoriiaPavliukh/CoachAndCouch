@@ -19,8 +19,12 @@ export const pages = [
     title: 'Контакти',
     link: '',
   },
-  // {
-  //   title: 'Sign In',
-  //   link: 'login',
-  // },
+  {
+    title: 'Вхід',
+    link: 'login',
+  },
+  {
+    title: 'Реєстрація',
+    link: 'registration',
+  },
 ];
