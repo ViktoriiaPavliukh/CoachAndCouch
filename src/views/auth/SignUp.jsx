@@ -1,19 +1,14 @@
 import * as React from 'react';
 import {
-  Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
   Typography,
   Container,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
-import { Copyright } from 'components';
+import { lightTheme } from 'styles';
 
 export function SignUp() {
   const handleSubmit = (event) => {
@@ -28,39 +23,30 @@ export function SignUp() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: 8,
+           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'left',
+          backgroundColor: 'white',
+          maxWidth: '440px',
+          padding: '40px',
+          borderRadius: '16px',
         }}
       >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
-      </Avatar>
       <Typography component="h1" variant="h5">
-        Sign up
+        Реєстрація
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               autoComplete="given-name"
               name="firstName"
               required
               fullWidth
               id="firstName"
-              label="First Name"
+              label="Ваше ім'я"
               autoFocus
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="family-name"
             />
           </Grid>
           <Grid item xs={12}>
@@ -68,7 +54,7 @@ export function SignUp() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Введіть e-mail"
               name="email"
               autoComplete="email"
             />
@@ -78,16 +64,10 @@ export function SignUp() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Придумайте пароль"
               type="password"
               id="password"
               autoComplete="new-password"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive inspiration, marketing promotions and updates via email."
             />
           </Grid>
         </Grid>
@@ -95,20 +75,20 @@ export function SignUp() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 2, textTransform: 'none', backgroundColor: lightTheme.palette.buttonColor.main }}
         >
-          Sign Up
+          Створити новий аккаунт
         </Button>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link href="#" variant="body2">
-              Already have an account? Sign in
+        <Grid container justifyContent="center">
+          <Typography>
+            Вже є аккаунт?
+          </Typography>
+            <Link href="#" variant="body2" style={{ color: 'black', marginTop: '2px', marginLeft: '15px' }}>
+              Вхід
             </Link>
-          </Grid>
         </Grid>
       </Box>
     </Box>
-    <Copyright sx={{ mt: 5 }} />
   </Container>            
   );
 }
