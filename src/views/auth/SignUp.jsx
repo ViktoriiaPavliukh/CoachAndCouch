@@ -8,27 +8,44 @@ import {
   Typography,
   Container,
 } from '@mui/material';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { lightTheme } from 'styles';
 
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your e-mail')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
+
 export function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+      formik.resetForm();
+    },
+  });
   return (
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-           marginTop: 8,
+          marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'left',
           backgroundColor: 'white',
-          maxWidth: '440px',
+          maxWidth: '500px',
           padding: '40px',
           borderRadius: '16px',
         }}
@@ -36,17 +53,18 @@ export function SignUp() {
       <Typography component="h1" variant="h5">
         Реєстрація
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TextField
               autoComplete="given-name"
-              name="firstName"
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
               required
               fullWidth
-              id="firstName"
+              id="name"
               label="Ваше ім'я"
-              autoFocus
             />
           </Grid>
           <Grid item xs={12}>
@@ -55,6 +73,10 @@ export function SignUp() {
               fullWidth
               id="email"
               label="Введіть e-mail"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
               name="email"
               autoComplete="email"
             />
@@ -67,6 +89,10 @@ export function SignUp() {
               label="Придумайте пароль"
               type="password"
               id="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
               autoComplete="new-password"
             />
           </Grid>
@@ -79,7 +105,10 @@ export function SignUp() {
         >
           Створити новий аккаунт
         </Button>
-        <Grid container justifyContent="center">
+        <Typography component="p" variant="h6" sx={{ fontSize: '14px', textAlign: 'center' }}>
+            Входячи в систему, я приймаю Умови користування та підтверджую, що мною прочитана Політика конфіденційності 
+        </Typography>
+        <Grid container justifyContent="center" sx={{ marginTop: '20px' }}>
           <Typography>
             Вже є аккаунт?
           </Typography>
