@@ -10,6 +10,7 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  Stack,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { pages, settings } from 'defaults';
@@ -90,7 +91,7 @@ export function Header() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map(({ title, link }) => (
+              {pages.slice(0, 5).map(({ title, link }) => (
                 <MenuItem
                   key={title}
                   onClick={() => {
@@ -121,7 +122,7 @@ export function Header() {
             Coach&#x26;Couch
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map(({ title, link }) => (
+            {pages.slice(0, 5).map(({ title, link }) => (
               <Button
                 key={title}
                 onClick={() => {
@@ -135,36 +136,48 @@ export function Header() {
               </Button>
             ))}
           </Box>
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map(setting => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+          <Stack direction="row" spacing={2}>
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map(setting => (
+                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Box> {pages.slice(5, 6).map(({ title, link }) => (
+                <MenuItem
+                  key={title}
+                  onClick={() => {
+                    handleCloseNavMenu(link);
+                  }}
+                >
+                  <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
-          </Box>
+            </Box>
+          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
