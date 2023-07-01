@@ -1,8 +1,6 @@
 import {
   Button,
   TextField,
-  // FormControlLabel,
-  // Checkbox,
   Link,
   Grid,
   Box,
@@ -86,7 +84,6 @@ export function SignIn() {
                             !formik.values.showPassword
                           )
                         }
-                        // onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
                         {formik.values.showPassword ? (

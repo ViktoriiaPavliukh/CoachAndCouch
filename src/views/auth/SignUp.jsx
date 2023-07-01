@@ -135,7 +135,7 @@ export function SignUp() {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
-                        aria-label="toggle password visibility"
+                        aria-label="toggle confirm visibility"
                         onClick={() =>
                           formik.setFieldValue(
                             'showPassword',
