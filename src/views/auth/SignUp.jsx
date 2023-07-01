@@ -1,29 +1,41 @@
 import * as React from 'react';
 import {
-  Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
   Typography,
   Container,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+import { lightTheme } from 'styles';
 
-import { Copyright } from 'components';
+const validationSchema = yup.object({
+  email: yup
+    .string('Enter your e-mail')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  password: yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
 
 export function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+      formik.resetForm();
+    },
+  });
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -31,36 +43,28 @@ export function SignUp() {
           marginTop: 8,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center',
+          alignItems: 'left',
+          backgroundColor: 'white',
+          maxWidth: '500px',
+          padding: '40px',
+          borderRadius: '16px',
         }}
       >
-      <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-        <LockOutlinedIcon />
-      </Avatar>
       <Typography component="h1" variant="h5">
-        Sign up
+        Реєстрація
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12}>
             <TextField
               autoComplete="given-name"
-              name="firstName"
+              name="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
               required
               fullWidth
-              id="firstName"
-              label="First Name"
-              autoFocus
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              fullWidth
-              id="lastName"
-              label="Last Name"
-              name="lastName"
-              autoComplete="family-name"
+              id="name"
+              label="Ваше ім'я"
             />
           </Grid>
           <Grid item xs={12}>
@@ -68,7 +72,11 @@ export function SignUp() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Введіть e-mail"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
               name="email"
               autoComplete="email"
             />
@@ -78,16 +86,14 @@ export function SignUp() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Придумайте пароль"
               type="password"
               id="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
               autoComplete="new-password"
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive inspiration, marketing promotions and updates via email."
             />
           </Grid>
         </Grid>
@@ -95,20 +101,23 @@ export function SignUp() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 3, mb: 2, textTransform: 'none', backgroundColor: lightTheme.palette.buttonColor.main }}
         >
-          Sign Up
+          Створити новий аккаунт
         </Button>
-        <Grid container justifyContent="flex-end">
-          <Grid item>
-            <Link href="#" variant="body2">
-              Already have an account? Sign in
+        <Typography component="p" variant="h6" sx={{ fontSize: '14px', textAlign: 'center' }}>
+            Входячи в систему, я приймаю Умови користування та підтверджую, що мною прочитана Політика конфіденційності 
+        </Typography>
+        <Grid container justifyContent="center" sx={{ marginTop: '20px' }}>
+          <Typography>
+            Вже є аккаунт?
+          </Typography>
+            <Link href="#" variant="body2" style={{ color: 'black', marginTop: '2px', marginLeft: '15px' }}>
+              Вхід
             </Link>
-          </Grid>
         </Grid>
       </Box>
     </Box>
-    <Copyright sx={{ mt: 5 }} />
   </Container>            
   );
 }
