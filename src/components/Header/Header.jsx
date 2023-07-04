@@ -7,9 +7,7 @@ import {
   Typography,
   Menu,
   Container,
-  // Avatar,
   Button,
-  // Tooltip,
   MenuItem,
   Stack,
 } from '@mui/material';
@@ -17,40 +15,13 @@ import { Menu as MenuIcon } from '@mui/icons-material';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TelegramIcon from '@mui/icons-material/Telegram';
 import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import AccountCircle from '@mui/icons-material/AccountCircle';
 import { pages } from 'defaults';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  // const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
-  // const isMenuOpen = Boolean(anchorEl);
-  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  // const handleProfileMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleMobileMenuClose = () => {
-  //   setMobileMoreAnchorEl(null);
-  // };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  //   handleMobileMenuClose();
-  // };
-
-  // const handleMobileMenuOpen = (event) => {
-  //   setMobileMoreAnchorEl(event.currentTarget);
-  // };
-
-  // const menuId = 'primary-search-account-menu';
 
   const ExternalLink = ({ to, children, ...rest }) => {
   navigate();
@@ -70,19 +41,11 @@ export function Header() {
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
   };
-  // const handleOpenUserMenu = event => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
   
-
   const handleCloseNavMenu = link => {
     setAnchorElNav(null);
     navigate(link);
   };
-
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
 
   return (
     <AppBar position="static">
@@ -205,6 +168,21 @@ export function Header() {
                   key={title}
                   onClick={() => {
                     handleCloseNavMenu(link);
+                  }}
+                >
+                  <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
+                </MenuItem>
+              ))}
+            </Box>
+             <Box> {pages.slice(6).map(({ title, link }) => (
+                <MenuItem
+                  key={title}
+                  onClick={() => {
+                    handleCloseNavMenu(link);
+                  }}
+                  sx={{
+                    backgroundColor: theme => theme.palette.buttonColor.main,
+                    borderRadius: '6px'
                   }}
                 >
                   <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
