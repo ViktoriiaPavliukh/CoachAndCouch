@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   AppBar,
   Box,
@@ -6,37 +7,82 @@ import {
   Typography,
   Menu,
   Container,
-  Avatar,
+  // Avatar,
   Button,
-  Tooltip,
+  // Tooltip,
   MenuItem,
   Stack,
 } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
-import { pages, settings } from 'defaults';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+// import MenuIcon from '@mui/icons-material/Menu';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
+import { pages } from 'defaults';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 export function Header() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  // const [anchorElUser, setAnchorElUser] = useState(null);
   const navigate = useNavigate();
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  // const isMenuOpen = Boolean(anchorEl);
+  // const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+
+  // const handleMobileMenuClose = () => {
+  //   setMobileMoreAnchorEl(null);
+  // };
+
+  // const handleMenuClose = () => {
+  //   setAnchorEl(null);
+  //   handleMobileMenuClose();
+  // };
+
+  // const handleMobileMenuOpen = (event) => {
+  //   setMobileMoreAnchorEl(event.currentTarget);
+  // };
+
+  // const menuId = 'primary-search-account-menu';
+
+  const ExternalLink = ({ to, children, ...rest }) => {
+  navigate();
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    window.open(to, '_blank');
+  };
+
+  return (
+    <Link to={to} onClick={handleClick} {...rest}>
+      {children}
+    </Link>
+  );
+};
 
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = event => {
-    setAnchorElUser(event.currentTarget);
-  };
+  // const handleOpenUserMenu = event => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
+  
 
   const handleCloseNavMenu = link => {
     setAnchorElNav(null);
     navigate(link);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
 
   return (
     <AppBar position="static">
@@ -136,36 +182,24 @@ export function Header() {
               </Button>
             ))}
           </Box>
+          <Stack direction="row" sx={{ display: { xs: 'none', md: 'flex' }, gap: '0'}}>
+            <ExternalLink to="https://www.instagram.com">
+              <IconButton size="large" aria-label="Instagram" color="inherit" sx={{ color: 'white' }}>
+                <InstagramIcon />
+              </IconButton>
+            </ExternalLink>
+             <ExternalLink to="https://www.telegram.org">
+              <IconButton size="large" aria-label="Telegram" color="inherit" sx={{ color: 'white' }}>
+                <TelegramIcon />
+              </IconButton>
+            </ExternalLink>
+             <ExternalLink to="https://www.facebook.com">
+              <IconButton size="large" aria-label="Facebook" color="inherit" sx={{ color: 'white' }}>
+                <FacebookRoundedIcon />
+              </IconButton>
+            </ExternalLink>
+          </Stack>
           <Stack direction="row" spacing={2}>
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: '45px' }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map(setting => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
             <Box> {pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
                   key={title}
