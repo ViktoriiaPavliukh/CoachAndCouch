@@ -19,32 +19,32 @@ import { pages } from 'defaults';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-export function Header() {
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const navigate = useNavigate();
-
-  const ExternalLink = ({ to, children, ...rest }) => {
-  navigate();
-
-  const handleClick = (event) => {
-    event.preventDefault();
-    window.open(to, '_blank');
-  };
-
+const ExternalLink = ({ to, children, ...rest }) => {
   return (
-    <Link to={to} onClick={handleClick} {...rest}>
-      {children}
+    <Link to={to}>
+      <IconButton
+        size="large"
+        color="inherit"
+        sx={{ color: 'white' }}
+        {...rest}
+      >
+        {children}
+      </IconButton>
     </Link>
   );
 };
 
+export function Header() {
+  const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  console.log('Привіт Хедер зарендерився');
+
   const handleOpenNavMenu = event => {
     setAnchorElNav(event.currentTarget);
   };
-  
+
   const handleCloseNavMenu = link => {
     setAnchorElNav(null);
-    navigate(link);
   };
 
   return (
@@ -107,7 +107,10 @@ export function Header() {
                     handleCloseNavMenu(link);
                   }}
                 >
-                  <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
+                  <Typography textAlign="center">
+                    {title.charAt(0).toUpperCase() +
+                      title.slice(1).toLowerCase()}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -137,55 +140,67 @@ export function Header() {
                 onClick={() => {
                   handleCloseNavMenu(link);
                 }}
-                sx={{ my: 2, color: 'white', display: 'block', textTransform: 'lowercase', '&:first-letter': {
-                textTransform: 'capitalize',},
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  textTransform: 'lowercase',
+                  '&:first-letter': {
+                    textTransform: 'capitalize',
+                  },
                 }}
               >
                 {title}
               </Button>
             ))}
           </Box>
-          <Stack direction="row" sx={{ display: { xs: 'none', md: 'flex' }, gap: '0'}}>
-            <ExternalLink to="https://www.instagram.com">
-              <IconButton size="large" aria-label="Instagram" color="inherit" sx={{ color: 'white' }}>
-                <InstagramIcon />
-              </IconButton>
+          <Stack
+            direction="row"
+            sx={{ display: { xs: 'none', md: 'flex' }, gap: '0' }}
+          >
+            <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
+              <InstagramIcon />
             </ExternalLink>
-             <ExternalLink to="https://www.telegram.org">
-              <IconButton size="large" aria-label="Telegram" color="inherit" sx={{ color: 'white' }}>
-                <TelegramIcon />
-              </IconButton>
+            <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
+              <TelegramIcon />
             </ExternalLink>
-             <ExternalLink to="https://www.facebook.com">
-              <IconButton size="large" aria-label="Facebook" color="inherit" sx={{ color: 'white' }}>
-                <FacebookRoundedIcon />
-              </IconButton>
+            <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
+              <FacebookRoundedIcon />
             </ExternalLink>
           </Stack>
           <Stack direction="row" spacing={2}>
-            <Box> {pages.slice(5, 6).map(({ title, link }) => (
+            <Box>
+              {' '}
+              {pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
                   key={title}
                   onClick={() => {
-                    handleCloseNavMenu(link);
+                    navigate(link);
                   }}
                 >
-                  <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
+                  <Typography textAlign="center">
+                    {title.charAt(0).toUpperCase() +
+                      title.slice(1).toLowerCase()}
+                  </Typography>
                 </MenuItem>
               ))}
             </Box>
-             <Box> {pages.slice(6).map(({ title, link }) => (
+            <Box>
+              {pages.slice(6).map(({ title, link }) => (
                 <MenuItem
                   key={title}
                   onClick={() => {
-                    handleCloseNavMenu(link);
+                    navigate(link);
                   }}
                   sx={{
                     backgroundColor: theme => theme.palette.buttonColor.main,
-                    borderRadius: '6px'
+                    borderRadius: '6px',
                   }}
                 >
-                  <Typography textAlign="center" >{title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}</Typography>
+                  <Typography textAlign="center">
+                    {title.charAt(0).toUpperCase() +
+                      title.slice(1).toLowerCase()}
+                  </Typography>
                 </MenuItem>
               ))}
             </Box>
