@@ -1,7 +1,7 @@
 export const pages = [
   {
     title: 'Викладачі',
-    link: '',
+    link: 'announcement',
   },
   {
     title: 'Бізнес',
@@ -13,7 +13,7 @@ export const pages = [
   },
   {
     title: 'Стати викладачем',
-    link: 'registration',
+    link: '',
   },
   {
     title: 'Контакти',

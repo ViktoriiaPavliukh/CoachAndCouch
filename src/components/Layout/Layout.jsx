@@ -7,7 +7,6 @@ import { selectTheme } from 'redux/theme/selectors';
 import { Header } from '../Header/Header';
 import { Copyright } from '../Copyright';
 
-
 export default function Layout() {
   const isDark = useSelector(selectTheme);
   return (
