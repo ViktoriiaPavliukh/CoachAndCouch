@@ -71,7 +71,7 @@ export function SignIn() {
                 fullWidth
                 size="small"
                 name="password"
-                label="Придумайте пароль"
+                label="Введіть пароль"
                 type={formik.values.showPassword ? 'text' : 'password'}
                 InputProps={{
                   endAdornment: (
@@ -100,7 +100,9 @@ export function SignIn() {
                 error={
                   formik.touched.password && Boolean(formik.errors.password)
                 }
-                helperText={formik.touched.password && formik.errors.password}
+                helperText={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 autoComplete="new-password"
               />
             </Grid>
@@ -121,7 +123,7 @@ export function SignIn() {
           >
             {formik.isSubmitting ? 'Завантаження' : 'Увійти'}
           </Button>
-          <Box container justifyContent="center" sx={{ marginTop: '20px' }}>
+          <Box justifyContent="center" sx={{ marginTop: '20px' }}>
             <Typography sx={{ textAlign: 'center', mt: 2, display: 'block' }}>
               Новий користувач?
             </Typography>

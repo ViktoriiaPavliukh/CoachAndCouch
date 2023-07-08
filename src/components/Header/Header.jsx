@@ -45,6 +45,7 @@ export function Header() {
 
   const handleCloseNavMenu = link => {
     setAnchorElNav(null);
+    navigate(link);
   };
 
   return (

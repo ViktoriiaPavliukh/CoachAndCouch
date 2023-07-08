@@ -13,30 +13,11 @@ export const lightTheme = createTheme({
         },
       },
     },
-    MuiTextField: {
-      styleOverrides: {
-        variants: {
-          containedSizeSmall: {
-            padding: '10.5px 14px',
-            height: 44, // Set the desired height, in this case, 44px
-          },
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        variants: {
-          containedSizeSmall: {
-            height: 44, // Set the desired height, in this case, 44px
-          },
-        },
-      },
-    },
   },
   palette: {
     mode: 'light',
     primary: {
-      main: '#285b1d',
+      main: '#0E5B1D',
     },
     secondary: {
       main: '#e4eadd',
@@ -45,7 +26,50 @@ export const lightTheme = createTheme({
       main: '#7ab02e',
     },
   },
+  typography: {
+    posterName: {
+      fontSize: '48px',
+      fontWeight: '900',
+      fontStyle: 'normal',
+      lineHeight: '0.5833',
+    },
+    posterCategory: {
+      fontSize: '16px',
+      fontStyle: 'normal',
+      fontWeight: '700',
+      lineHeight: 'calc(24 / 16)',
+      textTransform: 'uppercase',
+    },
+    posterItem: {
+      fontSize: '12px',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      lineHeight: 'calc(16 / 12)',
+    },
+    posterTitle: {
+      fontSize: '24px',
+      fontWeight: '700',
+      lineHeight: '1',
+      textTransform: 'uppercase',
+    },
+    posterDescription: {
+      fontSize: '16px',
+      lineHeight: 'calc(24 / 16)',
+    },
+    posterButton: {
+      fontSize: '14px',
+      lineHeight: 'calc(16 / 14)',
+      fontWeight: '700',
+      textTransform: 'uppercase',
+    },
+    posterPrice: {
+      fontSize: '36px',
+      fontWeight: '700',
+      lineHeight: 'calc(28 /36)',
+    },
+  },
 });
+
 export const darkTheme = createTheme({
   components: {
     MuiCssBaseline: {
@@ -58,36 +82,59 @@ export const darkTheme = createTheme({
         },
       },
     },
-    MuiTextField: {
-      styleOverrides: {
-        variants: {
-          containedSizeSmall: {
-            padding: '10.5px 14px',
-            height: 44, // Set the desired height, in this case, 44px
-          },
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        variants: {
-          containedSizeSmall: {
-            height: 44, // Set the desired height, in this case, 44px
-          },
-        },
-      },
-    },
   },
   palette: {
     mode: 'dark',
     primary: {
-      main: '#285b1d',
+      main: '#0E5B1D',
     },
     secondary: {
       main: '#e4eadd',
     },
     buttonColor: {
       main: '#7ab02e',
+    },
+  },
+  typography: {
+    posterName: {
+      fontSize: '48px',
+      fontWeight: '900',
+      fontStyle: 'normal',
+      lineHeight: '0.5833',
+    },
+    posterCategory: {
+      fontSize: '16px',
+      fontStyle: 'normal',
+      fontWeight: '700',
+      lineHeight: 'calc(24 / 16)',
+      textTransform: 'uppercase',
+    },
+    posterItem: {
+      fontSize: '12px',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      lineHeight: 'calc(16 / 12)',
+    },
+    posterTitle: {
+      fontSize: '24px',
+      fontWeight: '700',
+      lineHeight: '1',
+      textTransform: 'uppercase',
+    },
+    posterDescription: {
+      fontSize: '16px',
+      lineHeight: 'calc(24 / 16)',
+    },
+    posterButton: {
+      fontSize: '14px',
+      lineHeight: 'calc(16 / 14)',
+      fontWeight: '700',
+      textTransform: 'uppercase',
+    },
+    posterPrice: {
+      fontSize: '36px',
+      fontWeight: '700',
+      lineHeight: 'calc(28 /36)',
     },
   },
 });
