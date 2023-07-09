@@ -5,7 +5,7 @@ export const pages = [
   },
   {
     title: 'Бізнес',
-    link: '',
+    link: 'preview',
   },
   {
     title: 'Для дітей',
