@@ -24,9 +24,19 @@ export const lightTheme = createTheme({
     },
     buttonColor: {
       main: '#7ab02e',
+      fontColor: '#F1F3EF',
+    },
+    textColor: {
+      grey: '#878D99',
     },
   },
   typography: {
+    fontHeading: {
+      fontSize: '50px',
+      fontWeight: '900',
+      lineHeight: '60px',
+      fontStyle: 'normal',
+    },
     posterName: {
       fontSize: '48px',
       fontWeight: '900',
@@ -93,9 +103,15 @@ export const darkTheme = createTheme({
     },
     buttonColor: {
       main: '#7ab02e',
+      fontColor: '#F1F3EF',
     },
   },
   typography: {
+    fontHeading: {
+      fontSize: '50px',
+      fontWeight: '900',
+      lineHeight: '60px',
+    },
     posterName: {
       fontSize: '48px',
       fontWeight: '900',
