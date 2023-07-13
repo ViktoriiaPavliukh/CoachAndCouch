@@ -2,14 +2,27 @@ import {
   Container,
   Box,
   Button,
+  Grid,
   Typography,
   List,
   ListItem,
   ListItemText,
-  ListItemIcon
+  ListItemIcon,
+  Stack
 } from '@mui/material';
 import { FiberManualRecord as FiberManualRecordIcon } from '@mui/icons-material';
 import { DescriptionImage } from './DescriptionImage';
+import { Filter } from './Filter';
+import { TeacherCard } from './TeacherCard';
+import {
+  languageOptions,
+  ratingOptions,
+  lessonTimeOptions,
+  hobbyOptions,
+  countryOptions,
+  specializationOptions,
+  teacherCardData,
+} from 'defaults';
 
 export function Preview() {
   const listItemStyles = {
@@ -98,6 +111,30 @@ export function Preview() {
             </Button>
           </Box>
           <DescriptionImage />
+        </Box>
+        <Stack direction="row" spacing={2} sx={{ mb: '43px' }}>
+          <Filter
+            options={languageOptions}
+            // getOptionLabel={option => option.title}
+            label="МОВА"
+          />
+          <Filter options={ratingOptions} label="РЕЙТИНГ" />
+          <Filter options={lessonTimeOptions} label="ЧАС УРОКУ" />
+          <Filter options={specializationOptions} label="СПЕЦІАЛІЗАЦІЯ" />
+          <Filter options={countryOptions} label="КРАЇНА" />
+          <Filter options={hobbyOptions} label="ХОБІ" />
+        </Stack>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            {teacherCardData.map(teacher => (
+              <Grid key={teacher.id} item xs={12} md={6} lg={4}>
+                <TeacherCard
+                  picture={teacher.picture}
+                  description={teacher.description}
+                />
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       </Box>
     </Container>
