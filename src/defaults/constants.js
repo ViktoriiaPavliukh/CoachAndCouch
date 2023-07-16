@@ -3,6 +3,26 @@ export const siteDomain = 'https://ginkosoul.github.io/marketplace-project/';
 export const baseName = '/marketplace-project';
 
 export const settings = ['Profile', 'Settings', 'Logout'];
+export const languages = [
+  { id: '1', label: 'Англійська' },
+  { id: '2', label: 'Іспанська' },
+  { id: '3', label: 'Українська' },
+];
+// const specialization = [
+//   { id: '1', label: 'Розмовна мова' },
+//   { id: '2', label: 'Вивчення азів' },
+//   { id: '3', label: 'Для дітей' },
+//   { id: '4', label: 'Підготовка для іспитів' },
+//   { id: '5', label: 'Для бізнесу' },
+// ];
+// const hobbies = [
+//   { id: '1', label: 'Спорт' },
+//   { id: '2', label: 'Кіно' },
+//   { id: '3', label: 'Творчість' },
+//   { id: '4', label: 'Кулінарія' },
+//   { id: '5', label: 'Тварини' },
+//   { id: '6', label: 'Машини' },
+// ];
 export const languageOptions = [
   { title: 'Англійська', code: 'en' },
   { title: 'Іспанська', code: 'es' },

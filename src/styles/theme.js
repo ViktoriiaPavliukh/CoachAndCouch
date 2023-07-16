@@ -28,6 +28,8 @@ export const lightTheme = createTheme({
     },
     textColor: {
       grey: '#878D99',
+      darkGrey: '#5A5E67',
+      iconsGrey: '#7D7D7D',
     },
   },
   typography: {
@@ -65,6 +67,11 @@ export const lightTheme = createTheme({
     posterDescription: {
       fontSize: '16px',
       lineHeight: 'calc(24 / 16)',
+    },
+    posterStatus: {
+      fontSize: '8px',
+      lineHeight: '16px',
+      fontWeight: '400',
     },
     posterButton: {
       fontSize: '14px',

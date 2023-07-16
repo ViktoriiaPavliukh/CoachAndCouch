@@ -1,4 +1,4 @@
-import descriptionImage from 'shared/templates/teachers.svg';
+import descriptionImage from '../../shared/templates/teachers.svg';
 export function DescriptionImage({ src, ...props }) {
   return (
     <img

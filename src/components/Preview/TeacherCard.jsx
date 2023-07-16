@@ -1,33 +1,116 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CardActionArea,
+  CardActions,
+  Stack,
+} from '@mui/material/';
+import StarBorderPurple500OutlinedIcon from '@mui/icons-material/StarBorderPurple500Outlined';
+import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import { CategoryList } from '../Card/CategoryList';
+import { TeacherImage } from './TeacherImage';
+import { languages } from '../../defaults';
 
 export function TeacherCard() {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        maxWidth: '373px',
+        borderRadius: '8px',
+        boxShadow: '0px 2px 5px 0px rgba(0, 0, 0, 0.15)',
+      }}
+    >
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image="/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
-        />
+        <TeacherImage />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Lizard
+          <Stack
+            direction="row"
+            sx={{ justifyContent: 'left', alignItems: 'center', gap: '24px' }}
+          >
+            <Typography
+              gutterBottom
+              variant="posterDescription"
+              component="div"
+              sx={{ fontWeight: '700', letterSpacing: '-0.003px', mb: '8px' }}
+            >
+              Іван Іванчук
+            </Typography>
+            <Typography
+              color="grey.700"
+              variant="posterStatus"
+              sx={{ display: 'inline-block' }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  display: 'inline-block',
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  backgroundColor: '#0E5B1D',
+                  mr: '4px',
+                }}
+              />
+              Онлайн
+            </Typography>
+          </Stack>
+          <Typography
+            variant="posterItem"
+            sx={{ color: theme => theme.palette.textColor.grey }}
+          >
+            Професійний викладач
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
-          </Typography>
+          <CategoryList elements={languages} />
+          <Stack direction="row" sx={{ gap: '12px', pt: '4px' }}>
+            <Box sx={{ display: 'flex', gap: '4px' }}>
+              <StarBorderPurple500OutlinedIcon
+                sx={{
+                  fontSize: '16px',
+                  color: theme => theme.palette.textColor.darkGrey,
+                }}
+              />
+              <Typography variant="posterItem">5.0</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: '4px' }}>
+              <FavoriteBorderOutlinedIcon
+                sx={{
+                  fontSize: '16px',
+                  color: theme => theme.palette.textColor.darkGrey,
+                }}
+              />
+              <Typography variant="posterItem">5.0</Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: '4px' }}>
+              <Typography
+                variant="posterItem"
+                sx={{ color: theme => theme.palette.textColor.darkGrey }}
+              >
+                Уроки:
+              </Typography>
+              <Typography variant="posterItem">156</Typography>
+            </Box>
+          </Stack>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
+        <Button
+          variant="contained"
+          sx={{
+            width: '100vw',
+            py: '12px',
+            m: '8px',
+            mt: '0',
+            borderRadius: '8px',
+            color: theme => theme.palette.buttonColor.fontColor,
+            fontSize: '14px',
+            fontWeight: '700',
+          }}
+        >
+          ПРОБНИЙ УРОК
         </Button>
       </CardActions>
     </Card>

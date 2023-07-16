@@ -124,10 +124,18 @@ export function Preview() {
           <Filter options={countryOptions} label="КРАЇНА" />
           <Filter options={hobbyOptions} label="ХОБІ" />
         </Stack>
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
+        <Box sx={{ flexGrow: 1, mb: '115px' }}>
+          <Grid
+            container
+            sx={{
+              columnGap: '24px',
+              rowGap: '48px',
+              justifyContent: 'space-between',
+              flexBasis: '30%',
+            }}
+          >
             {teacherCardData.map(teacher => (
-              <Grid key={teacher.id} item xs={12} md={6} lg={4}>
+              <Grid key={teacher.id} item >
                 <TeacherCard
                   picture={teacher.picture}
                   description={teacher.description}
