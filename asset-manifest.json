@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.js": "/marketplace-project/static/js/main.2bc890fd.js",
+    "main.js": "/marketplace-project/static/js/main.8b0ca6e0.js",
     "static/media/bg.png": "/marketplace-project/static/media/bg.bd774a85555e6ec09869.png",
     "static/media/teachers.svg": "/marketplace-project/static/media/teachers.605a1f564cd0aa903748370039350bd0.svg",
+    "static/media/profile_1.png": "/marketplace-project/static/media/profile_1.dd2b676634cde323957b.png",
     "static/media/Frame 868.webp": "/marketplace-project/static/media/Frame 868.84b99bf0601b6e553d7d.webp",
     "static/media/avatar_1.webp": "/marketplace-project/static/media/avatar_1.e0c52fe0c0e09ddc20b9.webp",
     "index.html": "/marketplace-project/index.html",
     "static/media/emojione-v1_flag-for-ukraine.svg": "/marketplace-project/static/media/emojione-v1_flag-for-ukraine.97e287ec04c1b23941533e716b75fb2a.svg",
-    "main.2bc890fd.js.map": "/marketplace-project/static/js/main.2bc890fd.js.map"
+    "main.8b0ca6e0.js.map": "/marketplace-project/static/js/main.8b0ca6e0.js.map"
   },
   "entrypoints": [
-    "static/js/main.2bc890fd.js"
+    "static/js/main.8b0ca6e0.js"
   ]
 }
