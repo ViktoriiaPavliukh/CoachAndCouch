@@ -5,6 +5,7 @@ export function CategoryList({ elements }) {
     <List
       sx={{
         display: 'flex',
+        flexWrap: 'wrap',
         mb: 2.5,
         mt: 1,
         gap: 1,
