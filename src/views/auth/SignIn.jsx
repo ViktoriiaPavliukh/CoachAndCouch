@@ -5,40 +5,51 @@ import {
   Grid,
   Box,
   Typography,
-  Container,
   IconButton,
   InputAdornment,
-} from '@mui/material';
-import { Link as ReactLink } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { loginSchema as validationSchema } from 'defaults';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+} from "@mui/material";
+import { Link as ReactLink } from "react-router-dom";
+import { useFormik } from "formik";
+import { loginSchema as validationSchema } from "@/defaults";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import mainBg from "@assets/images/bg.png";
 
 export function SignIn() {
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       showPassword: false,
     },
     validationSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
       formik.resetForm();
     },
   });
   return (
-    <Container component="main" maxWidth="xs">
+    <Box
+      sx={{
+        backgroundImage: `url(${mainBg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        height: "calc(100vh - 70px)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Box
         sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'left',
-          backgroundColor: theme => theme.palette.background.paper,
-          maxWidth: '440px',
-          padding: '40px 56px',
-          borderRadius: '16px',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "left",
+          backgroundColor: (theme) => theme.palette.background.paper,
+          maxWidth: "440px",
+          padding: "40px 56px",
+          borderRadius: "16px",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -72,7 +83,7 @@ export function SignIn() {
                 size="small"
                 name="password"
                 label="Введіть пароль"
-                type={formik.values.showPassword ? 'text' : 'password'}
+                type={formik.values.showPassword ? "text" : "password"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -80,7 +91,7 @@ export function SignIn() {
                         aria-label="toggle password visibility"
                         onClick={() =>
                           formik.setFieldValue(
-                            'showPassword',
+                            "showPassword",
                             !formik.values.showPassword
                           )
                         }
@@ -117,14 +128,14 @@ export function SignIn() {
             sx={{
               mt: 3,
               mb: 2,
-              textTransform: 'none',
-              backgroundColor: theme => theme.palette.buttonColor.main,
+              textTransform: "none",
+              backgroundColor: (theme) => theme.palette.buttonColor.main,
             }}
           >
-            {formik.isSubmitting ? 'Завантаження' : 'Увійти'}
+            {formik.isSubmitting ? "Завантаження" : "Увійти"}
           </Button>
-          <Box justifyContent="center" sx={{ marginTop: '20px' }}>
-            <Typography sx={{ textAlign: 'center', mt: 2, display: 'block' }}>
+          <Box justifyContent="center" sx={{ marginTop: "20px" }}>
+            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>
               Новий користувач?
             </Typography>
             <Link
@@ -132,13 +143,13 @@ export function SignIn() {
               to="/registration"
               variant="body2"
               align="center"
-              sx={{ textAlign: 'center', mt: 2, display: 'block' }}
+              sx={{ textAlign: "center", mt: 2, display: "block" }}
             >
               Створити аккаунт
             </Link>
           </Box>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 }

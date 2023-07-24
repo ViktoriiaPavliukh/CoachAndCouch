@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   Button,
   TextField,
@@ -6,43 +5,54 @@ import {
   Grid,
   Box,
   Typography,
-  Container,
   IconButton,
   InputAdornment,
-} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Link as ReactLink } from 'react-router-dom';
-import { useFormik } from 'formik';
-import { registrationSchema as validationSchema } from 'defaults';
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Link as ReactLink } from "react-router-dom";
+import { useFormik } from "formik";
+import { registrationSchema as validationSchema } from "@/defaults";
+import mainBg from "@assets/images/bg.png";
 
 export function SignUp() {
   const formik = useFormik({
     initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
+      name: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
       showPassword: false,
     },
     validationSchema,
-    onSubmit: values => {
+    onSubmit: (values) => {
       console.log(values);
       alert(JSON.stringify(values, null, 2));
       formik.resetForm();
     },
   });
   return (
-    <Container component="main" maxWidth="xs">
+    <Box
+      sx={{
+        backgroundImage: `url(${mainBg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        height: "calc(100vh - 70px)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Box
         sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'left',
-          backgroundColor: theme => theme.palette.background.paper,
-          maxWidth: '500px',
-          padding: '40px 56px',
-          borderRadius: '16px',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "left",
+          backgroundColor: (theme) => theme.palette.background.paper,
+          maxWidth: "500px",
+          padding: "40px 56px",
+          borderRadius: "16px",
         }}
       >
         <Typography component="h1" variant="h5">
@@ -91,7 +101,7 @@ export function SignUp() {
                 sx={{ mb: 2.5 }}
                 name="password"
                 label="Придумайте пароль"
-                type={formik.values.showPassword ? 'text' : 'password'}
+                type={formik.values.showPassword ? "text" : "password"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -99,7 +109,7 @@ export function SignUp() {
                         aria-label="toggle password visibility"
                         onClick={() =>
                           formik.setFieldValue(
-                            'showPassword',
+                            "showPassword",
                             !formik.values.showPassword
                           )
                         }
@@ -130,7 +140,7 @@ export function SignUp() {
                 sx={{ mb: 2.5 }}
                 name="passwordConfirm"
                 label="Повторіть пароль"
-                type={formik.values.showPassword ? 'text' : 'password'}
+                type={formik.values.showPassword ? "text" : "password"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -138,7 +148,7 @@ export function SignUp() {
                         aria-label="toggle confirm visibility"
                         onClick={() =>
                           formik.setFieldValue(
-                            'showPassword',
+                            "showPassword",
                             !formik.values.showPassword
                           )
                         }
@@ -174,8 +184,8 @@ export function SignUp() {
             sx={{
               mt: 3,
               mb: 2,
-              textTransform: 'none',
-              backgroundColor: theme => theme.palette.buttonColor.main,
+              textTransform: "none",
+              backgroundColor: (theme) => theme.palette.buttonColor.main,
             }}
           >
             Створити новий аккаунт
@@ -183,24 +193,24 @@ export function SignUp() {
           <Typography
             component="p"
             variant="h6"
-            sx={{ fontSize: '14px', textAlign: 'center' }}
+            sx={{ fontSize: "14px", textAlign: "center" }}
           >
             Входячи в систему, я приймаю Умови користування та підтверджую, що
             мною прочитана Політика конфіденційності
           </Typography>
-          <Grid container justifyContent="center" sx={{ marginTop: '20px' }}>
+          <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
             <Typography>Вже є аккаунт?</Typography>
             <Link
               component={ReactLink}
               to="/login"
               variant="body2"
-              style={{ marginTop: '2px', marginLeft: '15px' }}
+              style={{ marginTop: "2px", marginLeft: "15px" }}
             >
               Вхід
             </Link>
           </Grid>
         </Box>
       </Box>
-    </Container>
+    </Box>
   );
 }

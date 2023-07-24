@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   AppBar,
   Box,
@@ -10,14 +9,14 @@ import {
   Button,
   MenuItem,
   Stack,
-} from '@mui/material';
-import { Menu as MenuIcon } from '@mui/icons-material';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TelegramIcon from '@mui/icons-material/Telegram';
-import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
-import { pages } from 'defaults';
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+} from "@mui/material";
+import { Menu as MenuIcon } from "@mui/icons-material";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import { pages } from "@/defaults";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
@@ -25,7 +24,7 @@ const ExternalLink = ({ to, children, ...rest }) => {
       <IconButton
         size="large"
         color="inherit"
-        sx={{ color: 'white' }}
+        sx={{ color: "white" }}
         {...rest}
       >
         {children}
@@ -37,20 +36,19 @@ const ExternalLink = ({ to, children, ...rest }) => {
 export function Header() {
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
-  console.log('Привіт Хедер зарендерився');
 
-  const handleOpenNavMenu = event => {
+  const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = link => {
+  const handleCloseNavMenu = (link) => {
     setAnchorElNav(null);
     navigate(link);
   };
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container sx={{ maxWidth: { lg: 1200, md: 834, sm: 375 } }}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -59,18 +57,18 @@ export function Header() {
             to=""
             sx={{
               mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              display: { xs: "none", lg: "flex" },
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             Coach&#x26;Couch
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", lg: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -85,20 +83,20 @@ export function Header() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
+                vertical: "top",
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={() => {
                 handleCloseNavMenu();
               }}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: "block", lg: "none" },
               }}
             >
               {pages.slice(0, 5).map(({ title, link }) => (
@@ -123,18 +121,18 @@ export function Header() {
             to=""
             sx={{
               mr: 2,
-              display: { xs: 'flex', md: 'none' },
+              display: { xs: "flex", lg: "none" },
               flexGrow: 1,
-              fontFamily: 'monospace',
+              fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
             }}
           >
             Coach&#x26;Couch
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
             {pages.slice(0, 5).map(({ title, link }) => (
               <Button
                 key={title}
@@ -143,11 +141,11 @@ export function Header() {
                 }}
                 sx={{
                   my: 2,
-                  color: 'white',
-                  display: 'block',
-                  textTransform: 'lowercase',
-                  '&:first-letter': {
-                    textTransform: 'capitalize',
+                  color: "white",
+                  display: "block",
+                  textTransform: "lowercase",
+                  "&:first-letter": {
+                    textTransform: "capitalize",
                   },
                 }}
               >
@@ -157,7 +155,7 @@ export function Header() {
           </Box>
           <Stack
             direction="row"
-            sx={{ display: { xs: 'none', md: 'flex' }, gap: '0' }}
+            sx={{ display: { xs: "none", lg: "flex" }, gap: "0" }}
           >
             <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
               <InstagramIcon />
@@ -171,7 +169,7 @@ export function Header() {
           </Stack>
           <Stack direction="row" spacing={2}>
             <Box>
-              {' '}
+              {" "}
               {pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
                   key={title}
@@ -194,8 +192,8 @@ export function Header() {
                     navigate(link);
                   }}
                   sx={{
-                    backgroundColor: theme => theme.palette.buttonColor.main,
-                    borderRadius: '6px',
+                    backgroundColor: (theme) => theme.palette.buttonColor.main,
+                    borderRadius: "6px",
                   }}
                 >
                   <Typography textAlign="center">
