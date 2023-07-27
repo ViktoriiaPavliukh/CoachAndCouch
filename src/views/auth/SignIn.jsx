@@ -13,8 +13,11 @@ import { useFormik } from "formik";
 import { loginSchema as validationSchema } from "@/defaults";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import mainBg from "@assets/images/bg.png";
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/redux/auth/operations";
 
 export function SignIn() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -22,9 +25,9 @@ export function SignIn() {
       showPassword: false,
     },
     validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      formik.resetForm();
+    onSubmit: ({ email, password }) => {
+      dispatch(loginUser({ email, password }));
+      // formik.resetForm();
     },
   });
   return (
