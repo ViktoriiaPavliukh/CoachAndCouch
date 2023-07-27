@@ -13,8 +13,11 @@ import { Link as ReactLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { registrationSchema as validationSchema } from "@/defaults";
 import mainBg from "@assets/images/bg.png";
+import { useDispatch } from "react-redux";
+import { registerUser } from "@/redux/auth/operations";
 
 export function SignUp() {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -24,10 +27,8 @@ export function SignUp() {
       showPassword: false,
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      alert(JSON.stringify(values, null, 2));
-      formik.resetForm();
+    onSubmit: ({ name, email, password }) => {
+      dispatch(registerUser({ name, email, password }));
     },
   });
   return (
