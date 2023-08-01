@@ -7,6 +7,8 @@ import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
 import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
 
+// lineheight 52px main title height
+
 const languages = [
   { id: "1", label: "Англійська" },
   { id: "2", label: "Іспанська" },

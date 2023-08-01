@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, registerUser } from "./operations";
+import { loginUser, logoutUser, refreshUser, registerUser } from "./operations";
 import { toast } from "react-toastify";
 
 const authSlice = createSlice({
@@ -17,7 +17,13 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, handleRegisterFulfilled)
       .addCase(loginUser.fulfilled, handleLoginFulfilled)
       .addCase(loginUser.rejected, handleRejected)
-      .addCase(registerUser.rejected, handleRejected),
+      .addCase(registerUser.rejected, handleRejected)
+      .addCase(refreshUser.fulfilled, handleRefreshFulfilled)
+      .addCase(refreshUser.pending, handlePending)
+      .addCase(refreshUser.rejected, handleRejected)
+      .addCase(logoutUser.pending, handlePending)
+      .addCase(logoutUser.fulfilled, handleLogoutFulfilled)
+      .addCase(logoutUser.rejected, handleRejected),
 });
 
 function handlePending(state) {
@@ -25,19 +31,36 @@ function handlePending(state) {
 }
 
 function handleLoginFulfilled(state, { payload }) {
-  state.user = { name: "User", ...payload };
+  state.user = { name: "User" };
+  state.token = payload.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRegisterFulfilled(state, { payload }) {
-  state.user = { name: "User", ...payload };
+  state.user = { name: "User" };
+  state.token = payload.refreshToken;
   state.isLoggedIn = true;
+  state.isLoading = false;
+}
+
+function handleRefreshFulfilled(state, { payload }) {
+  state.user = { name: "User" };
+  state.token = payload.refreshToken;
+  state.isLoggedIn = true;
+  state.isLoading = false;
+}
+
+function handleLogoutFulfilled(state) {
+  state.user = {};
+  state.token = "";
+  state.isLoggedIn = false;
   state.isLoading = false;
 }
 
 function handleRejected(state, { error }) {
   state.isLoading = false;
+  state.isLoggedIn = false;
   toast.error(error.message);
 }
 

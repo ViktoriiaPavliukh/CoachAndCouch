@@ -14,6 +14,9 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../../redux/auth/operations";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { pages } from "@/defaults";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -44,6 +47,13 @@ export function Header() {
   const handleCloseNavMenu = (link) => {
     setAnchorElNav(null);
     navigate(link);
+  };
+
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -163,7 +173,7 @@ export function Header() {
             sx={{
               display: { xs: "none", lg: "flex" },
               gap: "0",
-              ml: "30px"
+              ml: "30px",
               // ml: "55px",
             }}
           >
@@ -181,9 +191,12 @@ export function Header() {
             direction="row"
             sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" } }}
           >
-            <Box>
-              {" "}
-              {pages.slice(5, 6).map(({ title, link }) => (
+            {isLoggedIn ? (
+              <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                <Typography textAlign="center">Вихід</Typography>
+              </MenuItem>
+            ) : (
+              pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
                   sx={{ px: "12px" }}
                   key={title}
@@ -196,27 +209,30 @@ export function Header() {
                       title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
-              ))}
-            </Box>
-            <Box>
-              {pages.slice(6).map(({ title, link }) => (
-                <MenuItem
-                  key={title}
-                  onClick={() => {
-                    navigate(link);
-                  }}
-                  sx={{
-                    px: "12px",
-                    backgroundColor: (theme) => theme.palette.buttonColor.main,
-                    borderRadius: "6px",
-                  }}
-                >
-                  <Typography textAlign="center">
-                    {title.toUpperCase()}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Box>
+              ))
+            )}
+            {!isLoggedIn && (
+              <Box>
+                {pages.slice(6).map(({ title, link }) => (
+                  <MenuItem
+                    key={title}
+                    onClick={() => {
+                      navigate(link);
+                    }}
+                    sx={{
+                      px: "12px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.main,
+                      borderRadius: "6px",
+                    }}
+                  >
+                    <Typography textAlign="center">
+                      {title.toUpperCase()}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Box>
+            )}
           </Stack>
         </Toolbar>
       </Container>
