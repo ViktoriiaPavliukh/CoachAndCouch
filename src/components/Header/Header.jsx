@@ -56,19 +56,35 @@ export function Header() {
             component={Link}
             to=""
             sx={{
-              mr: 2,
               display: { xs: "none", lg: "flex" },
+              marginRight: "54px",
               fontFamily: "monospace",
               fontWeight: 700,
-              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+              // color: (theme) => theme.palette.headerColor.grey,
+              opacity: "0.9",
+            }}
+          >
+            Coach&#x26;Couch
+          </Typography>
+          <Typography
+            variant="h5"
+            noWrap
+            component={Link}
+            to=""
+            sx={{
+              display: { xs: "flex", lg: "none" },
+              flexGrow: 1,
+              fontFamily: "monospace",
+              fontWeight: 700,
               color: "inherit",
               textDecoration: "none",
             }}
           >
             Coach&#x26;Couch
           </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", lg: "none" } }}>
+          <Box sx={{ display: { xs: "flex", lg: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -84,12 +100,12 @@ export function Header() {
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left",
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "left",
+                horizontal: "right",
               }}
               open={Boolean(anchorElNav)}
               onClose={() => {
@@ -106,7 +122,14 @@ export function Header() {
                     handleCloseNavMenu(link);
                   }}
                 >
-                  <Typography textAlign="center">
+                  <Typography
+                    textAlign="center"
+                    variant="fontHeader"
+                    sx={{
+                      mr: 5.5,
+                      color: (theme) => theme.palette.buttonColor.fontColor,
+                    }}
+                  >
                     {title.charAt(0).toUpperCase() +
                       title.slice(1).toLowerCase()}
                   </Typography>
@@ -114,24 +137,6 @@ export function Header() {
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", lg: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Coach&#x26;Couch
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
             {pages.slice(0, 5).map(({ title, link }) => (
               <Button
@@ -140,7 +145,7 @@ export function Header() {
                   handleCloseNavMenu(link);
                 }}
                 sx={{
-                  my: 2,
+                  px: "16px",
                   color: "white",
                   display: "block",
                   textTransform: "lowercase",
@@ -155,23 +160,32 @@ export function Header() {
           </Box>
           <Stack
             direction="row"
-            sx={{ display: { xs: "none", lg: "flex" }, gap: "0" }}
+            sx={{
+              display: { xs: "none", lg: "flex" },
+              gap: "0",
+              ml: "30px"
+              // ml: "55px",
+            }}
           >
             <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
               <InstagramIcon />
             </ExternalLink>
             <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
-              <TelegramIcon />
+              <TelegramIcon sx={{ padding: "0px" }} />
             </ExternalLink>
             <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
               <FacebookRoundedIcon />
             </ExternalLink>
           </Stack>
-          <Stack direction="row" spacing={2}>
+          <Stack
+            direction="row"
+            sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" } }}
+          >
             <Box>
               {" "}
               {pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
+                  sx={{ px: "12px" }}
                   key={title}
                   onClick={() => {
                     navigate(link);
@@ -192,13 +206,13 @@ export function Header() {
                     navigate(link);
                   }}
                   sx={{
+                    px: "12px",
                     backgroundColor: (theme) => theme.palette.buttonColor.main,
                     borderRadius: "6px",
                   }}
                 >
                   <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.toUpperCase()}
                   </Typography>
                 </MenuItem>
               ))}
