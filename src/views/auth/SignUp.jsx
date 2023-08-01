@@ -13,10 +13,12 @@ import { Link as ReactLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { registrationSchema as validationSchema } from "@/defaults";
 import mainBg from "@assets/images/bg.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "@/redux/auth/operations";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export function SignUp() {
+  const isLoading = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -182,6 +184,7 @@ export function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={isLoading}
             sx={{
               mt: 3,
               mb: 2,
@@ -189,7 +192,7 @@ export function SignUp() {
               backgroundColor: (theme) => theme.palette.buttonColor.main,
             }}
           >
-            Створити новий аккаунт
+            {isLoading ? "Перевіряємо..." : "Створити новий аккаунт"}
           </Button>
           <Typography
             component="p"

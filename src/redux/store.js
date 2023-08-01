@@ -19,9 +19,10 @@ const persistConfig = {
   // whitelist: ["filter"],
 };
 const persistedTheme = persistReducer(persistConfig, themeReducer);
+const persistedAuth = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
-  reducer: { theme: persistedTheme, auth: authReducer },
+  reducer: { theme: persistedTheme, auth: persistedAuth },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
