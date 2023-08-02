@@ -13,7 +13,7 @@ export default function App() {
   const token = useSelector(selectToken);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(refreshUser(token));
+    if (token) dispatch(refreshUser(token));
   }, []);
   return (
     <>

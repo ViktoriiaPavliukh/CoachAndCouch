@@ -31,29 +31,29 @@ function handlePending(state) {
 }
 
 function handleLoginFulfilled(state, { payload }) {
-  state.user = { name: "User" };
-  state.token = payload.refreshToken;
+  state.user = { name: "User", ...payload.user };
+  state.token = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRegisterFulfilled(state, { payload }) {
-  state.user = { name: "User" };
-  state.token = payload.refreshToken;
+  state.user = { name: "User", ...payload.user };
+  state.token = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRefreshFulfilled(state, { payload }) {
-  state.user = { name: "User" };
-  state.token = payload.refreshToken;
+  state.user = { name: "User", ...payload.user };
+  state.token = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleLogoutFulfilled(state) {
   state.user = {};
-  state.token = "";
+  state.token = null;
   state.isLoggedIn = false;
   state.isLoading = false;
 }
