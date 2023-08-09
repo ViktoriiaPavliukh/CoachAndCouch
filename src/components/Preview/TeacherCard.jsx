@@ -113,6 +113,10 @@ export function TeacherCard() {
             color: (theme) => theme.palette.buttonColor.fontColor,
             fontSize: "14px",
             fontWeight: "700",
+            transition: "background-color 0.3s",
+            "&:hover": {
+              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+            },
           }}
         >
           ПРОБНИЙ УРОК

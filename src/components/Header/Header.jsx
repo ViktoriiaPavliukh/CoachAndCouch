@@ -58,7 +58,7 @@ export function Header() {
 
   return (
     <AppBar position="static">
-      <Container sx={{ maxWidth: { lg: 1200, md: 834, sm: 375 } }}>
+      <Container sx={{ maxWidth: { lg: 1200, md: 834 } }}>
         <Toolbar disableGutters>
           <Typography
             variant="h6"
@@ -137,7 +137,6 @@ export function Header() {
                     variant="fontHeader"
                     sx={{
                       mr: 5.5,
-                      color: (theme) => theme.palette.buttonColor.fontColor,
                     }}
                   >
                     {title.charAt(0).toUpperCase() +
@@ -161,6 +160,10 @@ export function Header() {
                   textTransform: "lowercase",
                   "&:first-letter": {
                     textTransform: "capitalize",
+                  },
+                  transition: "color 0.3s",
+                  "&:hover": {
+                    color: (theme) => theme.palette.textColor.menuHover,
                   },
                 }}
               >
@@ -198,7 +201,13 @@ export function Header() {
             ) : (
               pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
-                  sx={{ px: "12px" }}
+                  sx={{
+                    px: "12px",
+                    transition: "color 0.3s",
+                    "&:hover": {
+                      color: (theme) => theme.palette.textColor.menuHover,
+                    },
+                  }}
                   key={title}
                   onClick={() => {
                     navigate(link);
@@ -224,6 +233,11 @@ export function Header() {
                       backgroundColor: (theme) =>
                         theme.palette.buttonColor.main,
                       borderRadius: "6px",
+                      transition: "background-color 0.3s",
+                      "&:hover": {
+                        backgroundColor: (theme) =>
+                          theme.palette.buttonColor.hover,
+                      },
                     }}
                   >
                     <Typography textAlign="center">
