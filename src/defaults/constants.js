@@ -4,9 +4,11 @@ export const baseName = '/marketplace-project';
 
 export const settings = ['Profile', 'Settings', 'Logout'];
 export const languages = [
-  { id: '1', label: 'Англійська' },
-  { id: '2', label: 'Іспанська' },
-  { id: '3', label: 'Українська' },
+  { id: "1", label: "Англійська" },
+  { id: "2", label: "Іспанська" },
+  { id: "3", label: "Українська" },
+  { id: "4", label: "Китайська" },
+  { id: "5", label: "Турецька" },
 ];
 // const specialization = [
 //   { id: '1', label: 'Розмовна мова' },
