@@ -13,7 +13,7 @@ export const pages = [
   },
   {
     title: "Стати викладачем",
-    link: "",
+    link: "teacherform",
   },
   {
     title: "Контакти",

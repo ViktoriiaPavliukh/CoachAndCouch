@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Home, SignIn, SignUp } from "@/views";
-import { Card, Layout, Preview } from "@components";
+import { Card, Layout, Preview, TeacherForm } from "@components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RestrictedRoute } from "@components/RestrictedRoute";
@@ -23,6 +23,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="announcement" element={<Preview />} />
           <Route path="announcement/:id" element={<Card />} />
+          <Route path="teacherform" element={<TeacherForm/>} />
           <Route
             path="registration"
             element={
