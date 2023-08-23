@@ -1,3 +1,5 @@
-export * from 'components/Header/Header';
-export * from 'components/Copyright';
-export { default as Layout } from 'components/Layout/Layout';
+export * from "./Header/Header";
+export * from "./Copyright";
+export * from "./Card/Card";
+export * from "./Preview/Preview";
+export { default as Layout } from "./Layout/Layout";

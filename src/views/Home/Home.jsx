@@ -1,12 +1,12 @@
-import { Button, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { changeTheme } from 'redux/theme/slice';
+import { Button, Typography, Container } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { changeTheme } from "@/redux/theme/slice";
 
 export function Home() {
   const dispatch = useDispatch();
 
   return (
-    <>
+    <Container>
       <Typography component="h1" variant="h5">
         Home Page
       </Typography>
@@ -18,6 +18,6 @@ export function Home() {
       >
         Change theme
       </Button>
-    </>
+    </Container>
   );
 }

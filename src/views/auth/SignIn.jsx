@@ -1,115 +1,161 @@
 import {
-  Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
   Typography,
-  Container,
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-
-import { validationSchema } from 'defaults';
-import { Copyright } from 'components';
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Link as ReactLink } from "react-router-dom";
+import { useFormik } from "formik";
+import { loginSchema as validationSchema } from "@/defaults";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import mainBg from "@assets/images/bg.png";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "@/redux/auth/operations";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export function SignIn() {
-  const initialValues = {
-    email: '',
-    password: '',
-    remember: false,
-  };
-  const onSubmit = (values, props) => {
-    console.log(values);
-    setTimeout(() => {
-      props.resetForm();
-      props.setSubmitting(false);
-    }, 2000);
-    console.log(props);
-  };
+  const isLoading = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      showPassword: false,
+    },
+    validationSchema,
+    onSubmit: ({ email, password }) => {
+      dispatch(loginUser({ email, password }));
+      // formik.resetForm();
+    },
+  });
   return (
-    <Container component="main" maxWidth="xs">
+    <Box
+      sx={{
+        backgroundImage: `url(${mainBg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
+        height: "calc(100vh - 70px)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Box
         sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "left",
+          backgroundColor: (theme) => theme.palette.background.paper,
+          maxWidth: "440px",
+          padding: "40px 56px",
+          borderRadius: "16px",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Вхід
         </Typography>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
+        <Box
+          component="form"
+          noValidate
+          onSubmit={formik.handleSubmit}
+          sx={{ mt: 3 }}
         >
-          {props => (
-            <Form>
-              {console.log(props)}
-              <Field
-                as={TextField}
-                margin="normal"
-                required
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                sx={{ mb: 2.5 }}
+                size="small"
                 fullWidth
-                id="email"
-                label="Email Address"
+                label="Введіть e-mail"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
                 name="email"
                 autoComplete="email"
-                autoFocus
-                helperText={<ErrorMessage name="email" />}
               />
-              <Field
-                as={TextField}
-                margin="normal"
-                required
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                sx={{ mb: 2.5 }}
                 fullWidth
+                size="small"
                 name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                helperText={<ErrorMessage name="password" />}
+                label="Введіть пароль"
+                type={formik.values.showPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() =>
+                          formik.setFieldValue(
+                            "showPassword",
+                            !formik.values.showPassword
+                          )
+                        }
+                        edge="end"
+                      >
+                        {formik.values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                autoComplete="new-password"
               />
-              <Field
-                as={FormControlLabel}
-                name="remember"
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                disable={props.isSubmitting ? 'true' : 'false'}
-                sx={{ mt: 3, mb: 2 }}
-              >
-                {props.isSubmitting ? 'Loading' : 'Sign In'}
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-            </Form>
-          )}
-        </Formik>
+            </Grid>
+          </Grid>
+          <Link href="#" variant="body2">
+            Забули пароль?
+          </Link>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={isLoading}
+            sx={{
+              mt: 3,
+              mb: 2,
+              textTransform: "none",
+              backgroundColor: (theme) => theme.palette.buttonColor.main,
+            }}
+          >
+            {isLoading ? "Завантаження..." : "Увійти"}
+          </Button>
+          <Box justifyContent="center" sx={{ marginTop: "20px" }}>
+            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>
+              Новий користувач?
+            </Typography>
+            <Link
+              component={ReactLink}
+              to="/registration"
+              variant="body2"
+              align="center"
+              sx={{ textAlign: "center", mt: 2, display: "block" }}
+            >
+              Створити аккаунт
+            </Link>
+          </Box>
+        </Box>
       </Box>
-      <Copyright sx={{ mt: 8, mb: 4 }} />
-    </Container>
+    </Box>
   );
 }
