@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 const createThemeTemplate = (themeColor) => ({
   components: {
@@ -29,12 +29,15 @@ const createThemeTemplate = (themeColor) => ({
     },
     buttonColor: {
       main: "#7ab02e",
+      hover: "#ADCF7D",
+      darkHover: "#50945E",
       fontColor: "#F1F3EF",
     },
     textColor: {
       grey: "#878D99",
       darkGrey: "#5A5E67",
       iconsGrey: "#7D7D7D",
+      menuHover: "#A4E941",
     },
   },
   typography: {
@@ -99,6 +102,11 @@ const createThemeTemplate = (themeColor) => ({
     },
   },
 });
+
+
+
+
+
 
 export const lightTheme = createTheme(createThemeTemplate('light'));
 

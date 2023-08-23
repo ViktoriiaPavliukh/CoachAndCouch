@@ -38,29 +38,51 @@ export function Preview() {
       maxWidth="100vw"
       sx={{
         backgroundColor: "background.paper",
-        m: 0,
         display: "flex",
         justifyContent: "center",
+        px: { xs: "16px" },
       }}
     >
-      <Box maxWidth="1168px">
-        <Box sx={{ display: "flex", my: "80px", gap: "63px" }}>
+      <Box
+        maxWidth="1168px"
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            mt: { lg: "80px", md: "64px", xs: "36px" },
+            mb: { lg: "95px", md: "61px", xs: "36px" },
+            gap: { md: "18px", lg: "63px" },
+          }}
+        >
           <Box
             sx={{
               display: "flex",
-              mt: "80px",
+              mt: { lg: "80px", xs: "0px" },
               flexDirection: "column",
-              gap: "60px",
+              gap: { xs: "28px", md: "50px", lg: "60px" },
             }}
           >
             <Typography
               variant="fontHeading"
               sx={{
                 color: (theme) => theme.palette.primary.main,
+                fontSize: { lg: "50px", md: "36px", xs: "32px" },
+                lineHeight: { xs: "40px", md: "44px", lg: "60px" },
+                display: "inline-block",
               }}
             >
               Знайдіть ідеального викладача
             </Typography>
+            <Box sx={{ display: { md: "none" }, pb: "8px" }}>
+              <DescriptionImage />
+            </Box>
             <List
               sx={{
                 padding: "0",
@@ -100,7 +122,16 @@ export function Preview() {
             <Button
               type="button"
               variant="contained"
-              sx={{ p: "12px 53px", maxWidth: "328px", borderRadius: "8px" }}
+              sx={{
+                p: "12px 53px",
+                maxWidth: { xs: "100%", sm: "375px", md: "328px" },
+                borderRadius: "8px",
+                transition: "background-color 0.3s",
+                "&:hover": {
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.darkHover,
+                },
+              }}
             >
               <Typography
                 variant="posterButton"
@@ -110,28 +141,41 @@ export function Preview() {
               </Typography>
             </Button>
           </Box>
-          <DescriptionImage />
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              width: { md: "376px", lg: "fit-content" },
+            }}
+          >
+            <DescriptionImage />
+          </Box>
         </Box>
-        <Stack direction="row" spacing={2} sx={{ mb: "43px" }}>
-          <Filter
-            options={languageOptions}
-            // getOptionLabel={option => option.title}
-            label="МОВА"
-          />
+        <Stack
+          direction="row"
+          sx={{
+            mb: { lg: "43px", md: "58px", xs: "36px" },
+            display: "flex",
+            maxWidth: { xs: "100%", md: "585px", sm: "500px", lg: "100%" },
+            justifyContent: "center",
+            flexWrap: { xs: "wrap", lg: "nowrap" },
+            columnGap: { xs: "16px", md: "30px", lg: "24px" },
+            rowGap: { xs: "16px", md: "20px" },
+          }}
+        >
+          <Filter options={languageOptions} label="МОВА" />
           <Filter options={ratingOptions} label="РЕЙТИНГ" />
           <Filter options={lessonTimeOptions} label="ЧАС УРОКУ" />
           <Filter options={specializationOptions} label="СПЕЦІАЛІЗАЦІЯ" />
           <Filter options={countryOptions} label="КРАЇНА" />
           <Filter options={hobbyOptions} label="ХОБІ" />
         </Stack>
-        <Box sx={{ flexGrow: 1, mb: "115px" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
           <Grid
             container
             sx={{
-              columnGap: "24px",
-              rowGap: "48px",
-              justifyContent: "space-between",
-              flexBasis: "30%",
+              columnGap: { sm: "16px", lg: "24px" },
+              rowGap: { xs: "32px", md: "48px" },
+              justifyContent: "center",
             }}
           >
             {teacherCardData.map((teacher) => (

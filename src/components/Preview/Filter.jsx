@@ -12,16 +12,10 @@ export const Filter = ({ options, getOptionLabel, label }) => {
     <Autocomplete
       id={`${label}-filter`}
       options={options}
-      // getOptionLabel={getOptionLabel}
-      getOptionLabel={option => option.title}
+      getOptionLabel={(option) => option.title}
       filterOptions={filterOptions}
-      sx={{ width: 300 }}
-      renderInput={params => (
-        <TextField
-          {...params}
-          label={label}
-        />
-      )}
+      sx={{ width: { md: 175, xs: 164 }, fontSize: "10px" }}
+      renderInput={(params) => <TextField {...params} label={label} />}
     />
   );
 };
