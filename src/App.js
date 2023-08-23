@@ -1,9 +1,15 @@
-function App() {
+import { Route, Routes } from 'react-router-dom';
+import { Home, SignIn, SignUp } from 'views';
+import { Layout } from 'components';
+
+export default function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="registration" element={<SignUp />} />
+        <Route path="login" element={<SignIn />} />
+      </Route>
+    </Routes>
   );
 }
-
-export default App;
