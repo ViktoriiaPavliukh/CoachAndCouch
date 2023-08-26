@@ -1,13 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CardActionArea,
-  CardActions,
-  Stack,
-} from "@mui/material/";
+import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { CategoryList } from "../Card/CategoryList";
@@ -21,22 +12,23 @@ export function TeacherCard() {
     e.preventDefault();
     navigate("/announcement/2vc");
   };
+  const setBg = () => {
+    return "#" + Math.floor(Math.random() * 16777215).toString(16);
+  };
   return (
     <Card
       sx={{
         maxWidth: "373px",
         borderRadius: "8px",
         boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
+        backgroundColor: setBg,
       }}
     >
       <CardActionArea onClick={handleClick}>
         <TeacherImage />
       </CardActionArea>
       <CardContent>
-        <Stack
-          direction="row"
-          sx={{ justifyContent: "left", alignItems: "center", gap: "24px" }}
-        >
+        <Stack direction="row" sx={{ justifyContent: "left", alignItems: "center", gap: "24px" }}>
           <Typography
             gutterBottom
             variant="posterDescription"
@@ -45,11 +37,7 @@ export function TeacherCard() {
           >
             Іван Іванчук
           </Typography>
-          <Typography
-            color="grey.700"
-            variant="posterStatus"
-            sx={{ display: "inline-block" }}
-          >
+          <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
             <Box
               component="span"
               sx={{
@@ -64,10 +52,7 @@ export function TeacherCard() {
             Онлайн
           </Typography>
         </Stack>
-        <Typography
-          variant="posterItem"
-          sx={{ color: (theme) => theme.palette.textColor.grey }}
-        >
+        <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
           Професійний викладач
         </Typography>
         <CategoryList elements={languages} />
@@ -91,10 +76,7 @@ export function TeacherCard() {
             <Typography variant="posterItem">5.0</Typography>
           </Box>
           <Box sx={{ display: "flex", gap: "4px" }}>
-            <Typography
-              variant="posterItem"
-              sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
-            >
+            <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
               Уроки:
             </Typography>
             <Typography variant="posterItem">156</Typography>

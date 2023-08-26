@@ -9,6 +9,7 @@ import {
   ListItemText,
   ListItemIcon,
   Stack,
+  Pagination,
 } from "@mui/material";
 import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material";
 import { DescriptionImage } from "./DescriptionImage";
@@ -23,8 +24,20 @@ import {
   specializationOptions,
   teacherCardData,
 } from "@/defaults";
+import usePagination from "../hooks/usePagination";
+import { useState } from "react";
 
 export function Preview() {
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 3;
+  const count = Math.ceil(teacherCardData.length / PER_PAGE);
+  const items = usePagination(teacherCardData, PER_PAGE);
+  console.log(items);
+  const handleChange = (e, p) => {
+    setPage(p);
+    items.jump(p);
+  };
+
   const listItemStyles = {
     color: (theme) => theme.palette.textColor.grey,
     fontSize: "20px",
@@ -90,33 +103,21 @@ export function Preview() {
             >
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.buttonColor.main }}
-                  />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.buttonColor.main }} />
                 </ListItemIcon>
-                <ListItemText
-                  primary="Понад 1000 викладачів"
-                  sx={listItemStyles}
-                />
+                <ListItemText primary="Понад 1000 викладачів" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.buttonColor.main }}
-                  />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.buttonColor.main }} />
                 </ListItemIcon>
                 <ListItemText primary="Понад 20 мов" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.buttonColor.main }}
-                  />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.buttonColor.main }} />
                 </ListItemIcon>
-                <ListItemText
-                  primary="Професійні викладачі та носії мови"
-                  sx={listItemStyles}
-                />
+                <ListItemText primary="Професійні викладачі та носії мови" sx={listItemStyles} />
               </ListItem>
             </List>
             <Button
@@ -128,15 +129,11 @@ export function Preview() {
                 borderRadius: "8px",
                 transition: "background-color 0.3s",
                 "&:hover": {
-                  backgroundColor: (theme) =>
-                    theme.palette.buttonColor.darkHover,
+                  backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
                 },
               }}
             >
-              <Typography
-                variant="posterButton"
-                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
-              >
+              <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
                 Дізнатися більше
               </Typography>
             </Button>
@@ -178,16 +175,17 @@ export function Preview() {
               justifyContent: "center",
             }}
           >
-            {teacherCardData.map((teacher) => (
-              <Grid key={teacher.id} item>
-                <TeacherCard
-                  picture={teacher.picture}
-                  description={teacher.description}
-                />
-              </Grid>
-            ))}
+            {items &&
+              items.currentData().map((teacher) => {
+                return (
+                  <Grid key={teacher.id} item>
+                    <TeacherCard picture={teacher.picture} description={teacher.description} />
+                  </Grid>
+                );
+              })}
           </Grid>
         </Box>
+        <Pagination count={count} size="large" page={page} variant="outlined" shape="rounded" onChange={handleChange} />
       </Box>
     </Container>
   );

@@ -1,15 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Container,
-  Button,
-  MenuItem,
-  Stack,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Button, MenuItem, Stack } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -18,18 +7,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { pages } from "@/defaults";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
-    <Link to={to}>
-      <IconButton
-        size="large"
-        color="inherit"
-        sx={{ color: "white" }}
-        {...rest}
-      >
+    <Link to={to} sx={{ color: "white", padding: "px" }}>
+      <IconButton size="large" color="inherit" sx={{ color: "white", padding: "3px" }} {...rest}>
         {children}
       </IconButton>
     </Link>
@@ -37,6 +21,13 @@ const ExternalLink = ({ to, children, ...rest }) => {
 };
 
 export function Header() {
+  const [pathname, setPathname] = useState("");
+  const path = useLocation().pathname;
+  console.log(path);
+  console.log(pathname);
+  useEffect(() => {
+    setPathname(path);
+  }, [path]);
   const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = useState(null);
 
@@ -139,8 +130,7 @@ export function Header() {
                       mr: 5.5,
                     }}
                   >
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
               ))}
@@ -190,10 +180,7 @@ export function Header() {
               <FacebookRoundedIcon />
             </ExternalLink>
           </Stack>
-          <Stack
-            direction="row"
-            sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" } }}
-          >
+          <Stack direction="row" sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" } }}>
             {isLoggedIn ? (
               <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
                 <Typography textAlign="center">Вихід</Typography>
@@ -204,18 +191,25 @@ export function Header() {
                   sx={{
                     px: "12px",
                     transition: "color 0.3s",
+                    borderRadius: () => (pathname === "/login" ? "6px" : null),
+
+                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.main : null),
                     "&:hover": {
-                      color: (theme) => theme.palette.textColor.menuHover,
+                      color: (theme) =>
+                        pathname === "/login" ? theme.palette.textColor.main : theme.palette.textColor.menuHover,
+                      backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.hover : null),
                     },
                   }}
                   key={title}
                   onClick={() => {
+                    if (link === "login") {
+                      console.log(link);
+                    }
                     navigate(link);
                   }}
                 >
                   <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
               ))
@@ -231,18 +225,15 @@ export function Header() {
                     sx={{
                       px: "12px",
                       backgroundColor: (theme) =>
-                        theme.palette.buttonColor.main,
+                        pathname === "/registration" || pathname === "/" ? theme.palette.buttonColor.main : null,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
                       "&:hover": {
-                        backgroundColor: (theme) =>
-                          theme.palette.buttonColor.hover,
+                        backgroundColor: (theme) => theme.palette.buttonColor.hover,
                       },
                     }}
                   >
-                    <Typography textAlign="center">
-                      {title.toUpperCase()}
-                    </Typography>
+                    <Typography textAlign="center">{title.toUpperCase()}</Typography>
                   </MenuItem>
                 ))}
               </Box>
