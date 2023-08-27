@@ -1,13 +1,15 @@
-import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import * as React from "react";
+import { PropTypes } from "prop-types";
+import TextField from "@mui/material/TextField";
+import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
 const filterOptions = createFilterOptions({
-  matchFrom: 'start',
-  stringify: option => option.title,
+  matchFrom: "start",
+  stringify: (option) => option.title,
 });
 
 export const Filter = ({ options, getOptionLabel, label }) => {
+  console.log(options);
   return (
     <Autocomplete
       id={`${label}-filter`}
@@ -20,3 +22,10 @@ export const Filter = ({ options, getOptionLabel, label }) => {
   );
 };
 
+Filter.propTypes = {
+  options: PropTypes.shape({
+    title: PropTypes.string,
+  }),
+  label: PropTypes.string,
+  getOptionLabel: PropTypes.string,
+};

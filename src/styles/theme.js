@@ -103,11 +103,6 @@ const createThemeTemplate = (themeColor) => ({
   },
 });
 
+export const lightTheme = createTheme(createThemeTemplate("light"));
 
-
-
-
-
-export const lightTheme = createTheme(createThemeTemplate('light'));
-
-export const darkTheme = createTheme(createThemeTemplate('dark'));
+export const darkTheme = createTheme(createThemeTemplate("dark"));
