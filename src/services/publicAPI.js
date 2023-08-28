@@ -16,3 +16,19 @@ export const login = async (credentials) => {
   token.set(data.tokens.accesToken);
   return data;
 };
+
+export const getAdverts = async () => {
+  const { data } = await publicAPI.get(`/adverts`);
+
+  console.log(data);
+  return data;
+};
+getAdverts();
+
+export const getAdvertsById = async (id) => {
+  const { data } = await publicAPI.get(`/adverts/${id}`);
+
+  console.log(data);
+  return data;
+};
+getAdvertsById(1);

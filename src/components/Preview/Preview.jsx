@@ -28,8 +28,13 @@ import usePagination from "../hooks/usePagination";
 import { useState } from "react";
 
 export function Preview() {
+  // const [adverts, setAdverts] = useState([]);
+  // console.log(adverts);
+  // const allAdverts = getAdverts();
+  // console.log(allAdverts);
+  // setAdverts(allAdverts);
   let [page, setPage] = useState(1);
-  const PER_PAGE = 3;
+  const PER_PAGE = 9;
   const count = Math.ceil(teacherCardData.length / PER_PAGE);
   const items = usePagination(teacherCardData, PER_PAGE);
   console.log(items);
@@ -186,6 +191,18 @@ export function Preview() {
           </Grid>
         </Box>
         <Pagination count={count} size="large" page={page} variant="outlined" shape="rounded" onChange={handleChange} />
+        <Box>
+          {/* <ul>
+            {Boolean(adverts) &&
+              adverts.map((advert) => {
+                <li key={advert.id}>
+                  {advert.name}
+                  {advert.mail}
+                  {advert.price}
+                </li>;
+              })}
+          </ul> */}
+        </Box>
       </Box>
     </Container>
   );
