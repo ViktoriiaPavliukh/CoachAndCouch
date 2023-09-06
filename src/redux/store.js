@@ -1,28 +1,29 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { themeReducer } from "./theme/slice";
-import {
-  FLUSH,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-  REHYDRATE,
-  persistReducer,
-  persistStore,
-} from "redux-persist";
+import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slice";
+import { advertsReducer } from "./marketplace/adverts/advertsSlice";
 
-const persistConfig = {
+const authPersistConfig = {
+  key: "auth",
+  storage,
+  whitelist: ["token"],
+};
+
+const themePersistConfig = {
   key: "theme",
   storage,
-  // whitelist: ["filter"],
 };
-const persistedTheme = persistReducer(persistConfig, themeReducer);
-const persistedAuth = persistReducer(persistConfig, authReducer);
+const persistedTheme = persistReducer(themePersistConfig, themeReducer);
+const persistedAuth = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
-  reducer: { theme: persistedTheme, auth: persistedAuth },
+  reducer: {
+    theme: persistedTheme,
+    auth: persistedAuth,
+    adverts: advertsReducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -1,7 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import commonjsVariables from "commonjs-variables-for-esmodules";
 
+const { __dirname } = commonjsVariables(import.meta);
 export default defineConfig({
   plugins: [react()],
   resolve: {

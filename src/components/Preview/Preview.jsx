@@ -22,21 +22,25 @@ import {
   hobbyOptions,
   countryOptions,
   specializationOptions,
-  teacherCardData,
+  //teacherCardData,
 } from "@/defaults";
 import usePagination from "../hooks/usePagination";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { getAdverts } from "@/redux/marketplace/adverts/operations";
 
 export function Preview() {
-  // const [adverts, setAdverts] = useState([]);
-  // console.log(adverts);
-  // const allAdverts = getAdverts();
-  // console.log(allAdverts);
-  // setAdverts(allAdverts);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAdverts());
+  }, [dispatch]);
+  const adverts = useSelector(advertsSelector);
+  console.log(adverts);
   let [page, setPage] = useState(1);
   const PER_PAGE = 9;
-  const count = Math.ceil(teacherCardData.length / PER_PAGE);
-  const items = usePagination(teacherCardData, PER_PAGE);
+  const count = Math.ceil(adverts.length / PER_PAGE);
+  const items = usePagination(adverts, PER_PAGE);
   console.log(items);
   const handleChange = (e, p) => {
     setPage(p);
@@ -183,26 +187,15 @@ export function Preview() {
             {items &&
               items.currentData().map((teacher) => {
                 return (
-                  <Grid key={teacher.id} item>
-                    <TeacherCard picture={teacher.picture} description={teacher.description} />
+                  <Grid key={teacher.user.id} item>
+                    {/* <TeacherCard picture={teacher.picture} description={teacher.description} /> */}
+                    <TeacherCard teacher={teacher} />
                   </Grid>
                 );
               })}
           </Grid>
         </Box>
         <Pagination count={count} size="large" page={page} variant="outlined" shape="rounded" onChange={handleChange} />
-        <Box>
-          {/* <ul>
-            {Boolean(adverts) &&
-              adverts.map((advert) => {
-                <li key={advert.id}>
-                  {advert.name}
-                  {advert.mail}
-                  {advert.price}
-                </li>;
-              })}
-          </ul> */}
-        </Box>
       </Box>
     </Container>
   );

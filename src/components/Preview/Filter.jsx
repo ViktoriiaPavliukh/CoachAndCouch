@@ -1,4 +1,3 @@
-import * as React from "react";
 import { PropTypes } from "prop-types";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
@@ -8,7 +7,7 @@ const filterOptions = createFilterOptions({
   stringify: (option) => option.title,
 });
 
-export const Filter = ({ options, getOptionLabel, label }) => {
+export const Filter = ({ options, label }) => {
   console.log(options);
   return (
     <Autocomplete
@@ -23,9 +22,12 @@ export const Filter = ({ options, getOptionLabel, label }) => {
 };
 
 Filter.propTypes = {
-  options: PropTypes.shape({
-    title: PropTypes.string,
-  }),
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      time: PropTypes.number,
+    })
+  ),
   label: PropTypes.string,
   getOptionLabel: PropTypes.string,
 };

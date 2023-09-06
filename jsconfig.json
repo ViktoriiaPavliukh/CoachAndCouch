@@ -8,5 +8,5 @@
     }
   },
   "include": ["src"],
-  "references": [{ "path": "./jsconfig.node.json" }]
+  "exclude": ["node_modules", "**/node_modules", "dist"]
 }
