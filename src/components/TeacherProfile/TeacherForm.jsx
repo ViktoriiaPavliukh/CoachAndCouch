@@ -1,33 +1,26 @@
-import * as React from "react";
-import {
-  TextField,
-  Box,
-  MenuItem,
-  Typography, 
-  Stack
-} from "@mui/material";
-import { languages, countryOptions } from "../../defaults/index";
+import { TextField, Box, MenuItem, Typography } from "@mui/material";
+import { countryOptions } from "../../defaults/index";
 
 import tablesBg from "@assets/images/tables.jpeg";
 
-const currencies = [
-  {
-    value: "Ім'я",
-    label: "Ім'я",
-  },
-  {
-    value: "Прізвіще",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
-  },
-];
+// const currencies = [
+//   {
+//     value: "Ім'я",
+//     label: "Ім'я",
+//   },
+//   {
+//     value: "Прізвіще",
+//     label: "€",
+//   },
+//   {
+//     value: "BTC",
+//     label: "฿",
+//   },
+//   {
+//     value: "JPY",
+//     label: "¥",
+//   },
+// ];
 
 export function TeacherForm() {
   return (
@@ -68,32 +61,32 @@ export function TeacherForm() {
           noValidate
           autoComplete="off"
         >
-            {/* <div> */}
-            <TextField
-              id="outlined-select-language"
-              select
-              label="Країна"
-              defaultValue="Україна"
-              // helperText="Виберіть країну проживання"
-            >
-              {countryOptions.map((option) => (
-                <MenuItem key={option.code} value={option.title}>
-                  {option.title}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="outlined-select-age"
-              select
-              label="Вік"
-              // helperText="Виберіть країну проживання"
-            >
-              {countryOptions.map((option) => (
-                <MenuItem key={option.code} value={option.title}>
-                  {option.title}
-                </MenuItem>
-              ))}
-            </TextField>
+          {/* <div> */}
+          <TextField
+            id="outlined-select-language"
+            select
+            label="Країна"
+            defaultValue="Україна"
+            // helperText="Виберіть країну проживання"
+          >
+            {countryOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="outlined-select-age"
+            select
+            label="Вік"
+            // helperText="Виберіть країну проживання"
+          >
+            {countryOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
           {/* <TextField
               id="outlined-select-currency-native"
               select

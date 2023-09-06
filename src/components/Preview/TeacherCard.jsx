@@ -1,3 +1,4 @@
+import { PropTypes } from "prop-types";
 import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -6,22 +7,23 @@ import { TeacherImage } from "./TeacherImage";
 import { languages } from "@/defaults";
 import { useNavigate } from "react-router";
 
-export function TeacherCard() {
+export function TeacherCard({ teacher }) {
+  console.log(teacher);
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
     navigate("/announcement/2vc");
   };
-  const setBg = () => {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
-  };
+  // const setBg = () => {
+  //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
+  // };
   return (
     <Card
       sx={{
         maxWidth: "373px",
         borderRadius: "8px",
         boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
-        backgroundColor: setBg,
+        // backgroundColor: setBg,
       }}
     >
       <CardActionArea onClick={handleClick}>
@@ -35,7 +37,8 @@ export function TeacherCard() {
             component="div"
             sx={{ fontWeight: "700", letterSpacing: "-0.003px", mb: "8px" }}
           >
-            Іван Іванчук
+            {teacher.user.name}
+            {teacher.user.id}
           </Typography>
           <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
             <Box
@@ -107,3 +110,6 @@ export function TeacherCard() {
     </Card>
   );
 }
+TeacherCard.propTypes = {
+  teacher: PropTypes.object.isRequired,
+};
