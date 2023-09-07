@@ -1,5 +1,13 @@
-import { TextField, Box, MenuItem, Typography } from "@mui/material";
-import { countryOptions } from "../../defaults/index";
+import { TextField, Box, MenuItem, Typography, Button, Stack } from "@mui/material";
+import {
+  languageOptions,
+  ratingOptions,
+  lessonTimeOptions,
+  hobbyOptions,
+  countryOptions,
+  specializationOptions,
+  //teacherCardData,
+} from "@/defaults";
 
 import tablesBg from "@assets/images/tables.jpeg";
 
@@ -39,24 +47,37 @@ export function TeacherForm() {
       <Box
         sx={{
           backgroundColor: "white",
+          p: "40px",
+          borderRadius: "12px",
         }}
       >
-        <Typography>АНКЕТА ВИКЛАДАЧА</Typography>
+        <Typography variant="posterTitle">АНКЕТА ВИКЛАДАЧА</Typography>
         <Box
           component="form"
           sx={{
-            "& > :not(style)": { m: 1, width: "349px" },
+            display: "flex",
+            maxWidth: "900px",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            mt: "40px",
+            mb: "20px",
+            "& > :not(style)": { width: "49%" },
           }}
           noValidate
           autoComplete="off"
         >
           <TextField id="outlined-basic" label="Ім'я" variant="outlined" />
-          <TextField id="outlined-basic" label="Прізвіще" variant="outlined" />
+          <TextField id="outlined-basic" label="Прізвище" variant="outlined" />
         </Box>
         <Box
           component="form"
           sx={{
-            "& > :not(style)": { m: 1, width: "274px" },
+            display: "flex",
+            maxWidth: "900px",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            gap: "20px",
+            "& > :not(style)": { m: 0, width: "31%" },
           }}
           noValidate
           autoComplete="off"
@@ -66,9 +87,23 @@ export function TeacherForm() {
             id="outlined-select-language"
             select
             label="Країна"
-            defaultValue="Україна"
+            // defaultValue="Україна"
             // helperText="Виберіть країну проживання"
           >
+            {countryOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField id="outlined-select-age" select label="Дата народження">
+            {countryOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField id="outlined-select-sex" select label="Стать">
             {countryOptions.map((option) => (
               <MenuItem key={option.code} value={option.title}>
                 {option.title}
@@ -76,10 +111,52 @@ export function TeacherForm() {
             ))}
           </TextField>
           <TextField
-            id="outlined-select-age"
+            id="outlined-select-languages"
             select
-            label="Вік"
-            // helperText="Виберіть країну проживання"
+            label="Мови викладання"
+          >
+            {languageOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="outlined-select-specialization"
+            select
+            label="Спеціалізація"
+          >
+            {specializationOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField id="outlined-select-hobbies" select label="Захоплення">
+            {hobbyOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField id="outlined-select-time" select label="Час роботи">
+            {countryOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField id="outlined-select-platforms" select label="Платформи">
+            {countryOptions.map((option) => (
+              <MenuItem key={option.code} value={option.title}>
+                {option.title}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            id="outlined-select-certificates"
+            select
+            label="Сертифікати"
           >
             {countryOptions.map((option) => (
               <MenuItem key={option.code} value={option.title}>
@@ -87,90 +164,14 @@ export function TeacherForm() {
               </MenuItem>
             ))}
           </TextField>
-          {/* <TextField
-              id="outlined-select-currency-native"
-              select
-              label="Native select"
-              defaultValue="EUR"
-              SelectProps={{
-                native: true,
-              }}
-              helperText="Please select your currency"
-            >
-              {currencies.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
-          </div>
-          <div>
-            <TextField
-              id="filled-select-currency"
-              select
-              label="Select"
-              defaultValue="EUR"
-              helperText="Please select your currency"
-              variant="filled"
-            >
-              {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="filled-select-currency-native"
-              select
-              label="Native select"
-              defaultValue="EUR"
-              SelectProps={{
-                native: true,
-              }}
-              helperText="Please select your currency"
-              variant="filled"
-            >
-              {currencies.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField>
-          </div>
-          <div>
-            <TextField
-              id="standard-select-currency"
-              select
-              label="Select"
-              defaultValue="EUR"
-              helperText="Please select your currency"
-              variant="standard"
-            >
-              {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              id="standard-select-currency-native"
-              select
-              label="Native select"
-              defaultValue="EUR"
-              SelectProps={{
-                native: true,
-              }}
-              helperText="Please select your currency"
-              variant="standard"
-            >
-              {currencies.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </TextField> */}
-          {/* </div> */}
         </Box>
+        <Stack
+          direction="row"
+          sx={{ display: "flex", justifyContent: "space-between", mt: "40px" }}
+        >
+          <Button variant="contained">Опублікувати</Button>
+          <Button variant="outlined">Зберегти чернетку</Button>
+        </Stack>
       </Box>
     </Box>
   );
