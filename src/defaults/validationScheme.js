@@ -1,23 +1,39 @@
-import * as Yup from 'yup';
-
 export const loginSchema = Yup.object().shape({
-  email: Yup.string().email('please enter valid email').required('required'),
-  password: Yup.string().required('required'),
+  email: Yup.string()
+    .matches(
+      /^[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]{2,}$/,
+      "Please enter a valid email"
+    )
+    .max(50, "Email must be at most 50 characters")
+    .required("Email is required"),
+  password: Yup.string()
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,50}$/,
+      "Please enter a valid password"
+    )
+    .max(50, "Password must be at most 50 characters")
+    .required("Password is required"),
 });
 
-export const registrationSchema = Yup.object({
+export const registrationSchema = Yup.object().shape({
   name: Yup.string()
-    .matches(/^[A-Za-z ]*$/, 'Please enter valid name')
-    .min(2, 'At least 2 characters')
-    .required('Name is required'),
-  email: Yup.string('Enter your e-mail')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: Yup.string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-  passwordConfirm: Yup.string().oneOf(
-    [Yup.ref('password'), null],
-    'Passwords must match'
-  ),
+    .matches(/^[A-Za-z ]*$/, "Please enter a valid name")
+    .required("Name is required"),
+  email: Yup.string()
+    .matches(
+      /^[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]{2,}$/,
+      "Please enter a valid email"
+    )
+    .max(50, "Email must be at most 50 characters")
+    .required("Email is required"),
+  password: Yup.string()
+    .matches(
+      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,50}$/,
+      "Please enter a valid password"
+    )
+    .max(50, "Password must be at most 50 characters")
+    .required("Password is required"),
+  passwordConfirm: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Password confirmation is required"),
 });
