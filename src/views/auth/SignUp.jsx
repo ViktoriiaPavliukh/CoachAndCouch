@@ -32,11 +32,13 @@ export function SignUp() {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
-        height: "calc(100vh - 70px)",
+        height: "100vh",
+        // height: "calc(100vh - 70px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       <Box
@@ -49,6 +51,8 @@ export function SignUp() {
           maxWidth: "440px",
           padding: "40px 56px",
           borderRadius: "16px",
+          marginTop: "2%",
+          marginBottom: "20px"
         }}
       >
         <Typography component="h1" variant="h5">
