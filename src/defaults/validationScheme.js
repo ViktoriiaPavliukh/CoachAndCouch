@@ -22,7 +22,7 @@ export const registrationSchema = Yup.object().shape({
     .required("Name is required"),
   email: Yup.string()
     .matches(
-      /^[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]{2,}$/,
+      /^[A-Za-z0-9._%+-]+@[A-Za-z]+\.[A-Za-z]{2,}$/,
       "Please enter a valid email"
     )
     .max(50, "Email must be at most 50 characters")

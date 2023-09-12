@@ -3,6 +3,7 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
@@ -48,7 +49,7 @@ export function Header() {
   return (
     <AppBar position="static">
       <Container>
-        <Toolbar disableGutters sx={{display: "flex", gap: "5%"}}>
+        <Toolbar disableGutters sx={{ display: "flex", gap: "5%" }}>
           <Typography
             variant="h6"
             noWrap
@@ -82,7 +83,13 @@ export function Header() {
           >
             Coach&#x26;Couch
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, gap: "1rem" }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              gap: "1rem",
+            }}
+          >
             {pages.slice(0, 5).map(({ title, link }) => (
               <Button
                 key={title}
@@ -123,14 +130,20 @@ export function Header() {
               <FacebookRoundedIcon />
             </ExternalLink>
           </Stack>
-          <Stack
-            direction="row"
-            sx={{ display: { xs: "none", md: "flex" } }}
-          >
+          <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
-              <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
-                <Typography textAlign="center">Вихід</Typography>
-              </MenuItem>
+              <>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu("/user");
+                  }}
+                >
+                  <PeopleAltOutlinedIcon />
+                </MenuItem>
+                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                  <Typography textAlign="center">Вихід</Typography>
+                </MenuItem>
+              </>
             ) : (
               pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
@@ -171,7 +184,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(6).map(({ title, link }) => (
+                {pages.slice(6, 7).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -231,21 +244,38 @@ export function Header() {
               }}
             >
               {isLoggedIn ? (
-                <MenuItem
-                  onClick={() => {
-                    handleCloseNavMenu("/logout");
-                  }}
-                >
-                  <Typography
-                    textAlign="center"
-                    variant="fontHeader"
-                    sx={{
-                      mr: 5.5,
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu("/user/:id");
                     }}
                   >
-                    Logout
-                  </Typography>
-                </MenuItem>
+                    <Typography
+                      textAlign="center"
+                      variant="fontHeader"
+                      sx={{
+                        mr: 5.5,
+                      }}
+                    >
+                      Особистий кабінет
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu("/logout");
+                    }}
+                  >
+                    <Typography
+                      textAlign="center"
+                      variant="fontHeader"
+                      sx={{
+                        mr: 5.5,
+                      }}
+                    >
+                      Вихід
+                    </Typography>
+                  </MenuItem>
+                </>
               ) : (
                 <>
                   <MenuItem
