@@ -3,4 +3,5 @@ export * from "./Copyright";
 export * from "./Card/Card";
 export * from "./Preview/Preview";
 export * from "./TeacherProfile/TeacherForm";
+export * from "./PersonalAccount/PersonalAccount";
 export { default as Layout } from "./Layout/Layout";
