@@ -30,5 +30,8 @@ export const pages = [
   {
     title: "Особистий кабінет",
     link: "user",
+  }, 
+  { title: "Головна",
+    link: "homepage"
   }
 ];
