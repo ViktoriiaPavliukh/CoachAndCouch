@@ -247,7 +247,7 @@ export function Header() {
                 <>
                   <MenuItem
                     onClick={() => {
-                      handleCloseNavMenu("/user/:id");
+                      handleCloseNavMenu("/user");
                     }}
                   >
                     <Typography

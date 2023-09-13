@@ -24,7 +24,7 @@ export default function App() {
           <Route path="announcement" element={<Preview />} />
           <Route path="announcement/:id" element={<Card />} />
           <Route path="teacherform" element={<TeacherForm />} />
-          <Route path="user/:id" element={<PersonalAccount />} />
+          <Route path="user" element={<PersonalAccount />} />
           <Route
             path="registration"
             element={
