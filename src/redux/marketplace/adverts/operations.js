@@ -20,3 +20,18 @@ export const getAdvertsById = async (id) => {
   return data;
 };
 getAdvertsById(1);
+
+export const postAdvert = createAsyncThunk(
+  "adverts/postAdvert",
+  async (advertData, thunkAPI) => {
+    try {
+      const response = await publicAPI.post("/adverts", advertData);
+      const data = response.data;
+      console.log("Advertisement created:", data);
+      return data;
+    } catch (error) {
+      console.error("Error creating advertisement:", error);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
