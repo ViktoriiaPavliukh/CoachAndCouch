@@ -1,3 +1,4 @@
+import { PropTypes } from "prop-types";
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Button, MenuItem, Stack } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -5,7 +6,7 @@ import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
-import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { pages } from "@/defaults";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -21,6 +22,8 @@ const ExternalLink = ({ to, children, ...rest }) => {
 };
 
 export function Header() {
+  const user = useSelector(selectUser);
+  console.log(user);
   const [pathname, setPathname] = useState("");
   const path = useLocation().pathname;
   console.log(path);
@@ -94,6 +97,10 @@ export function Header() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
+              {isLoggedIn && <div>{user.name}</div>}
+              <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                <Typography textAlign="center">Вихід</Typography>
+              </MenuItem>
               <MenuIcon />
             </IconButton>
             <Menu
@@ -180,11 +187,14 @@ export function Header() {
               <FacebookRoundedIcon />
             </ExternalLink>
           </Stack>
-          <Stack direction="row" sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" } }}>
+          <Stack direction="row" sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
             {isLoggedIn ? (
-              <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
-                <Typography textAlign="center">Вихід</Typography>
-              </MenuItem>
+              <>
+                <Box sx={{ padding: "0" }}>{user.name}</Box>
+                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                  <Typography textAlign="center">Вихід</Typography>
+                </MenuItem>
+              </>
             ) : (
               pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
@@ -244,3 +254,8 @@ export function Header() {
     </AppBar>
   );
 }
+
+ExternalLink.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.node,
+};
