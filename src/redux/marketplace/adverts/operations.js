@@ -36,3 +36,16 @@ export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", a
 });
 // getAdvertsById(1);
 // deleteAdvertsById(1);
+getAdvertsById(1);
+
+export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
+  try {
+    const response = await publicAPI.post("/adverts", advertData);
+    const data = response.data;
+    console.log("Advertisement created:", data);
+    return data;
+  } catch (error) {
+    console.error("Error creating advertisement:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

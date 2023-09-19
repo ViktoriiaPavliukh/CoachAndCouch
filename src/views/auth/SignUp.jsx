@@ -32,11 +32,13 @@ export function SignUp() {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
-        height: "calc(100vh - 70px)",
+        height: "100vh",
+        // height: "calc(100vh - 70px)",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       <Box
@@ -45,15 +47,23 @@ export function SignUp() {
           flexDirection: "column",
           alignItems: "left",
           backgroundColor: (theme) => theme.palette.background.paper,
-          maxWidth: "500px",
+          backgroundSize: "cover",
+          maxWidth: "440px",
           padding: "40px 56px",
           borderRadius: "16px",
+          marginTop: "2%",
+          marginBottom: "20px"
         }}
       >
         <Typography component="h1" variant="h5">
           Реєстрація
         </Typography>
-        <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={formik.handleSubmit}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -97,17 +107,28 @@ export function SignUp() {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() => formik.setFieldValue("showPassword", !formik.values.showPassword)}
+                        onClick={() =>
+                          formik.setFieldValue(
+                            "showPassword",
+                            !formik.values.showPassword
+                          )
+                        }
                         edge="end"
                       >
-                        {formik.values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {formik.values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
                 autoComplete="new-password"
               />
@@ -125,18 +146,33 @@ export function SignUp() {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle confirm visibility"
-                        onClick={() => formik.setFieldValue("showPassword", !formik.values.showPassword)}
+                        onClick={() =>
+                          formik.setFieldValue(
+                            "showPassword",
+                            !formik.values.showPassword
+                          )
+                        }
                         edge="end"
                       >
-                        {formik.values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {formik.values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
                 value={formik.values.passwordConfirm}
                 onChange={formik.handleChange}
-                error={formik.touched.passwordConfirm && Boolean(formik.errors.passwordConfirm)}
-                helperText={formik.touched.passwordConfirm && formik.errors.passwordConfirm}
+                error={
+                  formik.touched.passwordConfirm &&
+                  Boolean(formik.errors.passwordConfirm)
+                }
+                helperText={
+                  formik.touched.passwordConfirm &&
+                  formik.errors.passwordConfirm
+                }
                 autoComplete="new-password"
               />
             </Grid>
@@ -155,12 +191,28 @@ export function SignUp() {
           >
             {isLoading ? "Перевіряємо..." : "Створити новий аккаунт"}
           </Button>
-          <Typography component="p" variant="h6" sx={{ fontSize: "14px", textAlign: "center" }}>
-            Входячи в систему, я приймаю Умови користування та підтверджую, що мною прочитана Політика конфіденційності
+          <Typography
+            component="p"
+            variant="h6"
+            sx={{ fontSize: "14px", textAlign: "center" }}
+          >
+            Входячи в систему, я приймаю{" "}
+            <Link component={ReactLink} to="/" variant="body2">
+              Умови користування
+            </Link>{" "}
+            та підтверджую, що мною прочитана{" "}
+            <Link component={ReactLink} to="/" variant="body2">
+              Політика конфіденційності
+            </Link>
           </Typography>
           <Grid container justifyContent="center" sx={{ marginTop: "20px" }}>
             <Typography>Вже є аккаунт?</Typography>
-            <Link component={ReactLink} to="/login" variant="body2" style={{ marginTop: "2px", marginLeft: "15px" }}>
+            <Link
+              component={ReactLink}
+              to="/login"
+              variant="body2"
+              style={{ marginTop: "2px", marginLeft: "15px" }}
+            >
               Вхід
             </Link>
           </Grid>

@@ -4,6 +4,7 @@ import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
 import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
@@ -26,8 +27,6 @@ export function Header() {
   console.log(user);
   const [pathname, setPathname] = useState("");
   const path = useLocation().pathname;
-  console.log(path);
-  console.log(pathname);
   useEffect(() => {
     setPathname(path);
   }, [path]);
@@ -52,21 +51,20 @@ export function Header() {
 
   return (
     <AppBar position="static">
-      <Container sx={{ maxWidth: { lg: 1200, md: 834 } }}>
-        <Toolbar disableGutters>
+      <Container>
+        <Toolbar disableGutters sx={{ display: "flex", gap: "5%" }}>
           <Typography
             variant="h6"
             noWrap
             component={Link}
             to=""
             sx={{
-              display: { xs: "none", lg: "flex" },
-              marginRight: "54px",
+              display: { xs: "none", md: "flex" },
+              // marginRight: "5%",
               fontFamily: "monospace",
               fontWeight: 700,
               color: "inherit",
               textDecoration: "none",
-              // color: (theme) => theme.palette.headerColor.grey,
               opacity: "0.9",
             }}
           >
@@ -78,7 +76,7 @@ export function Header() {
             component={Link}
             to=""
             sx={{
-              display: { xs: "flex", lg: "none" },
+              display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",
               fontWeight: 700,
@@ -88,7 +86,122 @@ export function Header() {
           >
             Coach&#x26;Couch
           </Typography>
-          <Box sx={{ display: { xs: "flex", lg: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              gap: "1rem",
+            }}
+          >
+            {pages.slice(0, 5).map(({ title, link }) => (
+              <Button
+                key={title}
+                onClick={() => {
+                  handleCloseNavMenu(link);
+                }}
+                sx={{
+                  color: "white",
+                  display: "block",
+                  textTransform: "lowercase",
+                  "&:first-letter": {
+                    textTransform: "capitalize",
+                  },
+                  transition: "color 0.3s",
+                  "&:hover": {
+                    color: (theme) => theme.palette.textColor.menuHover,
+                  },
+                }}
+              >
+                {title}
+              </Button>
+            ))}
+          </Box>
+          <Stack
+            direction="row"
+            sx={{
+              display: { xs: "none", lg: "flex" },
+              gap: "0",
+            }}
+          >
+            <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
+              <InstagramIcon />
+            </ExternalLink>
+            <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
+              <TelegramIcon sx={{ padding: "0px" }} />
+            </ExternalLink>
+            <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
+              <FacebookRoundedIcon />
+            </ExternalLink>
+          </Stack>
+          <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
+            {isLoggedIn ? (
+              <>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseNavMenu("/user");
+                  }}
+                >
+                  <PeopleAltOutlinedIcon />
+                </MenuItem>
+                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                  <Typography textAlign="center">Вихід</Typography>
+                </MenuItem>
+              </>
+            ) : (
+              pages.slice(5, 6).map(({ title, link }) => (
+                <MenuItem
+                  sx={{
+                    px: "12px",
+                    transition: "color 0.3s",
+                    borderRadius: () => (pathname === "/login" ? "6px" : null),
+
+                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.main : null),
+                    "&:hover": {
+                      color: (theme) =>
+                        pathname === "/login" ? theme.palette.textColor.main : theme.palette.textColor.menuHover,
+                      backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.hover : null),
+                    },
+                  }}
+                  key={title}
+                  onClick={() => {
+                    if (link === "login") {
+                      console.log(link);
+                    }
+                    navigate(link);
+                  }}
+                >
+                  <Typography textAlign="center">
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
+                  </Typography>
+                </MenuItem>
+              ))
+            )}
+            {!isLoggedIn && (
+              <Box>
+                {pages.slice(6, 7).map(({ title, link }) => (
+                  <MenuItem
+                    key={title}
+                    onClick={() => {
+                      navigate(link);
+                    }}
+                    sx={{
+                      px: "12px",
+                      backgroundColor: (theme) =>
+                        pathname === "/registration" || pathname === "/" ? theme.palette.buttonColor.main : null,
+                      borderRadius: "6px",
+                      transition: "background-color 0.3s",
+                      "&:hover": {
+                        backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                      },
+                    }}
+                  >
+                    <Typography textAlign="center">{title.toUpperCase()}</Typography>
+                  </MenuItem>
+                ))}
+              </Box>
+            )}
+          </Stack>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -123,6 +236,74 @@ export function Header() {
                 display: { xs: "block", lg: "none" },
               }}
             >
+              {isLoggedIn ? (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu("/user");
+                    }}
+                  >
+                    <Typography
+                      textAlign="center"
+                      variant="fontHeader"
+                      sx={{
+                        mr: 5.5,
+                      }}
+                    >
+                      Особистий кабінет
+                    </Typography>
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu("/logout");
+                    }}
+                  >
+                    <Typography
+                      textAlign="center"
+                      variant="fontHeader"
+                      sx={{
+                        mr: 5.5,
+                      }}
+                    >
+                      Вихід
+                    </Typography>
+                  </MenuItem>
+                </>
+              ) : (
+                <>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu("/login");
+                    }}
+                  >
+                    <Typography
+                      textAlign="center"
+                      variant="fontHeader"
+                      sx={{
+                        mr: 5.5,
+                      }}
+                    >
+                      Вхід
+                    </Typography>
+                  </MenuItem>
+
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseNavMenu("/registration");
+                    }}
+                  >
+                    <Typography
+                      textAlign="center"
+                      variant="fontHeader"
+                      sx={{
+                        mr: 5.5,
+                      }}
+                    >
+                      Реєстрація
+                    </Typography>
+                  </MenuItem>
+                </>
+              )}
               {pages.slice(0, 5).map(({ title, link }) => (
                 <MenuItem
                   key={title}

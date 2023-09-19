@@ -119,6 +119,4 @@ export const teacherCardData = [
     picture: "teacher2.jpg",
     description: "Certified language instructor fluent in English, Spanish, and French.",
   },
-
-  // Add more teacher card data objects
 ];

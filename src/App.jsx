@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Home, SignIn, SignUp } from "@/views";
-import { Card, Layout, Preview, TeacherForm } from "@components";
+import { Card, Layout, Preview, TeacherForm, PersonalAccount } from "@components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RestrictedRoute } from "@components/RestrictedRoute";

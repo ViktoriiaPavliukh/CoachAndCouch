@@ -27,4 +27,11 @@ export const pages = [
     title: "Реєстрація",
     link: "registration",
   },
+  {
+    title: "Особистий кабінет",
+    link: "user",
+  }, 
+  { title: "Головна",
+    link: "homepage"
+  }
 ];
