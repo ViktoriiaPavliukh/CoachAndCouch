@@ -40,8 +40,12 @@ getAdvertsById(1);
 
 export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
   try {
-    const response = await publicAPI.post("/adverts", advertData);
-    const data = response.data;
+    console.log(thunkAPI.getState());
+    const userToken = thunkAPI.getState().auth.token;
+    token.set(userToken);
+    const { data } = await privateAPI.post("/adverts", advertData);
+    // token.set(data.tokens.accesToken);
+
     console.log("Advertisement created:", data);
     return data;
   } catch (error) {

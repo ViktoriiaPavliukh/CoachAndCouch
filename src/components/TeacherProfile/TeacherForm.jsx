@@ -1,23 +1,14 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stack
-} from "@mui/material";
+import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
 import {
   languageOptions,
-  ratingOptions,
-  lessonTimeOptions,
-  hobbyOptions,
-  countryOptions,
-  specializationOptions,
+  // ratingOptions,
+  // lessonTimeOptions,
+  // hobbyOptions,
+  // countryOptions,
+  // specializationOptions,
 } from "@/defaults";
 import { postAdvert } from "@/redux/marketplace/adverts/operations";
 
@@ -33,12 +24,8 @@ const validationSchema = Yup.object({
   price: Yup.number().min(0).required("Price is required"),
   shortDescription: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(
-    1,
-    "Select at least one teaching language"
-  ),
+  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
 });
-
 
 export const TeacherForm = () => {
   const dispatch = useDispatch();
@@ -47,9 +34,16 @@ export const TeacherForm = () => {
     validationSchema,
     onSubmit: (values) => {
       console.log(values);
-      dispatch(postAdvert(values));
-   
-            
+      dispatch(
+        postAdvert({
+          shortDescription: "Some text",
+          price: 0.97,
+          imagePath: "image789.jpg",
+          hobbies: [{ hobby: "Футбол" }, { hobby: "Кодування" }, { hobby: "Розробка" }],
+          spokenLanguages: [{ language: "polski" }],
+          teachingLanguages: [{ language: "polski" }],
+        })
+      );
     },
   });
 
@@ -67,7 +61,6 @@ export const TeacherForm = () => {
         onBlur={formik.handleBlur}
         error={formik.touched.price && Boolean(formik.errors.price)}
         helperText={formik.touched.price && formik.errors.price}
-
       />
 
       <TextField
@@ -81,13 +74,8 @@ export const TeacherForm = () => {
         value={formik.values.shortDescription}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={
-          formik.touched.shortDescription &&
-          Boolean(formik.errors.shortDescription)
-        }
-        helperText={
-          formik.touched.shortDescription && formik.errors.shortDescription
-        }
+        error={formik.touched.shortDescription && Boolean(formik.errors.shortDescription)}
+        helperText={formik.touched.shortDescription && formik.errors.shortDescription}
       />
 
       <FormControl fullWidth variant="outlined">
@@ -100,10 +88,7 @@ export const TeacherForm = () => {
           value={formik.values.spokenLanguages}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.spokenLanguages &&
-            Boolean(formik.errors.spokenLanguages)
-          }
+          error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
           renderValue={(selected) => selected.join(", ")}
         >
           {languageOptions.map((language) => (
@@ -124,10 +109,7 @@ export const TeacherForm = () => {
           value={formik.values.teachingLanguages}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.teachingLanguages &&
-            Boolean(formik.errors.teachingLanguages)
-          }
+          error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
           renderValue={(selected) => selected.join(", ")}
         >
           {languageOptions.map((language) => (
@@ -166,7 +148,6 @@ export const TeacherForm = () => {
     </form>
   );
 };
-
 
 // import { useState } from "react";
 // import {

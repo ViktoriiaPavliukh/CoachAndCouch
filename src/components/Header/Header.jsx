@@ -135,18 +135,19 @@ export function Header() {
           </Stack>
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
-              <>
+              <Box display="flex" direction="row">
                 <MenuItem
                   onClick={() => {
-                    handleCloseNavMenu("/user");
+                    handleCloseNavMenu(`/user/${user.id}`);
                   }}
                 >
                   <PeopleAltOutlinedIcon />
+                  <Box sx={{ padding: "0" }}>{user.name}</Box>
                 </MenuItem>
                 <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
                   <Typography textAlign="center">Вихід</Typography>
                 </MenuItem>
-              </>
+              </Box>
             ) : (
               pages.slice(5, 6).map(({ title, link }) => (
                 <MenuItem
@@ -207,13 +208,14 @@ export function Header() {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
               color="inherit"
+              onClick={handleOpenNavMenu}
             >
-              {isLoggedIn && <div>{user.name}</div>}
-              <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
-                <Typography textAlign="center">Вихід</Typography>
-              </MenuItem>
+              {/* {isLoggedIn && (
+                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                  <Typography textAlign="center">Вихід</Typography>
+                </MenuItem>
+              )} */}
               <MenuIcon />
             </IconButton>
             <Menu
@@ -237,7 +239,7 @@ export function Header() {
               }}
             >
               {isLoggedIn ? (
-                <>
+                <div>
                   <MenuItem
                     onClick={() => {
                       handleCloseNavMenu("/user");
@@ -268,9 +270,9 @@ export function Header() {
                       Вихід
                     </Typography>
                   </MenuItem>
-                </>
+                </div>
               ) : (
-                <>
+                <div>
                   <MenuItem
                     onClick={() => {
                       handleCloseNavMenu("/login");
@@ -302,7 +304,7 @@ export function Header() {
                       Реєстрація
                     </Typography>
                   </MenuItem>
-                </>
+                </div>
               )}
               {pages.slice(0, 5).map(({ title, link }) => (
                 <MenuItem
@@ -324,112 +326,6 @@ export function Header() {
               ))}
             </Menu>
           </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
-            {pages.slice(0, 5).map(({ title, link }) => (
-              <Button
-                key={title}
-                onClick={() => {
-                  handleCloseNavMenu(link);
-                }}
-                sx={{
-                  px: "16px",
-                  color: "white",
-                  display: "block",
-                  textTransform: "lowercase",
-                  "&:first-letter": {
-                    textTransform: "capitalize",
-                  },
-                  transition: "color 0.3s",
-                  "&:hover": {
-                    color: (theme) => theme.palette.textColor.menuHover,
-                  },
-                }}
-              >
-                {title}
-              </Button>
-            ))}
-          </Box>
-          <Stack
-            direction="row"
-            sx={{
-              display: { xs: "none", lg: "flex" },
-              gap: "0",
-              ml: "30px",
-              // ml: "55px",
-            }}
-          >
-            <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
-              <InstagramIcon />
-            </ExternalLink>
-            <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
-              <TelegramIcon sx={{ padding: "0px" }} />
-            </ExternalLink>
-            <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
-              <FacebookRoundedIcon />
-            </ExternalLink>
-          </Stack>
-          <Stack direction="row" sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
-            {isLoggedIn ? (
-              <>
-                <Box sx={{ padding: "0" }}>{user.name}</Box>
-                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
-                  <Typography textAlign="center">Вихід</Typography>
-                </MenuItem>
-              </>
-            ) : (
-              pages.slice(5, 6).map(({ title, link }) => (
-                <MenuItem
-                  sx={{
-                    px: "12px",
-                    transition: "color 0.3s",
-                    borderRadius: () => (pathname === "/login" ? "6px" : null),
-
-                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.main : null),
-                    "&:hover": {
-                      color: (theme) =>
-                        pathname === "/login" ? theme.palette.textColor.main : theme.palette.textColor.menuHover,
-                      backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.hover : null),
-                    },
-                  }}
-                  key={title}
-                  onClick={() => {
-                    if (link === "login") {
-                      console.log(link);
-                    }
-                    navigate(link);
-                  }}
-                >
-                  <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
-                  </Typography>
-                </MenuItem>
-              ))
-            )}
-            {!isLoggedIn && (
-              <Box>
-                {pages.slice(6).map(({ title, link }) => (
-                  <MenuItem
-                    key={title}
-                    onClick={() => {
-                      navigate(link);
-                    }}
-                    sx={{
-                      px: "12px",
-                      backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/" ? theme.palette.buttonColor.main : null,
-                      borderRadius: "6px",
-                      transition: "background-color 0.3s",
-                      "&:hover": {
-                        backgroundColor: (theme) => theme.palette.buttonColor.hover,
-                      },
-                    }}
-                  >
-                    <Typography textAlign="center">{title.toUpperCase()}</Typography>
-                  </MenuItem>
-                ))}
-              </Box>
-            )}
-          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
