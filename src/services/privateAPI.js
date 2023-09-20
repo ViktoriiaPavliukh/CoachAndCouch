@@ -2,7 +2,7 @@ import axios from "axios";
 
 const baseURL = "https://couchandcoach.onrender.com";
 
-const privateAPI = axios.create({ baseURL });
+export const privateAPI = axios.create({ baseURL });
 
 export const token = {
   set(token) {

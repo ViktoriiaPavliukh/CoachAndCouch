@@ -1,3 +1,4 @@
+import { PropTypes } from "prop-types";
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Button, MenuItem, Stack } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -6,7 +7,7 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
-import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { pages } from "@/defaults";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -22,6 +23,8 @@ const ExternalLink = ({ to, children, ...rest }) => {
 };
 
 export function Header() {
+  const user = useSelector(selectUser);
+  console.log(user);
   const [pathname, setPathname] = useState("");
   const path = useLocation().pathname;
   useEffect(() => {
@@ -152,19 +155,11 @@ export function Header() {
                     transition: "color 0.3s",
                     borderRadius: () => (pathname === "/login" ? "6px" : null),
 
-                    backgroundColor: (theme) =>
-                      pathname === "/login"
-                        ? theme.palette.buttonColor.main
-                        : null,
+                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.main : null),
                     "&:hover": {
                       color: (theme) =>
-                        pathname === "/login"
-                          ? theme.palette.textColor.main
-                          : theme.palette.textColor.menuHover,
-                      backgroundColor: (theme) =>
-                        pathname === "/login"
-                          ? theme.palette.buttonColor.hover
-                          : null,
+                        pathname === "/login" ? theme.palette.textColor.main : theme.palette.textColor.menuHover,
+                      backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.hover : null),
                     },
                   }}
                   key={title}
@@ -176,8 +171,7 @@ export function Header() {
                   }}
                 >
                   <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
               ))
@@ -193,20 +187,15 @@ export function Header() {
                     sx={{
                       px: "12px",
                       backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/"
-                          ? theme.palette.buttonColor.main
-                          : null,
+                        pathname === "/registration" || pathname === "/" ? theme.palette.buttonColor.main : null,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
                       "&:hover": {
-                        backgroundColor: (theme) =>
-                          theme.palette.buttonColor.hover,
+                        backgroundColor: (theme) => theme.palette.buttonColor.hover,
                       },
                     }}
                   >
-                    <Typography textAlign="center">
-                      {title.toUpperCase()}
-                    </Typography>
+                    <Typography textAlign="center">{title.toUpperCase()}</Typography>
                   </MenuItem>
                 ))}
               </Box>
@@ -221,6 +210,10 @@ export function Header() {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
+              {isLoggedIn && <div>{user.name}</div>}
+              <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                <Typography textAlign="center">Вихід</Typography>
+              </MenuItem>
               <MenuIcon />
             </IconButton>
             <Menu
@@ -325,15 +318,125 @@ export function Header() {
                       mr: 5.5,
                     }}
                   >
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", lg: "flex" } }}>
+            {pages.slice(0, 5).map(({ title, link }) => (
+              <Button
+                key={title}
+                onClick={() => {
+                  handleCloseNavMenu(link);
+                }}
+                sx={{
+                  px: "16px",
+                  color: "white",
+                  display: "block",
+                  textTransform: "lowercase",
+                  "&:first-letter": {
+                    textTransform: "capitalize",
+                  },
+                  transition: "color 0.3s",
+                  "&:hover": {
+                    color: (theme) => theme.palette.textColor.menuHover,
+                  },
+                }}
+              >
+                {title}
+              </Button>
+            ))}
+          </Box>
+          <Stack
+            direction="row"
+            sx={{
+              display: { xs: "none", lg: "flex" },
+              gap: "0",
+              ml: "30px",
+              // ml: "55px",
+            }}
+          >
+            <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
+              <InstagramIcon />
+            </ExternalLink>
+            <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
+              <TelegramIcon sx={{ padding: "0px" }} />
+            </ExternalLink>
+            <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
+              <FacebookRoundedIcon />
+            </ExternalLink>
+          </Stack>
+          <Stack direction="row" sx={{ marginLeft: "60px", display: { xs: "none", lg: "flex" }, alignItems: "center" }}>
+            {isLoggedIn ? (
+              <>
+                <Box sx={{ padding: "0" }}>{user.name}</Box>
+                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                  <Typography textAlign="center">Вихід</Typography>
+                </MenuItem>
+              </>
+            ) : (
+              pages.slice(5, 6).map(({ title, link }) => (
+                <MenuItem
+                  sx={{
+                    px: "12px",
+                    transition: "color 0.3s",
+                    borderRadius: () => (pathname === "/login" ? "6px" : null),
+
+                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.main : null),
+                    "&:hover": {
+                      color: (theme) =>
+                        pathname === "/login" ? theme.palette.textColor.main : theme.palette.textColor.menuHover,
+                      backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.hover : null),
+                    },
+                  }}
+                  key={title}
+                  onClick={() => {
+                    if (link === "login") {
+                      console.log(link);
+                    }
+                    navigate(link);
+                  }}
+                >
+                  <Typography textAlign="center">
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
+                  </Typography>
+                </MenuItem>
+              ))
+            )}
+            {!isLoggedIn && (
+              <Box>
+                {pages.slice(6).map(({ title, link }) => (
+                  <MenuItem
+                    key={title}
+                    onClick={() => {
+                      navigate(link);
+                    }}
+                    sx={{
+                      px: "12px",
+                      backgroundColor: (theme) =>
+                        pathname === "/registration" || pathname === "/" ? theme.palette.buttonColor.main : null,
+                      borderRadius: "6px",
+                      transition: "background-color 0.3s",
+                      "&:hover": {
+                        backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                      },
+                    }}
+                  >
+                    <Typography textAlign="center">{title.toUpperCase()}</Typography>
+                  </MenuItem>
+                ))}
+              </Box>
+            )}
+          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
+ExternalLink.propTypes = {
+  to: PropTypes.string,
+  children: PropTypes.node,
+};

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectToken } from "@/redux/auth/selectors";
 import { refreshUser } from "@/redux/auth/operations";
+import { AdminPanel } from "./views/admin/AdminPanel";
 
 export default function App() {
   const token = useSelector(selectToken);
@@ -24,25 +25,9 @@ export default function App() {
           <Route path="announcement" element={<Preview />} />
           <Route path="announcement/:id" element={<Card />} />
           <Route path="teacherform" element={<TeacherForm />} />
-          <Route path="user" element={<PersonalAccount />} />
-          <Route
-            path="registration"
-            element={
-              <RestrictedRoute
-                redirectTo="/announcement"
-                component={<SignUp />}
-              />
-            }
-          />
-          <Route
-            path="login"
-            element={
-              <RestrictedRoute
-                redirectTo="/announcement"
-                component={<SignIn />}
-              />
-            }
-          />
+          <Route path="registration" element={<RestrictedRoute redirectTo="/announcement" component={<SignUp />} />} />
+          <Route path="login" element={<RestrictedRoute redirectTo="/announcement" component={<SignIn />} />} />
+          <Route path="admin" element={<AdminPanel />} />
         </Route>
       </Routes>
     </>
