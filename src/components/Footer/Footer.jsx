@@ -3,7 +3,7 @@ export default function Footer() {
     <footer
       style={{
         backgroundColor: "#0E5B1D",
-        position: "fixed",
+        // position: "fixed",
         bottom: 0,
         height: "44px",
         width: "100%",

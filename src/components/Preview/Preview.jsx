@@ -195,7 +195,15 @@ export function Preview() {
               })}
           </Grid>
         </Box>
-        <Pagination count={count} size="large" page={page} variant="outlined" shape="rounded" onChange={handleChange} />
+        <Pagination
+          sx={{ marginBottom: "50px" }}
+          count={count}
+          size="large"
+          page={page}
+          variant="outlined"
+          shape="rounded"
+          onChange={handleChange}
+        />
       </Box>
     </Container>
   );

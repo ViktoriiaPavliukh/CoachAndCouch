@@ -1,11 +1,10 @@
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PersonalImage } from "./PersonalImage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
-
 
 export function PersonalAccount() {
   const dispatch = useDispatch();
@@ -28,8 +27,7 @@ export function PersonalAccount() {
       <Box>
         <PersonalImage />
         <Link to="/">Головна</Link>
-     </Box>
-      
+      </Box>
     </Container>
   );
 }
