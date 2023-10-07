@@ -33,17 +33,7 @@ export const TeacherForm = () => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-      dispatch(
-        postAdvert({
-          shortDescription: "Some text",
-          price: 0.97,
-          imagePath: "image789.jpg",
-          hobbies: [{ hobby: "Футбол" }, { hobby: "Кодування" }, { hobby: "Розробка" }],
-          spokenLanguages: [{ language: "polski" }],
-          teachingLanguages: [{ language: "polski" }],
-        })
-      );
+      dispatch(postAdvert(values));
     },
   });
 

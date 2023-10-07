@@ -4,6 +4,7 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slice";
 import { advertsReducer } from "./marketplace/adverts/advertsSlice";
+import { initReducer } from "./init/initSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -23,6 +24,7 @@ export const store = configureStore({
     theme: persistedTheme,
     auth: persistedAuth,
     adverts: advertsReducer,
+    init: initReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
