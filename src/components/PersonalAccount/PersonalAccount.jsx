@@ -1,4 +1,4 @@
-import { Container, Box } from "@mui/material";
+import { Container, Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PersonalImage } from "./PersonalImage";
 import { useEffect } from "react";
@@ -88,8 +88,6 @@ export function PersonalAccount() {
             </Typography>
           </Box>
         </Box>
-
-        <Link to="/">Головна</Link>
       </Box>
     </Container>
   );

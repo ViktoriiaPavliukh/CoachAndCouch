@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="interface-dashboard-layout-circle--app-application-dashboard-home-layout-circle" clip-path="url(#clip0_385_5512)">
+<g id="Group">
+<path id="Vector" d="M5.5714 10.2855C8.17503 10.2855 10.2857 8.17485 10.2857 5.57122C10.2857 2.96759 8.17503 0.856934 5.5714 0.856934C2.96777 0.856934 0.857117 2.96759 0.857117 5.57122C0.857117 8.17485 2.96777 10.2855 5.5714 10.2855Z" stroke="#384C5E" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M18.4285 10.2855C21.0322 10.2855 23.1428 8.17485 23.1428 5.57122C23.1428 2.96759 21.0322 0.856934 18.4285 0.856934C15.8249 0.856934 13.7143 2.96759 13.7143 5.57122C13.7143 8.17485 15.8249 10.2855 18.4285 10.2855Z" stroke="#384C5E" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M5.5714 23.1424C8.17503 23.1424 10.2857 21.0318 10.2857 18.4282C10.2857 15.8245 8.17503 13.7139 5.5714 13.7139C2.96777 13.7139 0.857117 15.8245 0.857117 18.4282C0.857117 21.0318 2.96777 23.1424 5.5714 23.1424Z" stroke="#384C5E" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M18.4285 23.1424C21.0322 23.1424 23.1428 21.0318 23.1428 18.4282C23.1428 15.8245 21.0322 13.7139 18.4285 13.7139C15.8249 13.7139 13.7143 15.8245 13.7143 18.4282C13.7143 21.0318 15.8249 23.1424 18.4285 23.1424Z" stroke="#384C5E" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_385_5512">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
