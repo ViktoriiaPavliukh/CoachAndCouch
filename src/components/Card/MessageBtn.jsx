@@ -1,11 +1,12 @@
-import { Button, Typography } from '@mui/material';
+import { PropTypes } from "prop-types";
+import { Button, Typography } from "@mui/material";
 
-const btnConfig = { label: 'Написати', type: 'button' };
+const btnConfig = { label: "Написати", type: "button" };
 
 export function MessageBtn({ sx }) {
   return (
     <Button
-      sx={{ marginLeft: 'auto', marginRight: ' 20px', p: '10px 18px', ...sx }}
+      sx={{ marginLeft: "auto", marginRight: " 20px", p: "10px 18px", ...sx }}
       type={btnConfig.type}
       variant="contained"
     >
@@ -13,3 +14,6 @@ export function MessageBtn({ sx }) {
     </Button>
   );
 }
+MessageBtn.propTypes = {
+  sx: PropTypes.shape,
+};

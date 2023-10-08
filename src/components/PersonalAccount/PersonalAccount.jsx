@@ -1,7 +1,7 @@
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { PersonalImage } from "./PersonalImage";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
@@ -11,6 +11,7 @@ import notepad from "../../assets/icons/interface-content-note-pad-text--content
 import checklist from "../../assets/icons/interface-file-clipboard-check--checkmark-edit-task-edition-checklist-check-success-clipboard-form.svg";
 import settings from "../../assets/icons/interface-setting-cog--work-loading-cog-gear-settings-machine.svg";
 import envelope from "../../assets/icons/mail-send-envelope--envelope-email-message-unopened-sealed-close.svg";
+
 
 const linkStyles = {
   display: "flex",
@@ -87,6 +88,8 @@ export function PersonalAccount() {
             </Typography>
           </Box>
         </Box>
+
+        <Link to="/">Головна</Link>
       </Box>
     </Container>
   );

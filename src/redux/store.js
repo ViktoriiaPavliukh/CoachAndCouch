@@ -8,7 +8,7 @@ import { advertsReducer } from "./marketplace/adverts/advertsSlice";
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token"],
+  whitelist: ["refreshtoken"],
 };
 
 const themePersistConfig = {

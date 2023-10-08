@@ -9,6 +9,7 @@ const authSlice = createSlice({
     isLoading: false,
     isLoggedIn: false,
     token: null,
+    refreshtoken: null,
   },
   extraReducers: (builder) =>
     builder
@@ -32,21 +33,24 @@ function handlePending(state) {
 
 function handleLoginFulfilled(state, { payload }) {
   state.user = { name: "User", ...payload.user };
-  state.token = payload.tokens.refreshToken;
+  state.token = payload.tokens.accessToken;
+  state.refreshtoken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRegisterFulfilled(state, { payload }) {
   state.user = { name: "User", ...payload.user };
-  state.token = payload.tokens.refreshToken;
+  state.token = payload.tokens.accessToken;
+  state.refreshtoken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRefreshFulfilled(state, { payload }) {
   state.user = { name: "User", ...payload.user };
-  state.token = payload.tokens.refreshToken;
+  state.refreshtoken = payload.tokens.refreshToken;
+  state.token = payload.tokens.accessToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }

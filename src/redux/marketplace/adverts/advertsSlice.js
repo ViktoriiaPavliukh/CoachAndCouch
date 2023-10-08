@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAdverts } from "./operations";
+import { deleteAdvertsById, getAdverts, postAdvert } from "./operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
@@ -14,6 +14,18 @@ const advertsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.items = action.payload;
+      })
+      .addCase(postAdvert.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.token = action.payload.tokens.accessToken;
+        state.items.push(action.payload);
+      })
+      .addCase(deleteAdvertsById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex((advert) => advert.id === action.payload.id);
+        state.items.splice(index, 1);
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
