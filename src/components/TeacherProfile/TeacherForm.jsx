@@ -6,7 +6,7 @@ import {
   languageOptions,
   // ratingOptions,
   // lessonTimeOptions,
-  // hobbyOptions,
+  hobbyOptions,
   // countryOptions,
   // specializationOptions,
 } from "@/defaults";
@@ -18,13 +18,18 @@ const initialValues = {
   spokenLanguages: [],
   teachingLanguages: [],
   imagePath: "",
+  hobbies: [],
 };
 
 const validationSchema = Yup.object({
   price: Yup.number().min(0).required("Price is required"),
   shortDescription: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
+  hobbies: Yup.array(),
 });
 
 export const TeacherForm = () => {
@@ -33,8 +38,46 @@ export const TeacherForm = () => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      dispatch(postAdvert(values));
+
+      const hobbies = Array.isArray(values.hobbies)
+        ? values.hobbies.map((hobby) => ({ hobby }))
+        : [];
+      const spokenLanguages = Array.isArray(values.spokenLanguages)
+        ? values.spokenLanguages.map((language) => ({ language }))
+        : [];
+      const teachingLanguages = Array.isArray(values.teachingLanguages)
+        ? values.teachingLanguages.map((language) => ({ language }))
+        : [];
+
+      const transformedData = {
+        shortDescription: values.shortDescription,
+        price: values.price,
+        imagePath: values.imagePath,
+        hobbies,
+        spokenLanguages,
+        teachingLanguages,
+      };
+
+      console.log(transformedData);
+
+      // Dispatch the transformed data
+      dispatch(postAdvert(transformedData));
+
     },
+
+    // onSubmit: (values) => {
+    //   console.log(values);
+    //   dispatch(
+    //     postAdvert({
+    //       shortDescription: "Some text",
+    //       price: 0.97,
+    //       imagePath: "image789.jpg",
+    //       hobbies: [{ hobby: "Футбол" }, { hobby: "Кодування" }, { hobby: "Розробка" }],
+    //       spokenLanguages: [{ language: "polski" }],
+    //       teachingLanguages: [{ language: "polski" }],
+    //     })
+    //   );
+    // },
   });
 
   return (
@@ -64,10 +107,37 @@ export const TeacherForm = () => {
         value={formik.values.shortDescription}
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        error={formik.touched.shortDescription && Boolean(formik.errors.shortDescription)}
-        helperText={formik.touched.shortDescription && formik.errors.shortDescription}
+        error={
+          formik.touched.shortDescription &&
+          Boolean(formik.errors.shortDescription)
+        }
+        helperText={
+          formik.touched.shortDescription && formik.errors.shortDescription
+        }
       />
-
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Захоплення</InputLabel>
+        <Select
+          id="hobbies"
+          name="hobbies"
+          multiple
+          label="Захоплення"
+          value={formik.values.hobbies}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.hobbies &&
+            Boolean(formik.errors.hobbies)
+          }
+          renderValue={(selected) => selected.join(", ")}
+        >
+          {hobbyOptions.map((hobby) => (
+            <MenuItem key={hobby.code} value={hobby.title}>
+              {hobby.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <FormControl fullWidth variant="outlined">
         <InputLabel>Мови, якими розмовляєте</InputLabel>
         <Select
@@ -78,7 +148,10 @@ export const TeacherForm = () => {
           value={formik.values.spokenLanguages}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
+          error={
+            formik.touched.spokenLanguages &&
+            Boolean(formik.errors.spokenLanguages)
+          }
           renderValue={(selected) => selected.join(", ")}
         >
           {languageOptions.map((language) => (
@@ -99,7 +172,10 @@ export const TeacherForm = () => {
           value={formik.values.teachingLanguages}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
+          error={
+            formik.touched.teachingLanguages &&
+            Boolean(formik.errors.teachingLanguages)
+          }
           renderValue={(selected) => selected.join(", ")}
         >
           {languageOptions.map((language) => (
