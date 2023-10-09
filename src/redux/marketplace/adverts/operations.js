@@ -1,11 +1,11 @@
-import { publicAPI } from "@/services/publicAPI";
 import { privateAPI, token } from "@/services/privateAPI";
+import { publicAPI } from "@/services/publicAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunkAPI) => {
   try {
     const { data } = await publicAPI.get(`/adverts`);
-    console.log(data);
+    // console.log(data);
     return data;
   } catch (error) {
     console.log(error.message);
@@ -16,7 +16,7 @@ export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunk
 
 export const getAdvertsById = async (id) => {
   const { data } = await publicAPI.get(`/adverts/${id}`);
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
@@ -40,10 +40,10 @@ getAdvertsById(1);
 
 export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
   try {
-    console.log(thunkAPI.getState());
+    // console.log(thunkAPI.getState());
     const userToken = thunkAPI.getState().auth.token;
     token.set(userToken);
-    const { data } = await privateAPI.post("/adverts", advertData);
+    const data = await privateAPI.post("/adverts", advertData);
     // token.set(data.tokens.accesToken);
 
     console.log("Advertisement created:", data);

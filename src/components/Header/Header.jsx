@@ -24,7 +24,7 @@ const ExternalLink = ({ to, children, ...rest }) => {
 
 export function Header() {
   const user = useSelector(selectUser);
-  console.log(user);
+  // console.log(user);
   const [pathname, setPathname] = useState("");
   const path = useLocation().pathname;
   useEffect(() => {

@@ -38,6 +38,7 @@ export const TeacherForm = () => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
+
       const hobbies = Array.isArray(values.hobbies)
         ? values.hobbies.map((hobby) => ({ hobby }))
         : [];
@@ -61,6 +62,7 @@ export const TeacherForm = () => {
 
       // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
+
     },
 
     // onSubmit: (values) => {

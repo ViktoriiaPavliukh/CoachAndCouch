@@ -9,24 +9,27 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { refreshUser } from "@/redux/auth/operations";
 import { AdminPanel } from "./views/admin/AdminPanel";
-// import { PrivateRoute } from "./components/PrivateRoute";
-import { selectIsLoggedIn, selectRefreshToken, selectUser } from "./redux/auth/selectors";
+import { selectRefreshToken } from "./redux/auth/selectors";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { selectInitialized, setInitialized } from "./redux/init/initSlice";
 
 export default function App() {
   const dispatch = useDispatch();
   const refreshtoken = useSelector(selectRefreshToken);
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const initialized = useSelector(selectInitialized);
 
-  console.log(isLoggedIn);
-  const user = useSelector(selectUser);
-  console.log(user);
   useEffect(() => {
-    // const { token } = JSON.parse(localStorage.getItem("persist:auth"));
-    // console.log(token);
     if (refreshtoken) {
-      dispatch(refreshUser(refreshtoken));
+      dispatch(refreshUser(refreshtoken)).then(dispatch(setInitialized({ initialized: true })));
+    } else {
+      dispatch(setInitialized({ initialized: true }));
     }
   }, []);
+
+  if (!initialized) {
+    return <h1>Loading</h1>;
+  }
+
   return (
     <>
       <ToastContainer />
@@ -38,10 +41,10 @@ export default function App() {
           <Route path="teacherform" element={<TeacherForm />} />
           <Route path="registration" element={<RestrictedRoute redirectTo="/announcement" component={<SignUp />} />} />
           <Route path="login" element={<RestrictedRoute redirectTo="/announcement" component={<SignIn />} />} />
-          {/* <Route element={<PrivateRoute isLoggedIn={isLoggedIn} role={user.role} redirectTo="/announcement" />}> */}
-          <Route path="admin" element={<AdminPanel />} />
-          {/* </Route> */}
-
+          <Route
+            path="admin"
+            element={<PrivateRoute redirectTo="/announcement" role="admin" component={<AdminPanel />} />}
+          />
           <Route path="user/:id" element={<PersonalAccount />} />
         </Route>
       </Routes>
