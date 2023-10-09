@@ -27,7 +27,7 @@ export default function App() {
   }, []);
 
   if (!initialized) {
-    return <h1>загружаем</h1>;
+    return <h1>Loading</h1>;
   }
 
   return (

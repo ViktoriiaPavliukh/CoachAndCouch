@@ -10,7 +10,7 @@ export const PrivateRoute = ({ redirectTo = "/", role, component }) => {
   const userRole = useSelector(selectUser).role;
 
   if (isRefreshing) {
-    return <h1>хер вам!</h1>;
+    return <h1>Loading</h1>;
   }
 
   const valid = userLogged && role === userRole;
