@@ -1,13 +1,4 @@
-import {
-  Button,
-  TextField,
-  Link,
-  Grid,
-  Box,
-  Typography,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
+import { Button, TextField, Link, Grid, Box, Typography, IconButton, InputAdornment } from "@mui/material";
 import { Link as ReactLink } from "react-router-dom";
 import { useFormik } from "formik";
 import { loginSchema as validationSchema } from "@/defaults";
@@ -15,10 +6,10 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/auth/operations";
-import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoading } from "@/redux/auth/selectors";
 
 export function SignIn() {
-  const isLoading = useSelector(selectIsLoggedIn);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -60,12 +51,7 @@ export function SignIn() {
         <Typography component="h1" variant="h5">
           Вхід
         </Typography>
-        <Box
-          component="form"
-          noValidate
-          onSubmit={formik.handleSubmit}
-          sx={{ mt: 3 }}
-        >
+        <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -94,31 +80,18 @@ export function SignIn() {
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() =>
-                          formik.setFieldValue(
-                            "showPassword",
-                            !formik.values.showPassword
-                          )
-                        }
+                        onClick={() => formik.setFieldValue("showPassword", !formik.values.showPassword)}
                         edge="end"
                       >
-                        {formik.values.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
+                        {formik.values.showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
+                error={formik.touched.password && Boolean(formik.errors.password)}
+                helperText={formik.touched.password && Boolean(formik.errors.password)}
                 autoComplete="new-password"
               />
             </Grid>
@@ -141,9 +114,7 @@ export function SignIn() {
             {isLoading ? "Завантаження..." : "Увійти"}
           </Button>
           <Box justifyContent="center" sx={{ marginTop: "20px" }}>
-            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>
-              Новий користувач?
-            </Typography>
+            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>Новий користувач?</Typography>
             <Link
               component={ReactLink}
               to="/registration"
