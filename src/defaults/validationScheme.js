@@ -2,7 +2,7 @@ import * as Yup from "yup";
 export const loginSchema = Yup.object().shape({
   email: Yup.string()
     .matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i, "Please enter a valid email")
-    .max(30, "Email must be at most 30 characters")
+    .max(50, "Email must be at most 50 characters")
     .required("Email is required"),
   password: Yup.string()
     .matches(/^(?=.*[A-Z])(?=.*\d).{6,16}$/, "Please enter a valid password")
@@ -17,7 +17,7 @@ export const registrationSchema = Yup.object().shape({
     .max(20, "name must be at most 20 characters"),
   email: Yup.string()
     .matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i, "Please enter a valid email")
-    .max(30, "Email must be at most 30 characters")
+    .max(50, "Email must be at most 50 characters")
     .required("Email is required"),
   password: Yup.string()
     .matches(/^(?=.*[A-Z])(?=.*\d).{6,16}$/, "Please enter a valid password")
