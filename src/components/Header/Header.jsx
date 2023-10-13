@@ -139,7 +139,9 @@ export function Header() {
                 <MenuItem
                   onClick={() => {
                     handleCloseNavMenu(`/user/${user.id}`);
-                  }}
+                  }
+                }
+                user={user}
                 >
                   <PeopleAltOutlinedIcon />
                   <Box sx={{ padding: "0" }}>{user.name}</Box>

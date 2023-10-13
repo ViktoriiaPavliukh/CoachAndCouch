@@ -47,9 +47,22 @@ const createThemeTemplate = (themeColor) => ({
       lineHeight: "60px",
       fontStyle: "normal",
     },
+    fontTitle: {
+      fontSize: "40px",
+      fontWeight: "900",
+      lineHeight: "28px",
+      fontStyle: "normal",
+      color: "#5A5E67",
+    },
+    fontLink: {
+      fontSize: "22px",
+      fontWeight: "300",
+      lineHeight: "24px",
+      fontStyle: "normal",
+      color: "#384C5E",
+    },
     fontHeader: {
       fontSize: "16px",
-      fontWeight: "700",
       lineHeight: "24px",
       fontStyle: "normal",
       letterSpacing: "0.32px",
