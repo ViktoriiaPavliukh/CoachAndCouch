@@ -36,12 +36,12 @@ export function Preview() {
     dispatch(getAdverts());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
-  console.log(adverts);
+  // console.log(adverts);
   let [page, setPage] = useState(1);
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
   const items = usePagination(adverts, PER_PAGE);
-  console.log(items);
+  // console.log(items);
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
