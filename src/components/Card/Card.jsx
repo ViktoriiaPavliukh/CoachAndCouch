@@ -6,14 +6,19 @@ import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
 import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { getAdverts } from "@/redux/marketplace/adverts/operations";
 
 // lineheight 52px main title height
 
-const languages = [
-  { id: "1", label: "Англійська" },
-  { id: "2", label: "Іспанська" },
-  { id: "3", label: "Українська" },
-];
+// const languages = [
+//   { id: "1", label: "Англійська" },
+//   { id: "2", label: "Іспанська" },
+//   { id: "3", label: "Українська" },
+// ];
 const specialization = [
   { id: "1", label: "Розмовна мова" },
   { id: "2", label: "Вивчення азів" },
@@ -21,14 +26,14 @@ const specialization = [
   { id: "4", label: "Підготовка для іспитів" },
   { id: "5", label: "Для бізнесу" },
 ];
-const hobbies = [
-  { id: "1", label: "Спорт" },
-  { id: "2", label: "Кіно" },
-  { id: "3", label: "Творчість" },
-  { id: "4", label: "Кулінарія" },
-  { id: "5", label: "Тварини" },
-  { id: "6", label: "Машини" },
-];
+// const hobbies = [
+//   { id: "1", label: "Спорт" },
+//   { id: "2", label: "Кіно" },
+//   { id: "3", label: "Творчість" },
+//   { id: "4", label: "Кулінарія" },
+//   { id: "5", label: "Тварини" },
+//   { id: "6", label: "Машини" },
+// ];
 
 const reviews = [
   {
@@ -58,172 +63,163 @@ const reviews = [
 ];
 
 export function Card() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAdverts());
+  }, [dispatch]);
+
+  const adverts = useSelector(advertsSelector);
+  // console.log(adverts);
+  const teacherId = useParams();
+  // console.log(teacherId);
+  const teacher = adverts.find((advert) => advert.id === +teacherId.id);
+  // console.log(teacher);
+
   return (
-    <Container
-      component="div"
-      sx={{
-        pt: 11,
-        maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
-        pl: { lg: "30px", md: "20px", sm: "15px" },
-        pr: { lg: "30px", md: "20px", sm: "15px" },
-      }}
-    >
-      <Box
+    Boolean(teacher) && (
+      <Container
+        component="div"
         sx={{
-          display: "flex",
-          gap: "24px",
-          mb: "40px",
-          flexDirection: { xs: "column", md: "row" },
+          pt: 11,
+          maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
+          pl: { lg: "30px", md: "20px", sm: "15px" },
+          pr: { lg: "30px", md: "20px", sm: "15px" },
         }}
       >
-        <MainImage />
         <Box
           sx={{
             display: "flex",
-            width: "100%",
-            paddingTop: "9.6px",
-            flexDirection: "column",
+
+            gap: "24px",
+            mb: "40px",
+            flexDirection: { xs: "column", md: "row" },
           }}
         >
+          <MainImage />
           <Box
             sx={{
               display: "flex",
               width: "100%",
-              mb: "20px",
-              alignItems: "center",
-              p: 0,
+              paddingTop: "9.6px",
+              flexDirection: "column",
             }}
           >
-            <Typography variant="posterName">Іван Іванчук</Typography>
-            <img
-              src={countryLogo}
-              alt="country flag"
-              style={{ width: "52px", height: "36px", marginLeft: "4px" }}
-            />
-            <MessageBtn sx={{ display: { xs: "none", lg: "block" } }} />
-            <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} />
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
-            <span
-              style={{
-                display: "inline-block",
-                width: "12px",
-                height: "12px",
-                borderRadius: "50%",
-                backgroundColor: "#0E5B1D",
-                marginRight: "12px",
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                mb: "20px",
+                alignItems: "center",
+                p: 0,
               }}
-            ></span>
-            <Typography color="grey.700" variant="posterItem" sx={{ mr: 5.5 }}>
-              Онлайн
+            >
+              <Typography variant="posterName">{teacher.user.name}</Typography>
+              <img src={countryLogo} alt="country flag" style={{ width: "52px", height: "36px", marginLeft: "4px" }} />
+              <MessageBtn sx={{ display: { xs: "none", lg: "block" } }} />
+              <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} />
+            </Box>
+            <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
+              <span
+                style={{
+                  display: "inline-block",
+                  width: "12px",
+                  height: "12px",
+                  borderRadius: "50%",
+                  backgroundColor: "#0E5B1D",
+                  marginRight: "12px",
+                }}
+              ></span>
+              <Typography color="grey.700" variant="posterItem" sx={{ mr: 5.5 }}>
+                Онлайн
+              </Typography>
+              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
+                Рейтинг:
+              </Typography>
+              <Typography variant="posterItem" sx={{ mr: 3.5 }}>
+                5,5
+              </Typography>
+              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
+                Уроки:
+              </Typography>
+              <Typography variant="posterItem">156</Typography>
+            </Box>
+            <Typography variant="posterCategory" color="grey.600">
+              Мови викладання
             </Typography>
-            <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
-              Рейтинг:
+            <CategoryList elements={teacher.teachingLanguages} />
+            <Typography variant="posterCategory" color="grey.600">
+              Спеціалізація
             </Typography>
-            <Typography variant="posterItem" sx={{ mr: 3.5 }}>
-              5,5
+            <CategoryList elements={specialization} />
+            <Typography variant="posterCategory" color="grey.600">
+              Захоплення
             </Typography>
-            <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
-              Уроки:
+            <CategoryList elements={teacher.hobbies} />
+            <Typography variant="posterCategory" color="grey.600">
+              Платформи
             </Typography>
-            <Typography variant="posterItem">156</Typography>
           </Box>
-          <Typography variant="posterCategory" color="grey.600">
-            Мови викладання
-          </Typography>
-          <CategoryList elements={languages} />
-          <Typography variant="posterCategory" color="grey.600">
-            Спеціалізація
-          </Typography>
-          <CategoryList elements={specialization} />
-          <Typography variant="posterCategory" color="grey.600">
-            Захоплення
-          </Typography>
-          <CategoryList elements={hobbies} />
-          <Typography variant="posterCategory" color="grey.600">
-            Платформи
-          </Typography>
         </Box>
-      </Box>
-      <Box
-        sx={{
-          display: { xs: "flex", lg: "none" },
-          alignItems: "center",
-          mb: "20px",
-        }}
-      >
-        <MessageBtn />
-        <LikeBtn />
-      </Box>
-      <Box mb="40px">
-        <Typography
-          variant="posterTitle"
-          component="p"
-          color="grey.600"
-          mb="36px"
-        >
-          Про мене
-        </Typography>
-        <Typography variant="posterDescription">
-          Lorem ipsum dolor sit amet consectetur. Lectus consequat posuere eu
-          leo euismod nisl gravida. Montes diam imperdiet at consequat sagittis
-          sed. Fames dictum elit at vivamus. Pretium phasellus laoreet sagittis
-          integer nisi. Vulputate senectus etiam dolor sed at at enim tellus
-          tempor. Et quis vulputate mauris nulla sit viverra vestibulum nunc
-          tortor. Mi nulla donec placerat faucibus. Feugiat lectus felis
-          consequat purus amet cursus porta vestibulum libero. In cras amet
-          curabitur lobortis ultricies. Ornare non vitae nec at mi nec tellus
-          commodo. Commodo semper vitae sit risus gravida non. Elit quis vitae
-          integer quisque. In magna orci at at.{" "}
-        </Typography>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column-reverse", lg: "row" },
-          width: "100%",
-        }}
-      >
         <Box
           sx={{
-            display: "flex",
-            width: { xs: "100%", lg: "572px" },
-            flexDirection: "column",
+            display: { xs: "flex", lg: "none" },
+            alignItems: "center",
+            mb: "20px",
           }}
         >
-          <Typography variant="posterTitle" color="grey.600" mb="36px">
-            Відгуки
+          <MessageBtn />
+          <LikeBtn />
+        </Box>
+        <Box mb="40px">
+          <Typography variant="posterTitle" component="p" color="grey.600" mb="36px">
+            Про мене
           </Typography>
-          <ReviewList elements={reviews} />
+          <Typography variant="posterDescription">{teacher.shortDescription}</Typography>
         </Box>
         <Box
           sx={{
-            width: { xs: "100%", lg: "438px" },
             display: "flex",
-            flexDirection: "column",
-            ml: "auto",
+            flexDirection: { xs: "column-reverse", lg: "row" },
+            width: "100%",
           }}
         >
           <Box
             sx={{
               display: "flex",
-              flexDirection: { xs: "column-reverse", md: "row" },
-              gap: 4,
-              alignItems: "center",
-              mb: 8,
+              width: { xs: "100%", lg: "572px" },
+              flexDirection: "column",
             }}
           >
-            <Button
-              type="button"
-              variant="contained"
-              sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
+            <Typography variant="posterTitle" color="grey.600" mb="36px">
+              Відгуки
+            </Typography>
+            <ReviewList elements={reviews} />
+          </Box>
+          <Box
+            sx={{
+              width: { xs: "100%", lg: "438px" },
+              display: "flex",
+              flexDirection: "column",
+              ml: "auto",
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column-reverse", md: "row" },
+                gap: 4,
+                alignItems: "center",
+                mb: 8,
+              }}
             >
-              <Typography variant="posterButton">Пробний урок</Typography>
-            </Button>
-            <Typography variant="posterPrice">10$</Typography>
+              <Button type="button" variant="contained" sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}>
+                <Typography variant="posterButton">Пробний урок</Typography>
+              </Button>
+              <Typography variant="posterPrice">{teacher.price} $</Typography>
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    )
   );
 }

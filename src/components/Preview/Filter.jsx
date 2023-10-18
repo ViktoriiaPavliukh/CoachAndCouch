@@ -8,7 +8,7 @@ const filterOptions = createFilterOptions({
 });
 
 export const Filter = ({ options, label }) => {
-  console.log(options);
+  // console.log(options);
   return (
     <Autocomplete
       id={`${label}-filter`}

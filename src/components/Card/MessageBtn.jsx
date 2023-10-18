@@ -15,5 +15,5 @@ export function MessageBtn({ sx }) {
   );
 }
 MessageBtn.propTypes = {
-  sx: PropTypes.shape,
+  sx: PropTypes.objectOf(PropTypes.any),
 };
