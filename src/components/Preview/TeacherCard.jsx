@@ -103,6 +103,7 @@ export function TeacherCard({ teacher }) {
             fontSize: "14px",
             fontWeight: "700",
             transition: "background-color 0.3s",
+            backgroundColor: (theme) => theme.palette.buttonColor.main,
             "&:hover": {
               backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
             },

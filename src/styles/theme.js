@@ -1,4 +1,4 @@
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 
 const createThemeTemplate = (themeColor) => ({
   components: {
@@ -19,27 +19,58 @@ const createThemeTemplate = (themeColor) => ({
       xl: 1536,
     },
   },
-  palette: {
-    mode: themeColor,
-    primary: {
-      main: "#0E5B1D",
-    },
-    secondary: {
-      main: "#e4eadd",
-    },
-    buttonColor: {
-      main: "#7ab02e",
-      hover: "#ADCF7D",
-      darkHover: "#50945E",
-      fontColor: "#F1F3EF",
-    },
-    textColor: {
-      grey: "#878D99",
-      darkGrey: "#5A5E67",
-      iconsGrey: "#7D7D7D",
-      menuHover: "#A4E941",
-    },
-  },
+  palette:
+    themeColor === "light"
+      ? {
+          mode: "light",
+          primary: {
+            main: "#0E5B1D",
+            accent: "#7ab02e",
+            switch: "#ffffff",
+          },
+          secondary: {
+            main: "#e4eadd",
+          },
+          buttonColor: {
+            main: "#0E5B1D",
+            hover: "#ADCF7D",
+            darkHover: "#7ab02e",
+            fontColor: "#F1F3EF",
+          },
+          textColor: {
+            title: "#0E5B1D",
+            main: "#7ab02e",
+            grey: "#878D99",
+            darkGrey: "#5A5E67",
+            iconsGrey: "#7D7D7D",
+            menuHover: "#A4E941",
+          },
+        }
+      : {
+          mode: "dark",
+          primary: {
+            main: "#313732",
+            accent: "#7ab02e",
+            switch: "#7AB02E",
+          },
+          secondary: {
+            main: "#e4eadd",
+          },
+          buttonColor: {
+            main: "#0E5B1D",
+            hover: "#ADCF7D",
+            darkHover: "#7ab02e",
+            fontColor: "#F1F3EF",
+          },
+          textColor: {
+            title: "#7ab02e",
+            main: "#7ab02e",
+            grey: "#878D99",
+            darkGrey: "#5A5E67",
+            iconsGrey: "#7D7D7D",
+            menuHover: "#A4E941",
+          },
+        },
   typography: {
     fontHeading: {
       fontSize: "50px",

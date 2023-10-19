@@ -10,7 +10,7 @@ export default function Layout() {
   const isDark = useSelector(selectTheme);
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <CssBaseline />
+      <CssBaseline enableColorScheme />
       <Header />
       <Outlet />
       <Footer />
