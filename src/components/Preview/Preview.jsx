@@ -94,7 +94,7 @@ export function Preview() {
             <Typography
               variant="fontHeading"
               sx={{
-                color: (theme) => theme.palette.primary.main,
+                color: (theme) => theme.palette.textColor.title,
                 fontSize: { lg: "50px", md: "36px", xs: "32px" },
                 lineHeight: { xs: "40px", md: "44px", lg: "60px" },
                 display: "inline-block",
@@ -112,19 +112,19 @@ export function Preview() {
             >
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.buttonColor.main }} />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
                 </ListItemIcon>
                 <ListItemText primary="Понад 1000 викладачів" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.buttonColor.main }} />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
                 </ListItemIcon>
                 <ListItemText primary="Понад 20 мов" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.buttonColor.main }} />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
                 </ListItemIcon>
                 <ListItemText primary="Професійні викладачі та носії мови" sx={listItemStyles} />
               </ListItem>
@@ -137,6 +137,7 @@ export function Preview() {
                 maxWidth: { xs: "100%", sm: "375px", md: "328px" },
                 borderRadius: "8px",
                 transition: "background-color 0.3s",
+                backgroundColor: (theme) => theme.palette.buttonColor.main,
                 "&:hover": {
                   backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
                 },

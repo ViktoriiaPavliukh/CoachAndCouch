@@ -1,5 +1,18 @@
 import { PropTypes } from "prop-types";
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Button, MenuItem, Stack } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  MenuItem,
+  Stack,
+  Switch,
+} from "@mui/material";
+
 import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -11,6 +24,27 @@ import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors";
 import { pages } from "@/defaults";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { changeTheme } from "@/redux/theme/slice";
+import { styled } from "@mui/material/styles";
+
+const GreenSwitch = styled(Switch)(({ theme }) => ({
+  "& .MuiSwitch-switchBase.Mui-checked": {
+    color: (theme) => theme.palette.primary.switch,
+  },
+  "& .MuiSwitch-switchBase": {
+    color: theme.palette.primary.switch,
+  },
+  "& .MuiSwitch-thumb": {
+    color: theme.palette.primary.switch,
+  },
+  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+    backgroundColor: theme.palette.primary.switch,
+    color: theme.palette.primary.switch,
+  },
+  "& .MuiSwitch-track": {
+    backgroundColor: theme.palette.primary.accent,
+  },
+}));
 
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
@@ -49,8 +83,14 @@ export function Header() {
     dispatch(logoutUser());
   };
 
+  const [checked, setChecked] = useState(true);
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    dispatch(changeTheme());
+  };
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
       <Container>
         <Toolbar disableGutters sx={{ display: "flex", gap: "5%" }}>
           <Typography
@@ -133,15 +173,15 @@ export function Header() {
               <FacebookRoundedIcon />
             </ExternalLink>
           </Stack>
+          <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
               <Box display="flex" direction="row">
                 <MenuItem
                   onClick={() => {
                     handleCloseNavMenu(`/user/${user.id}`);
-                  }
-                }
-                user={user}
+                  }}
+                  user={user}
                 >
                   <PeopleAltOutlinedIcon />
                   <Box sx={{ padding: "0" }}>{user.name}</Box>
