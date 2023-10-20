@@ -35,16 +35,13 @@ export default function App() {
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="announcement" element={<Preview />} />
-          <Route path="announcement/:id" element={<Card />} />
+          <Route index element={<Preview />} />
+          <Route path="home" element={<Home />} />
+          <Route path="/:id" element={<Card />} />
           <Route path="teacherform" element={<TeacherForm />} />
-          <Route path="registration" element={<RestrictedRoute redirectTo="/announcement" component={<SignUp />} />} />
-          <Route path="login" element={<RestrictedRoute redirectTo="/announcement" component={<SignIn />} />} />
-          <Route
-            path="admin"
-            element={<PrivateRoute redirectTo="/announcement" role="admin" component={<AdminPanel />} />}
-          />
+          <Route path="registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
+          <Route path="login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
+          <Route path="admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanel />} />} />
           <Route path="user/:id" element={<PersonalAccount />} />
         </Route>
       </Routes>
