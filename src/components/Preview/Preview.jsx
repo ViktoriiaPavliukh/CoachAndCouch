@@ -29,8 +29,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
+import { useNavigate } from "react-router-dom";
 
 export function Preview() {
+  const navigate = useNavigate();
+  const handleClick = (e) => {
+    e.preventDefault();
+    navigate(`/home`);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAdverts());
@@ -132,6 +138,7 @@ export function Preview() {
             <Button
               type="button"
               variant="contained"
+              onClick={handleClick}
               sx={{
                 p: "12px 53px",
                 maxWidth: { xs: "100%", sm: "375px", md: "328px" },

@@ -1,4 +1,4 @@
-import { AppBar, Container } from "@mui/material";
+import { AppBar, Box, Container, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
@@ -6,7 +6,7 @@ export default function Footer() {
       <Container
         sx={{
           bottom: 0,
-          height: "44px",
+
           width: "100%",
           display: "flex",
           alignItems: "center",
@@ -14,7 +14,17 @@ export default function Footer() {
           color: "white",
         }}
       >
-        <div>Copyright ...</div>
+        <Box
+          sx={{
+            width: "300px",
+          }}
+        >
+          <h3>Контакти</h3>
+          <Typography>м.Київ, вул. Еспланадна, 8/10, 01601 </Typography>
+          <Typography>контактний телефон - (044) 289 35 60</Typography>
+          <Typography> Email : press@mlsp.gov.ua </Typography>
+        </Box>
+        <div> &copy; 2023 Команда Marketplace, Teamchallenge</div>
       </Container>
     </AppBar>
   );

@@ -1,24 +1,28 @@
 export const pages = [
   {
     title: "Викладачі",
-    link: "announcement",
+    link: "/",
   },
-  {
-    title: "Бізнес",
-    link: "",
-  },
-  {
-    title: "Для дітей",
-    link: "",
-  },
+  // {
+  //   title: "Бізнес",
+  //   link: "",
+  // },
+  // {
+  //   title: "Для дітей",
+  //   link: "",
+  // },
   {
     title: "Стати викладачем",
     link: "teacherform",
   },
   {
-    title: "Контакти",
-    link: "",
+    title: "Особистий кабінет",
+    link: "user",
   },
+  // {
+  //   title: "Контакти",
+  //   link: "home",
+  // },
   {
     title: "Вхід",
     link: "login",
@@ -27,11 +31,6 @@ export const pages = [
     title: "Реєстрація",
     link: "registration",
   },
-  {
-    title: "Особистий кабінет",
-    link: "user",
-  }, 
-  { title: "Головна",
-    link: "homepage"
-  }
+
+  // { title: "Головна", link: "home" },
 ];

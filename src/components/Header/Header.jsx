@@ -8,9 +8,9 @@ import {
   Menu,
   Container,
   Button,
-  MenuItem,
   Stack,
   Switch,
+  MenuItem,
 } from "@mui/material";
 
 import { Menu as MenuIcon } from "@mui/icons-material";
@@ -43,6 +43,19 @@ const GreenSwitch = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-track": {
     backgroundColor: theme.palette.primary.accent,
+  },
+}));
+
+const MenuMobItem = styled(MenuItem)(() => ({
+  "& :hover": {
+    backgroundColor: "green",
+    color: "white",
+  },
+  "& .MuiMenuItem-root": {
+    color: "white",
+  },
+  "& .MuiTypography-root": {
+    width: "100%",
   },
 }));
 
@@ -97,7 +110,7 @@ export function Header() {
             variant="h6"
             noWrap
             component={Link}
-            to=""
+            to="home"
             sx={{
               display: { xs: "none", md: "flex" },
               // marginRight: "5%",
@@ -114,7 +127,7 @@ export function Header() {
             variant="h5"
             noWrap
             component={Link}
-            to=""
+            to="home"
             sx={{
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
@@ -133,7 +146,7 @@ export function Header() {
               gap: "1rem",
             }}
           >
-            {pages.slice(0, 5).map(({ title, link }) => (
+            {pages.slice(0, 2).map(({ title, link }) => (
               <Button
                 key={title}
                 onClick={() => {
@@ -177,7 +190,7 @@ export function Header() {
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
               <Box display="flex" direction="row">
-                <MenuItem
+                <MenuMobItem
                   onClick={() => {
                     handleCloseNavMenu(`/user/${user.id}`);
                   }}
@@ -185,13 +198,13 @@ export function Header() {
                 >
                   <PeopleAltOutlinedIcon />
                   <Box sx={{ padding: "0" }}>{user.name}</Box>
-                </MenuItem>
+                </MenuMobItem>
                 <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
                   <Typography textAlign="center">Вихід</Typography>
                 </MenuItem>
               </Box>
             ) : (
-              pages.slice(5, 6).map(({ title, link }) => (
+              pages.slice(3, 4).map(({ title, link }) => (
                 <MenuItem
                   sx={{
                     px: "12px",
@@ -221,7 +234,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(6, 7).map(({ title, link }) => (
+                {pages.slice(4, 5).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -278,11 +291,14 @@ export function Header() {
               }}
               sx={{
                 display: { xs: "block", lg: "none" },
+                padding: "10px",
               }}
             >
               {isLoggedIn ? (
-                <div>
-                  <MenuItem
+                <>
+                  <MenuMobItem
+                    disableGutters={true}
+                    sx={{ width: "100%" }}
                     onClick={() => {
                       handleCloseNavMenu("/user");
                     }}
@@ -291,13 +307,16 @@ export function Header() {
                       textAlign="center"
                       variant="fontHeader"
                       sx={{
-                        mr: 5.5,
+                        // mr: 5.5,
+                        // width: "100%",
+                        mr: 0,
                       }}
                     >
                       Особистий кабінет
                     </Typography>
-                  </MenuItem>
-                  <MenuItem
+                  </MenuMobItem>
+                  <MenuMobItem
+                    disableGutters={true}
                     onClick={() => {
                       handleCloseNavMenu("/logout");
                     }}
@@ -305,17 +324,18 @@ export function Header() {
                     <Typography
                       textAlign="center"
                       variant="fontHeader"
-                      sx={{
-                        mr: 5.5,
-                      }}
+                      // sx={{
+                      //   mr: 5.5,
+                      // }}
                     >
                       Вихід
                     </Typography>
-                  </MenuItem>
-                </div>
+                  </MenuMobItem>
+                </>
               ) : (
                 <div>
-                  <MenuItem
+                  <MenuMobItem
+                    disableGutters={true}
                     onClick={() => {
                       handleCloseNavMenu("/login");
                     }}
@@ -323,33 +343,37 @@ export function Header() {
                     <Typography
                       textAlign="center"
                       variant="fontHeader"
-                      sx={{
-                        mr: 5.5,
-                      }}
+                      // sx={{
+                      //   mr: 5.5,
+                      // }}
                     >
                       Вхід
                     </Typography>
-                  </MenuItem>
+                  </MenuMobItem>
 
-                  <MenuItem
+                  <MenuMobItem
+                    disableGutters={true}
                     onClick={() => {
                       handleCloseNavMenu("/registration");
                     }}
                   >
                     <Typography
+                      // disableGutters={true}
                       textAlign="center"
                       variant="fontHeader"
                       sx={{
-                        mr: 5.5,
+                        // mr: 5.5,
+                        mr: 0,
                       }}
                     >
                       Реєстрація
                     </Typography>
-                  </MenuItem>
+                  </MenuMobItem>
                 </div>
               )}
-              {pages.slice(0, 5).map(({ title, link }) => (
-                <MenuItem
+              {pages.slice(0, 3).map(({ title, link }) => (
+                <MenuMobItem
+                  disableGutters={true}
                   key={title}
                   onClick={() => {
                     handleCloseNavMenu(link);
@@ -359,12 +383,14 @@ export function Header() {
                     textAlign="center"
                     variant="fontHeader"
                     sx={{
-                      mr: 5.5,
+                      //mr: 5.5,
+                      paddingLeft: "6px",
+                      paddingRight: "6px",
                     }}
                   >
                     {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
-                </MenuItem>
+                </MenuMobItem>
               ))}
             </Menu>
           </Box>
