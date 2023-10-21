@@ -190,16 +190,32 @@ export function Header() {
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
               <Box display="flex" direction="row">
-                <MenuMobItem
+                <MenuItem
                   onClick={() => {
                     handleCloseNavMenu(`/user/${user.id}`);
                   }}
                   user={user}
+                  sx={{
+                    "&:hover": {
+                      backgroundColor: (theme) => theme.palette.primary.accent,
+                      borderRadius: "6px",
+                    },
+                  }}
                 >
                   <PeopleAltOutlinedIcon />
                   <Box sx={{ padding: "0" }}>{user.name}</Box>
-                </MenuMobItem>
-                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
+                </MenuItem>
+                <MenuItem
+                  onClick={handleLogout}
+                  sx={{
+                    px: "12px",
+
+                    "&:hover": {
+                      backgroundColor: (theme) => theme.palette.primary.accent,
+                      borderRadius: "6px",
+                    },
+                  }}
+                >
                   <Typography textAlign="center">Вихід</Typography>
                 </MenuItem>
               </Box>
@@ -373,7 +389,7 @@ export function Header() {
               )}
               {pages.slice(0, 3).map(({ title, link }) => (
                 <MenuMobItem
-                  disableGutters={true}
+                  // disableGutters={true}
                   key={title}
                   onClick={() => {
                     handleCloseNavMenu(link);
