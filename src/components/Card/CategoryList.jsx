@@ -1,6 +1,7 @@
 import { PropTypes } from "prop-types";
 import { List, ListItem } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+
 export function CategoryList({ elements }) {
   return (
     <List
