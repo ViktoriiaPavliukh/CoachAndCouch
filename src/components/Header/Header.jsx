@@ -146,7 +146,7 @@ export function Header() {
               gap: "1rem",
             }}
           >
-            {pages.slice(0, 2).map(({ title, link }) => (
+            {pages.slice(0, 3).map(({ title, link }) => (
               <Button
                 key={title}
                 onClick={() => {
@@ -160,6 +160,8 @@ export function Header() {
                     textTransform: "capitalize",
                   },
                   transition: "color 0.3s",
+                  backgroundColor: (theme) =>
+                    pathname === `/${link}` || pathname === `${link}` ? theme.palette.primary.accent : null,
                   "&:hover": {
                     color: (theme) => theme.palette.textColor.menuHover,
                   },
@@ -220,18 +222,17 @@ export function Header() {
                 </MenuItem>
               </Box>
             ) : (
-              pages.slice(3, 4).map(({ title, link }) => (
+              pages.slice(4, 5).map(({ title, link }) => (
                 <MenuItem
                   sx={{
                     px: "12px",
                     transition: "color 0.3s",
-                    borderRadius: () => (pathname === "/login" ? "6px" : null),
+                    borderRadius: "6px",
 
-                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.main : null),
+                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.primary.accent : null),
                     "&:hover": {
-                      color: (theme) =>
-                        pathname === "/login" ? theme.palette.textColor.main : theme.palette.textColor.menuHover,
-                      backgroundColor: (theme) => (pathname === "/login" ? theme.palette.buttonColor.hover : null),
+                      // color: (theme) => (pathname === "/login" ? theme.palette.textColor.main : null),
+                      backgroundColor: (theme) => theme.palette.primary.accent,
                     },
                   }}
                   key={title}
@@ -250,7 +251,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(4, 5).map(({ title, link }) => (
+                {pages.slice(5, 6).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -259,15 +260,16 @@ export function Header() {
                     sx={{
                       px: "12px",
                       backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/" ? theme.palette.buttonColor.main : null,
+                        pathname === "/registration" || pathname === "/" ? theme.palette.primary.accent : null,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
+
                       "&:hover": {
-                        backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                        backgroundColor: (theme) => theme.palette.primary.accent,
                       },
                     }}
                   >
-                    <Typography textAlign="center">{title.toUpperCase()}</Typography>
+                    <Typography textAlign="center">{title}</Typography>
                   </MenuItem>
                 ))}
               </Box>
@@ -311,7 +313,7 @@ export function Header() {
               }}
             >
               {isLoggedIn ? (
-                <>
+                <div>
                   <MenuMobItem
                     disableGutters={true}
                     sx={{ width: "100%" }}
@@ -347,7 +349,7 @@ export function Header() {
                       Вихід
                     </Typography>
                   </MenuMobItem>
-                </>
+                </div>
               ) : (
                 <div>
                   <MenuMobItem

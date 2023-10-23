@@ -18,7 +18,8 @@ const advertsSlice = createSlice({
       .addCase(postAdvert.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.token = action.payload.tokens.accessToken;
+        state.token = action.payload.token;
+        console.log("postAdvert/fulfilled", action);
         state.items.push(action.payload);
       })
       .addCase(deleteAdvertsById.fulfilled, (state, action) => {

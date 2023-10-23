@@ -16,6 +16,10 @@ export const pages = [
     link: "teacherform",
   },
   {
+    title: "Про нас",
+    link: "home",
+  },
+  {
     title: "Особистий кабінет",
     link: "user",
   },

@@ -1,4 +1,5 @@
 import { PropTypes } from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -12,7 +13,7 @@ export function TeacherCard({ teacher }) {
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/${teacher.id}`);
+    navigate(`/teachers/${teacher.id}`);
   };
   // const setBg = () => {
   //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
