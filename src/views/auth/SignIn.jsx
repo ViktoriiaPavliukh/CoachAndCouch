@@ -6,10 +6,10 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/auth/operations";
-import { selectIsLoading } from "@/redux/auth/selectors";
+import { selectIsLoading, selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export function SignIn() {
-  const isLoading = useSelector(selectIsLoading);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -103,7 +103,7 @@ export function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            disabled={isLoading}
+            disabled={isLoggedIn}
             sx={{
               mt: 3,
               mb: 2,
@@ -111,7 +111,7 @@ export function SignIn() {
               backgroundColor: (theme) => theme.palette.buttonColor.main,
             }}
           >
-            {isLoading ? "Завантаження..." : "Увійти"}
+            {isLoggedIn ? "Завантаження..." : "Увійти"}
           </Button>
           <Box justifyContent="center" sx={{ marginTop: "20px" }}>
             <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>Новий користувач?</Typography>
