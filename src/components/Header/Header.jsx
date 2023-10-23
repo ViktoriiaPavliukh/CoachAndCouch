@@ -194,7 +194,7 @@ export function Header() {
               <Box display="flex" direction="row">
                 <MenuItem
                   onClick={() => {
-                    handleCloseNavMenu(`/user/${user.id}`);
+                    handleCloseNavMenu(`/user/${user.id}/main`);
                   }}
                   user={user}
                   sx={{
@@ -318,7 +318,7 @@ export function Header() {
                     disableGutters={true}
                     sx={{ width: "100%" }}
                     onClick={() => {
-                      handleCloseNavMenu("/user");
+                      handleCloseNavMenu(`/user/${user.id}/main`);
                     }}
                   >
                     <Typography

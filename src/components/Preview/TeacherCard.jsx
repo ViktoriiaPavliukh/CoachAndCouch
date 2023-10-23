@@ -1,5 +1,4 @@
 import { PropTypes } from "prop-types";
-import { v4 as uuidv4 } from "uuid";
 import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";

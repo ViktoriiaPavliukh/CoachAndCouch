@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Home, SignIn, SignUp } from "@/views";
 import { Card, Layout, Preview, TeacherForm, PersonalAccount } from "@components";
 import { ToastContainer } from "react-toastify";
@@ -13,6 +13,7 @@ import { selectRefreshToken } from "./redux/auth/selectors";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { selectInitialized, setInitialized } from "./redux/init/initSlice";
 import PageError from "./views/PageError";
+import { MainPage } from "./components/PersonalAccount/MainPage";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -45,7 +46,10 @@ export default function App() {
           <Route path="/registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
           <Route path="/login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
           <Route path="/admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanel />} />} />
-          <Route path="/user/:id" element={<PersonalAccount />} />
+          <Route path="/user/:id" element={<PersonalAccount />}>
+            <Route path="/user/:id/main" element={<MainPage />} />
+            <Route path="/user/:id/lessons" element={<div>Main page lessons</div>} />
+          </Route>
         </Route>
         <Route path="*" element={<PageError />} />
       </Routes>
