@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
@@ -10,7 +10,14 @@ import {
   // countryOptions,
   // specializationOptions,
 } from "@/defaults";
-import { postAdvert } from "@/redux/marketplace/adverts/operations";
+import { getAdverts, postAdvert } from "@/redux/marketplace/adverts/operations";
+import { selectToken, selectUser } from "@/redux/auth/selectors";
+import { SignUp } from "@/views";
+
+import { v4 as uuidv4 } from "uuid";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const initialValues = {
   price: 0,
@@ -25,23 +32,27 @@ const validationSchema = Yup.object({
   price: Yup.number().min(0).required("Price is required"),
   shortDescription: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(
-    1,
-    "Select at least one teaching language"
-  ),
+  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
   hobbies: Yup.array(),
 });
 
 export const TeacherForm = () => {
   const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
+  const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
+  useEffect(() => {
+    if (advertId) {
+      navigate(`/teachers/${advertId}`);
+      // console.log(advertId);
+    }
+  }, [advertId, navigate]);
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-
-      const hobbies = Array.isArray(values.hobbies)
-        ? values.hobbies.map((hobby) => ({ hobby }))
-        : [];
+      const hobbies = Array.isArray(values.hobbies) ? values.hobbies.map((hobby) => ({ hobby })) : [];
       const spokenLanguages = Array.isArray(values.spokenLanguages)
         ? values.spokenLanguages.map((language) => ({ language }))
         : [];
@@ -58,11 +69,13 @@ export const TeacherForm = () => {
         teachingLanguages,
       };
 
-      console.log(transformedData);
+      // console.log(transformedData);
 
       // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
+      dispatch(getAdverts());
 
+      // console.log(user.id);
     },
 
     // onSubmit: (values) => {
@@ -80,139 +93,127 @@ export const TeacherForm = () => {
     // },
   });
 
-  return (
-    <form onSubmit={formik.handleSubmit}>
-      <TextField
-        fullWidth
-        id="price"
-        name="price"
-        label="Ціна"
-        variant="outlined"
-        type="number"
-        value={formik.values.price}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.price && Boolean(formik.errors.price)}
-        helperText={formik.touched.price && formik.errors.price}
-      />
+  return token
+    ? token && (
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            fullWidth
+            id="price"
+            name="price"
+            label="Ціна"
+            variant="outlined"
+            type="number"
+            value={formik.values.price}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.price && Boolean(formik.errors.price)}
+            helperText={formik.touched.price && formik.errors.price}
+          />
 
-      <TextField
-        fullWidth
-        id="shortDescription"
-        name="shortDescription"
-        label="Опис"
-        variant="outlined"
-        multiline
-        rows={4}
-        value={formik.values.shortDescription}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={
-          formik.touched.shortDescription &&
-          Boolean(formik.errors.shortDescription)
-        }
-        helperText={
-          formik.touched.shortDescription && formik.errors.shortDescription
-        }
-      />
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Захоплення</InputLabel>
-        <Select
-          id="hobbies"
-          name="hobbies"
-          multiple
-          label="Захоплення"
-          value={formik.values.hobbies}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.hobbies &&
-            Boolean(formik.errors.hobbies)
-          }
-          renderValue={(selected) => selected.join(", ")}
-        >
-          {hobbyOptions.map((hobby) => (
-            <MenuItem key={hobby.code} value={hobby.title}>
-              {hobby.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Мови, якими розмовляєте</InputLabel>
-        <Select
-          id="spokenLanguages"
-          name="spokenLanguages"
-          multiple
-          label="Мови, якими розмовляєте"
-          value={formik.values.spokenLanguages}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.spokenLanguages &&
-            Boolean(formik.errors.spokenLanguages)
-          }
-          renderValue={(selected) => selected.join(", ")}
-        >
-          {languageOptions.map((language) => (
-            <MenuItem key={language.code} value={language.title}>
-              {language.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <TextField
+            fullWidth
+            id="shortDescription"
+            name="shortDescription"
+            label="Опис"
+            variant="outlined"
+            multiline
+            rows={4}
+            value={formik.values.shortDescription}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.shortDescription && Boolean(formik.errors.shortDescription)}
+            helperText={formik.touched.shortDescription && formik.errors.shortDescription}
+          />
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>Захоплення</InputLabel>
+            <Select
+              id="hobbies"
+              name="hobbies"
+              multiple
+              label="Захоплення"
+              value={formik.values.hobbies}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.hobbies && Boolean(formik.errors.hobbies)}
+              renderValue={(selected) => selected.join(", ")}
+            >
+              {hobbyOptions.map((hobby) => (
+                <MenuItem key={uuidv4()} value={hobby.title}>
+                  {hobby.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>Мови, якими розмовляєте</InputLabel>
+            <Select
+              id="spokenLanguages"
+              name="spokenLanguages"
+              multiple
+              label="Мови, якими розмовляєте"
+              value={formik.values.spokenLanguages}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
+              renderValue={(selected) => selected.join(", ")}
+            >
+              {languageOptions.map((language) => (
+                <MenuItem key={language.code} value={language.title}>
+                  {language.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Мови викладання</InputLabel>
-        <Select
-          id="teachingLanguages"
-          name="teachingLanguages"
-          multiple
-          label="Мови викладання"
-          value={formik.values.teachingLanguages}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.teachingLanguages &&
-            Boolean(formik.errors.teachingLanguages)
-          }
-          renderValue={(selected) => selected.join(", ")}
-        >
-          {languageOptions.map((language) => (
-            <MenuItem key={language.code} value={language.title}>
-              {language.title}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>Мови викладання</InputLabel>
+            <Select
+              id="teachingLanguages"
+              name="teachingLanguages"
+              multiple
+              label="Мови викладання"
+              value={formik.values.teachingLanguages}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
+              renderValue={(selected) => selected.join(", ")}
+            >
+              {languageOptions.map((language) => (
+                <MenuItem key={uuidv4()} value={language.title}>
+                  {language.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-      <TextField
-        fullWidth
-        id="imagePath"
-        name="imagePath"
-        label="Додати фото"
-        variant="outlined"
-        value={formik.values.imagePath}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.imagePath && Boolean(formik.errors.imagePath)}
-        helperText={formik.touched.imagePath && formik.errors.imagePath}
-      />
-      <Stack
-        direction="row"
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          mt: "40px",
-        }}
-      >
-        <Button variant="contained" type="submit">
-          Опублікувати
-        </Button>
-        <Button variant="outlined">Зберегти чернетку</Button>
-      </Stack>
-    </form>
-  );
+          <TextField
+            fullWidth
+            id="imagePath"
+            name="imagePath"
+            label="Додати фото"
+            variant="outlined"
+            value={formik.values.imagePath}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.imagePath && Boolean(formik.errors.imagePath)}
+            helperText={formik.touched.imagePath && formik.errors.imagePath}
+          />
+          <Stack
+            direction="row"
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mt: "40px",
+            }}
+          >
+            <Button variant="contained" type="submit">
+              Опублікувати
+            </Button>
+            <Button variant="outlined">Зберегти чернетку</Button>
+          </Stack>
+        </form>
+      )
+    : !token && <SignUp />;
 };
 
 // import { useState } from "react";

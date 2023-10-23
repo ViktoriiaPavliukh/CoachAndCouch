@@ -12,7 +12,7 @@ export function TeacherCard({ teacher }) {
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/${teacher.id}`);
+    navigate(`/teachers/${teacher.id}`);
   };
   // const setBg = () => {
   //   return "#" + Math.floor(Math.random() * 16777215).toString(16);

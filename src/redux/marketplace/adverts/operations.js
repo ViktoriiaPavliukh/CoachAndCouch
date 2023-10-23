@@ -24,7 +24,7 @@ export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", a
   try {
     const userToken = thunkAPI.getState().auth.token;
     token.set(userToken);
-    console.log(userToken);
+    // console.log(userToken);
     const { data } = await privateAPI.delete(`/admin/adverts/${id}`);
     console.log(`adverts id = ${id} was deleted`);
     return data;
@@ -34,19 +34,15 @@ export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", a
     return thunkAPI.rejectWithValue(error.message);
   }
 });
-// getAdvertsById(1);
-// deleteAdvertsById(1);
-getAdvertsById(1);
 
 export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
   try {
-    // console.log(thunkAPI.getState());
+    console.log(thunkAPI.getState());
     const userToken = thunkAPI.getState().auth.token;
+    console.log(userToken);
     token.set(userToken);
-    const data = await privateAPI.post("/adverts", advertData);
-    // token.set(data.tokens.accesToken);
-
-    console.log("Advertisement created:", data);
+    const { data } = await privateAPI.post("/adverts", advertData);
+    // console.log("Advertisement created:", data);
     return data;
   } catch (error) {
     console.error("Error creating advertisement:", error);

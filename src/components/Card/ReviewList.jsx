@@ -4,10 +4,11 @@ import { Box, Button, List, ListItem, Typography } from "@mui/material";
 export function ReviewList({ elements }) {
   const ReviewHandleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+
     const addReview = new FormData(e.target);
 
     console.log(addReview.get("name"), addReview.get("reviewDescription"));
+    e.target.reset();
   };
   return (
     <>

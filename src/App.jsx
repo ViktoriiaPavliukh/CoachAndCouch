@@ -12,6 +12,8 @@ import { AdminPanel } from "./views/admin/AdminPanel";
 import { selectRefreshToken } from "./redux/auth/selectors";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { selectInitialized, setInitialized } from "./redux/init/initSlice";
+import PageError from "./views/PageError";
+import { MainPage } from "./components/PersonalAccount/MainPage";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -33,17 +35,23 @@ export default function App() {
   return (
     <>
       <ToastContainer />
+
       <Routes>
+        {/* <Route path="*" element={<PageError />} /> */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Preview />} />
-          <Route path="home" element={<Home />} />
-          <Route path="/:id" element={<Card />} />
-          <Route path="teacherform" element={<TeacherForm />} />
-          <Route path="registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
-          <Route path="login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
-          <Route path="admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanel />} />} />
-          <Route path="user/:id" element={<PersonalAccount />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/teachers/:id" element={<Card />} />
+          <Route path="/teacherform" element={<TeacherForm />} />
+          <Route path="/registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
+          <Route path="/login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
+          <Route path="/admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanel />} />} />
+          <Route path="/user/:id" element={<PersonalAccount />}>
+            <Route path="/user/:id/main" element={<MainPage />} />
+            <Route path="/user/:id/lessons" element={<div>Main page lessons</div>} />
+          </Route>
         </Route>
+        <Route path="*" element={<PageError />} />
       </Routes>
     </>
   );
