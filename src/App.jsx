@@ -1,6 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Home, SignIn, SignUp } from "@/views";
-import { Card, Layout, Preview, TeacherForm, PersonalAccount } from "@components";
+import {
+  Card,
+  Layout,
+  Preview,
+  TeacherForm,
+  PersonalAccount,
+} from "@components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RestrictedRoute } from "@components/RestrictedRoute";
@@ -13,7 +19,14 @@ import { selectRefreshToken } from "./redux/auth/selectors";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { selectInitialized, setInitialized } from "./redux/init/initSlice";
 import PageError from "./views/PageError";
-import { MainPage } from "./components/PersonalAccount/MainPage";
+import {
+  MainPage,
+  Lessons,
+  Enquiry,
+  Schedule,
+  Messages,
+  Settings,
+} from "./components/PersonalAccount/index";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -22,7 +35,9 @@ export default function App() {
 
   useEffect(() => {
     if (refreshtoken) {
-      dispatch(refreshUser(refreshtoken)).then(dispatch(setInitialized({ initialized: true })));
+      dispatch(refreshUser(refreshtoken)).then(
+        dispatch(setInitialized({ initialized: true }))
+      );
     } else {
       dispatch(setInitialized({ initialized: true }));
     }
@@ -43,12 +58,31 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/teachers/:id" element={<Card />} />
           <Route path="/teacherform" element={<TeacherForm />} />
-          <Route path="/registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
-          <Route path="/login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
-          <Route path="/admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanel />} />} />
+          <Route
+            path="/registration"
+            element={<RestrictedRoute redirectTo="/" component={<SignUp />} />}
+          />
+          <Route
+            path="/login"
+            element={<RestrictedRoute redirectTo="/" component={<SignIn />} />}
+          />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoute
+                redirectTo="/"
+                role="admin"
+                component={<AdminPanel />}
+              />
+            }
+          />
           <Route path="/user/:id" element={<PersonalAccount />}>
             <Route path="/user/:id/main" element={<MainPage />} />
-            <Route path="/user/:id/lessons" element={<div>Main page lessons</div>} />
+            <Route path="/user/:id/lessons" element={<Lessons />} />
+            <Route path="/user/:id/enquiry" element={<Enquiry />} />
+            <Route path="/user/:id/schedule" element={<Schedule />} />
+            <Route path="/user/:id/messages" element={<Messages />} />
+            <Route path="/user/:id/settings" element={<Settings />} />
           </Route>
         </Route>
         <Route path="*" element={<PageError />} />
