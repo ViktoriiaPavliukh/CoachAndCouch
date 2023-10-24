@@ -6,7 +6,7 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/auth/operations";
-import { selectIsLoading, selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export function SignIn() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
