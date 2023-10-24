@@ -6,7 +6,7 @@ import { registrationSchema as validationSchema } from "@/defaults";
 import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "@/redux/auth/operations";
-import { selectIsLoading, selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export function SignUp() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
