@@ -37,12 +37,17 @@ export function PersonalAccount() {
         pr: { lg: "30px", md: "20px", sm: "15px" },
         display: "flex",
         gap: "122px",
-        height: "90vh",
+        height: "100%",
+        pb: "79px",
       }}
     >
       <Box>
         <PersonalImage />
-        <Typography gutterBottom variant="fontTitle" sx={{ display: "flex", paddingTop: "32px" }}>
+        <Typography
+          gutterBottom
+          variant="fontTitle"
+          sx={{ display: "flex", paddingTop: "32px" }}
+        >
           {user.name}
         </Typography>
         <Box
@@ -66,25 +71,25 @@ export function PersonalAccount() {
               Мої заняття
             </Typography>
           </Box>
-          <Box component={Link} to="/" sx={linkStyles}>
+          <Box component={Link} to="enquiry" sx={linkStyles}>
             <img src={checklist} alt="enquiry" />
             <Typography variant="fontLink" noWrap>
               Моя анкета
             </Typography>
           </Box>
-          <Box component={Link} to="/" sx={linkStyles}>
+          <Box component={Link} to="schedule" sx={linkStyles}>
             <img src={notepad} alt="schedule" />
             <Typography variant="fontLink" noWrap>
               Розклад
             </Typography>
           </Box>
-          <Box component={Link} to="/" sx={linkStyles}>
-            <img src={envelope} alt="mails" />
+          <Box component={Link} to="messages" sx={linkStyles}>
+            <img src={envelope} alt="messages" />
             <Typography variant="fontLink" noWrap>
               Повідомлення
             </Typography>
           </Box>
-          <Box component={Link} to="/" sx={linkStyles}>
+          <Box component={Link} to="settings" sx={linkStyles}>
             <img src={settings} alt="settings" />
             <Typography variant="fontLink" noWrap>
               Налаштування
