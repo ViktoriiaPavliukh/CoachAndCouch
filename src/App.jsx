@@ -18,7 +18,7 @@ import { AdminPanel } from "./views/admin/AdminPanel";
 import { selectRefreshToken } from "./redux/auth/selectors";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { selectInitialized, setInitialized } from "./redux/init/initSlice";
-import PageError from "./views/PageError";
+import PageError from "./views/page404/PageError";
 import {
   MainPage,
   Lessons,
@@ -54,6 +54,7 @@ export default function App() {
       <Routes>
         {/* <Route path="*" element={<PageError />} /> */}
         <Route path="/" element={<Layout />}>
+          <Route path="*" element={<PageError />} />
           <Route index element={<Preview />} />
           <Route path="/home" element={<Home />} />
           <Route path="/teachers/:id" element={<Card />} />
@@ -85,7 +86,6 @@ export default function App() {
             <Route path="/user/:id/settings" element={<Settings />} />
           </Route>
         </Route>
-        <Route path="*" element={<PageError />} />
       </Routes>
     </>
   );
