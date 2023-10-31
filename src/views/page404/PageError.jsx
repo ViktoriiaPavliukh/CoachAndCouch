@@ -54,17 +54,43 @@ export default function PageError() {
         >
           404
         </Typography>
-        <Typography>Oops! Сторінку не знайдено</Typography>
-        <Typography sx={{ pt: "20px" }}>
+        <Typography
+          variant="posterBlack"
+          sx={{ color: (theme) => theme.palette.textColor.black }}
+        >
+          Oops! Сторінку не знайдено
+        </Typography>
+        <Typography
+          variant="posterSubtitle"
+          sx={{
+            pt: "20px",
+            color: (theme) => theme.palette.textColor.black,
+          }}
+        >
           Перевірте URL адресу сторінки або поверніться на головну{" "}
         </Typography>
         <Button
           type="button"
           variant="contained"
           onClick={handleClick}
-          sx={{ mt: "36px" }}
+          sx={{
+            mt: "36px",
+            p: "12px 40px",
+            maxWidth: { xs: "100%", sm: "375px", md: "328px" },
+            borderRadius: "8px",
+            transition: "background-color 0.3s",
+            backgroundColor: (theme) => theme.palette.buttonColor.main,
+            "&:hover": {
+              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+            },
+          }}
         >
-          Перейти на головну
+          <Typography
+            variant="posterButton"
+            sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+          >
+            Перейти на головну
+          </Typography>
         </Button>
       </Box>
     </Box>

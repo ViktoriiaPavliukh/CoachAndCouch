@@ -69,6 +69,7 @@ const createThemeTemplate = (themeColor) => ({
             darkGrey: "#5A5E67",
             iconsGrey: "#7D7D7D",
             menuHover: "#A4E941",
+            black: "#030904",
           },
         },
   typography: {
@@ -123,6 +124,18 @@ const createThemeTemplate = (themeColor) => ({
       fontWeight: "700",
       lineHeight: "1",
       textTransform: "uppercase",
+    },
+    posterBlack: {
+      fontSize: "30px",
+      fontWeight: "600",
+      lineHeight: "32px",
+      letterSpacing: "0.6px",
+    },
+    posterSubtitle: {
+      pt: "20px",
+      fontSize: "18px",
+      fontWeight: 400,
+      lineHeight: "23.4px",
     },
     posterDescription: {
       fontSize: "16px",
