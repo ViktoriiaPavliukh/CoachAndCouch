@@ -49,7 +49,7 @@ export default function PageError() {
           variant="h1"
           sx={{
             fontSize: "200px",
-            color: (theme) => theme.palette.primary.main,
+            color: (theme) => theme.palette.textColor.green,
           }}
         >
           404
