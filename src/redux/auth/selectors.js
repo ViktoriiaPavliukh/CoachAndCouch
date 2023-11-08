@@ -4,5 +4,5 @@ export const selectIsLoading = (state) => state.auth.isLoading;
 export const selectUser = (state) => state.auth.user;
 
 export const selectToken = (state) => state.auth.token;
-
+export const selectRefreshUser = (state) => state.auth.refresh;
 export const selectRefreshToken = (state) => state.auth.refreshtoken;

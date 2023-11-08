@@ -13,16 +13,16 @@ export function SignUp() {
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      firstName: "",
       email: "",
       password: "",
       passwordConfirm: "",
       showPassword: false,
     },
     validationSchema,
-    onSubmit: ({ name, email, password }) => {
-      dispatch(registerUser({ name, email, password }));
-      console.log(name, email, password);
+    onSubmit: ({ firstName, email, password }) => {
+      dispatch(registerUser({ firstName, email, password }));
+      console.log(firstName, email, password);
     },
   });
   return (
@@ -63,15 +63,15 @@ export function SignUp() {
             <Grid item xs={12}>
               <TextField
                 autoComplete="given-name"
-                name="name"
+                name="firstName"
                 size="small"
                 sx={{ mb: 2.5 }}
-                value={formik.values.name}
+                value={formik.values.firstName}
                 onChange={formik.handleChange}
-                error={formik.touched.name && Boolean(formik.errors.name)}
-                helperText={formik.touched.name && formik.errors.name}
+                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName}
                 fullWidth
-                id="name"
+                id="firstname"
                 label="Ваше ім'я"
               />
             </Grid>

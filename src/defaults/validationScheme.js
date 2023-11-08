@@ -11,7 +11,7 @@ export const loginSchema = Yup.object().shape({
 });
 
 export const registrationSchema = Yup.object().shape({
-  name: Yup.string()
+  firstName: Yup.string()
     .matches(/^.{2,20}$/, "Please enter a valid name")
     .required("Name is required")
     .max(20, "name must be at most 20 characters"),
