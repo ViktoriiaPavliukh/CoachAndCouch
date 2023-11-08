@@ -15,7 +15,7 @@ export function CategoryList({ elements }) {
         color: "grey.400",
       }}
     >
-      {elements.map((e) => (
+      {elements?.map((e) => (
         <ListItem
           key={uuidv4()}
           sx={{

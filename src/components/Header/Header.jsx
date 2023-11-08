@@ -62,12 +62,7 @@ const MenuMobItem = styled(MenuItem)(() => ({
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
     <Link to={to} sx={{ color: "white", padding: "px" }}>
-      <IconButton
-        size="large"
-        color="inherit"
-        sx={{ color: "white", padding: "3px" }}
-        {...rest}
-      >
+      <IconButton size="large" color="inherit" sx={{ color: "white", padding: "3px" }} {...rest}>
         {children}
       </IconButton>
     </Link>
@@ -108,10 +103,7 @@ export function Header() {
   };
 
   return (
-    <AppBar
-      position="static"
-      sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
-    >
+    <AppBar position="static" sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
       <Container>
         <Toolbar
           disableGutters
@@ -176,9 +168,7 @@ export function Header() {
                   },
                   transition: "color 0.3s",
                   backgroundColor: (theme) =>
-                    pathname === `/${link}` || pathname === `${link}`
-                      ? theme.palette.primary.accent
-                      : null,
+                    pathname === `/${link}` || pathname === `${link}` ? theme.palette.primary.accent : null,
                   "&:hover": {
                     color: (theme) => theme.palette.textColor.menuHover,
                   },
@@ -196,9 +186,7 @@ export function Header() {
             }}
           >
             <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
-              <InstagramIcon
-                sx={{ color: (theme) => theme.palette.textColor.header }}
-              />
+              <InstagramIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
             </ExternalLink>
             <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
               <TelegramIcon
@@ -209,16 +197,10 @@ export function Header() {
               />
             </ExternalLink>
             <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
-              <FacebookRoundedIcon
-                sx={{ color: (theme) => theme.palette.textColor.header }}
-              />
+              <FacebookRoundedIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
             </ExternalLink>
           </Stack>
-          <GreenSwitch
-            checked={checked}
-            onChange={handleChange}
-            inputProps={{ "aria-label": "controlled" }}
-          />
+          <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
               <Box display="flex" direction="row">
@@ -234,8 +216,8 @@ export function Header() {
                     },
                   }}
                 >
-                  <PeopleAltOutlinedIcon sx={{mr: "12px"}}/>
-                  <Box sx={{ padding: "0" }}>{user.name}</Box>
+                  <PeopleAltOutlinedIcon sx={{ mr: "12px" }} />
+                  <Box sx={{ padding: "0" }}>{user.firstName}</Box>
                 </MenuItem>
                 <MenuItem
                   onClick={handleLogout}
@@ -259,10 +241,7 @@ export function Header() {
                     transition: "color 0.3s",
                     borderRadius: "6px",
 
-                    backgroundColor: (theme) =>
-                      pathname === "/login"
-                        ? theme.palette.primary.accent
-                        : null,
+                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.primary.accent : null),
                     "&:hover": {
                       // color: (theme) => (pathname === "/login" ? theme.palette.textColor.main : null),
                       backgroundColor: (theme) => theme.palette.primary.accent,
@@ -277,8 +256,7 @@ export function Header() {
                   }}
                 >
                   <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
               ))
@@ -294,15 +272,12 @@ export function Header() {
                     sx={{
                       px: "12px",
                       backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/"
-                          ? theme.palette.primary.accent
-                          : null,
+                        pathname === "/registration" || pathname === "/" ? theme.palette.primary.accent : null,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
 
                       "&:hover": {
-                        backgroundColor: (theme) =>
-                          theme.palette.primary.accent,
+                        backgroundColor: (theme) => theme.palette.primary.accent,
                       },
                     }}
                   >
@@ -443,8 +418,7 @@ export function Header() {
                       paddingRight: "6px",
                     }}
                   >
-                    {title.charAt(0).toUpperCase() +
-                      title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuMobItem>
               ))}

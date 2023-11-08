@@ -32,7 +32,7 @@ function handlePending(state) {
 }
 
 function handleLoginFulfilled(state, { payload }) {
-  state.user = { name: "User", ...payload.user };
+  state.user = { ...payload.user };
   state.token = payload.tokens.accessToken;
   state.refreshtoken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
@@ -40,7 +40,7 @@ function handleLoginFulfilled(state, { payload }) {
 }
 
 function handleRegisterFulfilled(state, { payload }) {
-  state.user = { name: "User", ...payload.user };
+  state.user = { ...payload.user };
   state.token = payload.tokens.accessToken;
   state.refreshtoken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
@@ -48,7 +48,7 @@ function handleRegisterFulfilled(state, { payload }) {
 }
 
 function handleRefreshFulfilled(state, { payload }) {
-  state.user = { name: "User", ...payload.user };
+  state.user = { ...payload.user };
   state.refreshtoken = payload.tokens.refreshToken;
   state.token = payload.tokens.accessToken;
   state.isLoggedIn = true;
