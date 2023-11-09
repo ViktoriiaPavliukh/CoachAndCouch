@@ -12,7 +12,6 @@ import {
   Switch,
   MenuItem,
 } from "@mui/material";
-
 import { Menu as MenuIcon } from "@mui/icons-material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
@@ -26,6 +25,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
 import { styled } from "@mui/material/styles";
+import LanguageSwitcher from "./LanguageSwitcher"
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -103,7 +103,10 @@ export function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
+    >
       <Container>
         <Toolbar
           disableGutters
@@ -168,7 +171,9 @@ export function Header() {
                   },
                   transition: "color 0.3s",
                   backgroundColor: (theme) =>
-                    pathname === `/${link}` || pathname === `${link}` ? theme.palette.primary.accent : null,
+                    pathname === `/${link}` || pathname === `${link}`
+                      ? theme.palette.primary.accent
+                      : null,
                   "&:hover": {
                     color: (theme) => theme.palette.textColor.menuHover,
                   },
@@ -186,7 +191,9 @@ export function Header() {
             }}
           >
             <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
-              <InstagramIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
+              <InstagramIcon
+                sx={{ color: (theme) => theme.palette.textColor.header }}
+              />
             </ExternalLink>
             <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
               <TelegramIcon
@@ -197,10 +204,19 @@ export function Header() {
               />
             </ExternalLink>
             <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
-              <FacebookRoundedIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
+              <FacebookRoundedIcon
+                sx={{ color: (theme) => theme.palette.textColor.header }}
+              />
             </ExternalLink>
           </Stack>
-          <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
+          <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
+            <LanguageSwitcher />
+            <GreenSwitch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
+          </Stack>
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
               <Box display="flex" direction="row">
@@ -241,7 +257,10 @@ export function Header() {
                     transition: "color 0.3s",
                     borderRadius: "6px",
 
-                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.primary.accent : null),
+                    backgroundColor: (theme) =>
+                      pathname === "/login"
+                        ? theme.palette.primary.accent
+                        : null,
                     "&:hover": {
                       // color: (theme) => (pathname === "/login" ? theme.palette.textColor.main : null),
                       backgroundColor: (theme) => theme.palette.primary.accent,
@@ -256,7 +275,8 @@ export function Header() {
                   }}
                 >
                   <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() +
+                      title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuItem>
               ))
@@ -272,12 +292,15 @@ export function Header() {
                     sx={{
                       px: "12px",
                       backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/" ? theme.palette.primary.accent : null,
+                        pathname === "/registration" || pathname === "/"
+                          ? theme.palette.primary.accent
+                          : null,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
 
                       "&:hover": {
-                        backgroundColor: (theme) => theme.palette.primary.accent,
+                        backgroundColor: (theme) =>
+                          theme.palette.primary.accent,
                       },
                     }}
                   >
@@ -418,7 +441,8 @@ export function Header() {
                       paddingRight: "6px",
                     }}
                   >
-                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
+                    {title.charAt(0).toUpperCase() +
+                      title.slice(1).toLowerCase()}
                   </Typography>
                 </MenuMobItem>
               ))}
