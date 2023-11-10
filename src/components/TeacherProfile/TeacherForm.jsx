@@ -13,7 +13,6 @@ import {
 import { getAdverts, postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
-
 import { v4 as uuidv4 } from "uuid";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
@@ -21,19 +20,17 @@ import { useEffect } from "react";
 
 const initialValues = {
   price: 0,
-  shortDescription: "",
+  description: "",
   spokenLanguages: [],
   teachingLanguages: [],
   imagePath: "",
-  hobbies: [],
 };
 
 const validationSchema = Yup.object({
   price: Yup.number().min(0).required("Price is required"),
-  shortDescription: Yup.string().required("Description is required"),
+  description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
   teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
-  hobbies: Yup.array(),
 });
 
 export const TeacherForm = () => {
@@ -52,7 +49,6 @@ export const TeacherForm = () => {
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      const hobbies = Array.isArray(values.hobbies) ? values.hobbies.map((hobby) => ({ hobby })) : [];
       const spokenLanguages = Array.isArray(values.spokenLanguages)
         ? values.spokenLanguages.map((language) => ({ language }))
         : [];
@@ -61,10 +57,9 @@ export const TeacherForm = () => {
         : [];
 
       const transformedData = {
-        shortDescription: values.shortDescription,
+        description: values.description,
         price: values.price,
         imagePath: values.imagePath,
-        hobbies,
         spokenLanguages,
         teachingLanguages,
       };
@@ -112,38 +107,18 @@ export const TeacherForm = () => {
 
           <TextField
             fullWidth
-            id="shortDescription"
-            name="shortDescription"
+            id="description"
+            name="description"
             label="Опис"
             variant="outlined"
             multiline
             rows={4}
-            value={formik.values.shortDescription}
+            value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.shortDescription && Boolean(formik.errors.shortDescription)}
-            helperText={formik.touched.shortDescription && formik.errors.shortDescription}
+            error={formik.touched.description && Boolean(formik.errors.description)}
+            helperText={formik.touched.description && formik.errors.description}
           />
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>Захоплення</InputLabel>
-            <Select
-              id="hobbies"
-              name="hobbies"
-              multiple
-              label="Захоплення"
-              value={formik.values.hobbies}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.hobbies && Boolean(formik.errors.hobbies)}
-              renderValue={(selected) => selected.join(", ")}
-            >
-              {hobbyOptions.map((hobby) => (
-                <MenuItem key={uuidv4()} value={hobby.title}>
-                  {hobby.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <FormControl fullWidth variant="outlined">
             <InputLabel>Мови, якими розмовляєте</InputLabel>
             <Select

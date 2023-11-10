@@ -1,5 +1,6 @@
 import { CardMedia } from "@mui/material";
 import mainImage from "@assets/templates/Frame 868.webp";
+
 export function MainImage({ src, ...props }) {
   return (
     <CardMedia
@@ -15,3 +16,5 @@ export function MainImage({ src, ...props }) {
     />
   );
 }
+
+// https://an-talla.co.uk/wp-content/uploads/2022/09/Santa-social-Edited.png
