@@ -3,18 +3,18 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
 import {
-  languageOptions,
+  // languageOptions,
   // ratingOptions,
   // lessonTimeOptions,
   hobbyOptions,
   // countryOptions,
   // specializationOptions,
 } from "@/defaults";
-import { getAdverts, postAdvert } from "@/redux/marketplace/adverts/operations";
+import { getAdverts, getLanguages, postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
 import { v4 as uuidv4 } from "uuid";
-import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { advertsSelector, languagesSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -39,6 +39,7 @@ export const TeacherForm = () => {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
+  const languages = useSelector(languagesSelector);
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);
@@ -69,6 +70,7 @@ export const TeacherForm = () => {
       // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
       dispatch(getAdverts());
+      dispatch(getLanguages());
 
       // console.log(user.id);
     },
@@ -132,11 +134,12 @@ export const TeacherForm = () => {
               error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
               renderValue={(selected) => selected.join(", ")}
             >
-              {languageOptions.map((language) => (
-                <MenuItem key={language.code} value={language.title}>
-                  {language.title}
-                </MenuItem>
-              ))}
+              {languages &&
+                languages.map((language) => (
+                  <MenuItem key={uuidv4()} value={language.language}>
+                    {language.language}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
 
@@ -153,9 +156,9 @@ export const TeacherForm = () => {
               error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
               renderValue={(selected) => selected.join(", ")}
             >
-              {languageOptions.map((language) => (
-                <MenuItem key={uuidv4()} value={language.title}>
-                  {language.title}
+              {languages.map((language) => (
+                <MenuItem key={uuidv4()} value={language.language}>
+                  {language.language}
                 </MenuItem>
               ))}
             </Select>

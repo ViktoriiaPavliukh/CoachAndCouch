@@ -16,10 +16,8 @@ import { DescriptionImage } from "./DescriptionImage";
 import { Filter } from "./Filter";
 import { TeacherCard } from "./TeacherCard";
 import {
-  languageOptions,
   ratingOptions,
   lessonTimeOptions,
-  hobbyOptions,
   countryOptions,
   specializationOptions,
   //teacherCardData,
@@ -27,8 +25,8 @@ import {
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts } from "@/redux/marketplace/adverts/operations";
+import { advertsSelector, languagesSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { getAdverts, getLanguages } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 
 export function Preview() {
@@ -40,8 +38,11 @@ export function Preview() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAdverts());
+    dispatch(getLanguages());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
+  const languages = useSelector(languagesSelector);
+  // console.log(languages);
   // console.log(adverts);
   let [page, setPage] = useState(1);
   const PER_PAGE = 9;
@@ -176,12 +177,12 @@ export function Preview() {
             rowGap: { xs: "16px", md: "20px" },
           }}
         >
-          <Filter options={languageOptions} label="МОВА" />
-          <Filter options={ratingOptions} label="РЕЙТИНГ" />
-          <Filter options={lessonTimeOptions} label="ЧАС УРОКУ" />
-          <Filter options={specializationOptions} label="СПЕЦІАЛІЗАЦІЯ" />
-          <Filter options={countryOptions} label="КРАЇНА" />
-          <Filter options={hobbyOptions} label="ХОБІ" />
+          <Filter options={languages} typeoption="language" label="МОВА" />
+          <Filter options={ratingOptions} typeoption="title" label="РЕЙТИНГ" />
+          <Filter options={lessonTimeOptions} typeoption="title" label="ЧАС УРОКУ" />
+          <Filter options={specializationOptions} typeoption="title" label="СПЕЦІАЛІЗАЦІЯ" />
+          <Filter options={countryOptions} typeoption="title" label="КРАЇНА" />
+          {/* <Filter options={hobbyOptions} label="ХОБІ" /> */}
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
           <Grid

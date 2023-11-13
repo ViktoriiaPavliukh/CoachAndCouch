@@ -37,15 +37,25 @@ export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", a
 
 export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
   try {
-    console.log(thunkAPI.getState());
+    // console.log(thunkAPI.getState());
     const userToken = thunkAPI.getState().auth.token;
-    console.log(userToken);
+    // console.log(userToken);
     token.set(userToken);
     const { data } = await privateAPI.post("/adverts", advertData);
     // console.log("Advertisement created:", data);
     return data;
   } catch (error) {
     console.error("Error creating advertisement:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const getLanguages = createAsyncThunk("adverts/getLanguages", async (_, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get("/languages");
+    return data;
+  } catch (error) {
+    console.error("Error get languages:", error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });

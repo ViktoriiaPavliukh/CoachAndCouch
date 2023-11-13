@@ -4,16 +4,17 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
 const filterOptions = createFilterOptions({
   matchFrom: "start",
-  stringify: (option) => option.title,
+  stringify: (option) => option.typeoption,
 });
 
-export const Filter = ({ options, label }) => {
+export const Filter = ({ options, typeoption, label }) => {
   // console.log(options);
   return (
     <Autocomplete
       id={`${label}-filter`}
       options={options}
-      getOptionLabel={(option) => option.title}
+      typeoption={typeoption}
+      getOptionLabel={(options) => options[typeoption]}
       filterOptions={filterOptions}
       sx={{ width: { md: 175, xs: 164 }, fontSize: "10px" }}
       renderInput={(params) => <TextField {...params} label={label} />}
@@ -24,10 +25,11 @@ export const Filter = ({ options, label }) => {
 Filter.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
+      typeoption: PropTypes.string,
       time: PropTypes.number,
     })
   ),
+  typeoption: PropTypes.string,
   label: PropTypes.string,
   getOptionLabel: PropTypes.string,
 };
