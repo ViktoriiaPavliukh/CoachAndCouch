@@ -1,15 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteAdvertsById, getAdverts, postAdvert } from "./operations";
+import { deleteAdvertsById, getAdverts, getLanguages, postAdvert } from "./operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
   initialState: {
+    languages: [],
     items: [],
     isLoading: false,
     error: null,
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getLanguages.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.languages = action.payload;
+      })
       .addCase(getAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;

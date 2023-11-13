@@ -25,12 +25,12 @@ export const languages = [
 //   { id: '5', label: 'Тварини' },
 //   { id: '6', label: 'Машини' },
 // ];
-export const languageOptions = [
-  { title: "Англійська", code: "en" },
-  { title: "Іспанська", code: "es" },
-  { title: "Французька", code: "fr" },
-  // Додайте більше варіантів мови
-];
+// export const languageOptions = [
+//   { title: "Англійська", code: "en" },
+//   { title: "Іспанська", code: "es" },
+//   { title: "Французька", code: "fr" },
+//   // Додайте більше варіантів мови
+// ];
 
 export const ratingOptions = [
   { title: "5 зірок", rating: 5 },
