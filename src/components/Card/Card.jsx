@@ -89,7 +89,6 @@ export function Card() {
         <Box
           sx={{
             display: "flex",
-
             gap: "24px",
             mb: "40px",
             flexDirection: { xs: "column", md: "row" },
@@ -113,7 +112,7 @@ export function Card() {
                 p: 0,
               }}
             >
-              <Typography variant="posterName">{teacher.user.name}</Typography>
+              <Typography variant="posterName">{teacher.user.firstName}</Typography>
               <img src={countryLogo} alt="country flag" style={{ width: "52px", height: "36px", marginLeft: "4px" }} />
               <MessageBtn sx={{ display: { xs: "none", lg: "block" } }} />
               <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} />
@@ -174,13 +173,14 @@ export function Card() {
           <Typography variant="posterTitle" component="p" color="grey.600" mb="36px">
             Про мене
           </Typography>
-          <Typography variant="posterDescription">{teacher.shortDescription}</Typography>
+          <Typography variant="posterDescription">{teacher.description}</Typography>
         </Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: { xs: "column-reverse", lg: "row" },
             width: "100%",
+            gap: "5%"
           }}
         >
           <Box
@@ -197,7 +197,7 @@ export function Card() {
           </Box>
           <Box
             sx={{
-              width: { xs: "100%", lg: "438px" },
+              width: { xs: "100%", lg: "50%" },
               display: "flex",
               flexDirection: "column",
               ml: "auto",
@@ -215,7 +215,7 @@ export function Card() {
               <Button type="button" variant="contained" sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}>
                 <Typography variant="posterButton">Пробний урок</Typography>
               </Button>
-              <Typography variant="posterPrice">{teacher.price} $</Typography>
+              <Typography variant="posterPrice">{Math.ceil(teacher.price)} $</Typography>
             </Box>
           </Box>
         </Box>
