@@ -19,14 +19,18 @@ import {
   ratingOptions,
   lessonTimeOptions,
   countryOptions,
-  specializationOptions,
+  // specializationOptions,
   //teacherCardData,
 } from "@/defaults";
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector, languagesSelector } from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts, getLanguages } from "@/redux/marketplace/adverts/operations";
+import {
+  advertsSelector,
+  languagesSelector,
+  specializationsSelector,
+} from "@/redux/marketplace/adverts/advertsSelector";
+import { getAdverts, getLanguages, getSpecializations } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 
 export function Preview() {
@@ -39,9 +43,11 @@ export function Preview() {
   useEffect(() => {
     dispatch(getAdverts());
     dispatch(getLanguages());
+    dispatch(getSpecializations());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
   const languages = useSelector(languagesSelector);
+  const specializations = useSelector(specializationsSelector);
   // console.log(languages);
   // console.log(adverts);
   let [page, setPage] = useState(1);
@@ -180,7 +186,7 @@ export function Preview() {
           <Filter options={languages} typeoption="language" label="МОВА" />
           <Filter options={ratingOptions} typeoption="title" label="РЕЙТИНГ" />
           <Filter options={lessonTimeOptions} typeoption="title" label="ЧАС УРОКУ" />
-          <Filter options={specializationOptions} typeoption="title" label="СПЕЦІАЛІЗАЦІЯ" />
+          <Filter options={specializations} typeoption="specialization" label="СПЕЦІАЛІЗАЦІЯ" />
           <Filter options={countryOptions} typeoption="title" label="КРАЇНА" />
           {/* <Filter options={hobbyOptions} label="ХОБІ" /> */}
         </Stack>

@@ -59,3 +59,13 @@ export const getLanguages = createAsyncThunk("adverts/getLanguages", async (_, t
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+
+export const getSpecializations = createAsyncThunk("adverts/getSpecializations", async (_, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get("/specializations");
+    return data;
+  } catch (error) {
+    console.error("Error get specializations:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
