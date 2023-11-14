@@ -8,8 +8,8 @@ const authSlice = createSlice({
     user: {},
     isLoading: true,
     isLoggedIn: false,
-    token: null,
-    refreshtoken: null,
+    refreshToken: null,
+    accessToken: null,
   },
   extraReducers: (builder) =>
     builder
@@ -33,31 +33,32 @@ function handlePending(state) {
 
 function handleLoginFulfilled(state, { payload }) {
   state.user = { ...payload.user };
-  state.token = payload.tokens.accessToken;
-  state.refreshtoken = payload.tokens.refreshToken;
+  state.accessToken = payload.tokens.accessToken;
+  state.refreshToken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRegisterFulfilled(state, { payload }) {
   state.user = { ...payload.user };
-  state.token = payload.tokens.accessToken;
-  state.refreshtoken = payload.tokens.refreshToken;
+  state.accessToken = payload.tokens.accessToken;
+  state.refreshToken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleRefreshFulfilled(state, { payload }) {
   state.user = { ...payload.user };
-  state.refreshtoken = payload.tokens.refreshToken;
-  state.token = payload.tokens.accessToken;
+  state.refreshToken = payload.tokens.refreshToken;
+  state.accessToken = payload.tokens.accessToken;
   state.isLoggedIn = true;
   state.isLoading = false;
 }
 
 function handleLogoutFulfilled(state) {
   state.user = {};
-  state.token = null;
+  state.accessToken = null;
+  // state.refreshToken = null;
   state.isLoggedIn = false;
   state.isLoading = false;
 }

@@ -5,11 +5,12 @@ import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slice";
 import { advertsReducer } from "./marketplace/adverts/advertsSlice";
 import { initReducer } from "./init/initSlice";
+import { adminReducer } from "./admin/adminSlice";
 
 const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ["refreshtoken"],
+  whitelist: ["accessToken", "refreshToken"],
 };
 
 const themePersistConfig = {
@@ -24,6 +25,7 @@ export const store = configureStore({
     theme: persistedTheme,
     auth: persistedAuth,
     adverts: advertsReducer,
+    admin: adminReducer,
     init: initReducer,
   },
   middleware: (getDefaultMiddleware) =>

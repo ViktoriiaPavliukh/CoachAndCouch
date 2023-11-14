@@ -16,7 +16,7 @@ export const token = {
 export const refresh = async (authorization) => {
   token.set(authorization);
   const { data } = await privateAPI.post("/auth/refresh", { headers: { Authorization: `Bearer ${authorization}` } });
-  token.set(data.tokens.accesToken);
+  // token.set(data.tokens.accessToken);
   token.set(data.tokens.refreshToken);
   return data;
 };
