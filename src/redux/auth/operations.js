@@ -9,7 +9,7 @@ export const registerUser = createAsyncThunk("/users/register", register);
 export const refreshUser = createAsyncThunk("/users/refresh", refresh);
 
 export const logoutUser = createAsyncThunk("/users/logout", async (_, thunkAPI) => {
-  const persistToken = thunkAPI.getState().auth.refreshtoken;
+  const persistToken = thunkAPI.getState().auth.refreshToken;
   token.set(persistToken);
   const { data } = await privateAPI.post("/auth/logout");
   console.log("exit");

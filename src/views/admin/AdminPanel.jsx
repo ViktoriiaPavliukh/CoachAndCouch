@@ -21,7 +21,8 @@ import * as React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
+import { getUsersAsAdmin } from "@/redux/admin/operations";
+import { usersAsAdminSelector } from "@/redux/admin/adminSelector";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -34,11 +35,7 @@ function TabPanel(props) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -65,13 +62,16 @@ function VerticalTabs() {
 
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+
   console.log(token);
   useEffect(() => {
     dispatch(getAdverts());
+    dispatch(getUsersAsAdmin());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
   console.log(adverts);
-
+  const users = useSelector(usersAsAdminSelector);
+  console.log(users);
   return (
     <Box
       sx={{
@@ -118,9 +118,9 @@ function VerticalTabs() {
                   <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     Advert ID
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                    User ID{" "}
-                  </TableCell>
+                  {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    User ID
+                  </TableCell> */}
                   <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     User name
                   </TableCell>
@@ -138,14 +138,14 @@ function VerticalTabs() {
                   <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     Price
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     Hobbies
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     Description
                   </TableCell>
                   <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                    Image Path
+                    Photo
                   </TableCell>
                   <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     Date create
@@ -164,15 +164,16 @@ function VerticalTabs() {
                     <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
                       {advert.id}
                     </TableCell>
-                    <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
+                    {/* <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
                       {advert.user.id}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                      {advert.user.name}
+                      {advert.user.firstName}&nbsp;{advert.user.lastName ? advert.user.lastName : ""}
                     </TableCell>
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                       {advert.user.email}
                     </TableCell>
+
                     <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
                       {advert.teachingLanguages && (
                         <ul>
@@ -194,7 +195,7 @@ function VerticalTabs() {
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                       {advert.price}
                     </TableCell>
-                    <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
+                    {/* <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
                       {advert.hobbies && (
                         <ul style={{ textAlign: "left" }}>
                           {advert.hobbies.map(({ hobby }) => (
@@ -202,12 +203,19 @@ function VerticalTabs() {
                           ))}
                         </ul>
                       )}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell align="center" sx={{ width: "400px" }}>
-                      {advert.shortDescription}
+                      {advert.description}
                     </TableCell>
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                      {advert.imagePath}
+                      <img
+                        src={advert.imagePath}
+                        width="100"
+                        height="80"
+                        style={{
+                          objectFit: "cover",
+                        }}
+                      />
                     </TableCell>
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                       {advert.createdAt}
@@ -226,7 +234,107 @@ function VerticalTabs() {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <Box>
+          <h2>Users</h2>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    User ID
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    User name
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    User email
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Registered At
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Last visit
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Photo
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    IsDeleted ?
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Advert
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Feedbacks
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Delete
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    Edit
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {users.map((user) => (
+                  <TableRow key={uuidv4()}>
+                    <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
+                      {user.id}
+                    </TableCell>
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      {user.firstName}&nbsp;{user.lastName ? user.lastName : ""}
+                    </TableCell>
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      {user.email}
+                    </TableCell>
+                    <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
+                      {user.registeredAt}
+                    </TableCell>
+                    <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
+                      {user.lastVisit}
+                    </TableCell>
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      <img
+                        src={user.photoPath}
+                        width="100"
+                        height="80"
+                        style={{
+                          objectFit: "cover",
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell align="center" sx={{ width: "400px" }}>
+                      {`${user.isDeleted}`}
+                    </TableCell>
+
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      {user.advert ? "yes" : "no"}
+                    </TableCell>
+
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      {user.feedbacks
+                        ? user.feedbacks && (
+                            <ul>
+                              {user.feedbacks.map(({ feedback }) => (
+                                <li key={uuidv4()}>{feedback}</li>
+                              ))}
+                            </ul>
+                          )
+                        : null}
+                    </TableCell>
+
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      <Button onClick={() => dispatch(deleteAdvertsById(user.id))}>Delete</Button>
+                    </TableCell>
+                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      EDIT
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three
