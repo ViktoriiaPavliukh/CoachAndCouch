@@ -1,7 +1,7 @@
 import axios from "axios";
 import { token } from "./privateAPI";
 
-const baseURL = "https://couchandcoach.onrender.com";
+const baseURL = "https://coachandcouch.onrender.com";
 
 export const publicAPI = axios.create({ baseURL });
 

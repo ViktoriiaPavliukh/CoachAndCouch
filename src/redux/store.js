@@ -6,6 +6,7 @@ import { authReducer } from "./auth/slice";
 import { advertsReducer } from "./marketplace/adverts/advertsSlice";
 import { initReducer } from "./init/initSlice";
 import { adminReducer } from "./admin/adminSlice";
+import { userReducer } from "./user/userSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -27,6 +28,7 @@ export const store = configureStore({
     adverts: advertsReducer,
     admin: adminReducer,
     init: initReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

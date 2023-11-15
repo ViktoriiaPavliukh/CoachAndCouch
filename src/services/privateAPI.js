@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "https://couchandcoach.onrender.com";
+const baseURL = "https://coachandcouch.onrender.com";
 
 export const privateAPI = axios.create({ baseURL });
 
