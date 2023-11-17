@@ -8,7 +8,6 @@ const filterOptions = createFilterOptions({
 });
 
 export const Filter = ({ options, typeoption, label }) => {
-  // console.log(options);
   return (
     <Autocomplete
       id={`${label}-filter`}
@@ -16,7 +15,7 @@ export const Filter = ({ options, typeoption, label }) => {
       typeoption={typeoption}
       getOptionLabel={(options) => options[typeoption]}
       filterOptions={filterOptions}
-      sx={{ width: { md: 175, xs: 164 }, fontSize: "10px" }}
+      sx={{ minWidth: { md: 315, xs: 180 }, fontSize: "10px" }}
       renderInput={(params) => <TextField {...params} label={label} />}
     />
   );
