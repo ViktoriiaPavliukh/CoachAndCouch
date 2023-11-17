@@ -68,9 +68,14 @@ export function ReviewList({ elements }) {
             gap: 5,
           }}
         >
-          {" "}
-          <label>Ім&apos;я</label>
-          <input type="text" style={{ height: "30px", borderRadius: "4px", padding: "12px" }} name="name" />
+          <label>Оцініть від 1 до 5:</label>
+          <input
+            type="number"
+            style={{ height: "30px", borderRadius: "4px", padding: "12px" }}
+            name="name"
+            min="1"
+            max="5"
+          />
         </div>
 
         <div
