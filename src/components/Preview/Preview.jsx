@@ -183,7 +183,7 @@ export function Preview() {
             rowGap: { xs: "16px", md: "20px" },
           }}
         >
-          <Filter options={languages} typeoption="language" label="МОВА" />
+          <Filter options={languages} typeoption="languageEn" label="МОВА" />
           <Filter options={ratingOptions} typeoption="title" label="РЕЙТИНГ" />
           <Filter options={lessonTimeOptions} typeoption="title" label="ЧАС УРОКУ" />
           <Filter options={specializations} typeoption="specialization" label="СПЕЦІАЛІЗАЦІЯ" />

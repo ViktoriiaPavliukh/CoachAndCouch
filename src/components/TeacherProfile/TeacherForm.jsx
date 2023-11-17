@@ -2,14 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
-import {
-  // languageOptions,
-  // ratingOptions,
-  // lessonTimeOptions,
-  hobbyOptions,
-  // countryOptions,
-  // specializationOptions,
-} from "@/defaults";
+import // languageOptions,
+// ratingOptions,
+// lessonTimeOptions,
+// hobbyOptions,
+// countryOptions,
+// specializationOptions,
+"@/defaults";
 import { getAdverts, getLanguages, postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
@@ -71,7 +70,6 @@ export const TeacherForm = () => {
       dispatch(postAdvert(transformedData));
       dispatch(getAdverts());
       dispatch(getLanguages());
-
       // console.log(user.id);
     },
 
@@ -90,108 +88,108 @@ export const TeacherForm = () => {
     // },
   });
 
-  return token
-    ? token && (
-        <form onSubmit={formik.handleSubmit}>
-          <TextField
-            fullWidth
-            id="price"
-            name="price"
-            label="Ціна"
-            variant="outlined"
-            type="number"
-            value={formik.values.price}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.price && Boolean(formik.errors.price)}
-            helperText={formik.touched.price && formik.errors.price}
-          />
+  return !token ? (
+    <SignUp />
+  ) : (
+    <form onSubmit={formik.handleSubmit}>
+      <TextField
+        fullWidth
+        id="price"
+        name="price"
+        label="Ціна"
+        variant="outlined"
+        type="number"
+        value={formik.values.price}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.price && Boolean(formik.errors.price)}
+        helperText={formik.touched.price && formik.errors.price}
+      />
 
-          <TextField
-            fullWidth
-            id="description"
-            name="description"
-            label="Опис"
-            variant="outlined"
-            multiline
-            rows={4}
-            value={formik.values.description}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.description && Boolean(formik.errors.description)}
-            helperText={formik.touched.description && formik.errors.description}
-          />
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>Мови, якими розмовляєте</InputLabel>
-            <Select
-              id="spokenLanguages"
-              name="spokenLanguages"
-              multiple
-              label="Мови, якими розмовляєте"
-              value={formik.values.spokenLanguages}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
-              renderValue={(selected) => selected.join(", ")}
-            >
-              {languages &&
-                languages.map((language) => (
-                  <MenuItem key={uuidv4()} value={language.language}>
-                    {language.language}
-                  </MenuItem>
-                ))}
-            </Select>
-          </FormControl>
+      <TextField
+        fullWidth
+        id="description"
+        name="description"
+        label="Опис"
+        variant="outlined"
+        multiline
+        rows={4}
+        value={formik.values.description}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.description && Boolean(formik.errors.description)}
+        helperText={formik.touched.description && formik.errors.description}
+      />
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Мови, якими розмовляєте</InputLabel>
+        <Select
+          id="spokenLanguages"
+          name="spokenLanguages"
+          multiple
+          label="Мови, якими розмовляєте"
+          value={formik.values.spokenLanguages}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
+          renderValue={(selected) => selected.join(", ")}
+        >
+          {languages &&
+            languages.map((language) => (
+              <MenuItem key={uuidv4()} value={language.language}>
+                {language.language}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
 
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>Мови викладання</InputLabel>
-            <Select
-              id="teachingLanguages"
-              name="teachingLanguages"
-              multiple
-              label="Мови викладання"
-              value={formik.values.teachingLanguages}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
-              renderValue={(selected) => selected.join(", ")}
-            >
-              {languages.map((language) => (
-                <MenuItem key={uuidv4()} value={language.language}>
-                  {language.language}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Мови викладання</InputLabel>
+        <Select
+          id="teachingLanguages"
+          name="teachingLanguages"
+          multiple
+          label="Мови викладання"
+          value={formik.values.teachingLanguages}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
+          renderValue={(selected) => selected.join(", ")}
+        >
+          {languages.map((language) => (
+            <MenuItem key={uuidv4()} value={language.language}>
+              {language.language}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
-          <TextField
-            fullWidth
-            id="imagePath"
-            name="imagePath"
-            label="Додати фото"
-            variant="outlined"
-            value={formik.values.imagePath}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.imagePath && Boolean(formik.errors.imagePath)}
-            helperText={formik.touched.imagePath && formik.errors.imagePath}
-          />
-          <Stack
-            direction="row"
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              mt: "40px",
-            }}
-          >
-            <Button variant="contained" type="submit">
-              Опублікувати
-            </Button>
-            <Button variant="outlined">Зберегти чернетку</Button>
-          </Stack>
-        </form>
-      )
-    : !token && <SignUp />;
+      <TextField
+        fullWidth
+        id="imagePath"
+        name="imagePath"
+        label="Додати фото"
+        variant="outlined"
+        value={formik.values.imagePath}
+        onChange={formik.handleChange}
+        onBlur={formik.handleBlur}
+        error={formik.touched.imagePath && Boolean(formik.errors.imagePath)}
+        helperText={formik.touched.imagePath && formik.errors.imagePath}
+      />
+      <Stack
+        direction="row"
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          mt: "40px",
+        }}
+      >
+        <Button variant="contained" type="submit">
+          Опублікувати
+        </Button>
+        <Button variant="outlined">Зберегти чернетку</Button>
+      </Stack>
+    </form>
+  );
 };
 
 // import { useState } from "react";
