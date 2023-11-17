@@ -15,13 +15,7 @@ import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material"
 import { DescriptionImage } from "./DescriptionImage";
 import { Filter } from "./Filter";
 import { TeacherCard } from "./TeacherCard";
-import {
-  ratingOptions,
-  lessonTimeOptions,
-  countryOptions,
-  // specializationOptions,
-  //teacherCardData,
-} from "@/defaults";
+import { lessonTimeOptions, countryOptions } from "@/defaults";
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,7 +24,11 @@ import {
   languagesSelector,
   specializationsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts, getLanguages, getSpecializations } from "@/redux/marketplace/adverts/operations";
+import {
+  getAdverts,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 
 export function Preview() {
@@ -48,8 +46,7 @@ export function Preview() {
   const adverts = useSelector(advertsSelector);
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
-  // console.log(languages);
-  // console.log(adverts);
+  console.log(specializations);
   let [page, setPage] = useState(1);
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
@@ -125,21 +122,33 @@ export function Preview() {
             >
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
                 </ListItemIcon>
-                <ListItemText primary="Понад 1000 викладачів" sx={listItemStyles} />
+                <ListItemText
+                  primary="Понад 1000 викладачів"
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
                 </ListItemIcon>
                 <ListItemText primary="Понад 20 мов" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
                 </ListItemIcon>
-                <ListItemText primary="Професійні викладачі та носії мови" sx={listItemStyles} />
+                <ListItemText
+                  primary="Професійні викладачі та носії мови"
+                  sx={listItemStyles}
+                />
               </ListItem>
             </List>
             <Button
@@ -153,11 +162,15 @@ export function Preview() {
                 transition: "background-color 0.3s",
                 backgroundColor: (theme) => theme.palette.buttonColor.main,
                 "&:hover": {
-                  backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.darkHover,
                 },
               }}
             >
-              <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
+              <Typography
+                variant="posterButton"
+                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+              >
                 Дізнатися більше
               </Typography>
             </Button>
@@ -176,7 +189,7 @@ export function Preview() {
           sx={{
             mb: { lg: "43px", md: "58px", xs: "36px" },
             display: "flex",
-            maxWidth: { xs: "100%", md: "585px", sm: "500px", lg: "100%" },
+            maxWidth: { xs: "100%", md: "100%", sm: "500px", lg: "100%" },
             justifyContent: "center",
             flexWrap: { xs: "wrap", lg: "nowrap" },
             columnGap: { xs: "16px", md: "30px", lg: "24px" },
@@ -184,11 +197,13 @@ export function Preview() {
           }}
         >
           <Filter options={languages} typeoption="language" label="МОВА" />
-          <Filter options={ratingOptions} typeoption="title" label="РЕЙТИНГ" />
-          <Filter options={lessonTimeOptions} typeoption="title" label="ЧАС УРОКУ" />
-          <Filter options={specializations} typeoption="specialization" label="СПЕЦІАЛІЗАЦІЯ" />
           <Filter options={countryOptions} typeoption="title" label="КРАЇНА" />
-          {/* <Filter options={hobbyOptions} label="ХОБІ" /> */}
+          <Filter options={lessonTimeOptions} typeoption="title" label="ЦІНА" />
+          <Filter
+            options={specializations}
+            typeoption="specialization"
+            label="СПЕЦІАЛІЗАЦІЯ"
+          />
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
           <Grid
