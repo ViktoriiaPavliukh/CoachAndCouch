@@ -39,10 +39,10 @@ export const ratingOptions = [
   // Додайте більше варіантів рейтингу
 ];
 
-export const lessonTimeOptions = [
-  { title: "30 хвилин", time: 30 },
-  { title: "1 година", time: 60 },
-  { title: "2 години", time: 120 },
+export const priceOptions = [
+  { title: "до 10$", price: 10 },
+  { title: "від 10$ до 20$", price: 20 },
+  { title: "від 20$", price: 50 },
   // Додайте більше варіантів часу уроку
 ];
 
@@ -77,46 +77,55 @@ export const teacherCardData = [
   {
     id: 2,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 3,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 4,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 5,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 6,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 7,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 8,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 9,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
   {
     id: 10,
     picture: "teacher2.jpg",
-    description: "Certified language instructor fluent in English, Spanish, and French.",
+    description:
+      "Certified language instructor fluent in English, Spanish, and French.",
   },
 ];
