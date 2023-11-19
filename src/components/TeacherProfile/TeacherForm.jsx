@@ -64,44 +64,30 @@ export const TeacherForm = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      const spokenLanguages = Array.isArray(values.spokenLanguages)
-        ? values.spokenLanguages.map((language) => ({ language: language }))
-        : [];
-      const teachingLanguages = Array.isArray(values.teachingLanguages)
-        ? values.teachingLanguages.map((language) => ({ language: language }))
-        : [];
+    onSubmit: async (values) => {
+      const spokenLanguages = values.spokenLanguages.map((language) => ({
+        languageEn: language.languageEn,
+        languageUa: language.languageUa,
+      }));
+
+      const teachingLanguages = values.teachingLanguages.map((language) => ({
+        languageEn: language.languageEn,
+        languageUa: language.languageUa,
+      }));
 
       const transformedData = {
         description: values.description,
         price: values.price,
-        imagePath: values.imagePath,
         spokenLanguages,
         teachingLanguages,
+        image: values.imagePath,
       };
 
-      console.log(transformedData);
-
-      // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
       dispatch(getAdverts());
       dispatch(getLanguages());
-      // console.log(user.id);
+      console.log(transformedData);
     },
-
-    // onSubmit: (values) => {
-    //   console.log(values);
-    //   dispatch(
-    //     postAdvert({
-    //       shortDescription: "Some text",
-    //       price: 0.97,
-    //       imagePath: "image789.jpg",
-    //       hobbies: [{ hobby: "Футбол" }, { hobby: "Кодування" }, { hobby: "Розробка" }],
-    //       spokenLanguages: [{ language: "polski" }],
-    //       teachingLanguages: [{ language: "polski" }],
-    //     })
-    //   );
-    // },
   });
 
   return !token ? (
@@ -138,7 +124,7 @@ export const TeacherForm = () => {
       />
       <FormControl fullWidth variant="outlined">
         <InputLabel>Мови, якими розмовляєте</InputLabel>
-        <Select
+        {/* <Select
           id="spokenLanguages"
           name="spokenLanguages"
           multiple
@@ -181,6 +167,83 @@ export const TeacherForm = () => {
               {language.languageUa}
             </MenuItem>
           ))}
+        </Select> */}
+        <Select
+          id="spokenLanguages"
+          name="spokenLanguages"
+          multiple
+          label="Spoken Languages"
+          value={formik.values.spokenLanguages}
+          onChange={(event) => {
+            formik.setFieldValue(
+              "spokenLanguages",
+              event.target.value.map((language) => ({
+                languageEn: language.languageEn,
+                languageUa: language.languageUa,
+              }))
+            );
+          }}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.spokenLanguages &&
+            Boolean(formik.errors.spokenLanguages)
+          }
+          renderValue={(selected) =>
+            selected.map((language) => language.languageUa).join(", ")
+          }
+        >
+          {languages &&
+            languages.map((language) => (
+              <MenuItem
+                key={uuidv4()}
+                value={{
+                  languageEn: language.languageEn,
+                  languageUa: language.languageUa,
+                }}
+              >
+                {`${language.languageUa} (${language.languageEn})`}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Teaching Languages</InputLabel>
+        <Select
+          id="teachingLanguages"
+          name="teachingLanguages"
+          multiple
+          label="Teaching Languages"
+          value={formik.values.teachingLanguages}
+          onChange={(event) => {
+            formik.setFieldValue(
+              "teachingLanguages",
+              event.target.value.map((language) => ({
+                languageEn: language.languageEn,
+                languageUa: language.languageUa,
+              }))
+            );
+          }}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.teachingLanguages &&
+            Boolean(formik.errors.teachingLanguages)
+          }
+          renderValue={(selected) =>
+            selected.map((language) => language.languageUa).join(", ")
+          }
+        >
+          {languages &&
+            languages.map((language) => (
+              <MenuItem
+                key={uuidv4()}
+                value={{
+                  languageEn: language.languageEn,
+                  languageUa: language.languageUa,
+                }}
+              >
+                {`${language.languageUa} (${language.languageEn})`}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
 
