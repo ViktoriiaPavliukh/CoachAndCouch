@@ -112,7 +112,7 @@ export function Card() {
                 p: 0,
               }}
             >
-              <Typography variant="posterName">{teacher.user.firstName}</Typography>
+              <Typography variant="posterName">{teacher.user.firstName + " " + teacher.user.lastName}</Typography>
               <img src={countryLogo} alt="country flag" style={{ width: "52px", height: "36px", marginLeft: "4px" }} />
               <MessageBtn sx={{ display: { xs: "none", lg: "block" } }} />
               <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} />

@@ -39,7 +39,7 @@ export function TeacherCard({ teacher }) {
               // variant="posterDescription"
               sx={{ fontWeight: "700", letterSpacing: "-0.003px" }}
             >
-              {teacher.user.firstName}
+              {teacher.user.firstName + " " + teacher.user.lastName}
             </Typography>
             <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
               <Box
