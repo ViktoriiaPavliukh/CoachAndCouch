@@ -25,7 +25,7 @@ import {
   languagesSelector,
   specializationsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts, getLanguages, getSpecializations } from "@/redux/marketplace/adverts/operations";
+import { getAdverts, getCountries, getLanguages, getSpecializations } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 
 export function Preview() {
@@ -39,6 +39,7 @@ export function Preview() {
     dispatch(getAdverts());
     dispatch(getLanguages());
     dispatch(getSpecializations());
+    dispatch(getCountries());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
   const languages = useSelector(languagesSelector);
@@ -49,7 +50,7 @@ export function Preview() {
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
   const items = usePagination(adverts, PER_PAGE);
-  // console.log(items);
+  console.log(countries);
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
