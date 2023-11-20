@@ -16,7 +16,7 @@ import {
   advertsSelector,
   countriesSelector,
   languagesSelector,
-  specializationsSelector,
+  // specializationsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -26,17 +26,17 @@ const initialValues = {
   description: "",
   spokenLanguages: [],
   teachingLanguages: [],
-  specializations: [],
+  // specializations: [],
   country: {},
   image: null,
 };
 
 const validationSchema = Yup.object({
-  price: Yup.number().min(0).required("Price is required"),
+  price: Yup.number().integer().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
   teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
-  specializations: Yup.array().required("Specialization is required"),
+  // specializations: Yup.array().required("Specialization is required"),
   country: Yup.object().required("Country is required"),
   image: Yup.mixed().required("Select image"),
 });
@@ -52,7 +52,7 @@ export const TeacherForm = () => {
   }, [dispatch]);
   const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
   const languages = useSelector(languagesSelector);
-  const specializations = useSelector(specializationsSelector);
+  // const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
   console.log(languages);
   useEffect(() => {
@@ -83,7 +83,7 @@ export const TeacherForm = () => {
       transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages));
       transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages));
       transformedData.append("country", JSON.stringify(values.country));
-      transformedData.append("specializations", JSON.stringify(values.specializations));
+      // transformedData.append("specializations", JSON.stringify(values.specializations));
       transformedData.append("image", values.image);
 
       dispatch(postAdvert(transformedData));
@@ -238,7 +238,7 @@ export const TeacherForm = () => {
         </Select>
       </FormControl>
 
-      <FormControl fullWidth variant="outlined">
+      {/* <FormControl fullWidth variant="outlined">
         <InputLabel>Спеціалізація</InputLabel>
         <Select
           id="specializations"
@@ -272,7 +272,7 @@ export const TeacherForm = () => {
               </MenuItem>
             ))}
         </Select>
-      </FormControl>
+      </FormControl> */}
 
       <FormControl fullWidth variant="outlined">
         <InputLabel>Країна</InputLabel>

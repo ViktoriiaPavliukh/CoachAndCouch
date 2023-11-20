@@ -15,7 +15,7 @@ import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material"
 import { DescriptionImage } from "./DescriptionImage";
 import { Filter } from "./Filter";
 import { TeacherCard } from "./TeacherCard";
-import { priceOptions, countryOptions } from "@/defaults";
+import { priceOptions } from "@/defaults";
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";

@@ -43,7 +43,7 @@ const advertsSlice = createSlice({
       .addCase(postAdvert.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.accessToken = action.payload.token;
+        state.accessToken = action.payload.accessToken;
         console.log("postAdvert/fulfilled", action);
         state.items.push(action.payload);
       })
