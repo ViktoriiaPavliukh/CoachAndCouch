@@ -1,19 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
-import // languageOptions,
-// ratingOptions,
-// lessonTimeOptions,
-// hobbyOptions,
-// countryOptions,
-// specializationOptions,
-"@/defaults";
-import { getAdverts, getLanguages, postAdvert } from "@/redux/marketplace/adverts/operations";
+import {
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Stack,
+} from "@mui/material";
+import {
+  getAdverts,
+  getLanguages,
+  postAdvert,
+} from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
 import { v4 as uuidv4 } from "uuid";
-import { advertsSelector, languagesSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import {
+  advertsSelector,
+  languagesSelector,
+} from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -29,7 +37,10 @@ const validationSchema = Yup.object({
   price: Yup.number().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
 });
 
 export const TeacherForm = () => {
@@ -37,7 +48,12 @@ export const TeacherForm = () => {
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
-  const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
+  useEffect(() => {
+    dispatch(getLanguages());
+  }, [dispatch]);
+  const advertId =
+    useSelector(advertsSelector).find((advert) => advert.user.id === user.id)
+      ?.id || null;
   const languages = useSelector(languagesSelector);
   console.log(languages);
   useEffect(() => {
@@ -50,21 +66,25 @@ export const TeacherForm = () => {
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      const spokenLanguages = Array.isArray(values.spokenLanguages)
-        ? values.spokenLanguages.map((language) => ({ language }))
-        : [];
-      const teachingLanguages = Array.isArray(values.teachingLanguages)
-        ? values.teachingLanguages.map((language) => ({ language }))
-        : [];
+    onSubmit: async (values) => {
+      const spokenLanguages = values.spokenLanguages.map((language) => ({
+        languageEn: language.languageEn,
+        languageUa: language.languageUa,
+      }));
+
+      const teachingLanguages = values.teachingLanguages.map((language) => ({
+        languageEn: language.languageEn,
+        languageUa: language.languageUa,
+      }));
 
       const transformedData = {
         description: values.description,
         price: values.price,
-        imagePath: values.imagePath,
         spokenLanguages,
         teachingLanguages,
+        image: values.imagePath,
       };
+
 
       console.log(transformedData);
 
@@ -73,21 +93,8 @@ export const TeacherForm = () => {
       dispatch(getAdverts());
 
       // console.log(user.id);
-    },
 
-    // onSubmit: (values) => {
-    //   console.log(values);
-    //   dispatch(
-    //     postAdvert({
-    //       shortDescription: "Some text",
-    //       price: 0.97,
-    //       imagePath: "image789.jpg",
-    //       hobbies: [{ hobby: "Футбол" }, { hobby: "Кодування" }, { hobby: "Розробка" }],
-    //       spokenLanguages: [{ language: "polski" }],
-    //       teachingLanguages: [{ language: "polski" }],
-    //     })
-    //   );
-    // },
+    },
   });
 
   return !token ? (
@@ -124,7 +131,7 @@ export const TeacherForm = () => {
       />
       <FormControl fullWidth variant="outlined">
         <InputLabel>Мови, якими розмовляєте</InputLabel>
-        <Select
+        {/* <Select
           id="spokenLanguages"
           name="spokenLanguages"
           multiple
@@ -132,7 +139,10 @@ export const TeacherForm = () => {
           value={formik.values.spokenLanguages}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
+          error={
+            formik.touched.spokenLanguages &&
+            Boolean(formik.errors.spokenLanguages)
+          }
           renderValue={(selected) => selected.join(", ")}
         >
           {languages &&
@@ -143,7 +153,6 @@ export const TeacherForm = () => {
             ))}
         </Select>
       </FormControl>
-
       <FormControl fullWidth variant="outlined">
         <InputLabel>Мови викладання</InputLabel>
         <Select
@@ -154,7 +163,10 @@ export const TeacherForm = () => {
           value={formik.values.teachingLanguages}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
+          error={
+            formik.touched.teachingLanguages &&
+            Boolean(formik.errors.teachingLanguages)
+          }
           renderValue={(selected) => selected.join(", ")}
         >
           {languages.map((language) => (
@@ -162,6 +174,83 @@ export const TeacherForm = () => {
               {language.languageUa}
             </MenuItem>
           ))}
+        </Select> */}
+        <Select
+          id="spokenLanguages"
+          name="spokenLanguages"
+          multiple
+          label="Spoken Languages"
+          value={formik.values.spokenLanguages}
+          onChange={(event) => {
+            formik.setFieldValue(
+              "spokenLanguages",
+              event.target.value.map((language) => ({
+                languageEn: language.languageEn,
+                languageUa: language.languageUa,
+              }))
+            );
+          }}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.spokenLanguages &&
+            Boolean(formik.errors.spokenLanguages)
+          }
+          renderValue={(selected) =>
+            selected.map((language) => language.languageUa).join(", ")
+          }
+        >
+          {languages &&
+            languages.map((language) => (
+              <MenuItem
+                key={uuidv4()}
+                value={{
+                  languageEn: language.languageEn,
+                  languageUa: language.languageUa,
+                }}
+              >
+                {`${language.languageUa} (${language.languageEn})`}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Teaching Languages</InputLabel>
+        <Select
+          id="teachingLanguages"
+          name="teachingLanguages"
+          multiple
+          label="Teaching Languages"
+          value={formik.values.teachingLanguages}
+          onChange={(event) => {
+            formik.setFieldValue(
+              "teachingLanguages",
+              event.target.value.map((language) => ({
+                languageEn: language.languageEn,
+                languageUa: language.languageUa,
+              }))
+            );
+          }}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.teachingLanguages &&
+            Boolean(formik.errors.teachingLanguages)
+          }
+          renderValue={(selected) =>
+            selected.map((language) => language.languageUa).join(", ")
+          }
+        >
+          {languages &&
+            languages.map((language) => (
+              <MenuItem
+                key={uuidv4()}
+                value={{
+                  languageEn: language.languageEn,
+                  languageUa: language.languageUa,
+                }}
+              >
+                {`${language.languageUa} (${language.languageEn})`}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
 
