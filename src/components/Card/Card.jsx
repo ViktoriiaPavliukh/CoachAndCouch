@@ -7,7 +7,7 @@ import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
 import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { advertsSelector, specializationsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
@@ -19,13 +19,13 @@ import { getAdverts } from "@/redux/marketplace/adverts/operations";
 //   { id: "2", label: "Іспанська" },
 //   { id: "3", label: "Українська" },
 // ];
-const specialization = [
-  { id: "1", label: "Розмовна мова" },
-  { id: "2", label: "Вивчення азів" },
-  { id: "3", label: "Для дітей" },
-  { id: "4", label: "Підготовка для іспитів" },
-  { id: "5", label: "Для бізнесу" },
-];
+// const specialization = [
+//   { id: "1", label: "Розмовна мова" },
+//   { id: "2", label: "Вивчення азів" },
+//   { id: "3", label: "Для дітей" },
+//   { id: "4", label: "Підготовка для іспитів" },
+//   { id: "5", label: "Для бізнесу" },
+// ];
 // const hobbies = [
 //   { id: "1", label: "Спорт" },
 //   { id: "2", label: "Кіно" },
@@ -94,7 +94,7 @@ export function Card() {
             flexDirection: { xs: "column", md: "row" },
           }}
         >
-          <MainImage />
+          <MainImage src={teacher.imagePath} />
           <Box
             sx={{
               display: "flex",
@@ -145,11 +145,15 @@ export function Card() {
             <Typography variant="posterCategory" color="grey.600">
               Мови викладання
             </Typography>
-            <CategoryList elements={teacher.teachingLanguages} />
+            <CategoryList
+              elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)}
+            />
             <Typography variant="posterCategory" color="grey.600">
               Спеціалізація
             </Typography>
-            <CategoryList elements={specialization} />
+            <CategoryList
+              elements={teacher.specialization && teacher.specialization.map((el) => el.specializationUa)}
+            />
             <Typography variant="posterCategory" color="grey.600">
               Захоплення
             </Typography>
@@ -180,7 +184,7 @@ export function Card() {
             display: "flex",
             flexDirection: { xs: "column-reverse", lg: "row" },
             width: "100%",
-            gap: "5%"
+            gap: "5%",
           }}
         >
           <Box

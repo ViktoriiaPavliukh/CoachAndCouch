@@ -29,7 +29,7 @@ export function TeacherCard({ teacher }) {
       }}
     >
       <CardActionArea onClick={handleClick}>
-        <TeacherImage />
+        <TeacherImage src={teacher.imagePath} />
       </CardActionArea>
       <CardContent>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", gap: "24px", mb: "8px" }}>
@@ -62,7 +62,9 @@ export function TeacherCard({ teacher }) {
         <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
           Мови викладання:
         </Typography>
-        {Boolean(teacher.teachingLanguages.length) && <CategoryList elements={teacher.teachingLanguages} />}
+        {Boolean(teacher.teachingLanguages.length) && (
+          <CategoryList elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)} />
+        )}
         <Stack direction="row" sx={{ gap: "12px", pt: "4px" }}>
           <Box sx={{ display: "flex", gap: "4px" }}>
             <StarBorderPurple500OutlinedIcon

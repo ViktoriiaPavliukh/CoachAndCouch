@@ -55,12 +55,14 @@ export const TeacherForm = () => {
     useSelector(advertsSelector).find((advert) => advert.user.id === user.id)
       ?.id || null;
   const languages = useSelector(languagesSelector);
+  console.log(languages);
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);
       // console.log(advertId);
     }
-  }, [advertId, navigate]);
+    dispatch(getLanguages());
+  }, [dispatch, advertId, navigate]);
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -83,10 +85,15 @@ export const TeacherForm = () => {
         image: values.imagePath,
       };
 
+
+      console.log(transformedData);
+
+      // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
       dispatch(getAdverts());
-      dispatch(getLanguages());
-      console.log(transformedData);
+
+      // console.log(user.id);
+
     },
   });
 

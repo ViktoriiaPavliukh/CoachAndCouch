@@ -38,7 +38,7 @@ export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", a
 export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
   try {
     // console.log(thunkAPI.getState());
-    const userToken = thunkAPI.getState().auth.token;
+    const userToken = thunkAPI.getState().auth.accessToken;
     // console.log(userToken);
     token.set(userToken);
     const { data } = await privateAPI.post("/adverts", advertData);
