@@ -1,7 +1,9 @@
+import { PropTypes } from "prop-types";
+
 import { CardMedia } from "@mui/material";
 import mainImage from "@assets/templates/Frame 868.webp";
 
-export function MainImage({ src, ...props }) {
+export function MainImage({ src }) {
   return (
     <CardMedia
       component="img"
@@ -16,5 +18,7 @@ export function MainImage({ src, ...props }) {
     />
   );
 }
-
+MainImage.propTypes = {
+  src: PropTypes.string,
+};
 // https://an-talla.co.uk/wp-content/uploads/2022/09/Santa-social-Edited.png

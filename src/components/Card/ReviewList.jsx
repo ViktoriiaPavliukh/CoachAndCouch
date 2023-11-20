@@ -2,6 +2,7 @@ import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 
 export function ReviewList({ elements }) {
+  console.log(elements);
   const ReviewHandleSubmit = (e) => {
     e.preventDefault();
 

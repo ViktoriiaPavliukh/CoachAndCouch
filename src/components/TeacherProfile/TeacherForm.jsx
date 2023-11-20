@@ -39,12 +39,14 @@ export const TeacherForm = () => {
   const navigate = useNavigate();
   const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
   const languages = useSelector(languagesSelector);
+  console.log(languages);
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);
       // console.log(advertId);
     }
-  }, [advertId, navigate]);
+    dispatch(getLanguages());
+  }, [dispatch, advertId, navigate]);
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -64,12 +66,12 @@ export const TeacherForm = () => {
         teachingLanguages,
       };
 
-      // console.log(transformedData);
+      console.log(transformedData);
 
       // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
       dispatch(getAdverts());
-      dispatch(getLanguages());
+
       // console.log(user.id);
     },
 
@@ -135,8 +137,8 @@ export const TeacherForm = () => {
         >
           {languages &&
             languages.map((language) => (
-              <MenuItem key={uuidv4()} value={language.language}>
-                {language.language}
+              <MenuItem key={uuidv4()} value={language.languageUa}>
+                {language.languageUa}
               </MenuItem>
             ))}
         </Select>
@@ -156,8 +158,8 @@ export const TeacherForm = () => {
           renderValue={(selected) => selected.join(", ")}
         >
           {languages.map((language) => (
-            <MenuItem key={uuidv4()} value={language.language}>
-              {language.language}
+            <MenuItem key={uuidv4()} value={language.languageUa}>
+              {language.languageUa}
             </MenuItem>
           ))}
         </Select>
