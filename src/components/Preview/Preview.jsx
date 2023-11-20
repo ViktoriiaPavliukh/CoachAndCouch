@@ -21,14 +21,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   advertsSelector,
+  countriesSelector,
   languagesSelector,
   specializationsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import {
-  getAdverts,
-  getLanguages,
-  getSpecializations,
-} from "@/redux/marketplace/adverts/operations";
+import { getAdverts, getLanguages, getSpecializations } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 
 export function Preview() {
@@ -45,6 +42,7 @@ export function Preview() {
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
   const languages = useSelector(languagesSelector);
+  const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
   console.log(specializations);
   let [page, setPage] = useState(1);
@@ -122,33 +120,21 @@ export function Preview() {
             >
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.primary.accent }}
-                  />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
                 </ListItemIcon>
-                <ListItemText
-                  primary="Понад 1000 викладачів"
-                  sx={listItemStyles}
-                />
+                <ListItemText primary="Понад 1000 викладачів" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.primary.accent }}
-                  />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
                 </ListItemIcon>
                 <ListItemText primary="Понад 20 мов" sx={listItemStyles} />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.primary.accent }}
-                  />
+                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
                 </ListItemIcon>
-                <ListItemText
-                  primary="Професійні викладачі та носії мови"
-                  sx={listItemStyles}
-                />
+                <ListItemText primary="Професійні викладачі та носії мови" sx={listItemStyles} />
               </ListItem>
             </List>
             <Button
@@ -162,15 +148,11 @@ export function Preview() {
                 transition: "background-color 0.3s",
                 backgroundColor: (theme) => theme.palette.buttonColor.main,
                 "&:hover": {
-                  backgroundColor: (theme) =>
-                    theme.palette.buttonColor.darkHover,
+                  backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
                 },
               }}
             >
-              <Typography
-                variant="posterButton"
-                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
-              >
+              <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
                 Дізнатися більше
               </Typography>
             </Button>
@@ -196,14 +178,10 @@ export function Preview() {
             rowGap: { xs: "16px", md: "20px" },
           }}
         >
-          <Filter options={languages} typeoption="languageEn" label="МОВА" />
-          <Filter options={countryOptions} typeoption="title" label="КРАЇНА" />
+          <Filter options={languages} typeoption="languageUa" label="МОВА" />
+          <Filter options={countries} typeoption="countryUa" label="КРАЇНА" />
           <Filter options={priceOptions} typeoption="title" label="ЦІНА" />
-          <Filter
-            options={specializations}
-            typeoption="specialization"
-            label="СПЕЦІАЛІЗАЦІЯ"
-          />
+          <Filter options={specializations} typeoption="specializationUa" label="СПЕЦІАЛІЗАЦІЯ" />
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
           <Grid

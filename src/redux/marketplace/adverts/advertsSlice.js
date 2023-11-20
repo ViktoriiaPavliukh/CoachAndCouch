@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteAdvertsById, getAdverts, getLanguages, getSpecializations, postAdvert } from "./operations";
+import {
+  deleteAdvertsById,
+  getAdverts,
+  getCountries,
+  getLanguages,
+  getSpecializations,
+  postAdvert,
+} from "./operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
   initialState: {
     languages: [],
     specializations: [],
+    countries: [],
     items: [],
     isLoading: false,
     error: null,
@@ -22,6 +30,11 @@ const advertsSlice = createSlice({
         state.error = null;
         state.languages = action.payload;
       })
+      .addCase(getCountries.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.countries = action.payload;
+      })
       .addCase(getAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -30,7 +43,7 @@ const advertsSlice = createSlice({
       .addCase(postAdvert.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.token = action.payload.token;
+        state.accessToken = action.payload.token;
         console.log("postAdvert/fulfilled", action);
         state.items.push(action.payload);
       })
