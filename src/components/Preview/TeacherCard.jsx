@@ -8,7 +8,7 @@ import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
 
 export function TeacherCard({ teacher }) {
-  // console.log(teacher);
+  console.log(teacher);
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();

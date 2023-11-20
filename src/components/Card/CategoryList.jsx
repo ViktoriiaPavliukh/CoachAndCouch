@@ -30,7 +30,8 @@ export function CategoryList({ elements }) {
             color: "text.primary",
           }}
         >
-          {Object.values(e)}
+          {/* Додати пропс мови для перевірки на мову */}
+          {Object.values(e.languageUa)}
         </ListItem>
       ))}
     </List>
