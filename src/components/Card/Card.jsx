@@ -7,7 +7,7 @@ import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
 import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector, specializationsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";

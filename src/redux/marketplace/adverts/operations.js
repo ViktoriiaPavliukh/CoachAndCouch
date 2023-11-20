@@ -42,7 +42,7 @@ export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertDa
     // console.log(userToken);
     token.set(userToken);
     const { data } = await privateAPI.post("/adverts", advertData);
-    // console.log("Advertisement created:", data);
+    console.log("Advertisement created:", data);
     return data;
   } catch (error) {
     console.error("Error creating advertisement:", error);
@@ -66,6 +66,15 @@ export const getSpecializations = createAsyncThunk("adverts/getSpecializations",
     return data;
   } catch (error) {
     console.error("Error get specializations:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+export const getCountries = createAsyncThunk("adverts/getCountries", async (_, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get("/countries");
+    return data;
+  } catch (error) {
+    console.error("Error get countries:", error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });

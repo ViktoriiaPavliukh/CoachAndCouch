@@ -1,18 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
 import {
-  Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stack,
-} from "@mui/material";
-import {
-  getAdverts,
+  // getAdverts,
+  getCountries,
   getLanguages,
+  getSpecializations,
   postAdvert,
 } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
@@ -20,7 +14,9 @@ import { SignUp } from "@/views";
 import { v4 as uuidv4 } from "uuid";
 import {
   advertsSelector,
+  countriesSelector,
   languagesSelector,
+  specializationsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -30,31 +26,34 @@ const initialValues = {
   description: "",
   spokenLanguages: [],
   teachingLanguages: [],
-  imagePath: "",
+  specializations: [],
+  country: {},
+  image: null,
 };
 
 const validationSchema = Yup.object({
   price: Yup.number().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(
-    1,
-    "Select at least one teaching language"
-  ),
+  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
+  specializations: Yup.array().required("Specialization is required"),
+  country: Yup.object().required("Country is required"),
+  image: Yup.mixed().required("Select image"),
 });
 
 export const TeacherForm = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
+  console.log(token);
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getLanguages());
   }, [dispatch]);
-  const advertId =
-    useSelector(advertsSelector).find((advert) => advert.user.id === user.id)
-      ?.id || null;
+  const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
   const languages = useSelector(languagesSelector);
+  const specializations = useSelector(specializationsSelector);
+  const countriesList = useSelector(countriesSelector);
   console.log(languages);
   useEffect(() => {
     if (advertId) {
@@ -62,38 +61,32 @@ export const TeacherForm = () => {
       // console.log(advertId);
     }
     dispatch(getLanguages());
+    dispatch(getSpecializations());
+    dispatch(getCountries());
   }, [dispatch, advertId, navigate]);
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      const spokenLanguages = values.spokenLanguages.map((language) => ({
-        languageEn: language.languageEn,
-        languageUa: language.languageUa,
-      }));
+      // const spokenLanguages = values.spokenLanguages.map((language) => ({
+      //   languageEn: language.languageEn,
+      //   languageUa: language.languageUa,
+      // }));
 
-      const teachingLanguages = values.teachingLanguages.map((language) => ({
-        languageEn: language.languageEn,
-        languageUa: language.languageUa,
-      }));
+      // const teachingLanguages = values.teachingLanguages.map((language) => ({
+      //   languageEn: language.languageEn,
+      //   languageUa: language.languageUa,
+      // }));
+      const transformedData = new FormData();
+      transformedData.append("description", values.description);
+      transformedData.append("price", values.price);
+      transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages));
+      transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages));
+      transformedData.append("country", JSON.stringify(values.country));
+      transformedData.append("specializations", JSON.stringify(values.specializations));
+      transformedData.append("image", values.image);
 
-      const transformedData = {
-        description: values.description,
-        price: values.price,
-        spokenLanguages,
-        teachingLanguages,
-        image: values.imagePath,
-      };
-
-
-      console.log(transformedData);
-
-      // Dispatch the transformed data
       dispatch(postAdvert(transformedData));
-      dispatch(getAdverts());
-
-      // console.log(user.id);
-
     },
   });
 
@@ -191,13 +184,8 @@ export const TeacherForm = () => {
             );
           }}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.spokenLanguages &&
-            Boolean(formik.errors.spokenLanguages)
-          }
-          renderValue={(selected) =>
-            selected.map((language) => language.languageUa).join(", ")
-          }
+          error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
+          renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
         >
           {languages &&
             languages.map((language) => (
@@ -208,18 +196,19 @@ export const TeacherForm = () => {
                   languageUa: language.languageUa,
                 }}
               >
-                {`${language.languageUa} (${language.languageEn})`}
+                {language.languageUa}
               </MenuItem>
             ))}
         </Select>
       </FormControl>
+
       <FormControl fullWidth variant="outlined">
-        <InputLabel>Teaching Languages</InputLabel>
+        <InputLabel>Мова викладання</InputLabel>
         <Select
           id="teachingLanguages"
           name="teachingLanguages"
           multiple
-          label="Teaching Languages"
+          label="Мова викладання"
           value={formik.values.teachingLanguages}
           onChange={(event) => {
             formik.setFieldValue(
@@ -231,13 +220,8 @@ export const TeacherForm = () => {
             );
           }}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.teachingLanguages &&
-            Boolean(formik.errors.teachingLanguages)
-          }
-          renderValue={(selected) =>
-            selected.map((language) => language.languageUa).join(", ")
-          }
+          error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
+          renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
         >
           {languages &&
             languages.map((language) => (
@@ -248,23 +232,93 @@ export const TeacherForm = () => {
                   languageUa: language.languageUa,
                 }}
               >
-                {`${language.languageUa} (${language.languageEn})`}
+                {language.languageUa}
               </MenuItem>
             ))}
         </Select>
       </FormControl>
 
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Спеціалізація</InputLabel>
+        <Select
+          id="specializations"
+          name="specializations"
+          multiple
+          label="Спеціалізація"
+          value={formik.values.specializations}
+          onChange={(event) => {
+            formik.setFieldValue(
+              "specializations",
+              event.target.value.map((specialization) => ({
+                specializationEn: specialization.specializationEn,
+                specializationUa: specialization.specializationUa,
+              }))
+            );
+          }}
+          onBlur={formik.handleBlur}
+          error={formik.touched.specializations && Boolean(formik.errors.specializations)}
+          renderValue={(selected) => selected.map((specialization) => specialization.specializationUa).join(", ")}
+        >
+          {specializations &&
+            specializations.map((specialization) => (
+              <MenuItem
+                key={uuidv4()}
+                value={{
+                  specializationEn: specialization.specializationEn,
+                  specializationUa: specialization.specializationUa,
+                }}
+              >
+                {specialization.specializationUa}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+
+      <FormControl fullWidth variant="outlined">
+        <InputLabel>Країна</InputLabel>
+        <Select
+          id="country"
+          name="country"
+          // multiple
+          label="Країна"
+          value={formik.values.country}
+          onChange={(event) => {
+            formik.setFieldValue("country", event.target.value);
+            console.log(event.target.value);
+          }}
+          // onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.country && Boolean(formik.errors.country)}
+          renderValue={(selected) => selected.countryUa}
+        >
+          {countriesList &&
+            countriesList.map((countryEl) => (
+              <MenuItem
+                key={uuidv4()}
+                value={{
+                  countryEn: countryEl.countryEn,
+                  countryUa: countryEl.countryUa,
+                }}
+              >
+                {countryEl.countryUa}
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
       <TextField
         fullWidth
-        id="imagePath"
-        name="imagePath"
+        type="file"
+        id="image"
+        name="image"
         label="Додати фото"
         variant="outlined"
-        value={formik.values.imagePath}
-        onChange={formik.handleChange}
+        accept="image/*"
+        placeholder=""
+        // value={formik.values.imagePath}
+        onChange={(event) => formik.setFieldValue("image", event.target.files[0])}
         onBlur={formik.handleBlur}
-        error={formik.touched.imagePath && Boolean(formik.errors.imagePath)}
-        helperText={formik.touched.imagePath && formik.errors.imagePath}
+        error={formik.touched.image && Boolean(formik.errors.image)}
+        helperText={formik.touched.image && formik.errors.image}
       />
       <Stack
         direction="row"
