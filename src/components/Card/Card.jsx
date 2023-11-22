@@ -152,7 +152,7 @@ export function Card() {
               Спеціалізація
             </Typography>
             <CategoryList
-              elements={teacher.user.specialization && teacher.user.specialization.map((el) => el.specializationUa)}
+              elements={teacher.user.specializations && teacher.user.specializations.map((el) => el.specializationUa)}
             />
             <Typography variant="posterCategory" color="grey.600">
               Країна

@@ -65,6 +65,7 @@ export function TeacherCard({ teacher }) {
         {Boolean(teacher.teachingLanguages.length) && (
           <CategoryList elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)} />
         )}
+
         <Stack direction="row" sx={{ gap: "12px", pt: "4px" }}>
           <Box sx={{ display: "flex", gap: "4px" }}>
             <StarBorderPurple500OutlinedIcon

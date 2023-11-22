@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const baseURL = "https://coachandcouch.onrender.com";
+// const baseURL = "https://coachandcouch.onrender.com";
 
 // test url
-// const baseURL = "https://test-i6mk.onrender.com";
+const baseURL = "https://test-i6mk.onrender.com";
 export const privateAPI = axios.create({ baseURL });
 
 export const token = {
