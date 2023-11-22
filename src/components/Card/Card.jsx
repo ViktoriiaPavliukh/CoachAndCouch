@@ -135,7 +135,7 @@ export function Card() {
                 Рейтинг:
               </Typography>
               <Typography variant="posterItem" sx={{ mr: 3.5 }}>
-                5,5
+                {teacher.user.rating}
               </Typography>
               <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
                 Уроки:
@@ -152,12 +152,12 @@ export function Card() {
               Спеціалізація
             </Typography>
             <CategoryList
-              elements={teacher.specialization && teacher.specialization.map((el) => el.specializationUa)}
+              elements={teacher.user.specialization && teacher.user.specialization.map((el) => el.specializationUa)}
             />
             <Typography variant="posterCategory" color="grey.600">
-              Захоплення
+              Країна
             </Typography>
-            <CategoryList elements={teacher.hobbies} />
+            <CategoryList elements={teacher.user.country} />
             <Typography variant="posterCategory" color="grey.600">
               Платформи
             </Typography>

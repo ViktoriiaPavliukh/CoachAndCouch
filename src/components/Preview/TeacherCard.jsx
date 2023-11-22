@@ -73,7 +73,7 @@ export function TeacherCard({ teacher }) {
                 color: (theme) => theme.palette.textColor.darkGrey,
               }}
             />
-            <Typography variant="posterItem">5.0</Typography>
+            <Typography variant="posterItem">{teacher.user.rating}</Typography>
           </Box>
           <Box sx={{ display: "flex", gap: "4px" }}>
             <FavoriteBorderOutlinedIcon
@@ -82,7 +82,7 @@ export function TeacherCard({ teacher }) {
                 color: (theme) => theme.palette.textColor.darkGrey,
               }}
             />
-            <Typography variant="posterItem">5.0</Typography>
+            <Typography variant="posterItem">{teacher.user.rating}</Typography>
           </Box>
           <Box sx={{ display: "flex", gap: "4px" }}>
             <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
