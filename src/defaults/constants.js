@@ -3,13 +3,13 @@ export const siteDomain = "https://ginkosoul.github.io/marketplace-project/";
 export const baseName = "/marketplace-project";
 
 export const settings = ["Profile", "Settings", "Logout"];
-export const languages = [
-  { id: "1", label: "Англійська" },
-  { id: "2", label: "Іспанська" },
-  { id: "3", label: "Українська" },
-  { id: "4", label: "Китайська" },
-  { id: "5", label: "Турецька" },
-];
+// export const languages = [
+//   { id: "1", label: "Англійська" },
+//   { id: "2", label: "Іспанська" },
+//   { id: "3", label: "Українська" },
+//   { id: "4", label: "Китайська" },
+//   { id: "5", label: "Турецька" },
+// ];
 // const specialization = [
 //   { id: '1', label: 'Розмовна мова' },
 //   { id: '2', label: 'Вивчення азів' },
@@ -46,21 +46,21 @@ export const priceOptions = [
   // Додайте більше варіантів часу уроку
 ];
 
-export const specializationOptions = [
-  { title: "Розмовна мова", specialization: "Speaking" },
-  { title: "Вивчення азів", specialization: "Beginner" },
-  { title: "Для дітей", specialization: "Children" },
-  { title: "Підготовка до іспитів", specialization: "Exams" },
-  { title: "Для бізнесу", specialization: "Business" },
-  // Додайте більше варіантів спеціалізації
-];
+// export const specializationOptions = [
+//   { title: "Розмовна мова", specialization: "Speaking" },
+//   { title: "Вивчення азів", specialization: "Beginner" },
+//   { title: "Для дітей", specialization: "Children" },
+//   { title: "Підготовка до іспитів", specialization: "Exams" },
+//   { title: "Для бізнесу", specialization: "Business" },
+//   // Додайте більше варіантів спеціалізації
+// ];
 
-export const countryOptions = [
-  { title: "Сполучені Штати", code: "US" },
-  { title: "Сполучене Королівство", code: "UK" },
-  { title: "Канада", code: "CA" },
-  // Додайте більше варіантів країни
-];
+// export const countryOptions = [
+//   { title: "Сполучені Штати", code: "US" },
+//   { title: "Сполучене Королівство", code: "UK" },
+//   { title: "Канада", code: "CA" },
+//   // Додайте більше варіантів країни
+// ];
 
 export const hobbyOptions = [
   { title: "Садівництво", hobby: "Gardening" },
@@ -68,64 +68,55 @@ export const hobbyOptions = [
   { title: "Кулінарія", hobby: "Cooking" },
 ];
 
-export const teacherCardData = [
-  {
-    id: 1,
-    picture: "teacher1.jpg",
-    description: "Experienced teacher with a passion for Mathematics.",
-  },
-  {
-    id: 2,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 3,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 4,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 5,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 6,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 7,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 8,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 9,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-  {
-    id: 10,
-    picture: "teacher2.jpg",
-    description:
-      "Certified language instructor fluent in English, Spanish, and French.",
-  },
-];
+// export const teacherCardData = [
+//   {
+//     id: 1,
+//     picture: "teacher1.jpg",
+//     description: "Experienced teacher with a passion for Mathematics.",
+//   },
+//   {
+//     id: 2,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 3,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 4,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 5,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 6,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 7,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 8,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 9,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+//   {
+//     id: 10,
+//     picture: "teacher2.jpg",
+//     description: "Certified language instructor fluent in English, Spanish, and French.",
+//   },
+// ];

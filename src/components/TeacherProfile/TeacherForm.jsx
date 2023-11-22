@@ -1,7 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from "@mui/material";
+import {
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Stack,
+  Box,
+  Typography,
+  Radio,
+  RadioGroup,
+  FormLabel,
+  FormControlLabel,
+} from "@mui/material";
+import mainBg from "@assets/images/bg.png";
+
 import {
   // getAdverts,
   getCountries,
@@ -16,19 +32,25 @@ import {
   advertsSelector,
   countriesSelector,
   languagesSelector,
-  // specializationsSelector,
+  specializationsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const initialValues = {
   price: 0,
   description: "",
   spokenLanguages: [],
   teachingLanguages: [],
-  // specializations: [],
-  country: {},
   image: null,
+  updateUser: {
+    country: "",
+    specializations: [],
+    birthday: "",
+    firstName: "",
+    lastName: "",
+    sex: "",
+  },
 };
 
 const validationSchema = Yup.object({
@@ -37,11 +59,14 @@ const validationSchema = Yup.object({
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
   teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
   // specializations: Yup.array().required("Specialization is required"),
-  country: Yup.object().required("Country is required"),
-  image: Yup.mixed().required("Select image"),
+  // country: Yup.object().required("Country is required"),
+  image: Yup.mixed().required("Select image for your advert"),
+  updateUser: Yup.object().required("All fields is required"),
 });
 
 export const TeacherForm = () => {
+  const [image, setImage] = useState("");
+  // const [country, setCountry] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
@@ -52,9 +77,10 @@ export const TeacherForm = () => {
   }, [dispatch]);
   const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
   const languages = useSelector(languagesSelector);
-  // const specializations = useSelector(specializationsSelector);
+
+  const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
-  console.log(languages);
+  console.log(countriesList);
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);
@@ -68,22 +94,23 @@ export const TeacherForm = () => {
     initialValues,
     validationSchema,
     onSubmit: async (values) => {
-      // const spokenLanguages = values.spokenLanguages.map((language) => ({
-      //   languageEn: language.languageEn,
-      //   languageUa: language.languageUa,
-      // }));
-
-      // const teachingLanguages = values.teachingLanguages.map((language) => ({
-      //   languageEn: language.languageEn,
-      //   languageUa: language.languageUa,
-      // }));
       const transformedData = new FormData();
+
+      const updateUser = {
+        country: { countryUa: values.updateUser.country.countryUa, countryEn: values.updateUser.country.countryEn },
+        birthday: "11-20-2007 22:23:23",
+        specializations: values.updateUser.specializations.map((el) => el.id),
+        sex: values.updateUser.sex,
+        firstName: values.updateUser.firstName,
+        lastName: values.updateUser.lastName,
+      };
       transformedData.append("description", values.description);
       transformedData.append("price", values.price);
-      transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages));
-      transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages));
-      transformedData.append("country", JSON.stringify(values.country));
-      // transformedData.append("specializations", JSON.stringify(values.specializations));
+      transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages.map((el) => el.id)));
+      transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages.map((el) => el.id)));
+
+      transformedData.append("updateUser", JSON.stringify(updateUser));
+
       transformedData.append("image", values.image);
 
       dispatch(postAdvert(transformedData));
@@ -93,407 +120,391 @@ export const TeacherForm = () => {
   return !token ? (
     <SignUp />
   ) : (
-    <form onSubmit={formik.handleSubmit}>
-      <TextField
-        fullWidth
-        id="price"
-        name="price"
-        label="Ціна"
-        variant="outlined"
-        type="number"
-        value={formik.values.price}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.price && Boolean(formik.errors.price)}
-        helperText={formik.touched.price && formik.errors.price}
-      />
+    <Box
+      sx={{
+        backgroundImage: `url(${mainBg})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100%",
 
-      <TextField
-        fullWidth
-        id="description"
-        name="description"
-        label="Опис"
-        variant="outlined"
-        multiline
-        rows={4}
-        value={formik.values.description}
-        onChange={formik.handleChange}
-        onBlur={formik.handleBlur}
-        error={formik.touched.description && Boolean(formik.errors.description)}
-        helperText={formik.touched.description && formik.errors.description}
-      />
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Мови, якими розмовляєте</InputLabel>
-        {/* <Select
-          id="spokenLanguages"
-          name="spokenLanguages"
-          multiple
-          label="Мови, якими розмовляєте"
-          value={formik.values.spokenLanguages}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.spokenLanguages &&
-            Boolean(formik.errors.spokenLanguages)
-          }
-          renderValue={(selected) => selected.join(", ")}
-        >
-          {languages &&
-            languages.map((language) => (
-              <MenuItem key={uuidv4()} value={language.languageUa}>
-                {language.languageUa}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Мови викладання</InputLabel>
-        <Select
-          id="teachingLanguages"
-          name="teachingLanguages"
-          multiple
-          label="Мови викладання"
-          value={formik.values.teachingLanguages}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={
-            formik.touched.teachingLanguages &&
-            Boolean(formik.errors.teachingLanguages)
-          }
-          renderValue={(selected) => selected.join(", ")}
-        >
-          {languages.map((language) => (
-            <MenuItem key={uuidv4()} value={language.languageUa}>
-              {language.languageUa}
-            </MenuItem>
-          ))}
-        </Select> */}
-        <Select
-          id="spokenLanguages"
-          name="spokenLanguages"
-          multiple
-          label="Spoken Languages"
-          value={formik.values.spokenLanguages}
-          onChange={(event) => {
-            formik.setFieldValue(
-              "spokenLanguages",
-              event.target.value.map((language) => ({
-                languageEn: language.languageEn,
-                languageUa: language.languageUa,
-              }))
-            );
-          }}
-          onBlur={formik.handleBlur}
-          error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
-          renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
-        >
-          {languages &&
-            languages.map((language) => (
-              <MenuItem
-                key={uuidv4()}
-                value={{
-                  languageEn: language.languageEn,
-                  languageUa: language.languageUa,
-                }}
-              >
-                {language.languageUa}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Мова викладання</InputLabel>
-        <Select
-          id="teachingLanguages"
-          name="teachingLanguages"
-          multiple
-          label="Мова викладання"
-          value={formik.values.teachingLanguages}
-          onChange={(event) => {
-            formik.setFieldValue(
-              "teachingLanguages",
-              event.target.value.map((language) => ({
-                languageEn: language.languageEn,
-                languageUa: language.languageUa,
-              }))
-            );
-          }}
-          onBlur={formik.handleBlur}
-          error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
-          renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
-        >
-          {languages &&
-            languages.map((language) => (
-              <MenuItem
-                key={uuidv4()}
-                value={{
-                  languageEn: language.languageEn,
-                  languageUa: language.languageUa,
-                }}
-              >
-                {language.languageUa}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-
-      {/* <FormControl fullWidth variant="outlined">
-        <InputLabel>Спеціалізація</InputLabel>
-        <Select
-          id="specializations"
-          name="specializations"
-          multiple
-          label="Спеціалізація"
-          value={formik.values.specializations}
-          onChange={(event) => {
-            formik.setFieldValue(
-              "specializations",
-              event.target.value.map((specialization) => ({
-                specializationEn: specialization.specializationEn,
-                specializationUa: specialization.specializationUa,
-              }))
-            );
-          }}
-          onBlur={formik.handleBlur}
-          error={formik.touched.specializations && Boolean(formik.errors.specializations)}
-          renderValue={(selected) => selected.map((specialization) => specialization.specializationUa).join(", ")}
-        >
-          {specializations &&
-            specializations.map((specialization) => (
-              <MenuItem
-                key={uuidv4()}
-                value={{
-                  specializationEn: specialization.specializationEn,
-                  specializationUa: specialization.specializationUa,
-                }}
-              >
-                {specialization.specializationUa}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl> */}
-
-      <FormControl fullWidth variant="outlined">
-        <InputLabel>Країна</InputLabel>
-        <Select
-          id="country"
-          name="country"
-          // multiple
-          label="Країна"
-          value={formik.values.country}
-          onChange={(event) => {
-            formik.setFieldValue("country", event.target.value);
-            console.log(event.target.value);
-          }}
-          // onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.country && Boolean(formik.errors.country)}
-          renderValue={(selected) => selected.countryUa}
-        >
-          {countriesList &&
-            countriesList.map((countryEl) => (
-              <MenuItem
-                key={uuidv4()}
-                value={{
-                  countryEn: countryEl.countryEn,
-                  countryUa: countryEl.countryUa,
-                }}
-              >
-                {countryEl.countryUa}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-      <TextField
-        fullWidth
-        type="file"
-        id="image"
-        name="image"
-        label="Додати фото"
-        variant="outlined"
-        accept="image/*"
-        placeholder=""
-        // value={formik.values.imagePath}
-        onChange={(event) => formik.setFieldValue("image", event.target.files[0])}
-        onBlur={formik.handleBlur}
-        error={formik.touched.image && Boolean(formik.errors.image)}
-        helperText={formik.touched.image && formik.errors.image}
-      />
-      <Stack
-        direction="row"
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingLeft: "235px",
+        paddingRight: "235px",
+        paddingBottom: "235px",
+        paddingTop: "235px",
+      }}
+    >
+      <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          mt: "40px",
+          backgroundColor: "white",
+          p: "40px",
+          borderRadius: "12px",
         }}
       >
-        <Button variant="contained" type="submit">
-          Опублікувати
-        </Button>
-        <Button variant="outlined">Зберегти чернетку</Button>
-      </Stack>
-    </form>
+        <form onSubmit={formik.handleSubmit}>
+          <Typography style={{ textTransform: "uppercase", marginBottom: "40px" }}>Анкета викладача</Typography>
+          <Stack
+            fullWidth
+            style={{
+              flexDirection: "row",
+              gap: "27px",
+              marginBottom: "20px",
+            }}
+          >
+            <TextField
+              fullWidth
+              id="firstName"
+              name="updateUser.firstName"
+              type="text"
+              label="Ім'я"
+              variant="outlined"
+              value={formik.values.updateUser.firstName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+              helperText={formik.touched.firstName && formik.errors.firstName}
+            />
+
+            <TextField
+              fullWidth
+              id="lastName"
+              name="updateUser.lastName"
+              type="text"
+              label="Прізвище"
+              variant="outlined"
+              value={formik.values.updateUser.lastName}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+              helperText={formik.touched.lastName && formik.errors.lastName}
+            />
+          </Stack>
+
+          <Stack
+            style={{
+              flexDirection: "row",
+              gap: "27px",
+              marginBottom: "20px",
+            }}
+          >
+            <FormControl variant="outlined">
+              <InputLabel>Країна</InputLabel>
+              <Select
+                style={{
+                  width: "274px",
+                }}
+                id="country"
+                name="updateUser.country"
+                label="Країна"
+                value={formik.values.country}
+                onChange={(event) => {
+                  formik.setFieldValue("updateUser.country", event.target.value);
+                  console.log(event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={formik.touched.country && Boolean(formik.errors.country)}
+                renderValue={(selected) => selected.countryUa}
+              >
+                {countriesList &&
+                  countriesList.map((country) => (
+                    <MenuItem key={uuidv4()} value={country}>
+                      {country.countryUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+            <TextField
+              label="День народження"
+              style={{
+                width: "274px",
+              }}
+            />
+
+            <TextField
+              style={{
+                "&::placeholder": {
+                  color: "red",
+                },
+                width: "274px",
+              }}
+              id="price"
+              name="price"
+              label="Вартість за годину уроку"
+              variant="outlined"
+              type="number"
+              placeholder="hello"
+              defaultValue="Default value"
+              value={formik.values.price}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.price && Boolean(formik.errors.price)}
+              helperText={formik.touched.price && formik.errors.price}
+            />
+          </Stack>
+
+          <Stack
+            fullWidth
+            style={{
+              gap: "27px",
+              marginBottom: "20px",
+            }}
+          >
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>Мови, якими розмовляєте</InputLabel>
+              <Select
+                id="spokenLanguages"
+                name="spokenLanguages"
+                multiple
+                label="Spoken Languages"
+                value={formik.values.spokenLanguages}
+                onChange={(event) => {
+                  formik.setFieldValue("spokenLanguages", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
+                renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
+              >
+                {languages &&
+                  languages.map((language) => (
+                    <MenuItem key={uuidv4()} value={language}>
+                      {language.languageUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>Мови викладання</InputLabel>
+              <Select
+                id="teachingLanguages"
+                name="teachingLanguages"
+                multiple
+                label="Мова викладання"
+                value={formik.values.teachingLanguages}
+                onChange={(event) => {
+                  formik.setFieldValue("teachingLanguages", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
+                renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
+              >
+                {languages &&
+                  languages.map((language) => (
+                    <MenuItem key={uuidv4()} value={language}>
+                      {language.languageUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>Спеціалізація</InputLabel>
+              <Select
+                id="specializations"
+                name="updateUser.specializations"
+                multiple
+                label="Спеціалізація"
+                value={formik.values.updateUser.specializations}
+                onChange={(event) => {
+                  formik.setFieldValue("updateUser.specializations", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={formik.touched.specializations && Boolean(formik.errors.specializations)}
+                renderValue={(selected) => selected.map((specialization) => specialization.specializationUa).join(", ")}
+              >
+                {specializations &&
+                  specializations.map((specialization) => (
+                    <MenuItem key={uuidv4()} value={specialization}>
+                      {specialization.specializationUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Stack>
+          <Stack
+            style={{
+              flexDirection: "column",
+              marginBottom: "20px",
+            }}
+          >
+            <Typography
+              style={{
+                marginBottom: "8px",
+              }}
+            >
+              Опис
+            </Typography>
+            <TextField
+              fullWidth
+              id="description"
+              name="description"
+              label="Опис"
+              variant="outlined"
+              multiline
+              rows={4}
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.description && Boolean(formik.errors.description)}
+              helperText={formik.touched.description && formik.errors.description}
+            />
+          </Stack>
+
+          <FormControl
+            style={{
+              display: "flex",
+              marginBottom: "20px",
+            }}
+          >
+            <FormLabel>Стать</FormLabel>
+            <RadioGroup
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <FormControlLabel
+                value="Male"
+                control={
+                  <Radio
+                    style={{
+                      border: "none",
+                    }}
+                    id="sexMale"
+                    name="updateUser.sex"
+                    type="radio"
+                    value="male"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.sex && Boolean(formik.errors.sex)}
+                    helperText={formik.touched.sex && formik.errors.sex}
+                  />
+                }
+                label="Чоловіча"
+              />
+              <FormControlLabel
+                value="female"
+                control={
+                  <Radio
+                    id="sexFemale"
+                    name="updateUser.sex"
+                    type="radio"
+                    value="female"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.sex && Boolean(formik.errors.sex)}
+                    helperText={formik.touched.sex && formik.errors.sex}
+                  />
+                }
+                label="Жіноча"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          <FormControl
+            fullWidth
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              style={{
+                alignSelf: "flex-start",
+                marginBottom: "20px",
+              }}
+            >
+              Завантажте свою фотографію
+            </Typography>
+            <Box
+              style={{
+                width: "670px",
+                height: "560px",
+                border: "1px solid rgba(193, 193, 193, 1)",
+                borderRadius: "8px",
+                position: "relative",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img
+                src={image ? image : null}
+                style={{
+                  minHeidth: "100%",
+                  width: "100%",
+                  minWidth: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+              <label
+                htmlFor="image"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "block",
+                  cursor: "pointer",
+                  position: "absolute",
+                }}
+              >
+                <TextField
+                  style={{
+                    display: "none",
+                  }}
+                  fullWidth
+                  type="file"
+                  id="image"
+                  name="image"
+                  variant="outlined"
+                  accept="image/*"
+                  placeholder=""
+                  onChange={(event) => {
+                    formik.setFieldValue("image", event.target.files[0]);
+                    setImage(URL.createObjectURL(event.target.files[0]));
+                  }}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.image && Boolean(formik.errors.image)}
+                  helperText={formik.touched.image && formik.errors.image}
+                />
+              </label>
+              {!image && (
+                <p
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%,-50%)",
+                    pointerEvents: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  + Додати фото
+                </p>
+              )}
+            </Box>
+          </FormControl>
+
+          <Stack
+            direction="row"
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              mt: "40px",
+            }}
+          >
+            <Button variant="contained" type="submit">
+              Опублікувати
+            </Button>
+            {/* <Button variant="outlined">Зберегти чернетку</Button> */}
+          </Stack>
+        </form>
+      </Box>
+    </Box>
   );
 };
 
-// import { useState } from "react";
-// import {
-//   TextField,
-//   Box,
-//   MenuItem,
-//   Typography,
-//   Button,
-//   Stack,
-// } from "@mui/material";
-// import { useFormik } from "formik";
-// import * as Yup from "yup";
-// import {
-//   languageOptions,
-//   ratingOptions,
-//   lessonTimeOptions,
-//   hobbyOptions,
-//   countryOptions,
-//   specializationOptions,
-//   //teacherCardData,
-// } from "@/defaults";
-
-// import tablesBg from "@assets/images/tables.jpeg";
-
-// export function TeacherForm() {
-//   const formData = {
-//     price: 0,
-//     shortDescription: "",
-//     spokenLanguages: [],
-//     teachingLanguages: [],
-//     imagePathes: [],
-//     hobbies: [],
-//   };
-
-// //   const handleInputChange = (e) => {
-// //     const { name, value } = e.target;
-// //     setFormData({
-// //       ...formData,
-// //       [name]: value,
-// //     });
-// //   };
-
-// //  const handleLanguagesChange = (e, field) => {
-// //    const selectedLanguages = Array.isArray(e.target.value)
-// //      ? e.target.value
-// //      : [];
-// //    setFormData({
-// //      ...formData,
-// //      [field]: selectedLanguages.map((language) => ({ language })),
-// //    });
-// //  };
-
-// //      const handleImageChange = (e) => {
-// //        const imagePathes = e.target.value.split(",");
-// //        setFormData({
-// //          ...formData,
-// //          imagePathes,
-// //        });
-// //      };
-
-//      const handleSubmit = (values) => {
-//       //  e.preventDefault();
-//        // Send the formData to your API endpoint (POST /adverts)
-//        // Example:
-//        console.log(values);
-//       //  fetch("/adverts", {
-//       //    method: "POST",
-//       //    headers: {
-//       //      "Content-Type": "application/json",
-//       //    },
-//       //    body: JSON.stringify(formData),
-//       //  })
-//       //    .then((response) => response.json())
-//       //    .then((data) => {
-//       //      console.log("Advertisement created:", data);
-//       //      // Optionally, you can reset the form here
-//       //      setFormData({
-//       //        price: 0,
-//       //        shortDescription: "",
-//       //        spokenLanguages: [],
-//       //        teachingLanguages: [],
-//       //        imagePathes: [],
-//       //        hobbies: [],
-//       //      });
-//       //    })
-//       //    .catch((error) => {
-//       //      console.error("Error creating advertisement:", error);
-//       //    });
-//      };
-//  return (
-//     <Formik
-//       initialValues={formData}
-//       validationSchema={validationSchema}
-//       onSubmit={handleSubmit}
-//     >
-//       <Form>
-//         {/* Price Field */}
-//         <div>
-//           <label htmlFor="price">Price</label>
-//           <Field type="number" id="price" name="price" />
-//           <ErrorMessage name="price" component="div" />
-//         </div>
-
-//         {/* Short Description Field */}
-//         <div>
-//           <label htmlFor="shortDescription">Short Description</label>
-//           <Field type="text" id="shortDescription" name="shortDescription" />
-//           <ErrorMessage name="shortDescription" component="div" />
-//         </div>
-
-//         {/* Spoken Languages Field */}
-//         <div>
-//           <label>Spoken Languages</label>
-//           <Field
-//             as="select"
-//             id="spokenLanguages"
-//             name="spokenLanguages"
-//             multiple
-//           >
-//             {languageOptions.map((option) => (
-//               <option key={option.code} value={option.code}>
-//                 {option.title}
-//               </option>
-//             ))}
-//           </Field>
-//           <ErrorMessage name="spokenLanguages" component="div" />
-//         </div>
-
-//         {/* Add other form fields here */}
-
-//         {/* Submit Button */}
-//         <div>
-//           <button type="submit">Submit</button>
-//         </div>
-//       </Form>
-//     </Formik>
-//   );
-// }
-//   // return (
-//   //   <Box
-//   //     sx={{
-//   //       backgroundImage: `url(${tablesBg})`,
-//   //       backgroundSize: "cover",
-//   //       backgroundRepeat: "no-repeat",
-//   //       width: "100%",
-//   //       height: "calc(100vh - 70px)",
-//   //       display: "flex",
-//   //       alignItems: "center",
-//   //       justifyContent: "center",
-//   //     }}
-//   //   >
-//   //     <Box
-//   //       sx={{
-//   //         backgroundColor: "white",
-//   //         p: "40px",
-//   //         borderRadius: "12px",
-//   //       }}
-//   //     >
 //   //       <Typography variant="posterTitle" sx={{ marginBottom: "40px" }}>
 //   //         АНКЕТА ВИКЛАДАЧА
 //   //       </Typography>
