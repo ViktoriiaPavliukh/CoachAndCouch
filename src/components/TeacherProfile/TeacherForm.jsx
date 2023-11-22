@@ -97,7 +97,7 @@ export const TeacherForm = () => {
       const transformedData = new FormData();
 
       const updateUser = {
-        country: { countryUa: values.updateUser.country.countryUa, countryEn: values.updateUser.country.countryEn },
+        country: values.updateUser.country.id,
         birthday: "11-20-2007 22:23:23",
         specializations: values.updateUser.specializations.map((el) => el.id),
         sex: values.updateUser.sex,
