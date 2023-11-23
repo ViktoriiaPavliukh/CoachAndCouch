@@ -10,9 +10,3 @@ export const register = async (credentials) => {
   token.set(data.tokens.accessToken);
   return data;
 };
-
-export const login = async (credentials) => {
-  const { data } = await publicAPI.post("/auth/signin", credentials);
-  token.set(data.tokens.accessToken);
-  return data;
-};

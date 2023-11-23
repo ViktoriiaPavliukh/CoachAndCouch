@@ -58,7 +58,7 @@ function handleRefreshFulfilled(state, { payload }) {
 function handleLogoutFulfilled(state) {
   state.user = {};
   state.accessToken = null;
-  // state.refreshToken = null;
+  state.refreshToken = null;
   state.isLoggedIn = false;
   state.isLoading = false;
 }

@@ -8,9 +8,9 @@ export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunk
     // console.log(data);
     return data;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
-    return thunkAPI.rejectWithValue(error.messahe);
+    return thunkAPI.rejectWithValue(error.message);
   }
 });
 
@@ -22,14 +22,14 @@ export const getAdvertsById = async (id) => {
 
 export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", async (id, thunkAPI) => {
   try {
-    const userToken = thunkAPI.getState().auth.token;
+    const userToken = thunkAPI.getState().auth.accessToken;
     token.set(userToken);
     // console.log(userToken);
-    const { data } = await privateAPI.delete(`/admin/adverts/${id}`);
+    const { data } = await privateAPI.put(`/adverts/${id}`);
     console.log(`adverts id = ${id} was deleted`);
     return data;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
     //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
     return thunkAPI.rejectWithValue(error.message);
   }
@@ -42,10 +42,10 @@ export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertDa
     // console.log(userToken);
     token.set(userToken);
     const { data } = await privateAPI.post("/adverts", advertData);
-    console.log("Advertisement created:", data);
+    // console.log("Advertisement created:", data);
     return data;
   } catch (error) {
-    console.error("Error creating advertisement:", error);
+    // console.error("Error creating advertisement:", error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -55,7 +55,7 @@ export const getLanguages = createAsyncThunk("adverts/getLanguages", async (_, t
     const { data } = await publicAPI.get("/languages");
     return data;
   } catch (error) {
-    console.error("Error get languages:", error);
+    // console.error("Error get languages:", error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -65,7 +65,7 @@ export const getSpecializations = createAsyncThunk("adverts/getSpecializations",
     const { data } = await publicAPI.get("/specializations");
     return data;
   } catch (error) {
-    console.error("Error get specializations:", error);
+    // console.error("Error get specializations:", error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -74,7 +74,7 @@ export const getCountries = createAsyncThunk("adverts/getCountries", async (_, t
     const { data } = await publicAPI.get("/countries");
     return data;
   } catch (error) {
-    console.error("Error get countries:", error);
+    // console.error("Error get countries:", error);
     return thunkAPI.rejectWithValue(error.message);
   }
 });

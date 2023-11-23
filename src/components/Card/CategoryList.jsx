@@ -3,6 +3,7 @@ import { List, ListItem } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
 export function CategoryList({ elements }) {
+  // console.log(elements);
   return (
     <List
       sx={{
@@ -37,5 +38,5 @@ export function CategoryList({ elements }) {
   );
 }
 CategoryList.propTypes = {
-  elements: PropTypes.arrayOf(PropTypes.shape),
+  elements: PropTypes.any,
 };
