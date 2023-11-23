@@ -8,7 +8,7 @@ import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
 
 export function TeacherCard({ teacher }) {
-  console.log(teacher);
+  // console.log(teacher);
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ export function TeacherCard({ teacher }) {
     <Card
       teacher={teacher}
       sx={{
-        height: "500px",
+        // height: "500px",
         maxWidth: "373px",
         borderRadius: "8px",
         boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
@@ -41,6 +41,64 @@ export function TeacherCard({ teacher }) {
             >
               {teacher.user.firstName + " " + teacher.user.lastName}
             </Typography>
+            {/* <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
+              <Box
+                component="span"
+                sx={{
+                  display: "inline-block",
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  backgroundColor: "#0E5B1D",
+                  mr: "4px",
+                }}
+              />
+              Онлайн
+            </Typography> */}
+          </Stack>
+
+          <Typography>ID:&nbsp;{teacher.id}</Typography>
+        </Stack>
+        <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
+          Мови викладання:
+        </Typography>
+        {Boolean(teacher.teachingLanguages.length) && (
+          <CategoryList elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)} />
+        )}
+        <Stack style={{ display: "flex", justifyContent: "flex-start", flexDirection: "row", marginBottom: "20px" }}>
+          <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
+            Країна: {teacher.user.country?.countryUa}
+          </Typography>
+        </Stack>
+
+        <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
+          <Box style={{ display: "flex", gap: "12px", pt: "4px" }}>
+            <Box sx={{ display: "flex", gap: "4px" }}>
+              <StarBorderPurple500OutlinedIcon
+                sx={{
+                  fontSize: "16px",
+                  color: (theme) => theme.palette.textColor.darkGrey,
+                }}
+              />
+              <Typography variant="posterItem">{teacher.user.rating}</Typography>
+            </Box>
+            <Box sx={{ display: "flex", gap: "4px" }}>
+              <FavoriteBorderOutlinedIcon
+                sx={{
+                  fontSize: "16px",
+                  color: (theme) => theme.palette.textColor.darkGrey,
+                }}
+              />
+              <Typography variant="posterItem">{teacher.user.rating}</Typography>
+            </Box>
+            <Box sx={{ display: "flex", gap: "4px" }}>
+              <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
+                Уроки:
+              </Typography>
+              <Typography variant="posterItem">156</Typography>
+            </Box>
+          </Box>
+          <Box>
             <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
               <Box
                 component="span"
@@ -55,41 +113,6 @@ export function TeacherCard({ teacher }) {
               />
               Онлайн
             </Typography>
-          </Stack>
-
-          <Typography>ID:&nbsp;{teacher.id}</Typography>
-        </Stack>
-        <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
-          Мови викладання:
-        </Typography>
-        {Boolean(teacher.teachingLanguages.length) && (
-          <CategoryList elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)} />
-        )}
-
-        <Stack direction="row" sx={{ gap: "12px", pt: "4px" }}>
-          <Box sx={{ display: "flex", gap: "4px" }}>
-            <StarBorderPurple500OutlinedIcon
-              sx={{
-                fontSize: "16px",
-                color: (theme) => theme.palette.textColor.darkGrey,
-              }}
-            />
-            <Typography variant="posterItem">{teacher.user.rating}</Typography>
-          </Box>
-          <Box sx={{ display: "flex", gap: "4px" }}>
-            <FavoriteBorderOutlinedIcon
-              sx={{
-                fontSize: "16px",
-                color: (theme) => theme.palette.textColor.darkGrey,
-              }}
-            />
-            <Typography variant="posterItem">{teacher.user.rating}</Typography>
-          </Box>
-          <Box sx={{ display: "flex", gap: "4px" }}>
-            <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
-              Уроки:
-            </Typography>
-            <Typography variant="posterItem">156</Typography>
           </Box>
         </Stack>
       </CardContent>

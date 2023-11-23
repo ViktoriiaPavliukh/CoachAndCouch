@@ -9,8 +9,9 @@ import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
+import { useEffect } from "react";
 
 // lineheight 52px main title height
 
@@ -157,7 +158,7 @@ export function Card() {
             <Typography variant="posterCategory" color="grey.600">
               Країна
             </Typography>
-            <CategoryList elements={teacher.user.country} />
+            <CategoryList elements={teacher.user.country?.countryUa.split(" ")} />
             <Typography variant="posterCategory" color="grey.600">
               Платформи
             </Typography>

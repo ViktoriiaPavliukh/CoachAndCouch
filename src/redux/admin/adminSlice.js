@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getUsersAsAdmin } from "./operations";
+import { deleteAdvertsAsAdmin, deleteUserAsAdmin, getAdvertsAsAdmin, getUsersAsAdmin } from "./operations";
 
 const adminSlice = createSlice({
   name: "admin",
@@ -12,10 +12,33 @@ const adminSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(deleteAdvertsAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.adverts.map((el) => {
+          if (el.id === action.payload) {
+            el.isDeleted = !el.isDeleted;
+          }
+        });
+      })
+      .addCase(deleteUserAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.users.map((el) => {
+          if (el.id === action.payload) {
+            el.isDeleted = !el.isDeleted;
+          }
+        });
+      })
       .addCase(getUsersAsAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
         state.users = action.payload;
+      })
+      .addCase(getAdvertsAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.adverts = action.payload;
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),

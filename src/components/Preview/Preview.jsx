@@ -45,12 +45,12 @@ export function Preview() {
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
-  console.log(specializations);
+  // console.log(specializations);
   let [page, setPage] = useState(1);
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
   const items = usePagination(adverts, PER_PAGE);
-  console.log(countries);
+  // console.log(countries);
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
