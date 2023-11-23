@@ -1,21 +1,33 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import { IconButton, Box } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { IconButton, Box, Button } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
+import {
+  toggleLanguage,
+  selectCurrentLanguage,
+} from "@/redux/marketplace/languages/languageSlice.js";
 
 const LanguageSwitcher = () => {
-  const [currentLanguage, setCurrentLanguage] = useState("uk");
-
-  const toggleLanguage = () => {
-    setCurrentLanguage(currentLanguage === "uk" ? "en" : "uk");
+  const dispatch = useDispatch();
+  const currentLanguage = useSelector(selectCurrentLanguage);
+  const handleToggleLanguage = () => {
+    dispatch(toggleLanguage());
   };
 
   return (
-    <Box sx={{display: "flex", gap: "0"}}>
-      <IconButton onClick={toggleLanguage} color="inherit" sx={{padding: 0}}>
-        <LanguageIcon sx={{padding: 0}}/>
+    <Box sx={{ display: "flex", gap: "0" }}>
+      <IconButton
+        onClick={handleToggleLanguage}
+        color="inherit"
+        sx={{ padding: 0 }}
+      >
+        <LanguageIcon sx={{ padding: 0 }} />
       </IconButton>
-      <Button onClick={toggleLanguage} color="inherit" sx={{padding: 0, minWidth:"34px"}}>
+      <Button
+        onClick={handleToggleLanguage}
+        color="inherit"
+        sx={{ padding: 0, minWidth: "34px" }}
+      >
         {currentLanguage === "uk" ? "Укр" : "Eng"}
       </Button>
     </Box>

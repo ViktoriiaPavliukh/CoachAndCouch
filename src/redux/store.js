@@ -4,6 +4,7 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, pers
 import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slice";
 import { advertsReducer } from "./marketplace/adverts/advertsSlice";
+import persistedLanguageReducer from "./marketplace/languages/languageSlice";
 import { initReducer } from "./init/initSlice";
 import { adminReducer } from "./admin/adminSlice";
 import { userReducer } from "./user/userSlice";
@@ -29,6 +30,7 @@ export const store = configureStore({
     admin: adminReducer,
     init: initReducer,
     user: userReducer,
+    language: persistedLanguageReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
