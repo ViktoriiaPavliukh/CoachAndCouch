@@ -1,5 +1,15 @@
-import { Button, TextField, Link, Grid, Box, Typography, IconButton, InputAdornment } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
 import { Link as ReactLink } from "react-router-dom";
+import { useIntl } from "react-intl";
 import { useFormik } from "formik";
 import { loginSchema as validationSchema } from "@/defaults";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -11,6 +21,7 @@ import { selectIsLoggedIn } from "@/redux/auth/selectors";
 export function SignIn() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
+  const intl = useIntl();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -49,16 +60,21 @@ export function SignIn() {
         }}
       >
         <Typography component="h1" variant="h5">
-          Вхід
+          {intl.formatMessage({ id: "signIn" })}
         </Typography>
-        <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={formik.handleSubmit}
+          sx={{ mt: 3 }}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 sx={{ mb: 2.5 }}
                 size="small"
                 fullWidth
-                label="Введіть e-mail"
+                label={intl.formatMessage({ id: "enterEmail" })}
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
@@ -73,31 +89,44 @@ export function SignIn() {
                 fullWidth
                 size="small"
                 name="password"
-                label="Введіть пароль"
+                label={intl.formatMessage({ id: "enterPassword" })}
                 type={formik.values.showPassword ? "text" : "password"}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
                         aria-label="toggle password visibility"
-                        onClick={() => formik.setFieldValue("showPassword", !formik.values.showPassword)}
+                        onClick={() =>
+                          formik.setFieldValue(
+                            "showPassword",
+                            !formik.values.showPassword
+                          )
+                        }
                         edge="end"
                       >
-                        {formik.values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        {formik.values.showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
                       </IconButton>
                     </InputAdornment>
                   ),
                 }}
                 value={formik.values.password}
                 onChange={formik.handleChange}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+                helperText={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 autoComplete="new-password"
               />
             </Grid>
           </Grid>
           <Link href="#" variant="body2">
-            Забули пароль?
+            {intl.formatMessage({ id: "forgotPassword" })}
           </Link>
           <Button
             type="submit"
@@ -111,10 +140,14 @@ export function SignIn() {
               backgroundColor: (theme) => theme.palette.buttonColor.main,
             }}
           >
-            {isLoggedIn ? "Завантаження..." : "Увійти"}
+            {isLoggedIn
+              ? intl.formatMessage({ id: "loading" })
+              : intl.formatMessage({ id: "signInButton" })}
           </Button>
           <Box justifyContent="center" sx={{ marginTop: "20px" }}>
-            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>Новий користувач?</Typography>
+            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>
+              {intl.formatMessage({ id: "newUser" })}
+            </Typography>
             <Link
               component={ReactLink}
               to="/registration"
@@ -122,7 +155,7 @@ export function SignIn() {
               align="center"
               sx={{ textAlign: "center", mt: 2, display: "block" }}
             >
-              Створити аккаунт
+              {intl.formatMessage({ id: "createAccount" })}
             </Link>
           </Box>
         </Box>

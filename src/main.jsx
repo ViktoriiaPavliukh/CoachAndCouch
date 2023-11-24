@@ -11,7 +11,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "@/redux/store.js";
 import LanguageProvider from "./components/LanguageProvider.jsx";
 import messages from "./defaults/translations/messages";
-// import { current } from "@reduxjs/toolkit";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
