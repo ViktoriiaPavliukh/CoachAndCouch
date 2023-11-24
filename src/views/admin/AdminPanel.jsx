@@ -1,8 +1,24 @@
 import PropTypes from "prop-types";
 import { format, parseISO, parseJSON } from "date-fns";
 import { selectToken } from "@/redux/auth/selectors";
-
-import { Box, Container, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import {
+  Box,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -11,8 +27,17 @@ import * as React from "react";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { deleteAdvertsAsAdmin, deleteUserAsAdmin, getAdvertsAsAdmin, getUsersAsAdmin } from "@/redux/admin/operations";
-import { advertsAsAdminSelector, usersAsAdminSelector } from "@/redux/admin/adminSelector";
+import {
+  addLanguagesAsAdmin,
+  deleteAdvertsAsAdmin,
+  deleteUserAsAdmin,
+  getAdvertsAsAdmin,
+  getCountriesAsAdmin,
+  getUsersAsAdmin,
+} from "@/redux/admin/operations";
+import { advertsAsAdminSelector, countiesAsAdmin, usersAsAdminSelector } from "@/redux/admin/adminSelector";
+import { languagesSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { getLanguages } from "@/redux/marketplace/adverts/operations";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,8 +67,26 @@ function a11yProps(index) {
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
+const initialValues = {
+  languageUa: "",
+  languageEn: "",
+
+  languagesBD: "",
+};
+const validationSchema = Yup.object({
+  languageUa: Yup.string().required("This field id required"),
+  languageEn: Yup.string().required("This field id required"),
+});
 
 function VerticalTabs() {
+  const formik = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: async (values) => {
+      dispatch(addLanguagesAsAdmin({ languageUa: values.languageUa, languageEn: values.languageEn }));
+      dispatch(getLanguages());
+    },
+  });
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -52,11 +95,17 @@ function VerticalTabs() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const adverts = useSelector(advertsAsAdminSelector);
+  const countries = useSelector(countiesAsAdmin);
+  const languages = useSelector(languagesSelector);
+  console.log(languages);
+  console.log(countries);
   console.log(token);
 
   useEffect(() => {
     dispatch(getAdvertsAsAdmin());
     dispatch(getUsersAsAdmin());
+    dispatch(getCountriesAsAdmin());
+    dispatch(getLanguages());
   }, [dispatch]);
 
   console.log(adverts);
@@ -68,10 +117,9 @@ function VerticalTabs() {
         // flexGrow: 1,
         bgcolor: "background.paper",
         display: "flex",
-
         justifyContent: "flex-start",
-        width: "200",
         height: "auto",
+        border: "1px solid red",
       }}
     >
       <Tabs
@@ -80,25 +128,25 @@ function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs"
-        sx={{ borderRight: 1, borderColor: "divider", alignItems: "flex-start" }}
+        sx={{ borderRight: 1, borderColor: "divider", alignItems: "flex-start", minWidth: "150px", width: "150px" }}
       >
         <Tab
           label="Adverts"
           {...a11yProps(0)}
-          sx={{ alignItems: "flex-start", paddingLeft: "60px", paddingRight: "60px" }}
+          sx={{ alignItems: "flex-start", paddingLeft: "30px", paddingRight: "40px" }}
         />
         <Tab
           label="Users"
           {...a11yProps(1)}
-          sx={{ alignItems: "flex-start", paddingLeft: "60px", paddingRight: "60px" }}
+          sx={{ alignItems: "flex-start", paddingLeft: "30px", paddingRight: "40px" }}
         />
         <Tab
           label="Settings"
           {...a11yProps(2)}
-          sx={{ alignItems: "flex-start", paddingLeft: "60px", paddingRight: "60px" }}
+          sx={{ alignItems: "flex-start", paddingLeft: "30px", paddingRight: "40px" }}
         />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
         <Box>
           <h2>Adverts</h2>
           <TableContainer component={Paper}>
@@ -317,7 +365,63 @@ function VerticalTabs() {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <h2>Додати Мову</h2>
+        <FormControl variant="outlined" sx={{ width: "300px" }}>
+          <InputLabel>Мови в базі даних:</InputLabel>
+          <Select
+            id="languagesBD"
+            name="languagesBD"
+            label="Languages"
+            // value={formik.values.languagesBD || ""}
+            // onChange={(event) => {
+            //   formik.setFieldValue("languagesBD", event.target.value);
+            // }}
+            onBlur={formik.handleBlur}
+            error={formik.touched.languagesBD && Boolean(formik.errors.languagesBD)}
+            // renderValue={(selected) =>
+            //   selected.map((language) => {
+            //     language;
+            //   })
+            // }
+          >
+            {languages &&
+              languages?.map((language) => (
+                <MenuItem key={uuidv4()} value={language}>
+                  {language.id + " " + language.languageUa + " " + language.languageEn}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+        <form onSubmit={formik.handleSubmit}>
+          <label>
+            Українською:
+            <TextField
+              id="addLanguageUa"
+              name="languageUa"
+              value={formik.values.languageUa}
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.languageUa && Boolean(formik.errors.languageUa)}
+              helperText={formik.touched.languageUa && formik.errors.languageUa}
+            />
+          </label>
+          <br />
+          <label>
+            Англійською:
+            <TextField
+              id="addLanguageEn"
+              name="languageEn"
+              value={formik.values.languageEn}
+              type="text"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.languageEn && Boolean(formik.errors.languageEn)}
+              helperText={formik.touched.languageEn && formik.errors.languageEn}
+            />
+          </label>
+          <button type="submit">Add</button>
+        </form>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Four

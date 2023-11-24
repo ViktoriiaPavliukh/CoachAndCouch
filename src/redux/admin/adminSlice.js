@@ -1,17 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { deleteAdvertsAsAdmin, deleteUserAsAdmin, getAdvertsAsAdmin, getUsersAsAdmin } from "./operations";
+import {
+  addCountryAsAdmin,
+  addLanguagesAsAdmin,
+  deleteAdvertsAsAdmin,
+  deleteUserAsAdmin,
+  getAdvertsAsAdmin,
+  getCountriesAsAdmin,
+  getUsersAsAdmin,
+} from "./operations";
 
 const adminSlice = createSlice({
   name: "admin",
   initialState: {
     adverts: [],
     users: [],
+    countries: [],
+    languages: [],
     isLoading: false,
     error: null,
   },
   extraReducers: (builder) => {
     builder
+      .addCase(addLanguagesAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.languages.push(action.payload);
+      })
+      .addCase(getCountriesAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.countries = action.payload;
+      })
+      .addCase(addCountryAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.countries.push(action.payload);
+      })
       .addCase(deleteAdvertsAsAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
