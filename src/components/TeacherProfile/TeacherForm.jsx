@@ -98,7 +98,7 @@ export const TeacherForm = () => {
 
       const updateUser = {
         country: values.updateUser.country.id,
-        birthday: "11-20-2007 22:23:23",
+        birthday: "11-20-2007",
         specializations: values.updateUser.specializations.map((el) => el.id),
         sex: values.updateUser.sex,
         firstName: values.updateUser.firstName,

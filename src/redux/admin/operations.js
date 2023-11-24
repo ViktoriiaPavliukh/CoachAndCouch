@@ -62,3 +62,38 @@ export const deleteUserAsAdmin = createAsyncThunk("admin/deleteUserAsAdmin", asy
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+
+export const addCountryAsAdmin = createAsyncThunk("admin/updateCountryAsAdmin", async (countryData, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+
+    token.set(userToken);
+    const { data } = await privateAPI.post("/admin/countries", countryData);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const getCountriesAsAdmin = createAsyncThunk("admin/getCountriesAsAdmin", async (_, thunkAPI) => {
+  {
+    try {
+      const { data } = await privateAPI.get("/admin/countries");
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+});
+
+export const addLanguagesAsAdmin = createAsyncThunk("admin/addLanguagesAsAdmin", async (languagesData, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+    token.set(userToken);
+    const { data } = await privateAPI.post("/admin/languages", languagesData);
+    console.log(languagesData);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
