@@ -40,9 +40,9 @@ export const ratingOptions = [
 ];
 
 export const priceOptions = [
-  { title: "до 10$", price: 10 },
-  { title: "від 10$ до 20$", price: 20 },
-  { title: "від 20$", price: 50 },
+  { title: "до 10$", price: 10, id: 1 },
+  { title: "від 10$ до 20$", price: 20, id: 2 },
+  { title: "від 20$", price: 50, id: 3 },
   // Додайте більше варіантів часу уроку
 ];
 

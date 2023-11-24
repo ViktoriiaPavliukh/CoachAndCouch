@@ -1,6 +1,7 @@
 import { privateAPI } from "@/services/privateAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { token } from "../../services/privateAPI";
+import { publicAPI } from "@/services/publicAPI";
 
 export const getUsersAsAdmin = createAsyncThunk("admin/getUsersAsAdmin", async (_, thunkAPI) => {
   try {
@@ -63,12 +64,12 @@ export const deleteUserAsAdmin = createAsyncThunk("admin/deleteUserAsAdmin", asy
   }
 });
 
-export const addCountryAsAdmin = createAsyncThunk("admin/updateCountryAsAdmin", async (countryData, thunkAPI) => {
+export const addCountryAsAdmin = createAsyncThunk("admin/updateCountryAsAdmin", async (Data, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.accessToken;
 
     token.set(userToken);
-    const { data } = await privateAPI.post("/admin/countries", countryData);
+    const { data } = await privateAPI.post("/admin/countries", Data);
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -86,14 +87,68 @@ export const getCountriesAsAdmin = createAsyncThunk("admin/getCountriesAsAdmin",
   }
 });
 
-export const addLanguagesAsAdmin = createAsyncThunk("admin/addLanguagesAsAdmin", async (languagesData, thunkAPI) => {
+export const addLanguagesAsAdmin = createAsyncThunk("admin/addLanguagesAsAdmin", async (Data, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.accessToken;
     token.set(userToken);
-    const { data } = await privateAPI.post("/admin/languages", languagesData);
-    console.log(languagesData);
+    const { data } = await privateAPI.post("/admin/languages", Data);
+    console.log(Data);
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+export const getLanguages = createAsyncThunk("admin/getLanguages", async (_, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get("/languages");
+    return data;
+  } catch (error) {
+    // console.error("Error get languages:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+export const deleteLanguageAsAdmin = createAsyncThunk("admin/deleteLanguageAsAdmin", async (id, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+    token.set(userToken);
+    const { data } = await privateAPI.delete(`/admin/languages/${id}`);
+    console.log(`language id = ${id} was deleted`);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+export const getSpecializations = createAsyncThunk("adverts/getSpecializations", async (_, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get("/specializations");
+    return data;
+  } catch (error) {
+    // console.error("Error get specializations:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+export const addSpecializationsAsAdmin = createAsyncThunk("admin/addSpecializationsAsAdmin", async (Data, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+    token.set(userToken);
+    const { data } = await privateAPI.post("/admin/specializations", Data);
+    console.log(Data);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+export const deleteSpecializationAsAdmin = createAsyncThunk(
+  "admin/deleteSpecializationAsAdmin",
+  async (id, thunkAPI) => {
+    try {
+      const userToken = thunkAPI.getState().auth.accessToken;
+      token.set(userToken);
+      const { data } = await privateAPI.delete(`/admin/specializations/${id}`);
+      console.log(`specialization id = ${id} was deleted`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

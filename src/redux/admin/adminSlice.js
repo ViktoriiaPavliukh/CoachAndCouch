@@ -3,10 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addCountryAsAdmin,
   addLanguagesAsAdmin,
+  addSpecializationsAsAdmin,
   deleteAdvertsAsAdmin,
+  deleteLanguageAsAdmin,
+  deleteSpecializationAsAdmin,
   deleteUserAsAdmin,
   getAdvertsAsAdmin,
   getCountriesAsAdmin,
+  getLanguages,
+  getSpecializations,
   getUsersAsAdmin,
 } from "./operations";
 
@@ -17,11 +22,39 @@ const adminSlice = createSlice({
     users: [],
     countries: [],
     languages: [],
+    specializations: [],
     isLoading: false,
     error: null,
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getSpecializations.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.specializations = action.payload;
+      })
+      .addCase(addSpecializationsAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.specializations.push(action.payload);
+      })
+      .addCase(deleteSpecializationAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex((specialization) => specialization.id === action.payload.id);
+        state.specializations.splice(index, 1);
+      })
+      .addCase(getLanguages.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.languages = action.payload;
+      })
+      .addCase(deleteLanguageAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        const index = state.items.findIndex((language) => language.id === action.payload.id);
+        state.languages.splice(index, 1);
+      })
       .addCase(addLanguagesAsAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
