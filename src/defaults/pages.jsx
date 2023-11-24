@@ -1,6 +1,8 @@
+import { FormattedMessage } from "react-intl";
+
 export const pages = [
   {
-    title: "Викладачі",
+    title: <FormattedMessage id="header.teachers" default="shjddd" />,
     link: "/",
   },
   // {
@@ -12,11 +14,11 @@ export const pages = [
   //   link: "",
   // },
   {
-    title: "Стати викладачем",
+    title: <FormattedMessage id="header.becomeTeacher" />,
     link: "teacherform",
   },
   {
-    title: "Про нас",
+    title: <FormattedMessage id="header.aboutUs" />,
     link: "home",
   },
   {

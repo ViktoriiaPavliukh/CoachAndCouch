@@ -270,9 +270,9 @@ export function Header() {
                     navigate(link);
                   }}
                 >
-                  <Typography textAlign="center">
+                  {/* <Typography textAlign="center">
                     {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
-                  </Typography>
+                  </Typography> */}
                 </MenuItem>
               ))
             )}
@@ -433,7 +433,7 @@ export function Header() {
                       paddingRight: "6px",
                     }}
                   >
-                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
+                    {title}
                   </Typography>
                 </MenuMobItem>
               ))}

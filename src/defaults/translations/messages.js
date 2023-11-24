@@ -1,8 +1,8 @@
 const messages = {
   en: {
     "header.teachers": "Teachers",
-    "header.becomeTeacher": "Become a Teacher",
-    "header.aboutUs": "About Us",
+    "header.becomeTeacher": "Become a teacher",
+    "header.aboutUs": "About us",
     "header.profile": "Profile",
     "header.login": "Login",
     "header.registration": "Register",
