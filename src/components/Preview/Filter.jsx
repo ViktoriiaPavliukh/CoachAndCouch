@@ -12,11 +12,17 @@ export const Filter = ({ options, typeoption, label }) => {
     <Autocomplete
       id={`${label}-filter`}
       options={options}
-      typeoption={typeoption}
       getOptionLabel={(options) => options[typeoption]}
       filterOptions={filterOptions}
       sx={{ minWidth: { md: 274, xs: 180 }, fontSize: "10px" }}
       renderInput={(params) => <TextField {...params} label={label} />}
+      renderOption={(props, option) => {
+        return (
+          <li {...props} key={option.id}>
+            {option[typeoption]}
+          </li>
+        );
+      }}
     />
   );
 };

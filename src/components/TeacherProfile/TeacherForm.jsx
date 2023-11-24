@@ -18,24 +18,15 @@ import {
 } from "@mui/material";
 import mainBg from "@assets/images/bg.png";
 
-import {
-  // getAdverts,
-  getCountries,
-  getLanguages,
-  getSpecializations,
-  postAdvert,
-} from "@/redux/marketplace/adverts/operations";
+import { getCountries, postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
 import { v4 as uuidv4 } from "uuid";
-import {
-  advertsSelector,
-  countriesSelector,
-  languagesSelector,
-  specializationsSelector,
-} from "@/redux/marketplace/adverts/advertsSelector";
+import { advertsSelector, countriesSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getLanguages, getSpecializations } from "@/redux/admin/operations";
+import { languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 
 const initialValues = {
   price: 0,

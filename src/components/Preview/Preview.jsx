@@ -19,14 +19,11 @@ import { priceOptions } from "@/defaults";
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  advertsSelector,
-  countriesSelector,
-  languagesSelector,
-  specializationsSelector,
-} from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts, getCountries, getLanguages, getSpecializations } from "@/redux/marketplace/adverts/operations";
+import { advertsSelector, countriesSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { getAdverts, getCountries } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
+import { languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
+import { getLanguages, getSpecializations } from "@/redux/admin/operations";
 
 export function Preview() {
   const navigate = useNavigate();
@@ -179,7 +176,7 @@ export function Preview() {
             rowGap: { xs: "16px", md: "20px" },
           }}
         >
-          <Filter options={languages} typeoption="languageUa" label="МОВА" />
+          <Filter options={languages} typeoption="languageUa" keyfield="id" label="МОВА" />
           <Filter options={countries} typeoption="countryUa" label="КРАЇНА" />
           <Filter options={priceOptions} typeoption="title" label="ЦІНА" />
           <Filter options={specializations} typeoption="specializationUa" label="СПЕЦІАЛІЗАЦІЯ" />

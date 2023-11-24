@@ -50,25 +50,6 @@ export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertDa
   }
 });
 
-export const getLanguages = createAsyncThunk("adverts/getLanguages", async (_, thunkAPI) => {
-  try {
-    const { data } = await publicAPI.get("/languages");
-    return data;
-  } catch (error) {
-    // console.error("Error get languages:", error);
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
-
-export const getSpecializations = createAsyncThunk("adverts/getSpecializations", async (_, thunkAPI) => {
-  try {
-    const { data } = await publicAPI.get("/specializations");
-    return data;
-  } catch (error) {
-    // console.error("Error get specializations:", error);
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
 export const getCountries = createAsyncThunk("adverts/getCountries", async (_, thunkAPI) => {
   try {
     const { data } = await publicAPI.get("/countries");

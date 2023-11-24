@@ -1,23 +1,24 @@
 import PropTypes from "prop-types";
 import { format, parseISO, parseJSON } from "date-fns";
 import { selectToken } from "@/redux/auth/selectors";
-import * as Yup from "yup";
-import { useFormik } from "formik";
+// import * as Yup from "yup";
+// import { useFormik } from "formik";
 import {
   Box,
   Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
+  // FormControl,
+  // InputLabel,
+  // MenuItem,
   Paper,
-  Select,
+  Stack,
+  // Select,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
+  // TextField,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,16 +29,25 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import {
-  addLanguagesAsAdmin,
+  // addLanguagesAsAdmin,
   deleteAdvertsAsAdmin,
+  // deleteLanguageAsAdmin,
   deleteUserAsAdmin,
   getAdvertsAsAdmin,
   getCountriesAsAdmin,
+  getLanguages,
+  getSpecializations,
   getUsersAsAdmin,
 } from "@/redux/admin/operations";
-import { advertsAsAdminSelector, countiesAsAdmin, usersAsAdminSelector } from "@/redux/admin/adminSelector";
-import { languagesSelector } from "@/redux/marketplace/adverts/advertsSelector";
-import { getLanguages } from "@/redux/marketplace/adverts/operations";
+import {
+  advertsAsAdminSelector,
+  countiesAsAdmin,
+  languagesSelector,
+  specializationsSelector,
+  usersAsAdminSelector,
+} from "@/redux/admin/adminSelector";
+import { AddLanguageForm } from "./AddLanguageForm";
+import { AddSpecializationForm } from "./AddSpecializationForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,26 +77,26 @@ function a11yProps(index) {
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
-const initialValues = {
-  languageUa: "",
-  languageEn: "",
+// const initialValues = {
+//   languageUa: "",
+//   languageEn: "",
 
-  languagesBD: "",
-};
-const validationSchema = Yup.object({
-  languageUa: Yup.string().required("This field id required"),
-  languageEn: Yup.string().required("This field id required"),
-});
+//   languagesBD: "",
+// };
+// const validationSchema = Yup.object({
+//   languageUa: Yup.string().required("This field id required"),
+//   languageEn: Yup.string().required("This field id required"),
+// });
 
 function VerticalTabs() {
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (values) => {
-      dispatch(addLanguagesAsAdmin({ languageUa: values.languageUa, languageEn: values.languageEn }));
-      dispatch(getLanguages());
-    },
-  });
+  // const formik = useFormik({
+  //   initialValues,
+  //   validationSchema,
+  //   onSubmit: async (values) => {
+  //     dispatch(addLanguagesAsAdmin({ languageUa: values.languageUa, languageEn: values.languageEn }));
+  //     dispatch(getLanguages());
+  //   },
+  // });
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -97,6 +107,7 @@ function VerticalTabs() {
   const adverts = useSelector(advertsAsAdminSelector);
   const countries = useSelector(countiesAsAdmin);
   const languages = useSelector(languagesSelector);
+  const specializations = useSelector(specializationsSelector);
   console.log(languages);
   console.log(countries);
   console.log(token);
@@ -106,6 +117,7 @@ function VerticalTabs() {
     dispatch(getUsersAsAdmin());
     dispatch(getCountriesAsAdmin());
     dispatch(getLanguages());
+    dispatch(getSpecializations());
   }, [dispatch]);
 
   console.log(adverts);
@@ -299,7 +311,7 @@ function VerticalTabs() {
                   <TableRow
                     key={uuidv4()}
                     style={{
-                      backgroundColor: users.isDeleted ? "rgba(175, 186, 202, 0.3)" : "transparent",
+                      backgroundColor: user.isDeleted ? "rgba(175, 186, 202, 0.3)" : "transparent",
                     }}
                   >
                     <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
@@ -349,13 +361,14 @@ function VerticalTabs() {
 
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                       <button
+                        disabled={user.role === "admin" ? true : false}
                         onClick={() => {
                           dispatch(deleteUserAsAdmin(user.id));
                         }}
                       >
                         D
                       </button>
-                      <button>E</button>
+                      <button disabled={user.role === "admin" ? true : false}>E</button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -365,7 +378,7 @@ function VerticalTabs() {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <h2>Додати Мову</h2>
+        {/* <h2>Додати Мову</h2>
         <FormControl variant="outlined" sx={{ width: "300px" }}>
           <InputLabel>Мови в базі даних:</InputLabel>
           <Select
@@ -386,13 +399,21 @@ function VerticalTabs() {
           >
             {languages &&
               languages?.map((language) => (
-                <MenuItem key={uuidv4()} value={language}>
+                <MenuItem key={language.id} value={language}>
                   {language.id + " " + language.languageUa + " " + language.languageEn}
+                  <button
+                    onClick={() => {
+                      dispatch(deleteLanguageAsAdmin(language.id));
+                      dispatch(getLanguages());
+                    }}
+                  >
+                    D
+                  </button>
                 </MenuItem>
               ))}
           </Select>
         </FormControl>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} id="addLanguageForm">
           <label>
             Українською:
             <TextField
@@ -421,7 +442,11 @@ function VerticalTabs() {
             />
           </label>
           <button type="submit">Add</button>
-        </form>
+        </form> */}
+        <Stack style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "50px" }}>
+          <AddLanguageForm languages={languages} />
+          <AddSpecializationForm specializations={specializations} />
+        </Stack>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Four
