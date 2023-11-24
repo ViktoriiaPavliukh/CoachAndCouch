@@ -27,10 +27,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
 import { styled } from "@mui/material/styles";
 import LanguageSwitcher from "./LanguageSwitcher";
-
+// import { FormattedMessage } from "react-intl";
 
 import messages from "../../defaults/translations/messages";
-
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -115,7 +114,10 @@ export function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
+    >
       <Container>
         <Toolbar
           disableGutters
@@ -180,7 +182,9 @@ export function Header() {
                   },
                   transition: "color 0.3s",
                   backgroundColor: (theme) =>
-                    pathname === `/${link}` || pathname === `${link}` ? theme.palette.primary.accent : null,
+                    pathname === `/${link}` || pathname === `${link}`
+                      ? theme.palette.primary.accent
+                      : null,
                   "&:hover": {
                     color: (theme) => theme.palette.textColor.menuHover,
                   },
@@ -198,7 +202,9 @@ export function Header() {
             }}
           >
             <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
-              <InstagramIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
+              <InstagramIcon
+                sx={{ color: (theme) => theme.palette.textColor.header }}
+              />
             </ExternalLink>
             <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
               <TelegramIcon
@@ -209,12 +215,18 @@ export function Header() {
               />
             </ExternalLink>
             <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
-              <FacebookRoundedIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
+              <FacebookRoundedIcon
+                sx={{ color: (theme) => theme.palette.textColor.header }}
+              />
             </ExternalLink>
           </Stack>
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             <LanguageSwitcher />
-            <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
+            <GreenSwitch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
           </Stack>
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
@@ -245,7 +257,9 @@ export function Header() {
                     },
                   }}
                 >
-                  <Typography textAlign="center">Вихід</Typography>
+                  <Typography textAlign="center">
+                    {intl.formatMessage({ id: "header.logout" })}
+                  </Typography>
                 </MenuItem>
               </Box>
             ) : (
@@ -256,7 +270,10 @@ export function Header() {
                     transition: "color 0.3s",
                     borderRadius: "6px",
 
-                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.primary.accent : null),
+                    backgroundColor: (theme) =>
+                      pathname === "/login"
+                        ? theme.palette.primary.accent
+                        : null,
                     "&:hover": {
                       // color: (theme) => (pathname === "/login" ? theme.palette.textColor.main : null),
                       backgroundColor: (theme) => theme.palette.primary.accent,
@@ -270,9 +287,9 @@ export function Header() {
                     navigate(link);
                   }}
                 >
-                  {/* <Typography textAlign="center">
-                    {title.charAt(0).toUpperCase() + title.slice(1).toLowerCase()}
-                  </Typography> */}
+                  <Typography textAlign="center">
+                    {intl.formatMessage({ id: "header.login" })}
+                  </Typography>
                 </MenuItem>
               ))
             )}
@@ -287,12 +304,15 @@ export function Header() {
                     sx={{
                       px: "12px",
                       backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/" ? theme.palette.primary.accent : null,
+                        pathname === "/registration" || pathname === "/"
+                          ? theme.palette.primary.accent
+                          : null,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
 
                       "&:hover": {
-                        backgroundColor: (theme) => theme.palette.primary.accent,
+                        backgroundColor: (theme) =>
+                          theme.palette.primary.accent,
                       },
                     }}
                   >
@@ -352,12 +372,12 @@ export function Header() {
                       textAlign="center"
                       variant="fontHeader"
                       sx={{
-                        // mr: 5.5,
-                        // width: "100%",
                         mr: 0,
                       }}
                     >
-                      Особистий кабінет
+                      <Typography textAlign="center">
+                        {intl.formatMessage({ id: "header.profile" })}
+                      </Typography>
                     </Typography>
                   </MenuMobItem>
                   <MenuMobItem
@@ -373,7 +393,7 @@ export function Header() {
                       //   mr: 5.5,
                       // }}
                     >
-                      Вихід
+                      {intl.formatMessage({ id: "header.logout" })}
                     </Typography>
                   </MenuMobItem>
                 </div>
@@ -392,7 +412,7 @@ export function Header() {
                       //   mr: 5.5,
                       // }}
                     >
-                      Вхід
+                      {intl.formatMessage({ id: "header.login" })}
                     </Typography>
                   </MenuMobItem>
 
@@ -407,11 +427,10 @@ export function Header() {
                       textAlign="center"
                       variant="fontHeader"
                       sx={{
-                        // mr: 5.5,
                         mr: 0,
                       }}
                     >
-                      Реєстрація
+                      {intl.formatMessage({ id: "header.registration" })}
                     </Typography>
                   </MenuMobItem>
                 </div>
