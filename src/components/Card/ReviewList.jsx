@@ -5,11 +5,7 @@ export function ReviewList({ elements }) {
   console.log(elements);
   const ReviewHandleSubmit = (e) => {
     e.preventDefault();
-
-    const addReview = new FormData(e.target);
-
-    console.log(addReview.get("name"), addReview.get("reviewDescription"));
-    e.target.reset();
+    // dispatch(AddFeedback(id));
   };
   return (
     <>
@@ -73,7 +69,7 @@ export function ReviewList({ elements }) {
           <input
             type="number"
             style={{ height: "30px", borderRadius: "4px", padding: "12px" }}
-            name="name"
+            name="rating"
             min="1"
             max="5"
           />

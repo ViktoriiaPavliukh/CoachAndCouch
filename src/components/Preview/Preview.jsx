@@ -39,6 +39,7 @@ export function Preview() {
     dispatch(getCountries());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
+  console.log(adverts);
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
