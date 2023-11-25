@@ -15,6 +15,13 @@ const messages = {
     signInButton: "Sign In",
     newUser: "New user?",
     createAccount: "Create an account",
+    "footer.text":
+      "Learn your favorite language through individual lessons at any convenient place and time.",
+    "footer.social": "Coach&Couch in social media:",
+    "footer.confidential": "Privacy Policy",
+    "footer.conditions": "Terms and Conditions",
+    "footer.developers": "Developer Team Contacts",
+    "footer.copyright": "©2023 coach&Couch. All rights reserved.",
   },
   uk: {
     "header.teachers": "Викладачі",
@@ -32,6 +39,13 @@ const messages = {
     signInButton: "Увійти",
     newUser: "Новий користувач?",
     createAccount: "Створити аккаунт",
+    "footer.text":
+      "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
+    "footer.social": "Coach&Couch в соцмережах:",
+    "footer.confidential": "Політика конфіденційності",
+    "footer.conditions": "Умови використання",
+    "footer.developers": "Контакти команди розробників",
+    "footer.copyright": "©2023 coach&Couch. Усі права захищені.",
   },
 };
 
