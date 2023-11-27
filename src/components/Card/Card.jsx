@@ -158,7 +158,7 @@ export function Card() {
             <Typography variant="posterCategory" color="grey.600">
               Країна
             </Typography>
-            <CategoryList elements={teacher.user.country?.countryUa.split(" ")} />
+            <CategoryList elements={teacher.user.country?.alpha2.split(" ")} />
             <Typography variant="posterCategory" color="grey.600">
               Платформи
             </Typography>
