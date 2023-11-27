@@ -34,14 +34,15 @@ import {
   // deleteLanguageAsAdmin,
   deleteUserAsAdmin,
   getAdvertsAsAdmin,
-  getCountriesAsAdmin,
+  getCountries,
+  // getCountriesAsAdmin,
   getLanguages,
   getSpecializations,
   getUsersAsAdmin,
 } from "@/redux/admin/operations";
 import {
   advertsAsAdminSelector,
-  countiesAsAdmin,
+  countriesSelector,
   languagesSelector,
   specializationsSelector,
   usersAsAdminSelector,
@@ -105,7 +106,7 @@ function VerticalTabs() {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const adverts = useSelector(advertsAsAdminSelector);
-  const countries = useSelector(countiesAsAdmin);
+  const countries = useSelector(countriesSelector);
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   console.log(languages);
@@ -115,7 +116,7 @@ function VerticalTabs() {
   useEffect(() => {
     dispatch(getAdvertsAsAdmin());
     dispatch(getUsersAsAdmin());
-    dispatch(getCountriesAsAdmin());
+    dispatch(getCountries());
     dispatch(getLanguages());
     dispatch(getSpecializations());
   }, [dispatch]);

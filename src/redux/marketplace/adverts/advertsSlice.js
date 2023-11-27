@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteAdvertsById, getAdverts, getCountries, postAdvert } from "./operations";
+import { deleteAdvertsById, getAdverts, postAdvert } from "./operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
   initialState: {
     // languages: [],
-    specializations: [],
-    countries: [],
+    // specializations: [],
+    // countries: [],
     items: [],
     isLoading: false,
     error: null,
@@ -14,11 +14,6 @@ const advertsSlice = createSlice({
   extraReducers: (builder) => {
     builder
 
-      .addCase(getCountries.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.error = null;
-        state.countries = action.payload;
-      })
       .addCase(getAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;

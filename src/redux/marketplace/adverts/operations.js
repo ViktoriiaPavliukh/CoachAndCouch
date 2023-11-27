@@ -1,15 +1,26 @@
 import { privateAPI, token } from "@/services/privateAPI";
 import { publicAPI } from "@/services/publicAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunkAPI) => {
   try {
     const { data } = await publicAPI.get(`/adverts`);
     // console.log(data);
+    if (thunkAPI.status === 201) {
+      toast.success("You add the advert", {
+        icon: "🚀",
+      });
+    }
+    if (thunkAPI.status === 404) {
+      toast.error("You entered incorrect data", {
+        icon: false,
+      });
+    }
+
     return data;
   } catch (error) {
-    // console.log(error.message);
-    //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
+    toast.error("Something wrong with internet");
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -50,12 +61,3 @@ export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertDa
   }
 });
 
-export const getCountries = createAsyncThunk("adverts/getCountries", async (_, thunkAPI) => {
-  try {
-    const { data } = await publicAPI.get("/countries");
-    return data;
-  } catch (error) {
-    // console.error("Error get countries:", error);
-    return thunkAPI.rejectWithValue(error.message);
-  }
-});
