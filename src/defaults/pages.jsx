@@ -1,6 +1,8 @@
+import { FormattedMessage } from "react-intl";
+
 export const pages = [
   {
-    title: "Викладачі",
+    title: <FormattedMessage id="header.teachers" />,
     link: "/",
   },
   // {
@@ -12,15 +14,15 @@ export const pages = [
   //   link: "",
   // },
   {
-    title: "Стати викладачем",
+    title: <FormattedMessage id="header.becomeTeacher" />,
     link: "teacherform",
   },
   {
-    title: "Про нас",
+    title: <FormattedMessage id="header.aboutUs" />,
     link: "home",
   },
   {
-    title: "Особистий кабінет",
+    title: <FormattedMessage id="header.profile" />,
     link: "user",
   },
   // {
@@ -28,11 +30,11 @@ export const pages = [
   //   link: "home",
   // },
   {
-    title: "Вхід",
+    title: <FormattedMessage id="header.login" />,
     link: "login",
   },
   {
-    title: "Реєстрація",
+    title: <FormattedMessage id="header.registration" />,
     link: "registration",
   },
 
