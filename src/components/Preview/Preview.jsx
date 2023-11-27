@@ -19,11 +19,11 @@ import { priceOptions } from "@/defaults";
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector, countriesSelector } from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts, getCountries } from "@/redux/marketplace/adverts/operations";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
-import { languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
-import { getLanguages, getSpecializations } from "@/redux/admin/operations";
+import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
+import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
 
 export function Preview() {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export function Preview() {
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
   const items = usePagination(adverts, PER_PAGE);
-  // console.log(countries);
+  console.log(countries);
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
@@ -178,7 +178,7 @@ export function Preview() {
           }}
         >
           <Filter options={languages} typeoption="languageUa" keyfield="id" label="МОВА" />
-          <Filter options={countries} typeoption="countryUa" label="КРАЇНА" />
+          <Filter options={countries} typeoption="alpha2" label="КРАЇНА" />
           <Filter options={priceOptions} typeoption="title" label="ЦІНА" />
           <Filter options={specializations} typeoption="specializationUa" label="СПЕЦІАЛІЗАЦІЯ" />
         </Stack>

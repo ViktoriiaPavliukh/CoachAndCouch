@@ -152,3 +152,13 @@ export const deleteSpecializationAsAdmin = createAsyncThunk(
     }
   }
 );
+
+export const getCountries = createAsyncThunk("adverts/getCountries", async (_, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get("/countries");
+    return data;
+  } catch (error) {
+    // console.error("Error get countries:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

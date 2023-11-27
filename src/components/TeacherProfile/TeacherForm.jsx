@@ -18,15 +18,15 @@ import {
 } from "@mui/material";
 import mainBg from "@assets/images/bg.png";
 
-import { getCountries, postAdvert } from "@/redux/marketplace/adverts/operations";
+import { postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
 import { v4 as uuidv4 } from "uuid";
-import { advertsSelector, countriesSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getLanguages, getSpecializations } from "@/redux/admin/operations";
-import { languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
+import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 
 const initialValues = {
   price: 0,
@@ -196,12 +196,12 @@ export const TeacherForm = () => {
                 }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.country && Boolean(formik.errors.country)}
-                renderValue={(selected) => selected.countryUa}
+                renderValue={(selected) => selected.alpha2}
               >
                 {countriesList &&
                   countriesList.map((country) => (
                     <MenuItem key={uuidv4()} value={country}>
-                      {country.countryUa}
+                      {country.alpha2}
                     </MenuItem>
                   ))}
               </Select>

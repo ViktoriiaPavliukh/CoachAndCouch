@@ -9,6 +9,7 @@ import {
   deleteSpecializationAsAdmin,
   deleteUserAsAdmin,
   getAdvertsAsAdmin,
+  getCountries,
   getCountriesAsAdmin,
   getLanguages,
   getSpecializations,
@@ -28,6 +29,11 @@ const adminSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getCountries.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.countries = action.payload;
+      })
       .addCase(getSpecializations.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;

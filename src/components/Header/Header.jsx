@@ -27,7 +27,9 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
 import { styled } from "@mui/material/styles";
 import LanguageSwitcher from "./LanguageSwitcher";
+
 // import { FormattedMessage } from "react-intl";
+
 
 import messages from "../../defaults/translations/messages";
 
@@ -66,12 +68,7 @@ const MenuMobItem = styled(MenuItem)(() => ({
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
     <Link to={to} sx={{ color: "white", padding: "px" }}>
-      <IconButton
-        size="large"
-        color="inherit"
-        sx={{ color: "white", padding: "3px" }}
-        {...rest}
-      >
+      <IconButton size="large" color="inherit" sx={{ color: "white", padding: "3px" }} {...rest}>
         {children}
       </IconButton>
     </Link>
@@ -281,9 +278,9 @@ export function Header() {
                   }}
                   key={title}
                   onClick={() => {
-                    if (link === "login") {
-                      console.log(link);
-                    }
+                    // if (link === "login") {
+                    //   console.log(link);
+                    // }
                     navigate(link);
                   }}
                 >

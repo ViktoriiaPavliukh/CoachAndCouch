@@ -12,12 +12,16 @@ export const loginUser = createAsyncThunk("/users/login", async (credentials, th
   try {
     const { data } = await publicAPI.post("/auth/signin", credentials);
     token.set(data.tokens.accessToken);
-
+    if (thunkAPI.status === 200) {
+      toast.success("Welcome");
+    }
+    if (thunkAPI.status === 400) {
+      toast.error("Incorrect login or password");
+    }
     return data;
   } catch (error) {
-    console.log(error.message);
-    toast.failure("Sorry. We have some problem with a server. Please, reload the page");
-    return thunkAPI.rejectWithValue(error.message);
+    toast.error("Sorry. We have some problem with a server. Please, reload the page");
+    // return thunkAPI.rejectWithValue(error.message);
   }
 });
 
