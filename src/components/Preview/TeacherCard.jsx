@@ -67,7 +67,7 @@ export function TeacherCard({ teacher }) {
         )}
         <Stack style={{ display: "flex", justifyContent: "flex-start", flexDirection: "row", marginBottom: "20px" }}>
           <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
-            Країна: {teacher.user.country?.countryUa}
+            Країна: {teacher.user.country?.alpha2}
           </Typography>
         </Stack>
 
