@@ -1,11 +1,18 @@
 import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addFeedback } from "@/redux/user/operations";
 
-export function ReviewList({ elements }) {
-  console.log(elements);
-  const ReviewHandleSubmit = (e) => {
+export function ReviewList({ elements, id }) {
+  const dispatch = useDispatch();
+  const reviewHandleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(AddFeedback(id));
+    dispatch(addFeedback(id));
+    const feedback = {
+      rating: e.target.rating?.value,
+      message: e.target.message?.value,
+    };
+    console.log(feedback, id);
   };
   return (
     <>
@@ -48,7 +55,7 @@ export function ReviewList({ elements }) {
           padding: "8px 16px",
           marginBottom: "30px",
         }}
-        onSubmit={ReviewHandleSubmit}
+        onSubmit={reviewHandleSubmit}
       >
         <Typography
           component="p"
@@ -83,10 +90,7 @@ export function ReviewList({ elements }) {
           }}
         >
           <label>Ваш відгук</label>
-          <textarea
-            style={{ height: "200px", borderRadius: "4px", padding: "12px" }}
-            name="reviewDescription"
-          ></textarea>
+          <textarea style={{ height: "200px", borderRadius: "4px", padding: "12px" }} name="message"></textarea>
         </div>
         <Button type="submit" sx={{ alignSelf: "center", p: "10px 18px" }} variant="contained">
           <Typography variant="posterButton">Відправити</Typography>
@@ -105,4 +109,5 @@ ReviewList.propTypes = {
       image: PropTypes.string,
     })
   ),
+  id: PropTypes.number,
 };

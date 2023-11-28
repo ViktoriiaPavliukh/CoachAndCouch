@@ -16,3 +16,16 @@ export const getUserById = createAsyncThunk("admin/getUsersAsAdmin", async (id, 
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+
+export const addFeedback = createAsyncThunk("user/addFeedback", async (id, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+
+    token.set(userToken);
+    const { data } = await privateAPI.post(`/user/${id}/feedback`, id);
+
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

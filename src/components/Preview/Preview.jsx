@@ -48,7 +48,8 @@ export function Preview() {
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
   const items = usePagination(adverts, PER_PAGE);
-  console.log(countries);
+  console.log("current data", items.currentData());
+  // console.log(countries);
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
@@ -194,8 +195,7 @@ export function Preview() {
             {items &&
               items.currentData().map((teacher) => {
                 return (
-                  <Grid key={teacher.user.id} item>
-                    {/* <TeacherCard picture={teacher.picture} description={teacher.description} /> */}
+                  <Grid item key={teacher.id}>
                     <TeacherCard teacher={teacher} />
                   </Grid>
                 );
