@@ -30,7 +30,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 // import { FormattedMessage } from "react-intl";
 
-import messages from "../../defaults/translations/messages";
+// import messages from "../../defaults/translations/messages";
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {

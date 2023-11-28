@@ -1,4 +1,3 @@
-import React from "react";
 import PhoneNumber from "./PhoneNumber";
 import { Link } from "react-router-dom";
 import { Box, Container, Typography, Paper, Stack } from "@mui/material";
@@ -62,24 +61,14 @@ export default function Footer() {
                 coachandcouch@gmail.com
               </Typography>
             </Stack>
-            <Typography>
-              {intl.formatMessage({ id: "footer.social" })}
-            </Typography>
+            <Typography>{intl.formatMessage({ id: "footer.social" })}</Typography>
           </Stack>
           <Stack direction="row" spacing={2}>
-            <Typography>
-              {intl.formatMessage({ id: "footer.confidential" })}
-            </Typography>
-            <Typography>
-              {intl.formatMessage({ id: "footer.conditions" })}
-            </Typography>
-            <Typography>
-              {intl.formatMessage({ id: "footer.developers" })}
-            </Typography>
+            <Typography>{intl.formatMessage({ id: "footer.confidential" })}</Typography>
+            <Typography>{intl.formatMessage({ id: "footer.conditions" })}</Typography>
+            <Typography>{intl.formatMessage({ id: "footer.developers" })}</Typography>
           </Stack>
-          <Typography>
-            {intl.formatMessage({ id: "footer.copyright" })}
-          </Typography>
+          <Typography>{intl.formatMessage({ id: "footer.copyright" })}</Typography>
         </Box>
       </Container>
       {/* </AppBar> */}
