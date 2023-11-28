@@ -9,6 +9,7 @@ export function TeacherImage({ src }) {
       alt="Teacher's profile"
       sx={{
         display: "flex",
+        position: "relative",
         width: "373px",
         height: "264px",
         borderRadius: "0px",

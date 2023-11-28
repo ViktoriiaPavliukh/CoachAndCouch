@@ -30,6 +30,14 @@ export function TeacherCard({ teacher }) {
     >
       <CardActionArea onClick={handleClick}>
         <TeacherImage src={teacher.imagePath} />
+        <img
+          src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
+          srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
+          width="40"
+          height="36"
+          alt="ua"
+          style={{ width: "52px", height: "36px", marginLeft: "4px", position: "absolute", top: "10px", right: "10px" }}
+        />
       </CardActionArea>
       <CardContent>
         <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", gap: "24px", mb: "8px" }}>
