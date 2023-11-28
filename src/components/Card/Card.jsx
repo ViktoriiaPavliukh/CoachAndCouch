@@ -5,7 +5,7 @@ import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
-import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
+// import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useParams } from "react-router-dom";
@@ -114,7 +114,17 @@ export function Card() {
               }}
             >
               <Typography variant="posterName">{teacher.user.firstName + " " + teacher.user.lastName}</Typography>
-              <img src={countryLogo} alt="country flag" style={{ width: "52px", height: "36px", marginLeft: "4px" }} />
+              {/* <img src={countryLogo} alt="country flag" style={{ width: "52px", height: "36px", marginLeft: "4px" }} /> */}
+
+              <img
+                src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
+                srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
+                width="40"
+                height="36"
+                alt="ua"
+                style={{ width: "52px", height: "36px", marginLeft: "4px", border: "0.2px solid rgba(0, 0, 0, 0.14)" }}
+              />
+
               <MessageBtn sx={{ display: { xs: "none", lg: "block" } }} />
               <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} />
             </Box>
