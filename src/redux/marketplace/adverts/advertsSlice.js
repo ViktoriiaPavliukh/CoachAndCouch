@@ -4,9 +4,6 @@ import { deleteAdvertsById, getAdverts, postAdvert } from "./operations";
 const advertsSlice = createSlice({
   name: "adverts",
   initialState: {
-    // languages: [],
-    // specializations: [],
-    // countries: [],
     items: [],
     isLoading: false,
     error: null,
