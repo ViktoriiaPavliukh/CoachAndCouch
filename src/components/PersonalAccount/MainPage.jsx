@@ -1,4 +1,7 @@
+import { useSelector, useDispatch } from "react-redux";
+import { useIntl } from "react-intl";
 import "react-calendar/dist/Calendar.css";
+import { selectUser } from "../../redux/auth/selectors";
 // import { enUS } from "date-fns/locale";
 import { Box, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -11,6 +14,9 @@ import { useState } from "react";
 export const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [showTime, setShowTime] = useState(false);
+  const user = useSelector(selectUser);
+  const intl = useIntl();
+
   return (
     <Box
       sx={{
@@ -33,34 +39,15 @@ export const MainPage = () => {
         >
           <Avatar sx={{ bgcolor: green[500] }} aria-label="rate"></Avatar>
           <Box>
-            <Typography>РЕЙТИНГ</Typography>
-            <Typography>95%</Typography>
+            <Typography>{intl.formatMessage({ id: "rate" })}</Typography>
+            <Typography>{user.rating}</Typography>
             <Typography> Молодець! Так тримати</Typography>
-          </Box>
-        </Card>
-        <Card
-          sx={{
-            display: "flex",
-            p: "24px",
-            border: "1px solid #C1D9EA",
-            borderRadius: "12px",
-            gap: "32px",
-            justifyContent: "center",
-            alignItems: "center",
-            minWidth: "359px",
-          }}
-        >
-          <Avatar sx={{ bgcolor: green[500] }} aria-label="rate"></Avatar>
-          <Box>
-            <Typography>Відвідуваність</Typography>
-            <Typography>85%</Typography>
-            <Typography> Добре! Є трохи пропусків</Typography>
           </Box>
         </Card>
       </Box>
       <Box>
-        <Typography variant="h5" noWrap sx={{ paddingTop: "32px", mb: "16px" }}>
-          РОЗКЛАД
+        <Typography variant="h5" noWrap sx={{ paddingTop: "32px", mb: "16px", textTransform: "uppercase" }}>
+          {intl.formatMessage({ id: "personalAccount.schedule" })}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", gap: "40px" }}>
           <Box sx={{ display: "flex", flexDirection: "row" }}>
@@ -97,7 +84,12 @@ export const MainPage = () => {
               alignItems: "center",
             }}
           >
-            <Calendar onChange={setDate} value={date} onClickDay={() => setShowTime(true)} locale="en-US" />
+            <Calendar
+              onChange={setDate}
+              value={date}
+              onClickDay={() => setShowTime(true)}
+              locale="en-US"
+            />
           </Box>
         </Box>
       </Box>
