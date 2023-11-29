@@ -208,7 +208,7 @@ export function Card() {
             <Typography variant="posterTitle" color="grey.600" mb="36px">
               Відгуки
             </Typography>
-            <ReviewList elements={reviews} id={teacher.user.id} />
+            <ReviewList elements={teacher.user.feedbacksToMe} id={teacher.user.id} />
           </Box>
           <Box
             sx={{
