@@ -30,3 +30,15 @@ export const addFeedback = createAsyncThunk("user/addFeedback", async (dataFeedb
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+export const getAllFeedbacks = createAsyncThunk("user/getAllFeedbacks", async (id, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+
+    token.set(userToken);
+    const { data } = await privateAPI.get(`/users/${id}/feedback`);
+
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
