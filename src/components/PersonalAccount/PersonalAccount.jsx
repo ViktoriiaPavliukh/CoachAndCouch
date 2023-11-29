@@ -1,5 +1,6 @@
 import "react-calendar/dist/Calendar.css";
 // import { enUS } from "date-fns/locale";
+import { useIntl } from "react-intl";
 import { Container, Box, Typography } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { PersonalImage } from "./PersonalImage";
@@ -29,6 +30,8 @@ export function PersonalAccount() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const navigate = useNavigate();
+  const intl = useIntl();
+  // console.log(user);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -55,7 +58,7 @@ export function PersonalAccount() {
       }}
     >
       <Box>
-        <PersonalImage />
+        <PersonalImage advertImagePath={user.advert?.imagePath} />
         <Typography
           gutterBottom
           variant="fontTitle"
@@ -75,25 +78,25 @@ export function PersonalAccount() {
           <Box component={Link} to="main" sx={linkStyles}>
             <img src={homeIcon} alt="Home Icon" />
             <Typography variant="fontLink" noWrap>
-              Дашборд
+              {intl.formatMessage({ id: "dashboard" })}
             </Typography>
           </Box>
           <Box component={Link} to="lessons" sx={linkStyles}>
             <img src={mouse} alt="lessons" />
             <Typography variant="fontLink" noWrap>
-              Мої уроки
+              {intl.formatMessage({ id: "personalAccount.lessons" })}
             </Typography>
           </Box>
           <Box component={Link} to="enquiry" sx={linkStyles}>
             <img src={checklist} alt="enquiry" />
             <Typography variant="fontLink" noWrap>
-              Моя анкета
+              {intl.formatMessage({ id: "personalAccount.profile" })}
             </Typography>
           </Box>
           <Box component={Link} to="schedule" sx={linkStyles}>
             <img src={notepad} alt="schedule" />
             <Typography variant="fontLink" noWrap>
-              Розклад
+              {intl.formatMessage({ id: "personalAccount.schedule" })}
             </Typography>
           </Box>
           {/* <Box component={Link} to="messages" sx={linkStyles}>
@@ -105,13 +108,13 @@ export function PersonalAccount() {
           <Box component={Link} to="settings" sx={linkStyles}>
             <img src={settings} alt="settings" />
             <Typography variant="fontLink" noWrap>
-              Налаштування
+              {intl.formatMessage({ id: "personalAccount.settings" })}
             </Typography>
           </Box>
           <Box component={Link} sx={linkStyles} onClick={handleLogout}>
             <img src={logout} alt="logout" />
             <Typography variant="fontLink" noWrap>
-              Вихід
+              {intl.formatMessage({ id: "personalAccount.logout" })}
             </Typography>
           </Box>
         </Box>
