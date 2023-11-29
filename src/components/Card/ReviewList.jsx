@@ -2,18 +2,22 @@ import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addFeedback } from "@/redux/user/operations";
+import { el } from "date-fns/locale";
 
 export function ReviewList({ elements, id }) {
   const dispatch = useDispatch();
+
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addFeedback(id));
     const feedback = {
-      rating: e.target.rating?.value,
+      mark: Number(e.target.mark?.value),
       message: e.target.message?.value,
     };
     console.log(feedback, id);
+    dispatch(addFeedback({ id, feedback }));
+    e.target.reset();
   };
+  console.log(elements);
   return (
     <>
       <List
@@ -26,10 +30,10 @@ export function ReviewList({ elements, id }) {
       >
         {elements.map((e) => (
           <ListItem key={e.id} sx={{ display: "flex", gap: "24px" }}>
-            <img src={e.image} alt={e.name} style={{ width: "85px", height: "85px", borderRadius: "50%" }} />
+            {/* <img src={e.image} alt={e.name} style={{ width: "85px", height: "85px", borderRadius: "50%" }} /> */}
             <Box>
               <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
-                {e.name}
+                {e.fromUser.firstName + " " + e.fromUser.lastName}
               </Typography>
               <Typography
                 sx={{
@@ -38,7 +42,7 @@ export function ReviewList({ elements, id }) {
                   color: "grey.600",
                 }}
               >
-                {e.text}
+                {e.message}
               </Typography>
             </Box>
           </ListItem>
@@ -76,7 +80,7 @@ export function ReviewList({ elements, id }) {
           <input
             type="number"
             style={{ height: "30px", borderRadius: "4px", padding: "12px" }}
-            name="rating"
+            name="mark"
             min="1"
             max="5"
           />
@@ -103,10 +107,10 @@ export function ReviewList({ elements, id }) {
 ReviewList.propTypes = {
   elements: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      text: PropTypes.string,
-      image: PropTypes.string,
+      id: PropTypes.number,
+      // name: PropTypes.string,
+      message: PropTypes.string,
+      // image: PropTypes.string,
     })
   ),
   id: PropTypes.number,

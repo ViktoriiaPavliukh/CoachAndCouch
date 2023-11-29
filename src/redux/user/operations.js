@@ -17,12 +17,13 @@ export const getUserById = createAsyncThunk("admin/getUsersAsAdmin", async (id, 
   }
 });
 
-export const addFeedback = createAsyncThunk("user/addFeedback", async (id, thunkAPI) => {
+export const addFeedback = createAsyncThunk("user/addFeedback", async (dataFeedback, thunkAPI) => {
+  const { id, feedback } = dataFeedback;
   try {
     const userToken = thunkAPI.getState().auth.accessToken;
 
     token.set(userToken);
-    const { data } = await privateAPI.post(`/user/${id}/feedback`, id);
+    const { data } = await privateAPI.post(`/users/${id}/feedback`, feedback);
 
     return data;
   } catch (error) {
