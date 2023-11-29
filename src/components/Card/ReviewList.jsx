@@ -1,11 +1,9 @@
 import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addFeedback, getAllFeedbacks } from "@/redux/user/operations";
-import { useEffect } from "react";
-import { getAdverts } from "@/redux/marketplace/adverts/operations";
+import { addFeedback } from "@/redux/user/operations";
 
-export function ReviewList({ elements, id }) {
+export function ReviewList({ elements, id, userImage }) {
   const dispatch = useDispatch();
 
   const reviewHandleSubmit = (e) => {
@@ -32,7 +30,11 @@ export function ReviewList({ elements, id }) {
       >
         {elements.map((e) => (
           <ListItem key={e.id} sx={{ display: "flex", gap: "24px" }}>
-            {/* <img src={e.image} alt={e.name} style={{ width: "85px", height: "85px", borderRadius: "50%" }} /> */}
+            <img
+              src={userImage}
+              alt={e.fromUser.firstName + " " + e.fromUser.lastName}
+              style={{ width: "85px", height: "85px", borderRadius: "50%" }}
+            />
             <Box>
               <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
                 {e.fromUser.firstName + " " + e.fromUser.lastName}
@@ -107,6 +109,7 @@ export function ReviewList({ elements, id }) {
 }
 
 ReviewList.propTypes = {
+  userImage: PropTypes.string,
   elements: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
