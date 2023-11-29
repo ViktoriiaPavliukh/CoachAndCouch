@@ -1,8 +1,9 @@
 import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addFeedback } from "@/redux/user/operations";
-import { el } from "date-fns/locale";
+import { addFeedback, getAllFeedbacks } from "@/redux/user/operations";
+import { useEffect } from "react";
+import { getAdverts } from "@/redux/marketplace/adverts/operations";
 
 export function ReviewList({ elements, id }) {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export function ReviewList({ elements, id }) {
     e.target.reset();
   };
   console.log(elements);
+
   return (
     <>
       <List
