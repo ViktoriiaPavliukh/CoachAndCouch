@@ -36,32 +36,32 @@ import { useEffect } from "react";
 //   { id: "6", label: "Машини" },
 // ];
 
-const reviews = [
-  {
-    id: "1",
-    name: "Гліб Карпов",
-    text: "Найкращий викладач. Дуже сподобалось навчання, готуємося до іспитів разом",
-    image: userImage,
-  },
-  {
-    id: "2",
-    name: "Андрій Іващук",
-    text: "Цікаве спілкування, працюємо над якісною вимовою.  Хочу продовжити навчання саме з чим вчителем",
-    image: userImage,
-  },
-  {
-    id: "3",
-    name: "Максим Остапенко ",
-    text: "Отримав корисні поради щодо вивчення української мови. Гарний вчитель. Рекомендую",
-    image: userImage,
-  },
-  {
-    id: "4",
-    name: "Аліна Карпенко",
-    text: "Дуже сподобався урок. Все чітко та якісно. Приємний у спілкуванні викладач. Готуємось разом для іспитів",
-    image: userImage,
-  },
-];
+// const reviews = [
+//   {
+//     id: "1",
+//     name: "Гліб Карпов",
+//     text: "Найкращий викладач. Дуже сподобалось навчання, готуємося до іспитів разом",
+//     image: userImage,
+//   },
+//   {
+//     id: "2",
+//     name: "Андрій Іващук",
+//     text: "Цікаве спілкування, працюємо над якісною вимовою.  Хочу продовжити навчання саме з чим вчителем",
+//     image: userImage,
+//   },
+//   {
+//     id: "3",
+//     name: "Максим Остапенко ",
+//     text: "Отримав корисні поради щодо вивчення української мови. Гарний вчитель. Рекомендую",
+//     image: userImage,
+//   },
+//   {
+//     id: "4",
+//     name: "Аліна Карпенко",
+//     text: "Дуже сподобався урок. Все чітко та якісно. Приємний у спілкуванні викладач. Готуємось разом для іспитів",
+//     image: userImage,
+//   },
+// ];
 
 export function Card() {
   const dispatch = useDispatch();
@@ -208,7 +208,7 @@ export function Card() {
             <Typography variant="posterTitle" color="grey.600" mb="36px">
               Відгуки
             </Typography>
-            <ReviewList elements={teacher.user.feedbacksToMe} id={teacher.user.id} />
+            <ReviewList elements={teacher.user.feedbacksToMe} id={teacher.user.id} userImage={userImage} />
           </Box>
           <Box
             sx={{

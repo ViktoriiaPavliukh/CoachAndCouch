@@ -20,7 +20,7 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(addFeedback.fulfilled, (state, action) => {
-        state.feedbacks = action.payload;
+        state.feedbacks.push(action.payload);
         state.isLoading = false;
         state.error = null;
       })
