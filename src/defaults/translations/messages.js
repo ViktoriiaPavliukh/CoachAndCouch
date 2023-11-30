@@ -53,6 +53,7 @@ const messages = {
     // Buttons
     sendBtn: "Send",
     trialLessonBtn: "Trial lesson",
+    writeMeBtn: "Contact",
   },
   uk: {
     "header.teachers": "Викладачі",
@@ -86,7 +87,6 @@ const messages = {
     createAccount: "Створити аккаунт",
 
     // ReviewList
-
     titleRewiewForm: "Залиште свій відгук про викладача",
     reviewMark: "Оцініть від 1 до 5:",
     reviewMessage: "Ваш відгук:",
@@ -110,6 +110,7 @@ const messages = {
     // Buttons
     sendBtn: "Відправити",
     trialLessonBtn: "Пробний урок",
+    writeMeBtn: "Написати",
   },
 };
 
