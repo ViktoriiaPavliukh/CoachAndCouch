@@ -1,11 +1,20 @@
 import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFeedback } from "@/redux/user/operations";
+import Loader from "../Loader/Loader";
+import { selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
+import { selectToken } from "@/redux/auth/selectors";
+import { toast } from "react-toastify";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import { useIntl } from "react-intl";
 
 export function ReviewList({ elements, id, userImage }) {
+  const intl = useIntl();
   const dispatch = useDispatch();
-
+  const isLoading = useSelector(selectAdvertsIsLoading);
+  const token = useSelector(selectToken);
+  const en = useSelector(selectCurrentLanguage);
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
     const feedback = {
@@ -13,12 +22,26 @@ export function ReviewList({ elements, id, userImage }) {
       message: e.target.message?.value,
     };
     console.log(feedback, id);
+    if (!token) {
+      if (en === "en") {
+        toast.error("Only authorized users can post reviews", {
+          icon: false,
+        });
+      } else {
+        toast.error("Лише авторизовані користувачі можуть залишати відгуки", {
+          icon: false,
+        });
+      }
+      return;
+    }
     dispatch(addFeedback({ id, feedback }));
     e.target.reset();
   };
   console.log(elements);
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <>
       <List
         sx={{
@@ -71,7 +94,8 @@ export function ReviewList({ elements, id, userImage }) {
           color="primary.main"
           sx={{ mb: "0px", mr: "auto", ml: "auto" }}
         >
-          Залиште свій відгук про викладача
+          {/* Залиште свій відгук про викладача */}
+          {intl.formatMessage({ id: "titleRewiewForm" })}
         </Typography>
         <div
           style={{
@@ -80,7 +104,7 @@ export function ReviewList({ elements, id, userImage }) {
             gap: 5,
           }}
         >
-          <label>Оцініть від 1 до 5:</label>
+          <label> {intl.formatMessage({ id: "reviewMark" })}</label>
           <input
             type="number"
             style={{ height: "30px", borderRadius: "4px", padding: "12px" }}
@@ -97,11 +121,11 @@ export function ReviewList({ elements, id, userImage }) {
             gap: 5,
           }}
         >
-          <label>Ваш відгук</label>
+          <label>{intl.formatMessage({ id: "reviewMessage" })}</label>
           <textarea style={{ height: "200px", borderRadius: "4px", padding: "12px" }} name="message"></textarea>
         </div>
         <Button type="submit" sx={{ alignSelf: "center", p: "10px 18px" }} variant="contained">
-          <Typography variant="posterButton">Відправити</Typography>
+          <Typography variant="posterButton">{intl.formatMessage({ id: "sendBtn" })}</Typography>
         </Button>
       </form>
     </>

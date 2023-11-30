@@ -19,11 +19,14 @@ import { priceOptions } from "@/defaults";
 import usePagination from "../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { advertsSelector, selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+// import Loader from "../Loader/Loader";
+
+import Loader from "../Loader/Loader";
 
 export function Preview() {
   const navigate = useNavigate();
@@ -39,6 +42,7 @@ export function Preview() {
     dispatch(getCountries());
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
+  const isLoading = useSelector(selectAdvertsIsLoading);
   console.log(adverts);
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
@@ -178,10 +182,16 @@ export function Preview() {
             rowGap: { xs: "16px", md: "20px" },
           }}
         >
-          <Filter options={languages} typeoption="languageUa" keyfield="id" label="МОВА" />
-          <Filter options={countries} typeoption="alpha2" label="КРАЇНА" />
-          <Filter options={priceOptions} typeoption="title" label="ЦІНА" />
-          <Filter options={specializations} typeoption="specializationUa" label="СПЕЦІАЛІЗАЦІЯ" />
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <>
+              <Filter options={languages} typeoption="languageUa" keyfield="id" label="МОВА" />
+              <Filter options={countries} typeoption="alpha2" label="КРАЇНА" />
+              <Filter options={priceOptions} typeoption="title" label="ЦІНА" />
+              <Filter options={specializations} typeoption="specializationUa" label="СПЕЦІАЛІЗАЦІЯ" />
+            </>
+          )}
         </Stack>
         <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
           <Grid

@@ -15,6 +15,13 @@ const messages = {
     signInButton: "Sign In",
     newUser: "New user?",
     createAccount: "Create an account",
+
+    // ReviewList
+    titleRewiewForm: "Leave a comment about the teacher",
+    reviewMark: "Rate this type 1 to 5:",
+    reviewMessage: "Your comment:",
+    SendBtn: "Send",
+
     dashboard: "Dashboard",
     "personalAccount.lessons": "My Lessons",
     "personalAccount.profile": "Profile",
@@ -22,7 +29,7 @@ const messages = {
     "personalAccount.schedule": "Schedule",
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
-    "rate": "Rate",
+    rate: "Rate",
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
     "signup.email": "Enter your email",
@@ -37,13 +44,16 @@ const messages = {
     "signup.privacyLink": "Privacy Policy",
     "signup.alreadyHaveAccount": "Already have an account?",
     "signup.signIn": "Sign In",
-    "footer.text":
-      "Learn your favorite language through individual lessons at any convenient place and time.",
+    "footer.text": "Learn your favorite language through individual lessons at any convenient place and time.",
     "footer.social": "Coach&Couch in social media:",
     "footer.confidential": "Privacy Policy",
     "footer.conditions": "Terms and Conditions",
     "footer.developers": "Developer Team Contacts",
     "footer.copyright": "©2023 coach&Couch. All rights reserved.",
+
+    // Buttons
+    sendBtn: "Send",
+    trialLessonBtn: "Trial lesson",
   },
   uk: {
     "header.teachers": "Викладачі",
@@ -75,6 +85,13 @@ const messages = {
     signInButton: "Увійти",
     newUser: "Новий користувач?",
     createAccount: "Створити аккаунт",
+
+    // ReviewList
+
+    titleRewiewForm: "Залиште свій відгук про викладача",
+    reviewMark: "Оцініть від 1 до 5:",
+    reviewMessage: "Ваш відгук:",
+
     dashboard: "Дашборд",
     "personalAccount.lessons": "Мої уроки",
     "personalAccount.profile": "Профіль",
@@ -82,14 +99,18 @@ const messages = {
     "personalAccount.schedule": "Розклад",
     "personalAccount.settings": "Налаштування",
     "personalAccount.logout": "Вихід",
-    "rate": "Рейтинг",
-    "footer.text":
-      "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
+    rate: "Рейтинг",
+    "footer.text": "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
+
     "footer.social": "Coach&Couch в соцмережах:",
     "footer.confidential": "Політика конфіденційності",
     "footer.conditions": "Умови використання",
     "footer.developers": "Контакти команди розробників",
     "footer.copyright": "©2023 coach&Couch. Усі права захищені.",
+
+    // Buttons
+    sendBtn: "Відправити",
+    trialLessonBtn: "Пробний урок",
   },
 };
 
