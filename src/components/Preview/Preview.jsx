@@ -24,7 +24,6 @@ import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
-// import Loader from "../Loader/Loader";
 
 import Loader from "../Loader/Loader";
 
