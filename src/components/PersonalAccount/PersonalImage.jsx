@@ -2,11 +2,11 @@ import { PropTypes } from "prop-types";
 import mainImage from "@assets/templates/profile_1.png";
 import { CardMedia } from "@mui/material";
 
-export function PersonalImage({ src }) {
+export function PersonalImage({ src, advertImagePath }) {
   return (
     <CardMedia
       component="img"
-      src={src || mainImage}
+      src={ (advertImagePath || mainImage)}
       alt="Teacher's profile"
       sx={{
         display: "flex",
@@ -20,4 +20,5 @@ export function PersonalImage({ src }) {
 }
 PersonalImage.propTypes = {
   src: PropTypes.string,
+  advertImagePath: PropTypes.string,
 };

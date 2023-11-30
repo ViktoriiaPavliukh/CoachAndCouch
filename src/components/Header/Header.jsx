@@ -296,6 +296,7 @@ export function Header() {
             )}
           </Stack>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
+            <LanguageSwitcher />
             <IconButton
               size="large"
               aria-label="account of current user"
