@@ -20,7 +20,6 @@ const messages = {
     titleRewiewForm: "Leave a comment about the teacher",
     reviewMark: "Rate this type 1 to 5:",
     reviewMessage: "Your comment:",
-    SendBtn: "Send",
 
     dashboard: "Dashboard",
     "personalAccount.lessons": "My Lessons",
