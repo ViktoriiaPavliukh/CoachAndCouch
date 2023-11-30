@@ -14,7 +14,6 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.19",
-    "@mui/styles": "^5.14.19",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "commonjs-variables-for-esmodules": "^1.1.0",
