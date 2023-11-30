@@ -53,7 +53,7 @@ const messages = {
     // Buttons
     sendBtn: "Send",
     trialLessonBtn: "Trial lesson",
-    writeMeBtn: "Contact",
+    writeMeBtn: "Contact us",
   },
   uk: {
     "header.teachers": "Викладачі",

@@ -1,5 +1,4 @@
-import { Box } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Box, CircularProgress } from "@mui/material";
 
 export default function Loader() {
   return (
