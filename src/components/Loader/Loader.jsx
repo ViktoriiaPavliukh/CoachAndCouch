@@ -1,9 +1,10 @@
-import { Box } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Box, CircularProgress } from "@mui/material";
 
 export default function Loader() {
   return (
-    <Box sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}>
+    <Box
+      sx={{ display: "flex", gap: 2, alignItems: "center", flexWrap: "wrap" }}
+    >
       <CircularProgress />
     </Box>
   );
