@@ -15,13 +15,23 @@ const messages = {
     signInButton: "Sign In",
     newUser: "New user?",
     createAccount: "Create an account",
-    "footer.text":
-      "Learn your favorite language through individual lessons at any convenient place and time.",
+
+    // ReviewList
+    titleRewiewForm: "Leave a comment about the teacher",
+    reviewMark: "Rate this type 1 to 5:",
+    reviewMessage: "Your comment:",
+    SendBtn: "Send",
+
+    "footer.text": "Learn your favorite language through individual lessons at any convenient place and time.",
     "footer.social": "Coach&Couch in social media:",
     "footer.confidential": "Privacy Policy",
     "footer.conditions": "Terms and Conditions",
     "footer.developers": "Developer Team Contacts",
     "footer.copyright": "©2023 coach&Couch. All rights reserved.",
+
+    // Buttons
+    sendBtn: "Send",
+    trialLessonBtn: "Trial lesson",
   },
   uk: {
     "header.teachers": "Викладачі",
@@ -39,13 +49,23 @@ const messages = {
     signInButton: "Увійти",
     newUser: "Новий користувач?",
     createAccount: "Створити аккаунт",
-    "footer.text":
-      "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
+
+    // ReviewList
+
+    titleRewiewForm: "Залиште свій відгук про викладача",
+    reviewMark: "Оцініть від 1 до 5:",
+    reviewMessage: "Ваш відгук:",
+
+    "footer.text": "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
     "footer.social": "Coach&Couch в соцмережах:",
     "footer.confidential": "Політика конфіденційності",
     "footer.conditions": "Умови використання",
     "footer.developers": "Контакти команди розробників",
     "footer.copyright": "©2023 coach&Couch. Усі права захищені.",
+
+    // Buttons
+    sendBtn: "Відправити",
+    trialLessonBtn: "Пробний урок",
   },
 };
 
