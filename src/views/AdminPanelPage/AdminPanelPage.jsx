@@ -18,6 +18,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   // TextField,
 } from "@mui/material";
 import { useEffect } from "react";
@@ -170,26 +171,28 @@ function VerticalTabs() {
             >
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
                     ID
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
                     Advert
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
                     Price
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px" }}>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px", padding: "6px 0" }}>
                     Description
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                    Photo
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
+                    Image
                   </TableCell>
-
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px", padding: "6px 0" }}>
+                    Teaching | Spoken lang.
+                  </TableCell>
+                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
                     Edit
                   </TableCell>
                 </TableRow>
@@ -203,28 +206,28 @@ function VerticalTabs() {
                         backgroundColor: advert.isDeleted ? "rgba(175, 186, 202, 0.3)" : "transparent",
                       }}
                     >
-                      <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
+                      <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0", padding: "10px" }}>
                         {advert.id}
                       </TableCell>
 
-                      <TableCell align="left" sx={{ border: "1px solid #e0e0e0", width: "250px" }}>
-                        name:&nbsp;&nbsp;
-                        {advert.user.firstName}&nbsp;{advert.user.lastName ? advert.user.lastName : ""}
-                        <br />
-                        <br />
-                        email:&nbsp;&nbsp;
-                        {advert.user.email}
-                        <br />
-                        <br />
-                        Create at:&nbsp;&nbsp;{format(parseISO(advert.createdAt), "dd-mm-yyyy HH:mm")}
-                        <br />
-                        {advert.teachingLanguages.map((language) => language.languageUa).join(", ")}
-                        <br />
-                        {advert.spokenLanguages.map((language) => language.languageUa).join(", ")}
-                        {advert.price}
+                      <TableCell align="left" sx={{ border: "1px solid #e0e0e0", width: "250px", padding: "10px" }}>
+                        <Typography sx={{ fontWeight: "600" }}>
+                          {advert.user.firstName}&nbsp;{advert.user.lastName ? advert.user.lastName : ""}
+                        </Typography>
+                        <Typography sx={{ marginBottom: "20px" }}>{advert.user.email}</Typography>
+
+                        <p>
+                          Create at:
+                          <br />
+                          <Typography sx={{ fontWeight: "600" }}>
+                            {format(parseISO(advert.createdAt), "dd-mm-yyyy HH:mm")}
+                          </Typography>
+                        </p>
                       </TableCell>
 
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}></TableCell>
+                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
+                        {advert.price}
+                      </TableCell>
 
                       <TableCell align="left" sx={{ padding: "10px" }}>
                         <div
@@ -239,7 +242,7 @@ function VerticalTabs() {
                           {advert.description}
                         </div>
                       </TableCell>
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
                         <img
                           src={advert.imagePath}
                           width="100"
@@ -249,8 +252,22 @@ function VerticalTabs() {
                           }}
                         />
                       </TableCell>
-
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px", padding: 0 }}>
+                        <TableCell
+                          align="center"
+                          sx={{
+                            borderBottom: "none",
+                            borderRight: "1px solid rgba(224, 224, 224, 1)",
+                            padding: "10px",
+                          }}
+                        >
+                          {advert.teachingLanguages.map((language) => language.languageUa).join(", ")}
+                        </TableCell>
+                        <TableCell align="center" sx={{ borderBottom: "none", padding: "10px" }}>
+                          {advert.spokenLanguages.map((language) => language.languageUa).join(", ")}
+                        </TableCell>
+                      </TableCell>
+                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
                         <button
                           onClick={() => {
                             dispatch(deleteAdvertsAsAdmin(advert.id));
@@ -470,16 +487,12 @@ export const AdminPanelPage = () => {
   return (
     <Container
       component="div"
-      maxWidth="100vw"
+      // maxWidth="100vw"
       sx={{
-        backgroundColor: "background.paper",
-        // display: "flex",
         justifyContent: "center",
-        px: { xs: "16px" },
       }}
     >
       <Link to="/">Back to home page</Link>
-
       <VerticalTabs />
     </Container>
   );
