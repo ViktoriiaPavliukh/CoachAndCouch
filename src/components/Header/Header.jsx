@@ -111,20 +111,21 @@ export function Header() {
 
   return (
     <AppBar position="static" sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
-      <Container>
+      <Container sx={{ padding: { sm: "0 16px", md: "0 23px" } }}>
         <Toolbar
           disableGutters
           sx={{
             display: "flex",
+            justifyContent: "space-between",
             gap: "5%",
             color: (theme) => theme.palette.textColor.header,
           }}
         >
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component={Link}
-            to="home"
+            to="/"
             sx={{
               display: { xs: "none", md: "flex" },
               // marginRight: "5%",
@@ -138,10 +139,10 @@ export function Header() {
             Coach&#x26;Couch
           </Typography>
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
             component={Link}
-            to="home"
+            to="/"
             sx={{
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
@@ -156,7 +157,7 @@ export function Header() {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", lg: "flex" },
               gap: "1rem",
             }}
           >
@@ -207,11 +208,10 @@ export function Header() {
               <FacebookRoundedIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
             </ExternalLink>
           </Stack>
+
           <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             <LanguageSwitcher />
             <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
-          </Stack>
-          <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
             {isLoggedIn ? (
               <Box display="flex" direction="row">
                 <MenuItem
@@ -250,18 +250,13 @@ export function Header() {
                     px: "12px",
                     transition: "color 0.3s",
                     borderRadius: "6px",
-
                     backgroundColor: (theme) => (pathname === "/login" ? theme.palette.primary.accent : null),
                     "&:hover": {
-                      // color: (theme) => (pathname === "/login" ? theme.palette.textColor.main : null),
                       backgroundColor: (theme) => theme.palette.primary.accent,
                     },
                   }}
                   key={title}
                   onClick={() => {
-                    // if (link === "login") {
-                    //   console.log(link);
-                    // }
                     navigate(link);
                   }}
                 >
@@ -295,8 +290,9 @@ export function Header() {
               </Box>
             )}
           </Stack>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
             <LanguageSwitcher />
+            <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -305,11 +301,6 @@ export function Header() {
               color="inherit"
               onClick={handleOpenNavMenu}
             >
-              {/* {isLoggedIn && (
-                <MenuItem sx={{ px: "12px" }} onClick={handleLogout}>
-                  <Typography textAlign="center">Вихід</Typography>
-                </MenuItem>
-              )} */}
               <MenuIcon />
             </IconButton>
             <Menu
@@ -337,7 +328,7 @@ export function Header() {
                 <div>
                   <MenuMobItem
                     disableGutters={true}
-                    sx={{ width: "100%" }}
+                    sx={{ width: "100%", padding: 0 }}
                     onClick={() => {
                       handleCloseNavMenu(`/user/${user.id}/main`);
                     }}
@@ -347,6 +338,8 @@ export function Header() {
                       variant="fontHeader"
                       sx={{
                         mr: 0,
+                        borderBottom: "1px solid green",
+                        padding: "6px 16px",
                       }}
                     >
                       <Typography textAlign="center">{intl.formatMessage({ id: "header.profile" })}</Typography>
@@ -355,34 +348,42 @@ export function Header() {
                   <MenuMobItem
                     disableGutters={true}
                     onClick={() => {
-                      handleCloseNavMenu("/logout");
+                      handleLogout("/");
+                    }}
+                    sx={{
+                      padding: 0,
                     }}
                   >
                     <Typography
                       textAlign="center"
                       variant="fontHeader"
-                      // sx={{
-                      //   mr: 5.5,
-                      // }}
+                      sx={{
+                        mr: 0,
+                        padding: "6px 16px",
+                      }}
                     >
                       {intl.formatMessage({ id: "header.logout" })}
                     </Typography>
                   </MenuMobItem>
                 </div>
               ) : (
-                <div>
+                <>
                   <MenuMobItem
                     disableGutters={true}
                     onClick={() => {
                       handleCloseNavMenu("/login");
                     }}
+                    sx={{
+                      padding: 0,
+                    }}
                   >
                     <Typography
                       textAlign="center"
                       variant="fontHeader"
-                      // sx={{
-                      //   mr: 5.5,
-                      // }}
+                      sx={{
+                        mr: 0,
+                        padding: "6px 16px",
+                      }}
                     >
                       {intl.formatMessage({ id: "header.login" })}
                     </Typography>
@@ -393,35 +394,41 @@ export function Header() {
                     onClick={() => {
                       handleCloseNavMenu("/registration");
                     }}
+                    sx={{
+                      padding: 0,
+                    }}
                   >
                     <Typography
-                      // disableGutters={true}
+                      disableGutters={true}
                       textAlign="center"
                       variant="fontHeader"
                       sx={{
                         mr: 0,
+                        padding: "6px 16px",
                       }}
                     >
                       {intl.formatMessage({ id: "header.registration" })}
                     </Typography>
                   </MenuMobItem>
-                </div>
+                </>
               )}
               {pages.slice(0, 3).map(({ title, link }) => (
                 <MenuMobItem
-                  // disableGutters={true}
+                  disableGutters={true}
                   key={title.props.id}
                   onClick={() => {
                     handleCloseNavMenu(link);
+                  }}
+                  sx={{
+                    padding: 0,
                   }}
                 >
                   <Typography
                     textAlign="center"
                     variant="fontHeader"
                     sx={{
-                      //mr: 5.5,
-                      paddingLeft: "6px",
-                      paddingRight: "6px",
+                      mr: 0,
+                      padding: "6px 16px",
                     }}
                   >
                     {title}

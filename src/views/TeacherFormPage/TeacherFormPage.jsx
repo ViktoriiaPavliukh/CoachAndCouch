@@ -55,7 +55,7 @@ const validationSchema = Yup.object({
   updateUser: Yup.object().required("All fields is required"),
 });
 
-export const TeacherForm = () => {
+export const TeacherFormPage = () => {
   const [image, setImage] = useState("");
   // const [country, setCountry] = useState("");
   const dispatch = useDispatch();

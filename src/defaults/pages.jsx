@@ -19,16 +19,12 @@ export const pages = [
   },
   {
     title: <FormattedMessage id="header.aboutUs" />,
-    link: "home",
+    link: "about",
   },
   {
     title: <FormattedMessage id="header.profile" />,
     link: "user",
   },
-  // {
-  //   title: "Контакти",
-  //   link: "home",
-  // },
   {
     title: <FormattedMessage id="header.login" />,
     link: "login",
@@ -37,6 +33,4 @@ export const pages = [
     title: <FormattedMessage id="header.registration" />,
     link: "registration",
   },
-
-  // { title: "Головна", link: "home" },
 ];
