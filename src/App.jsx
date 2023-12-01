@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import { Home, SignIn, SignUp } from "@/views";
-import { Card, Layout, Preview, TeacherForm, PersonalAccount } from "@components";
+import { AboutUsPage, SignIn, SignUp, TeacherFormPage, TeachersPage } from "@/views";
+import { Card, Layout, PersonalAccount } from "@components";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RestrictedRoute } from "@components/RestrictedRoute";
@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { refreshUser } from "@/redux/auth/operations";
-import { AdminPanel } from "./views/admin/AdminPanel";
+import { AdminPanelPage } from "./views/AdminPanelPage/AdminPanelPage";
 import { selectRefreshToken } from "./redux/auth/selectors";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { selectInitialized, setInitialized } from "./redux/init/initSlice";
@@ -37,16 +37,15 @@ export default function App() {
       <ToastContainer />
 
       <Routes>
-        {/* <Route path="*" element={<PageError />} /> */}
         <Route path="/" element={<Layout />}>
           <Route path="*" element={<PageError />} />
-          <Route index element={<Preview />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/teachers/:id" element={<Card />} />
-          <Route path="/teacherform" element={<TeacherForm />} />
+          <Route index element={<TeachersPage />} />
+          <Route path="about" element={<AboutUsPage />} />
+          <Route path="teachers/:id" element={<Card />} />
+          <Route path="/teacherform" element={<TeacherFormPage />} />
           <Route path="/registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
           <Route path="/login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
-          <Route path="/admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanel />} />} />
+          <Route path="/admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanelPage />} />} />
           <Route path="/user/:id" element={<PersonalAccount />}>
             <Route path="/user/:id/main" element={<MainPage />} />
             <Route path="/user/:id/lessons" element={<Lessons />} />

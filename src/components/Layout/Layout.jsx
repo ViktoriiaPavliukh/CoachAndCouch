@@ -1,4 +1,4 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Container, CssBaseline, ThemeProvider } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { lightTheme, darkTheme } from "@/styles";
 import { useSelector } from "react-redux";
@@ -11,8 +11,22 @@ export default function Layout() {
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <CssBaseline enableColorScheme />
+
       <Header />
-      <Outlet />
+      <Container
+        sx={{
+          padding: { sm: "0 16px", md: "0 23px" },
+          border: "1px solid red",
+          backgroundColor: "background.paper",
+          display: "flex",
+          justifyContent: "center",
+          maxWidth: "100vw",
+          minWidth: "320px",
+        }}
+        component="div"
+      >
+        <Outlet />
+      </Container>
       <Footer />
     </ThemeProvider>
   );

@@ -12,11 +12,10 @@ const createThemeTemplate = (themeColor) => ({
   },
   breakpoints: {
     values: {
-      xs: 0,
+      xs: 320,
       sm: 375,
-      md: 834,
-      lg: 1200,
-      xl: 1536,
+      md: 768,
+      lg: 1440,
     },
   },
   palette:

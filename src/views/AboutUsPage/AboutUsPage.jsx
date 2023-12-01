@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 
-export function Home() {
+export function AboutUsPage() {
   return (
     <Container
       sx={{

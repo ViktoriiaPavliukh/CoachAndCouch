@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addFeedback } from "@/redux/user/operations";
 import Loader from "../Loader/Loader";
 import { selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
-import { selectToken } from "@/redux/auth/selectors";
+import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { toast } from "react-toastify";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
@@ -15,6 +15,8 @@ export function ReviewList({ elements, id, userImage }) {
   const isLoading = useSelector(selectAdvertsIsLoading);
   const token = useSelector(selectToken);
   const en = useSelector(selectCurrentLanguage);
+  const userId = useSelector(selectUser).id;
+  console.log(userId);
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
     const feedback = {
@@ -29,6 +31,18 @@ export function ReviewList({ elements, id, userImage }) {
         });
       } else {
         toast.error("Лише авторизовані користувачі можуть залишати відгуки", {
+          icon: false,
+        });
+      }
+      return;
+    }
+    if (userId === id) {
+      if (en === "en") {
+        toast.error("The user cannot write feedback to himself", {
+          icon: false,
+        });
+      } else {
+        toast.error("Ви не можете написати відгук самі собі", {
           icon: false,
         });
       }

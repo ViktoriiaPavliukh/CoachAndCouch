@@ -8,7 +8,9 @@ h6,
 p {
   margin: 0;
 }
-
+* {
+  box-sizing: border-box;
+}
 p:last-child {
   margin-bottom: 0;
 }
@@ -35,4 +37,5 @@ img {
 }
 .MuiCircularProgress-colorPrimary {
   color: #0e5b1d !important;
+  margin-bottom: 50px;
 }

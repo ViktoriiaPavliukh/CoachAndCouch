@@ -47,8 +47,8 @@ import {
   specializationsSelector,
   usersAsAdminSelector,
 } from "@/redux/admin/adminSelector";
-import { AddLanguageForm } from "./AddLanguageForm";
-import { AddSpecializationForm } from "./AddSpecializationForm";
+import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
+import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -456,7 +456,7 @@ function VerticalTabs() {
   );
 }
 
-export const AdminPanel = () => {
+export const AdminPanelPage = () => {
   // const dispatch = useDispatch();
   // const token = useSelector(selectToken);
   // console.log(token);

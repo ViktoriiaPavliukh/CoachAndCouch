@@ -22,7 +22,8 @@ export function TeacherCard({ teacher }) {
       teacher={teacher}
       sx={{
         // height: "500px",
-        maxWidth: "373px",
+        maxWidth: "350px",
+        minWidth: "100wv",
         borderRadius: "8px",
         boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
         // backgroundColor: setBg,
