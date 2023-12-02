@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
 
+import format from "date-fns/format";
+
 export function ReviewList({ elements, id, userImage }) {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -66,26 +68,39 @@ export function ReviewList({ elements, id, userImage }) {
         }}
       >
         {elements.map((e) => (
-          <ListItem key={e.id} sx={{ display: "flex", gap: "24px" }}>
-            <img
-              src={userImage}
-              alt={e.fromUser.firstName + " " + e.fromUser.lastName}
-              style={{ width: "85px", height: "85px", borderRadius: "50%" }}
-            />
-            <Box>
-              <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
-                {e.fromUser.firstName + " " + e.fromUser.lastName}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "14px",
-                  lineHeight: "calc(20 / 14)",
-                  color: "grey.600",
-                }}
-              >
-                {e.message}
-              </Typography>
+          <ListItem key={e.id} sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", gap: "24px", width: "100%" }}>
+              <img
+                src={userImage}
+                alt={e.fromUser.firstName + " " + e.fromUser.lastName}
+                style={{ width: "85px", height: "85px", borderRadius: "50%" }}
+              />
+              <Box>
+                <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
+                  {e.fromUser.firstName + " " + e.fromUser.lastName}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    lineHeight: "calc(20 / 14)",
+                    color: "grey.600",
+                  }}
+                >
+                  {e.message}
+                </Typography>
+              </Box>
             </Box>
+
+            <Typography
+              sx={{
+                fontSize: "14px",
+                lineHeight: "calc(20 / 14)",
+                color: "grey.600",
+                alignSelf: "flex-end",
+              }}
+            >
+              {format(new Date(e.createdAt), "dd.MM.yyyy HH:mm")}
+            </Typography>
           </ListItem>
         ))}
       </List>
