@@ -38,4 +38,8 @@ img {
 .MuiCircularProgress-colorPrimary {
   color: #0e5b1d !important;
   margin-bottom: 50px;
+  margin-top: 50px;
+}
+.custom-link:hover {
+  color: #0e5b1d;
 }

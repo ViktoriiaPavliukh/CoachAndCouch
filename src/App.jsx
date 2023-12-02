@@ -42,17 +42,17 @@ export default function App() {
           <Route index element={<TeachersPage />} />
           <Route path="about" element={<AboutUsPage />} />
           <Route path="teachers/:id" element={<Card />} />
-          <Route path="/teacherform" element={<TeacherFormPage />} />
-          <Route path="/registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
-          <Route path="/login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
-          <Route path="/admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanelPage />} />} />
-          <Route path="/user/:id" element={<PersonalAccount />}>
-            <Route path="/user/:id/main" element={<MainPage />} />
-            <Route path="/user/:id/lessons" element={<Lessons />} />
-            <Route path="/user/:id/enquiry" element={<Enquiry />} />
-            <Route path="/user/:id/schedule" element={<Schedule />} />
-            <Route path="/user/:id/messages" element={<Messages />} />
-            <Route path="/user/:id/settings" element={<Settings />} />
+          <Route path="teacherform" element={<TeacherFormPage />} />
+          <Route path="registration" element={<RestrictedRoute redirectTo="/" component={<SignUp />} />} />
+          <Route path="login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
+          <Route path="admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanelPage />} />} />
+          <Route path="user/:id" element={<PersonalAccount />}>
+            <Route path="user/:id/main" element={<MainPage />} />
+            <Route path="user/:id/lessons" element={<Lessons />} />
+            <Route path="user/:id/enquiry" element={<Enquiry />} />
+            <Route path="user/:id/schedule" element={<Schedule />} />
+            <Route path="user/:id/messages" element={<Messages />} />
+            <Route path="user/:id/settings" element={<Settings />} />
           </Route>
         </Route>
       </Routes>

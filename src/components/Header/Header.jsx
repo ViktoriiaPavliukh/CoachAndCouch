@@ -1,5 +1,6 @@
 import { PropTypes } from "prop-types";
 import { useIntl } from "react-intl";
+
 import {
   AppBar,
   Box,
@@ -209,7 +210,7 @@ export function Header() {
             </ExternalLink>
           </Stack>
 
-          <Stack direction="row" sx={{ display: { xs: "none", md: "flex" } }}>
+          <Stack direction="row" sx={{ display: { xs: "none", lg: "flex" } }}>
             <LanguageSwitcher />
             <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
             {isLoggedIn ? (
@@ -290,7 +291,7 @@ export function Header() {
               </Box>
             )}
           </Stack>
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+          <Box sx={{ display: { xs: "flex", lg: "none" }, alignItems: "center" }}>
             <LanguageSwitcher />
             <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
             <IconButton

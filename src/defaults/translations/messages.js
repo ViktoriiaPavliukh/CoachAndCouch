@@ -1,6 +1,6 @@
 const messages = {
   en: {
-    "header.teachers": "Teachers",
+    "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
     "header.profile": "Profile",
@@ -56,7 +56,7 @@ const messages = {
     writeMeBtn: "Contact us",
   },
   uk: {
-    "header.teachers": "Викладачі",
+    "header.teachers": "Головна",
     "header.becomeTeacher": "Стати викладачем",
     "header.aboutUs": "Про нас",
     "header.profile": "Особистий кабінет",
