@@ -1,16 +1,19 @@
 import PropTypes from "prop-types";
 import { format, parseISO, parseJSON } from "date-fns";
 import { selectToken } from "@/redux/auth/selectors";
-// import * as Yup from "yup";
-// import { useFormik } from "formik";
+import EditNoteIcon from "@mui/icons-material/EditNote";
+import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
+import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSharp";
 import {
   Box,
-  Container,
+  Button,
+  // Container,
   // FormControl,
   // InputLabel,
   // MenuItem,
   Paper,
   Stack,
+  SvgIcon,
   // Select,
   Table,
   TableBody,
@@ -19,7 +22,6 @@ import {
   TableHead,
   TableRow,
   Typography,
-  // TextField,
 } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,6 +52,7 @@ import {
 } from "@/redux/admin/adminSelector";
 import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
 import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
+import Loader from "@/components/Loader/Loader";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -100,6 +103,7 @@ function VerticalTabs() {
   //   },
   // });
   const [value, setValue] = React.useState(0);
+  const [deleteState, setDeleteState] = React.useState("delete");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -142,22 +146,22 @@ function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs"
-        sx={{ borderRight: 1, borderColor: "divider", alignItems: "flex-start", minWidth: "150px", width: "150px" }}
+        sx={{ borderRight: 1, borderColor: "divider", alignItems: "flex-start", minWidth: "105px", width: "105px" }}
       >
         <Tab
           label="Adverts"
           {...a11yProps(0)}
-          sx={{ alignItems: "flex-start", paddingLeft: "30px", paddingRight: "40px" }}
+          sx={{ alignItems: "flex-start", paddingLeft: "0px", paddingRight: "20px" }}
         />
         <Tab
           label="Users"
           {...a11yProps(1)}
-          sx={{ alignItems: "flex-start", paddingLeft: "30px", paddingRight: "40px" }}
+          sx={{ alignItems: "flex-start", paddingLeft: "0px", paddingRight: "20px" }}
         />
         <Tab
           label="Settings"
           {...a11yProps(2)}
-          sx={{ alignItems: "flex-start", paddingLeft: "30px", paddingRight: "40px" }}
+          sx={{ alignItems: "flex-start", paddingLeft: "0px", paddingRight: "20px" }}
         />
       </Tabs>
       <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
@@ -165,34 +169,105 @@ function VerticalTabs() {
           <h2>Adverts</h2>
           <TableContainer component={Paper}>
             <Table
+              sx={{
+                "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root": {
+                  backgroundColor: "#0E5B1D",
+                  color: "white",
+                  "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
+                    backgroundColor: "white",
+                  },
+                },
+              }}
               style={{
                 "& td": { fontSize: "16px" },
               }}
             >
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0", padding: "6px 0", fontSize: "18px", fontWeight: "500" }}
+                  >
                     ID
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0", padding: "6px 0", fontSize: "18px", fontWeight: "500" }}
+                  >
                     Advert
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0", padding: "6px 10px", fontSize: "18px", fontWeight: "500" }}
+                  >
                     Price
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px", padding: "6px 0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      width: "200px",
+                      padding: "6px 0",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
+                  >
                     Description
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0", padding: "6px 6px", fontSize: "18px", fontWeight: "500" }}
+                  >
                     Image
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px", padding: "6px 0" }}>
-                    Teaching | Spoken lang.
+                  <TableCell
+                    sx={{
+                      width: "200px",
+                      padding: 0,
+                      border: "1px solid #e0e0e0",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    <TableRow>
+                      <TableCell align="center" style={{ width: "260px", fontSize: "18px", fontWeight: "500" }}>
+                        Languages
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell sx={{ padding: 0, borderBottom: "none", fontSize: "18px", fontWeight: "500" }}>
+                        <TableRow>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              border: "none",
+                              borderRight: "1px solid #e0e0e0",
+                              width: "110px",
+                              padding: "6px",
+                              fontSize: "18px",
+                              fontWeight: "500",
+                            }}
+                          >
+                            Teaching
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ border: "none", width: "110px", padding: "6px", fontSize: "18px", fontWeight: "500" }}
+                          >
+                            Spoken
+                          </TableCell>
+                        </TableRow>
+                      </TableCell>
+                    </TableRow>
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "6px 0" }}>
+
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0", padding: "6px 0", fontSize: "18px", fontWeight: "500" }}
+                  >
                     Edit
                   </TableCell>
                 </TableRow>
@@ -203,7 +278,7 @@ function VerticalTabs() {
                     <TableRow
                       key={uuidv4()}
                       style={{
-                        backgroundColor: advert.isDeleted ? "rgba(175, 186, 202, 0.3)" : "transparent",
+                        backgroundColor: advert.isDeleted ? "rgba(175, 186, 202, 0.3)" : "none",
                       }}
                     >
                       <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0", padding: "10px" }}>
@@ -227,60 +302,176 @@ function VerticalTabs() {
 
                       <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
                         {advert.price}
+                        {"$"}
                       </TableCell>
 
-                      <TableCell align="left" sx={{ padding: "10px" }}>
-                        <div
-                          style={{
+                      <TableCell align="left" sx={{ padding: "10px", paddingRight: 0 }}>
+                        <Box
+                          sx={{
                             maxHeight: "100px",
                             width: "200px",
                             maxWidth: "200px",
                             overflowY: "auto",
                             overflowX: "hidden",
+                            paddingRight: "5px",
+                            scrollbarWidth: "thin",
+                            "&::-webkit-scrollbar": {
+                              width: "0.4em",
+                            },
+                            "&::-webkit-scrollbar-track": {
+                              background: "transparent",
+                            },
+                            "&::-webkit-scrollbar-thumb": {
+                              backgroundColor: "#888",
+                              borderRadius: "5px",
+                            },
+                            "&::-webkit-scrollbar-thumb:hover": {
+                              background: "#555",
+                            },
+                            "&.MuiTableCell-root:hover::-webkit-scrollbar-thumb ": {
+                              background: "white",
+                            },
                           }}
                         >
                           {advert.description}
-                        </div>
+                        </Box>
                       </TableCell>
                       <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
                         <img
                           src={advert.imagePath}
                           width="100"
-                          height="80"
+                          height="100"
                           style={{
                             objectFit: "cover",
+                            maxHeight: "100px",
                           }}
                         />
                       </TableCell>
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", width: "200px", padding: 0 }}>
-                        <TableCell
-                          align="center"
-                          sx={{
-                            borderBottom: "none",
-                            borderRight: "1px solid rgba(224, 224, 224, 1)",
-                            padding: "10px",
+                      <TableCell sx={{ padding: 0, maxWidth: "220px" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            width: "100%",
+                            padding: 0,
+                            flexDirection: "center",
                           }}
                         >
-                          {advert.teachingLanguages.map((language) => language.languageUa).join(", ")}
-                        </TableCell>
-                        <TableCell align="center" sx={{ borderBottom: "none", padding: "10px" }}>
-                          {advert.spokenLanguages.map((language) => language.languageUa).join(", ")}
-                        </TableCell>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              padding: "6px 6px",
+                              borderRight: " 1px solid #e0e0e0",
+                              width: "110px",
+                              alignItems: "center",
+                              overflowY: "auto",
+                              height: "151px",
+                            }}
+                          >
+                            {advert.teachingLanguages.map((language) => language.languageUa).join(", ")}
+                          </div>
+
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              padding: "6px 6px",
+                              width: "110px",
+                              overflowY: "auto",
+                              height: "151px",
+                            }}
+                          >
+                            {advert.spokenLanguages.map((language) => language.languageUa).join(", ")}
+                          </div>
+                        </div>
                       </TableCell>
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
-                        <button
+
+                      <TableCell
+                        align="center"
+                        sx={{
+                          border: "1px solid #e0e0e0",
+                          padding: "10px",
+                        }}
+                      >
+                        <Button
+                          sx={{
+                            mb: "15px",
+                            border: "1px solid",
+                            borderColor: (theme) => theme.palette.buttonColor.fontColor,
+
+                            color: (theme) => theme.palette.buttonColor.fontColor,
+                            fontSize: "14px",
+                            fontWeight: "700",
+                            transition: "background-color 0.3s",
+                            backgroundColor: (theme) => theme.palette.buttonColor.main,
+                            "&:hover": {
+                              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                              // borderColor: (theme) => theme.palette.buttonColor.fontColor,
+                            },
+
+                            width: "95px",
+                            "& svg": {
+                              fill: "white",
+                            },
+                          }}
+                          style={{}}
                           onClick={() => {
+                            setDeleteState(deleteState === "delete" ? "undo" : "delete");
                             dispatch(deleteAdvertsAsAdmin(advert.id));
                           }}
                         >
-                          D
-                        </button>
-                        <button>E</button>
+                          <SvgIcon
+                            component={DeleteForeverSharpIcon}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              marginRight: "5px",
+                            }}
+                          />
+                          {advert.isDeleted ? deleteState : "delete"}
+                        </Button>
+                        <Button
+                          sx={{
+                            color: (theme) => theme.palette.buttonColor.main,
+                            fontSize: "14px",
+                            fontWeight: "700",
+                            transition: "background-color 0.3s",
+                            "&:hover": {
+                              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                              borderColor: (theme) => theme.palette.buttonColor.fontColor,
+                              color: (theme) => theme.palette.buttonColor.fontColor,
+                              "& svg": {
+                                fill: "white",
+                              },
+                            },
+                            "& svg": {
+                              fill: (theme) => theme.palette.buttonColor.main,
+                            },
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "95px",
+                            border: "1px solid",
+                            borderColor: (theme) => theme.palette.buttonColor.main,
+                            backgroundColor: "white",
+                          }}
+                        >
+                          <SvgIcon
+                            component={EditNoteIcon}
+                            style={{
+                              width: "20px",
+                              height: "20px",
+                              marginRight: "5px",
+                            }}
+                          />
+                          Edit
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
-                  <div>Loading</div>
+                  <Loader />
                 )}
               </TableBody>
             </Table>
@@ -379,6 +570,7 @@ function VerticalTabs() {
 
                     <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                       <button
+                        style={{ width: "24px", height: "24px" }}
                         disabled={user.role === "admin" ? true : false}
                         onClick={() => {
                           dispatch(deleteUserAsAdmin(user.id));
@@ -386,7 +578,12 @@ function VerticalTabs() {
                       >
                         D
                       </button>
-                      <button disabled={user.role === "admin" ? true : false}>E</button>
+                      <button
+                        style={{ width: "24px", height: "24px", border: "none" }}
+                        disabled={user.role === "admin" ? true : false}
+                      >
+                        E
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -485,15 +682,31 @@ export const AdminPanelPage = () => {
   // let count = 0;
 
   return (
-    <Container
+    <Box
       component="div"
-      // maxWidth="100vw"
       sx={{
         justifyContent: "center",
+        width: "100%",
       }}
     >
-      <Link to="/">Back to home page</Link>
+      <Link
+        className="custom-link"
+        to="/"
+        style={{
+          display: "inline-block",
+          marginBottom: "20px",
+          marginTop: "20px",
+          "&:hover": {
+            color: (theme) => theme.palette.textColor.menuHover,
+          },
+        }}
+      >
+        <span style={{ marginBottom: "20px" }}>
+          <SvgIcon component={KeyboardBackspaceSharpIcon} height="18px" style={{ verticalAlign: "middle" }} />
+          Back to the Home page
+        </span>
+      </Link>
       <VerticalTabs />
-    </Container>
+    </Box>
   );
 };

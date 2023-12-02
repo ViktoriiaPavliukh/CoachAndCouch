@@ -22,6 +22,7 @@ export default function Layout() {
           justifyContent: "center",
           maxWidth: "100vw",
           minWidth: "320px",
+          minHeight: "100vh",
         }}
         component="div"
       >

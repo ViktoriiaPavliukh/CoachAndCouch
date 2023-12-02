@@ -3,6 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { PropTypes } from "prop-types";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn, selectUser, selectIsLoading } from "../redux/auth/selectors";
+import Loader from "./Loader/Loader";
 
 export const PrivateRoute = ({ redirectTo = "/", role, component }) => {
   const isRefreshing = useSelector(selectIsLoading);
@@ -10,7 +11,7 @@ export const PrivateRoute = ({ redirectTo = "/", role, component }) => {
   const userRole = useSelector(selectUser).role;
 
   if (isRefreshing) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
 
   const valid = userLogged && role === userRole;
