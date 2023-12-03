@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { format, parseISO, parseJSON } from "date-fns";
+import { format, parseJSON } from "date-fns";
 import { selectToken } from "@/redux/auth/selectors";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
@@ -7,14 +7,9 @@ import KeyboardBackspaceSharpIcon from "@mui/icons-material/KeyboardBackspaceSha
 import {
   Box,
   Button,
-  // Container,
-  // FormControl,
-  // InputLabel,
-  // MenuItem,
   Paper,
   Stack,
   SvgIcon,
-  // Select,
   Table,
   TableBody,
   TableCell,
@@ -32,13 +27,10 @@ import * as React from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import {
-  // addLanguagesAsAdmin,
   deleteAdvertsAsAdmin,
-  // deleteLanguageAsAdmin,
   deleteUserAsAdmin,
   getAdvertsAsAdmin,
   getCountries,
-  // getCountriesAsAdmin,
   getLanguages,
   getSpecializations,
   getUsersAsAdmin,
@@ -436,7 +428,7 @@ function VerticalTabs() {
                               marginRight: "5px",
                             }}
                           />
-                          {advert.isDeleted ? deleteState : "delete"}
+                          {advert.isDeleted ? "undo" : "delete"}
                         </Button>
                         <Button
                           sx={{
