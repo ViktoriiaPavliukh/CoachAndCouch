@@ -171,7 +171,7 @@ function VerticalTabs() {
             <Table
               sx={{
                 "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root": {
-                  backgroundColor: "#0E5B1D",
+                  backgroundColor: "#546658",
                   color: "white",
                   "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
                     backgroundColor: "white",
@@ -295,7 +295,7 @@ function VerticalTabs() {
                           Create at:
                           <br />
                           <Typography sx={{ fontWeight: "600" }}>
-                            {format(parseISO(advert.createdAt), "dd-mm-yyyy HH:mm")}
+                            {format(new Date(advert.createdAt), "dd.MM.yyyy HH:mm")}
                           </Typography>
                         </p>
                       </TableCell>
@@ -310,6 +310,7 @@ function VerticalTabs() {
                           sx={{
                             maxHeight: "100px",
                             width: "200px",
+                            wordBreak: "break-all",
                             maxWidth: "200px",
                             overflowY: "auto",
                             overflowX: "hidden",
@@ -353,13 +354,13 @@ function VerticalTabs() {
                             display: "flex",
                             width: "100%",
                             padding: 0,
-                            flexDirection: "center",
+                            justifyContent: "center",
                           }}
                         >
                           <div
                             style={{
                               display: "flex",
-                              justifyContent: "center",
+                              justifyContent: "flex-start",
                               padding: "6px 6px",
                               borderRight: " 1px solid #e0e0e0",
                               width: "110px",
@@ -374,7 +375,7 @@ function VerticalTabs() {
                           <div
                             style={{
                               display: "flex",
-                              justifyContent: "center",
+                              justifyContent: "flex-start",
                               alignItems: "center",
                               padding: "6px 6px",
                               width: "110px",
