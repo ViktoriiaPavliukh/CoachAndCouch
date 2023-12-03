@@ -53,6 +53,7 @@ import {
 import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
 import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
 import Loader from "@/components/Loader/Loader";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -102,6 +103,7 @@ function VerticalTabs() {
   //     dispatch(getLanguages());
   //   },
   // });
+  const en = useSelector(selectCurrentLanguage);
   const [value, setValue] = React.useState(0);
   const [deleteState, setDeleteState] = React.useState("delete");
   const handleChange = (event, newValue) => {
@@ -369,7 +371,9 @@ function VerticalTabs() {
                               height: "151px",
                             }}
                           >
-                            {advert.teachingLanguages.map((language) => language.languageUa).join(", ")}
+                            {advert.teachingLanguages
+                              .map((language) => (en === "en" ? language.languageEn : language.languageUa))
+                              .join(", ")}
                           </div>
 
                           <div
@@ -383,7 +387,9 @@ function VerticalTabs() {
                               height: "151px",
                             }}
                           >
-                            {advert.spokenLanguages.map((language) => language.languageUa).join(", ")}
+                            {advert.spokenLanguages
+                              .map((language) => (en === "en" ? language.languageEn : language.languageUa))
+                              .join(", ")}
                           </div>
                         </div>
                       </TableCell>
