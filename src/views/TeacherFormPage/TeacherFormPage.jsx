@@ -146,12 +146,13 @@ export const TeacherFormPage = () => {
           >
             <TextField
               fullWidth
+              focused
               id="firstName"
               name="updateUser.firstName"
               type="text"
               label="Ім'я"
               variant="outlined"
-              value={formik.values.updateUser.firstName}
+              value={formik.values.updateUser.firstName || user.firstName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.firstName && Boolean(formik.errors.firstName)}
