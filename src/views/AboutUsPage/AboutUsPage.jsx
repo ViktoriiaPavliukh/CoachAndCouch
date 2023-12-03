@@ -13,68 +13,98 @@ export function AboutUsPage() {
     setPathname(path);
   }, [path]);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const dispatch = useDispatch();
 
   return (
     <Container
-      sx={{
-        height: "100vh",
-      }}
     >
-      <Typography>{intl.formatMessage({ id: "header.aboutUs" })}</Typography>
-      <Stack>
-        <Typography>Coach&Couch </Typography>
-        <Typography>{intl.formatMessage({ id: "aboutText1" })}</Typography>
-        <Typography>{intl.formatMessage({ id: "aboutText2" })}</Typography>
-        <Typography>{intl.formatMessage({ id: "aboutText3" })}</Typography>
-        <Typography>{intl.formatMessage({ id: "aboutUpper" })}</Typography>
-        {!isLoggedIn && (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "45px",
+          paddingTop: "187px",
+        }}
+      >
+        <Typography variant="bigTitle">
+          {intl.formatMessage({ id: "header.aboutUs" })}
+        </Typography>
+        <Stack
+          sx={{
+            display: "flex",
+            gap: "58px",
+            flexDirection: "column",
+            alignSelf: "end",
+            maxWidth: "771px",
+          }}
+        >
+          <Typography
+            variant="posterSubtitle"
+            sx={{ paddingBottom: "9px", borderBottom: "3px solid #146817" }}
+          >
+            Coach&Couch{" "}
+          </Typography>
           <Box>
-            <Button
-              component={Link}
-              to="/registration"
-              sx={{
-                px: "12px",
-                transition: "color 0.3s",
-                borderRadius: "6px",
-                backgroundColor: (theme) =>
-                  pathname === "/registration"
-                    ? theme.palette.primary.accent
-                    : null,
-                "&:hover": {
-                  backgroundColor: (theme) => theme.palette.primary.accent,
-                  color: "white",
-                },
-              }}
-            >
-              {" "}
-              <Typography>
-                {intl.formatMessage({ id: "header.registration" })}
-              </Typography>
-            </Button>
-            <Button
-              component={Link}
-              to="/login"
-              sx={{
-                px: "12px",
-                transition: "color 0.3s",
-                borderRadius: "6px",
-                backgroundColor: (theme) =>
-                  pathname === "/login" ? theme.palette.primary.accent : null,
-                "&:hover": {
-                  backgroundColor: (theme) => theme.palette.primary.accent,
-                  color: "white",
-                },
-              }}
-            >
-              {" "}
-              <Typography>
-                {intl.formatMessage({ id: "header.login" })}
-              </Typography>
-            </Button>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText1" })}
+            </Typography>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText2" })}
+            </Typography>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText3" })}
+            </Typography>
           </Box>
-        )}
-      </Stack>
+          <Typography variant="textUppercase">
+            {intl.formatMessage({ id: "aboutUpper" })}
+          </Typography>
+          {!isLoggedIn && (
+            <Box>
+              <Button
+                component={Link}
+                to="/registration"
+                sx={{
+                  px: "12px",
+                  transition: "color 0.3s",
+                  borderRadius: "6px",
+                  backgroundColor: (theme) =>
+                    pathname === "/registration"
+                      ? theme.palette.primary.accent
+                      : null,
+                  "&:hover": {
+                    backgroundColor: (theme) => theme.palette.primary.accent,
+                    color: "white",
+                  },
+                }}
+              >
+                {" "}
+                <Typography>
+                  {intl.formatMessage({ id: "header.registration" })}
+                </Typography>
+              </Button>
+              <Button
+                component={Link}
+                to="/login"
+                sx={{
+                  px: "12px",
+                  transition: "color 0.3s",
+                  borderRadius: "6px",
+                  backgroundColor: (theme) =>
+                    pathname === "/login" ? theme.palette.primary.accent : null,
+                  "&:hover": {
+                    backgroundColor: (theme) => theme.palette.primary.accent,
+                    color: "white",
+                  },
+                }}
+              >
+                {" "}
+                <Typography>
+                  {intl.formatMessage({ id: "header.login" })}
+                </Typography>
+              </Button>
+            </Box>
+          )}
+        </Stack>
+      </Box>
     </Container>
   );
 }
