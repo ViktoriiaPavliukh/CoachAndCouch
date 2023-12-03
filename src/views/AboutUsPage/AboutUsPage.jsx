@@ -16,9 +16,6 @@ export function AboutUsPage() {
 
   return (
     <Container
-      sx={{
-        height: "100vh",
-      }}
     >
       <Box
         sx={{
