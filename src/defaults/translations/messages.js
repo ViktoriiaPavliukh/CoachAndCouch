@@ -16,6 +16,15 @@ const messages = {
     newUser: "New user?",
     createAccount: "Create an account",
 
+    //about
+    aboutText1:
+      "We offer a wide range of languages for learning, including popular and less common ones. You can choose the one that interests you the most. Our lessons are designed with modern teaching methods in mind, incorporating audio and video materials, interactive exercises, and the opportunity for free conversation.",
+    aboutText2:
+      "Learning on our platform takes place in a 24/7 mode, allowing you to study at any time and from any place that is convenient for you. You can choose the level of difficulty and topics that interest you and work on them at your own pace.",
+    aboutText3:
+      "We provide the opportunity to communicate with native speakers, allowing you to enhance your skills and improve pronunciation.",
+    aboutUpper: "",
+
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
     reviewMark: "Rate this type 1 to 5:",
@@ -43,7 +52,8 @@ const messages = {
     "signup.privacyLink": "Privacy Policy",
     "signup.alreadyHaveAccount": "Already have an account?",
     "signup.signIn": "Sign In",
-    "footer.text": "Learn your favorite language through individual lessons at any convenient place and time.",
+    "footer.text":
+      "Learn your favorite language through individual lessons at any convenient place and time.",
     "footer.social": "Coach&Couch in social media:",
     "footer.confidential": "Privacy Policy",
     "footer.conditions": "Terms and Conditions",
@@ -86,6 +96,16 @@ const messages = {
     newUser: "Новий користувач?",
     createAccount: "Створити аккаунт",
 
+    //about
+    aboutText1:
+      "Ми пропонуємо широкий вибір мов для вивчення, включаючи популярні та менш поширені мови. Ви можете вибрати ту, яка вас цікавить найбільше. Наші уроки розроблені з урахуванням сучасних методів навчання, і вони включають в себе аудіо та відео матеріали, інтерактивні вправи та можливість вільного спілкування.",
+    aboutText2:
+      "Навчання на нашій платформі відбувається в режимі 24/7, дозволяючи вам вчитися в будь-який час та в будь-якому місці, що для вас зручно. Ви можете вибрати рівень складності та теми, які вас цікавлять, і працювати над ними на власному темпі.",
+    aboutText3:
+      "Ми надаємо можливість спілкуватися з носіями мови, щоб ви могли вдосконалити свої навички та покращити вимову.",
+    aboutUpper:
+      "Приєднуйтесь до нашої активної спільноти студентів, де ви можете ділитися успіхами та отримувати підтримку від однодумців.",
+
     // ReviewList
     titleRewiewForm: "Залиште свій відгук про викладача",
     reviewMark: "Оцініть від 1 до 5:",
@@ -99,7 +119,8 @@ const messages = {
     "personalAccount.settings": "Налаштування",
     "personalAccount.logout": "Вихід",
     rate: "Рейтинг",
-    "footer.text": "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
+    "footer.text":
+      "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
 
     "footer.social": "Coach&Couch в соцмережах:",
     "footer.confidential": "Політика конфіденційності",

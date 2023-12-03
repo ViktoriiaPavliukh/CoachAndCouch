@@ -1,27 +1,80 @@
-import { Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import { useSelector, useDispatch } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { Link, useLocation } from "react-router-dom";
+import { Container, Typography, Stack, Button, Box } from "@mui/material";
 
 export function AboutUsPage() {
+  const intl = useIntl();
+  const [pathname, setPathname] = useState("");
+  const path = useLocation().pathname;
+  useEffect(() => {
+    setPathname(path);
+  }, [path]);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
+
   return (
     <Container
       sx={{
         height: "100vh",
       }}
     >
-      <h2>Дізнатись більше про нас</h2>
-      <p>
-        What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
-        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-        PageMaker including versions of Lorem Ipsum. Why do we use it? It is a long established fact that a reader will
-        be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
-        that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here,
-        making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum
-        as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy.
-        Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and
-        the like).
-      </p>
+      <Typography>{intl.formatMessage({ id: "header.aboutUs" })}</Typography>
+      <Stack>
+        <Typography>Coach&Couch </Typography>
+        <Typography>{intl.formatMessage({ id: "aboutText1" })}</Typography>
+        <Typography>{intl.formatMessage({ id: "aboutText2" })}</Typography>
+        <Typography>{intl.formatMessage({ id: "aboutText3" })}</Typography>
+        <Typography>{intl.formatMessage({ id: "aboutUpper" })}</Typography>
+        {!isLoggedIn && (
+          <Box>
+            <Button
+              component={Link}
+              to="/registration"
+              sx={{
+                px: "12px",
+                transition: "color 0.3s",
+                borderRadius: "6px",
+                backgroundColor: (theme) =>
+                  pathname === "/registration"
+                    ? theme.palette.primary.accent
+                    : null,
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.primary.accent,
+                  color: "white",
+                },
+              }}
+            >
+              {" "}
+              <Typography>
+                {intl.formatMessage({ id: "header.registration" })}
+              </Typography>
+            </Button>
+            <Button
+              component={Link}
+              to="/login"
+              sx={{
+                px: "12px",
+                transition: "color 0.3s",
+                borderRadius: "6px",
+                backgroundColor: (theme) =>
+                  pathname === "/login" ? theme.palette.primary.accent : null,
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.primary.accent,
+                  color: "white",
+                },
+              }}
+            >
+              {" "}
+              <Typography>
+                {intl.formatMessage({ id: "header.login" })}
+              </Typography>
+            </Button>
+          </Box>
+        )}
+      </Stack>
     </Container>
   );
 }
