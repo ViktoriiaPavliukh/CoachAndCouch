@@ -1,3 +1,4 @@
+import { useIntl } from "react-intl";
 import {
   // Container,
   Box,
@@ -19,15 +20,27 @@ import { priceOptions } from "@/defaults";
 import usePagination from "../../hooks/usePagination";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector, selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
+import {
+  advertsSelector,
+  selectAdvertsIsLoading,
+} from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
-import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
-import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+import {
+  countriesSelector,
+  languagesSelector,
+  specializationsSelector,
+} from "@/redux/admin/adminSelector";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
 
 import Loader from "../../components/Loader/Loader";
 
 export function TeachersPage() {
+  const intl = useIntl();
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
@@ -46,13 +59,10 @@ export function TeachersPage() {
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
-  // console.log(specializations);
   let [page, setPage] = useState(1);
   const PER_PAGE = 9;
   const count = Math.ceil(adverts.length / PER_PAGE);
   const items = usePagination(adverts, PER_PAGE);
-  console.log("current data", items.currentData());
-  // console.log(countries);
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
@@ -113,7 +123,7 @@ export function TeachersPage() {
               display: "inline-block",
             }}
           >
-            Знайдіть ідеального викладача
+            {intl.formatMessage({ id: "findTeacher" })}
           </Typography>
           <Box sx={{ display: { md: "none" }, pb: "8px" }}>
             <DescriptionImage />
@@ -125,21 +135,36 @@ export function TeachersPage() {
           >
             <ListItem sx={{ padding: "0" }}>
               <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                <FiberManualRecordIcon
+                  sx={{ color: (theme) => theme.palette.primary.accent }}
+                />
               </ListItemIcon>
-              <ListItemText primary="Понад 1000 викладачів" sx={listItemStyles} />
+              <ListItemText
+                primary={intl.formatMessage({ id: "list1" })}
+                sx={listItemStyles}
+              />
             </ListItem>
             <ListItem sx={{ padding: "0" }}>
               <ListItemIcon sx={{ minWidth: "35px" }}>
-                <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                <FiberManualRecordIcon
+                  sx={{ color: (theme) => theme.palette.primary.accent }}
+                />
               </ListItemIcon>
-              <ListItemText primary="Понад 20 мов" sx={listItemStyles} />
+              <ListItemText
+                primary={intl.formatMessage({ id: "list2" })}
+                sx={listItemStyles}
+              />
             </ListItem>
             <ListItem sx={{ padding: "0" }}>
               <ListItemIcon sx={{ minWidth: "35px" }}>
-                <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                <FiberManualRecordIcon
+                  sx={{ color: (theme) => theme.palette.primary.accent }}
+                />
               </ListItemIcon>
-              <ListItemText primary="Професійні викладачі та носії мови" sx={listItemStyles} />
+              <ListItemText
+                primary={intl.formatMessage({ id: "list3" })}
+                sx={listItemStyles}
+              />
             </ListItem>
           </List>
           <Button
@@ -157,8 +182,11 @@ export function TeachersPage() {
               },
             }}
           >
-            <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
-              Дізнатися більше
+            <Typography
+              variant="posterButton"
+              sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+            >
+              {intl.formatMessage({ id: "learnMore" })}
             </Typography>
           </Button>
         </Box>
@@ -187,10 +215,27 @@ export function TeachersPage() {
               rowGap: { xs: "16px", md: "20px" },
             }}
           >
-            <Filter options={languages} typeoption="languageUa" keyfield="id" label="МОВА" />
-            <Filter options={countries} typeoption="alpha2" label="КРАЇНА" />
-            <Filter options={priceOptions} typeoption="title" label="ЦІНА" />
-            <Filter options={specializations} typeoption="specializationUa" label="СПЕЦІАЛІЗАЦІЯ" />
+            <Filter
+              options={languages}
+              typeoption="languageUa"
+              keyfield="id"
+              label={intl.formatMessage({ id: "language" })}
+            />
+            <Filter
+              options={countries}
+              typeoption="alpha2"
+              label={intl.formatMessage({ id: "country" })}
+            />
+            <Filter
+              options={priceOptions}
+              typeoption="title"
+              label={intl.formatMessage({ id: "price" })}
+            />
+            <Filter
+              options={specializations}
+              typeoption="specializationUa"
+              label={intl.formatMessage({ id: "specialization" })}
+            />
           </Stack>
           <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
             <Grid
