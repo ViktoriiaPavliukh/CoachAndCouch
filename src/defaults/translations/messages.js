@@ -16,6 +16,19 @@ const messages = {
     newUser: "New user?",
     createAccount: "Create an account",
 
+    //homepage
+    findTeacher: "Find the perfect teacher",
+    learnMore: "Learn more",
+    list1: "Over 1000 teachers",
+    list2: "Over 20 languages",
+    list3: "Professional teachers and native speakers",
+
+    //filter
+    language: "Language",
+    country: "Country",
+    price: "Price",
+    specialization: "specialization",
+
     //about
     aboutSubtitle:
       "Our platform is here to be your reliable companion on the journey to mastering a new language.",
@@ -110,6 +123,19 @@ const messages = {
       "Ми надаємо можливість спілкуватися з носіями мови, щоб ви могли вдосконалити свої навички та покращити вимову.",
     aboutUpper:
       "Приєднуйтесь до нашої активної спільноти студентів, де ви можете ділитися успіхами та отримувати підтримку від однодумців.",
+
+    //HomePage
+    findTeacher: "Знайдіть ідеального викладача",
+    learnMore: "Дізнатися більше",
+    list1: "Понад 1000 викладачів",
+    list2: "Понад 20 мов",
+    list3: "Професійні викладачі та носії мови",
+
+    //Filter
+    language: "Мова",
+    country: "Країна",
+    price: "Ціна",
+    specialization: "Спеціалізація",
 
     // ReviewList
     titleRewiewForm: "Залиште свій відгук про викладача",
