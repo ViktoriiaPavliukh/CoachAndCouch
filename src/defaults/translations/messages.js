@@ -17,13 +17,16 @@ const messages = {
     createAccount: "Create an account",
 
     //about
+    aboutSubtitle:
+      "Our platform is here to be your reliable companion on the journey to mastering a new language.",
     aboutText1:
       "We offer a wide range of languages for learning, including popular and less common ones. You can choose the one that interests you the most. Our lessons are designed with modern teaching methods in mind, incorporating audio and video materials, interactive exercises, and the opportunity for free conversation.",
     aboutText2:
       "Learning on our platform takes place in a 24/7 mode, allowing you to study at any time and from any place that is convenient for you. You can choose the level of difficulty and topics that interest you and work on them at your own pace.",
     aboutText3:
       "We provide the opportunity to communicate with native speakers, allowing you to enhance your skills and improve pronunciation.",
-    aboutUpper: "",
+    aboutUpper:
+      "Join our vibrant student community, where you can share successes and receive support from like-minded peers.",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -97,6 +100,8 @@ const messages = {
     createAccount: "Створити аккаунт",
 
     //about
+    aboutSubtitle:
+      "Наша платформа - це ваш надійний партнер у подорожі до опанування нової мови.",
     aboutText1:
       "Ми пропонуємо широкий вибір мов для вивчення, включаючи популярні та менш поширені мови. Ви можете вибрати ту, яка вас цікавить найбільше. Наші уроки розроблені з урахуванням сучасних методів навчання, і вони включають в себе аудіо та відео матеріали, інтерактивні вправи та можливість вільного спілкування.",
     aboutText2:

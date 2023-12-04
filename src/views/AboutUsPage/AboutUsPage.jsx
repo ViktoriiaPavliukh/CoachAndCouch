@@ -15,8 +15,7 @@ export function AboutUsPage() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <Container
-    >
+    <Container>
       <Box
         sx={{
           display: "flex",
@@ -37,13 +36,26 @@ export function AboutUsPage() {
             maxWidth: "771px",
           }}
         >
-          <Typography
-            variant="posterSubtitle"
-            sx={{ paddingBottom: "9px", borderBottom: "3px solid #146817" }}
-          >
-            Coach&Couch{" "}
-          </Typography>
-          <Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography
+              variant="text"
+              sx={{ paddingBottom: "9px", borderBottom: "3px solid #146817" }}
+            >
+              Coach&Couch{" "}
+            </Typography>
+            <Typography
+              variant="text"
+              sx={{
+                display: "flex",
+                alignSelf: "end",
+                textAlign: "right",
+                maxWidth: "413px",
+              }}
+            >
+              {intl.formatMessage({ id: "aboutSubtitle" })}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Typography variant="text">
               {intl.formatMessage({ id: "aboutText1" })}
             </Typography>
@@ -54,11 +66,31 @@ export function AboutUsPage() {
               {intl.formatMessage({ id: "aboutText3" })}
             </Typography>
           </Box>
-          <Typography variant="textUppercase">
+          <Typography variant="textUppercase" sx={{ maxWidth: "473px" }}>
             {intl.formatMessage({ id: "aboutUpper" })}
           </Typography>
           {!isLoggedIn && (
             <Box>
+              <Button
+                component={Link}
+                to="/login"
+                sx={{
+                  px: "12px",
+                  transition: "color 0.3s",
+                  borderRadius: "6px",
+                  backgroundColor: (theme) =>
+                    pathname === "/login" ? theme.palette.primary.accent : null,
+                  "&:hover": {
+                    backgroundColor: (theme) => theme.palette.primary.accent,
+                    color: "white",
+                  },
+                }}
+              >
+                {" "}
+                <Typography>
+                  {intl.formatMessage({ id: "header.login" })}
+                </Typography>
+              </Button>
               <Button
                 component={Link}
                 to="/registration"
@@ -81,30 +113,18 @@ export function AboutUsPage() {
                   {intl.formatMessage({ id: "header.registration" })}
                 </Typography>
               </Button>
-              <Button
-                component={Link}
-                to="/login"
-                sx={{
-                  px: "12px",
-                  transition: "color 0.3s",
-                  borderRadius: "6px",
-                  backgroundColor: (theme) =>
-                    pathname === "/login" ? theme.palette.primary.accent : null,
-                  "&:hover": {
-                    backgroundColor: (theme) => theme.palette.primary.accent,
-                    color: "white",
-                  },
-                }}
-              >
-                {" "}
-                <Typography>
-                  {intl.formatMessage({ id: "header.login" })}
-                </Typography>
-              </Button>
             </Box>
           )}
         </Stack>
       </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "45px",
+          paddingTop: "187px",
+        }}
+      ></Box>
     </Container>
   );
 }
