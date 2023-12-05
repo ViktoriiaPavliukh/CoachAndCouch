@@ -328,7 +328,7 @@ export function Header() {
               {isLoggedIn ? (
                 <div>
                   <MenuMobItem
-                    disableGutters={true}
+                    // disableGutters={true}
                     sx={{ width: "100%", padding: 0 }}
                     onClick={() => {
                       handleCloseNavMenu(`/user/${user.id}/main`);
@@ -347,7 +347,7 @@ export function Header() {
                     </Typography>
                   </MenuMobItem>
                   <MenuMobItem
-                    disableGutters={true}
+                    // disableGutters={true}
                     onClick={() => {
                       handleLogout("/");
                     }}
@@ -368,9 +368,9 @@ export function Header() {
                   </MenuMobItem>
                 </div>
               ) : (
-                <>
+                <div>
                   <MenuMobItem
-                    disableGutters={true}
+                    // disableGutters={true}
                     onClick={() => {
                       handleCloseNavMenu("/login");
                     }}
@@ -400,7 +400,7 @@ export function Header() {
                     }}
                   >
                     <Typography
-                      disableGutters={true}
+                      // disableGutters={true}
                       textAlign="center"
                       variant="fontHeader"
                       sx={{
@@ -411,11 +411,11 @@ export function Header() {
                       {intl.formatMessage({ id: "header.registration" })}
                     </Typography>
                   </MenuMobItem>
-                </>
+                </div>
               )}
               {pages.slice(0, 3).map(({ title, link }) => (
                 <MenuMobItem
-                  disableGutters={true}
+                  // disableGutters={true}
                   key={title.props.id}
                   onClick={() => {
                     handleCloseNavMenu(link);

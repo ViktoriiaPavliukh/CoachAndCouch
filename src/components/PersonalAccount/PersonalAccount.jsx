@@ -1,9 +1,9 @@
 import "react-calendar/dist/Calendar.css";
 // import { enUS } from "date-fns/locale";
 import { useIntl } from "react-intl";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box, Typography, FormControl, TextField } from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
-import { PersonalImage } from "./PersonalImage";
+// import { PersonalImage } from "./PersonalImage";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
 import homeIcon from "../../assets/icons/interface-dashboard-layout-circle--app-application-dashboard-home-layout-circle.svg";
@@ -14,6 +14,7 @@ import settings from "../../assets/icons/interface-setting-cog--work-loading-cog
 // import envelope from "../../assets/icons/mail-send-envelope--envelope-email-message-unopened-sealed-close.svg";
 import logout from "../../assets/icons/logout.svg";
 import { selectUser } from "../../redux/auth/selectors";
+import { useState } from "react";
 
 const linkStyles = {
   display: "flex",
@@ -27,6 +28,7 @@ const linkStyles = {
 };
 
 export function PersonalAccount() {
+  const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const navigate = useNavigate();
@@ -58,13 +60,91 @@ export function PersonalAccount() {
       }}
     >
       <Box>
-        <PersonalImage advertImagePath={user.advert?.imagePath} />
-        <Typography
-          gutterBottom
-          variant="fontTitle"
-          sx={{ display: "flex", paddingTop: "32px" }}
+        <FormControl
+          // fullWidth
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          {user.firstName}
+          <Box
+            style={{
+              width: "275px",
+              height: "214px",
+              border: "1px solid rgba(193, 193, 193, 1)",
+              borderRadius: "8px",
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {image && (
+              <img
+                src={image ? image : null}
+                alt="user's profile"
+                style={{
+                  minHeidth: "100%",
+                  objectFit: "cover",
+                  display: "flex",
+                  width: "275px",
+                  height: "214px",
+
+                  alignSelf: "stretch",
+                }}
+              />
+            )}
+
+            <label
+              htmlFor="image"
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "block",
+                cursor: "pointer",
+                position: "absolute",
+              }}
+            >
+              <TextField
+                style={{
+                  display: "none",
+                }}
+                fullWidth
+                type="file"
+                id="image"
+                name="image"
+                variant="outlined"
+                accept="image/*"
+                placeholder=""
+                onChange={(event) => {
+                  // formik.setFieldValue("image", event.target.files[0]);
+                  setImage(URL.createObjectURL(event.target.files[0]));
+                }}
+                // onBlur={formik.handleBlur}
+                // error={formik.touched.image && Boolean(formik.errors.image)}
+                // helperText={formik.touched.image && formik.errors.image}
+              />
+            </label>
+            {Boolean(!image) && (
+              <p
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%,-50%)",
+                  pointerEvents: "none",
+                  cursor: "pointer",
+                }}
+              >
+                + Додати фото
+              </p>
+            )}
+          </Box>
+        </FormControl>
+
+        {/* <PersonalImage advertImagePath={user.advert?.imagePath} /> */}
+        <Typography gutterBottom variant="fontTitle" sx={{ display: "flex", paddingTop: "32px" }}>
+          {user.firstName} {user.lastName}
         </Typography>
         <Box
           sx={{

@@ -20,7 +20,7 @@ export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunk
 
     return data;
   } catch (error) {
-    toast.error("Something wrong with internet");
+    toast.error(error.message);
     return thunkAPI.rejectWithValue(error.message);
   }
 });
@@ -60,4 +60,3 @@ export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertDa
     return thunkAPI.rejectWithValue(error.message);
   }
 });
-

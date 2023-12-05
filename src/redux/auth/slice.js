@@ -10,6 +10,7 @@ const authSlice = createSlice({
     isLoggedIn: false,
     refreshToken: null,
     accessToken: null,
+    en: "uk",
   },
   extraReducers: (builder) =>
     builder
@@ -37,6 +38,12 @@ function handleLoginFulfilled(state, { payload }) {
   state.refreshToken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
+  state.en = JSON.parse(localStorage.getItem("persist:language"));
+  if ([...Object.values(state.en)[0]].splice(1, 2).join("") === "en")
+    toast.success(`Welcome ${state.user.firstName} to Coach&Coach`, { icon: false });
+  else {
+    toast.success(`Вітаємо ${state.user.firstName} у Coach&Coach`, { icon: false });
+  }
 }
 
 function handleRegisterFulfilled(state, { payload }) {
@@ -45,6 +52,12 @@ function handleRegisterFulfilled(state, { payload }) {
   state.refreshToken = payload.tokens.refreshToken;
   state.isLoggedIn = true;
   state.isLoading = false;
+  state.en = JSON.parse(localStorage.getItem("persist:language"));
+  if ([...Object.values(state.en)[0]].splice(1, 2).join("") === "en")
+    toast.success(`Welcome ${state.user.firstName} to Coach&Coach`, { icon: false });
+  else {
+    toast.success(`Вітаємо ${state.user.firstName} у Coach&Coach`, { icon: false });
+  }
 }
 
 function handleRefreshFulfilled(state, { payload }) {
@@ -61,12 +74,33 @@ function handleLogoutFulfilled(state) {
   state.refreshToken = null;
   state.isLoggedIn = false;
   state.isLoading = false;
+  state.en = JSON.parse(localStorage.getItem("persist:language"));
+  const lang = [...Object.values(state.en)[0]].splice(1, 2).join("");
+  if (lang === "en") {
+    toast.warn("You exit from your acount");
+  } else {
+    toast.warn("Ви вийшли зі свого акаунту");
+  }
 }
 
-function handleRejected(state, { error }) {
+function handleRejected(state, { payload: { type, message }, error }) {
+  console.log("handleRejected", state, type, message, error);
   state.isLoading = false;
   state.isLoggedIn = false;
-  toast.error(error.message);
+  state.en = JSON.parse(localStorage.getItem("persist:language"));
+  const lang = [...Object.values(state.en)[0]].splice(1, 2).join("");
+  if (type === "network") {
+    if (lang === "en") toast.error("No internet connection", { icon: false });
+    else toast.error("Відсутнє інтернет-з'єднання", { icon: false });
+  }
+  if (message === "Request failed with status code 403" || message === "Request failed with status code 400") {
+    if (lang === "en") toast.error("Invalid email or password", { icon: false });
+    else toast.error("Невірна електронна пошта чи пароль ", { icon: false });
+    return;
+  } else {
+    if (lang === "en") toast.error("Server error", { icon: false });
+    else toast.error("Помилка сервера", { icon: false });
+  }
 }
 
 export const authReducer = authSlice.reducer;
