@@ -27,7 +27,7 @@ const messages = {
     language: "Language",
     country: "Country",
     price: "Price",
-    specialization: "specialization",
+    specialization: "Specialization",
 
     //about
     aboutSubtitle:
@@ -45,6 +45,7 @@ const messages = {
     titleRewiewForm: "Leave a comment about the teacher",
     reviewMark: "Rate this type 1 to 5:",
     reviewMessage: "Your comment:",
+    deleteAccount: "Delete account",
 
     dashboard: "Dashboard",
     "personalAccount.lessons": "My Lessons",
@@ -141,6 +142,7 @@ const messages = {
     titleRewiewForm: "Залиште свій відгук про викладача",
     reviewMark: "Оцініть від 1 до 5:",
     reviewMessage: "Ваш відгук:",
+    deleteAccount: "Видалити аккаунт",
 
     dashboard: "Дашборд",
     "personalAccount.lessons": "Мої уроки",

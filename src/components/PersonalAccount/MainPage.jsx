@@ -1,34 +1,41 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { deleteUserAsUser } from "../../redux/user/operations";
 import "react-calendar/dist/Calendar.css";
 import { selectUser } from "../../redux/auth/selectors";
+import { logoutUser } from "../../redux/auth/operations";
 // import { enUS } from "date-fns/locale";
-import { Box, Typography, Button } from "@mui/material";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Avatar,
+} from "@mui/material";
 import { green } from "@mui/material/colors";
 import Time from "./Time";
 import Calendar from "react-calendar";
-import { useState } from "react";
+
 export const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [showTime, setShowTime] = useState(false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const intl = useIntl();
 
-   const handleDeleteAccount = async () => {
-     try {
-       // Dispatch the deleteUserAsUser action
-       await dispatch(deleteUserAsUser(user.id));
-       // Navigate or perform other actions after successful account deletion
-     } catch (error) {
-       console.error("Error deleting user account:", error);
-       // Handle error, show message, etc.
-     }
-   };
+  const handleDeleteAccount = () => {
+    try {
+      dispatch(deleteUserAsUser(user.id));
+      dispatch(logoutUser());
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.error("Error deleting user account:", error);
+    }
+  };
 
   return (
     <Box
@@ -126,9 +133,18 @@ export const MainPage = () => {
         </p>
       )}
       <Time showTime={showTime} date={date} />
-      <Button onClick={handleDeleteAccount} style={{ cursor: "pointer" }}>
-        <Typography variant="fontLink" noWrap>
-          Видалити аккаунт
+      <Button
+        onClick={handleDeleteAccount}
+        sx={{
+          marginLeft: "auto",
+          marginRight: " 20px",
+          p: "10px 18px",
+          fontFamily: "Poppins, sans-serif",
+        }}
+        variant="outlined"
+      >
+        <Typography variant="posterButton" noWrap>
+          {intl.formatMessage({ id: "deleteAccount" })}
         </Typography>
       </Button>
     </Box>
