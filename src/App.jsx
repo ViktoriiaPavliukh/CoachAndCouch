@@ -14,6 +14,7 @@ import { PrivateRoute } from "./components/PrivateRoute";
 import { selectInitialized, setInitialized } from "./redux/init/initSlice";
 import PageError from "./views/page404/PageError";
 import { MainPage, Lessons, Enquiry, Schedule, Messages, Settings } from "./components/PersonalAccount/index";
+import Loader from "./components/Loader/Loader";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function App() {
   }, []);
 
   if (!initialized) {
-    return <h1>Loading</h1>;
+    return <Loader />;
   }
 
   return (
@@ -47,12 +48,12 @@ export default function App() {
           <Route path="login" element={<RestrictedRoute redirectTo="/" component={<SignIn />} />} />
           <Route path="admin" element={<PrivateRoute redirectTo="/" role="admin" component={<AdminPanelPage />} />} />
           <Route path="user/:id" element={<PersonalAccount />}>
-            <Route path="user/:id/main" element={<MainPage />} />
-            <Route path="user/:id/lessons" element={<Lessons />} />
-            <Route path="user/:id/enquiry" element={<Enquiry />} />
-            <Route path="user/:id/schedule" element={<Schedule />} />
-            <Route path="user/:id/messages" element={<Messages />} />
-            <Route path="user/:id/settings" element={<Settings />} />
+            <Route path="main" element={<MainPage />} />
+            <Route path="lessons" element={<Lessons />} />
+            <Route path="enquiry" element={<Enquiry />} />
+            <Route path="schedule" element={<Schedule />} />
+            <Route path="messages" element={<Messages />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
       </Routes>

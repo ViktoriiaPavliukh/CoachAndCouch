@@ -1,27 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { register } from "@/services/publicAPI";
+import { publicAPI, register } from "@/services/publicAPI";
 import { privateAPI, refresh, token } from "@/services/privateAPI";
-import axios from "axios";
-import { toast } from "react-toastify";
-
-const baseURL = "https://coachandcouch.onrender.com";
-
-export const publicAPI = axios.create({ baseURL });
 
 export const loginUser = createAsyncThunk("/users/login", async (credentials, thunkAPI) => {
+  if (!navigator.onLine) return thunkAPI.rejectWithValue({ type: "network" });
   try {
-    const { data } = await publicAPI.post("/auth/signin", credentials);
-    token.set(data.tokens.accessToken);
-    if (thunkAPI.status === 200) {
-      toast.success("Welcome");
-    }
-    if (thunkAPI.status === 400) {
-      toast.error("Incorrect login or password");
-    }
-    return data;
-  } catch (error) {
-    toast.error("Sorry. We have some problem with a server. Please, reload the page");
-    // return thunkAPI.rejectWithValue(error.message);
+    const res = await publicAPI.post("/auth/signin", credentials);
+    token.set(res.data.tokens.accessToken);
+    return res.data;
+  } catch ({ request, response, message }) {
+    return thunkAPI.rejectWithValue({ type: "request", message });
   }
 });
 

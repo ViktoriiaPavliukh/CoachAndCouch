@@ -61,6 +61,7 @@ export const TeacherFormPage = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
+  console.log(user);
   console.log(token);
   const navigate = useNavigate();
   useEffect(() => {
@@ -190,7 +191,7 @@ export const TeacherFormPage = () => {
                 id="country"
                 name="updateUser.country"
                 label="Країна"
-                value={formik.values.country}
+                value={user.country ? user.country : formik.values.country}
                 onChange={(event) => {
                   formik.setFieldValue("updateUser.country", event.target.value);
                   console.log(event.target.value);
