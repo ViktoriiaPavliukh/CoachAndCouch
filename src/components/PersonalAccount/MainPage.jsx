@@ -1,9 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useIntl } from "react-intl";
+import { deleteUserAsUser } from "../../redux/user/operations";
 import "react-calendar/dist/Calendar.css";
 import { selectUser } from "../../redux/auth/selectors";
 // import { enUS } from "date-fns/locale";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
@@ -15,7 +16,19 @@ export const MainPage = () => {
   const [date, setDate] = useState(new Date());
   const [showTime, setShowTime] = useState(false);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const intl = useIntl();
+
+   const handleDeleteAccount = async () => {
+     try {
+       // Dispatch the deleteUserAsUser action
+       await dispatch(deleteUserAsUser(user.id));
+       // Navigate or perform other actions after successful account deletion
+     } catch (error) {
+       console.error("Error deleting user account:", error);
+       // Handle error, show message, etc.
+     }
+   };
 
   return (
     <Box
@@ -46,7 +59,11 @@ export const MainPage = () => {
         </Card>
       </Box>
       <Box>
-        <Typography variant="h5" noWrap sx={{ paddingTop: "32px", mb: "16px", textTransform: "uppercase" }}>
+        <Typography
+          variant="h5"
+          noWrap
+          sx={{ paddingTop: "32px", mb: "16px", textTransform: "uppercase" }}
+        >
           {intl.formatMessage({ id: "personalAccount.schedule" })}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", gap: "40px" }}>
@@ -109,6 +126,11 @@ export const MainPage = () => {
         </p>
       )}
       <Time showTime={showTime} date={date} />
+      <Button onClick={handleDeleteAccount} style={{ cursor: "pointer" }}>
+        <Typography variant="fontLink" noWrap>
+          Видалити аккаунт
+        </Typography>
+      </Button>
     </Box>
   );
 };
