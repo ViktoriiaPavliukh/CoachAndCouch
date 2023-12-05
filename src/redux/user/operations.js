@@ -55,41 +55,18 @@ export const getAllFeedbacks = createAsyncThunk(
 );
 
 export const deleteUserAsUser = createAsyncThunk(
-  "admin/deleteUserAsUser",
+  "user/deleteUser",
   async (_, thunkAPI) => {
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
-      console.log(userToken);
       const userId = thunkAPI.getState().auth.user.id;
-      await privateAPI.patch(`/users/${userId}`, {
+      await privateAPI.put(`/users`, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
       return userId;
     } catch (error) {
-      console.log(error.message);
-      return thunkAPI.rejectWithValue(error.message);
-      //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
-
-// export const deleteUserAsAdmin = createAsyncThunk(
-//   "admin/deleteUserAsAdmin",
-//   async (id, thunkAPI) => {
-//     try {
-//       const persistToken = thunkAPI.getState().auth.accessToken;
-//       token.set(persistToken);
-//       // console.log(persistToken);
-//       await privateAPI.put(`/admin/users/${id}`, {
-//         headers: { Authorization: `Bearer ${persistToken}` },
-//       });
-//       return id;
-//     } catch (error) {
-//       console.log(error.message);
-//       //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
