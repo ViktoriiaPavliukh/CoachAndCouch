@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useIntl } from "react-intl";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import {
@@ -17,7 +18,6 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import mainBg from "@assets/images/bg.png";
-
 import { postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
@@ -25,8 +25,16 @@ import { v4 as uuidv4 } from "uuid";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
-import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
+import {
+  countriesSelector,
+  languagesSelector,
+  specializationsSelector,
+} from "@/redux/admin/adminSelector";
 
 const initialValues = {
   price: 0,
@@ -48,7 +56,10 @@ const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
   // specializations: Yup.array().required("Specialization is required"),
   // country: Yup.object().required("Country is required"),
   image: Yup.mixed().required("Select image for your advert"),
@@ -57,26 +68,24 @@ const validationSchema = Yup.object({
 
 export const TeacherFormPage = () => {
   const [image, setImage] = useState("");
-  // const [country, setCountry] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
-  console.log(user);
-  console.log(token);
+  const intl = useIntl();
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getLanguages());
   }, [dispatch]);
-  const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
+  const advertId =
+    useSelector(advertsSelector).find((advert) => advert.user.id === user.id)
+      ?.id || null;
   const languages = useSelector(languagesSelector);
-
   const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
   console.log(countriesList);
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);
-      // console.log(advertId);
     }
     dispatch(getLanguages());
     dispatch(getSpecializations());
@@ -87,7 +96,6 @@ export const TeacherFormPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       const transformedData = new FormData();
-
       const updateUser = {
         country: values.updateUser.country.id,
         birthday: "1995-04-23T18:02:22.126Z",
@@ -98,8 +106,14 @@ export const TeacherFormPage = () => {
       };
       transformedData.append("description", values.description);
       transformedData.append("price", values.price);
-      transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages.map((el) => el.id)));
-      transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages.map((el) => el.id)));
+      transformedData.append(
+        "spokenLanguages",
+        JSON.stringify(values.spokenLanguages.map((el) => el.id))
+      );
+      transformedData.append(
+        "teachingLanguages",
+        JSON.stringify(values.teachingLanguages.map((el) => el.id))
+      );
 
       transformedData.append("updateUser", JSON.stringify(updateUser));
 
@@ -118,7 +132,6 @@ export const TeacherFormPage = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
-
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -136,7 +149,11 @@ export const TeacherFormPage = () => {
         }}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Typography style={{ textTransform: "uppercase", marginBottom: "40px" }}>Анкета викладача</Typography>
+          <Typography
+            style={{ textTransform: "uppercase", marginBottom: "40px" }}
+          >
+            {intl.formatMessage({ id: "teacherForm" })}
+          </Typography>
           <Stack
             fullWidth
             style={{
@@ -151,21 +168,22 @@ export const TeacherFormPage = () => {
               id="firstName"
               name="updateUser.firstName"
               type="text"
-              label="Ім'я"
+              label={intl.formatMessage({ id: "name" })}
               variant="outlined"
               value={formik.values.updateUser.firstName || user.firstName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+              error={
+                formik.touched.firstName && Boolean(formik.errors.firstName)
+              }
               helperText={formik.touched.firstName && formik.errors.firstName}
             />
-
             <TextField
               fullWidth
               id="lastName"
               name="updateUser.lastName"
               type="text"
-              label="Прізвище"
+              label={intl.formatMessage({ id: "lastName" })}
               variant="outlined"
               value={formik.values.updateUser.lastName}
               onChange={formik.handleChange}
@@ -183,17 +201,20 @@ export const TeacherFormPage = () => {
             }}
           >
             <FormControl variant="outlined">
-              <InputLabel>Країна</InputLabel>
+              <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
               <Select
                 style={{
                   width: "274px",
                 }}
                 id="country"
                 name="updateUser.country"
-                label="Країна"
+                label="country"
                 value={user.country ? user.country : formik.values.country}
                 onChange={(event) => {
-                  formik.setFieldValue("updateUser.country", event.target.value);
+                  formik.setFieldValue(
+                    "updateUser.country",
+                    event.target.value
+                  );
                   console.log(event.target.value);
                 }}
                 onBlur={formik.handleBlur}
@@ -209,7 +230,7 @@ export const TeacherFormPage = () => {
               </Select>
             </FormControl>
             <TextField
-              label="День народження"
+              label={intl.formatMessage({ id: "birthday" })}
               style={{
                 width: "274px",
               }}
@@ -224,7 +245,7 @@ export const TeacherFormPage = () => {
               }}
               id="price"
               name="price"
-              label="Вартість за годину уроку"
+              label={intl.formatMessage({ id: "pricePerHour" })}
               variant="outlined"
               type="number"
               value={formik.values.price}
@@ -234,7 +255,6 @@ export const TeacherFormPage = () => {
               helperText={formik.touched.price && formik.errors.price}
             />
           </Stack>
-
           <Stack
             fullWidth
             style={{
@@ -243,19 +263,26 @@ export const TeacherFormPage = () => {
             }}
           >
             <FormControl fullWidth variant="outlined">
-              <InputLabel>Мови, якими розмовляєте</InputLabel>
+              <InputLabel>
+                {intl.formatMessage({ id: "languagesSpoken" })}
+              </InputLabel>
               <Select
                 id="spokenLanguages"
                 name="spokenLanguages"
                 multiple
-                label="Spoken Languages"
+                label="languagesSpoken"
                 value={formik.values.spokenLanguages}
                 onChange={(event) => {
                   formik.setFieldValue("spokenLanguages", event.target.value);
                 }}
                 onBlur={formik.handleBlur}
-                error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
-                renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
+                error={
+                  formik.touched.spokenLanguages &&
+                  Boolean(formik.errors.spokenLanguages)
+                }
+                renderValue={(selected) =>
+                  selected.map((language) => language.languageUa).join(", ")
+                }
               >
                 {languages &&
                   languages.map((language) => (
@@ -267,19 +294,26 @@ export const TeacherFormPage = () => {
             </FormControl>
 
             <FormControl fullWidth variant="outlined">
-              <InputLabel>Мови викладання</InputLabel>
+              <InputLabel>
+                {intl.formatMessage({ id: "languagesTeaching" })}
+              </InputLabel>
               <Select
                 id="teachingLanguages"
                 name="teachingLanguages"
                 multiple
-                label="Мова викладання"
+                label="languagesTeaching"
                 value={formik.values.teachingLanguages}
                 onChange={(event) => {
                   formik.setFieldValue("teachingLanguages", event.target.value);
                 }}
                 onBlur={formik.handleBlur}
-                error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
-                renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
+                error={
+                  formik.touched.teachingLanguages &&
+                  Boolean(formik.errors.teachingLanguages)
+                }
+                renderValue={(selected) =>
+                  selected.map((language) => language.languageUa).join(", ")
+                }
               >
                 {languages &&
                   languages.map((language) => (
@@ -291,19 +325,32 @@ export const TeacherFormPage = () => {
             </FormControl>
 
             <FormControl fullWidth variant="outlined">
-              <InputLabel>Спеціалізація</InputLabel>
+              <InputLabel>
+                {" "}
+                {intl.formatMessage({ id: "specialization" })}
+              </InputLabel>
               <Select
                 id="specializations"
                 name="updateUser.specializations"
                 multiple
-                label="Спеціалізація"
+                label={intl.formatMessage({ id: "specialization" })}
                 value={formik.values.updateUser.specializations}
                 onChange={(event) => {
-                  formik.setFieldValue("updateUser.specializations", event.target.value);
+                  formik.setFieldValue(
+                    "updateUser.specializations",
+                    event.target.value
+                  );
                 }}
                 onBlur={formik.handleBlur}
-                error={formik.touched.specializations && Boolean(formik.errors.specializations)}
-                renderValue={(selected) => selected.map((specialization) => specialization.specializationUa).join(", ")}
+                error={
+                  formik.touched.specializations &&
+                  Boolean(formik.errors.specializations)
+                }
+                renderValue={(selected) =>
+                  selected
+                    .map((specialization) => specialization.specializationUa)
+                    .join(", ")
+                }
               >
                 {specializations &&
                   specializations.map((specialization) => (
@@ -320,26 +367,23 @@ export const TeacherFormPage = () => {
               marginBottom: "20px",
             }}
           >
-            <Typography
-              style={{
-                marginBottom: "8px",
-              }}
-            >
-              Опис
-            </Typography>
             <TextField
               fullWidth
               id="description"
               name="description"
-              label="Опис"
+              label={intl.formatMessage({ id: "description" })}
               variant="outlined"
               multiline
               rows={4}
               value={formik.values.description}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.description && Boolean(formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
             />
           </Stack>
 
@@ -349,7 +393,7 @@ export const TeacherFormPage = () => {
               marginBottom: "20px",
             }}
           >
-            <FormLabel>Стать</FormLabel>
+            <FormLabel>{intl.formatMessage({ id: "sex" })}</FormLabel>
             <RadioGroup
               style={{
                 flexDirection: "row",
@@ -372,7 +416,7 @@ export const TeacherFormPage = () => {
                     helperText={formik.touched.sex && formik.errors.sex}
                   />
                 }
-                label="Чоловіча"
+                label={intl.formatMessage({ id: "male" })}
               />
               <FormControlLabel
                 value="female"
@@ -388,7 +432,7 @@ export const TeacherFormPage = () => {
                     helperText={formik.touched.sex && formik.errors.sex}
                   />
                 }
-                label="Жіноча"
+                label={intl.formatMessage({ id: "female" })}
               />
             </RadioGroup>
           </FormControl>
@@ -406,7 +450,7 @@ export const TeacherFormPage = () => {
                 marginBottom: "20px",
               }}
             >
-              Завантажте свою фотографію
+              {intl.formatMessage({ id: "uploadPhoto" })}
             </Typography>
             <Box
               style={{
@@ -471,7 +515,7 @@ export const TeacherFormPage = () => {
                     cursor: "pointer",
                   }}
                 >
-                  + Додати фото
+                  {intl.formatMessage({ id: "addPhoto" })}
                 </p>
               )}
             </Box>
@@ -486,7 +530,7 @@ export const TeacherFormPage = () => {
             }}
           >
             <Button variant="contained" type="submit">
-              Опублікувати
+              {intl.formatMessage({ id: "publishBtn" })}
             </Button>
             {/* <Button variant="outlined">Зберегти чернетку</Button> */}
           </Stack>

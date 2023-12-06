@@ -23,12 +23,6 @@ const messages = {
     list2: "Over 20 languages",
     list3: "Professional teachers and native speakers",
 
-    //filter
-    language: "Language",
-    country: "Country",
-    price: "Price",
-    specialization: "Specialization",
-
     //about
     aboutSubtitle:
       "Our platform is here to be your reliable companion on the journey to mastering a new language.",
@@ -54,7 +48,7 @@ const messages = {
     "personalAccount.schedule": "Schedule",
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
-    rate: "Rate",
+    rate: "Rating",
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
     "signup.email": "Enter your email",
@@ -86,6 +80,38 @@ const messages = {
     trialLessonBtn: "Trial lesson",
     writeMeBtn: "Contact us",
     homepageBtn: "to main page",
+    message: "Send message",
+    publishBtn: "Publish",
+
+    //Status
+    online: "Online",
+
+    //Repeating
+    lessons: "Lessons",
+    languagesTeaching: "Teaching languages",
+    languagesSpoken: "Languages spoken",
+    language: "Language",
+    country: "Country",
+    price: "Price",
+    specialization: "Specialization",
+    platforms: "Platforms",
+    aboutMe: "About me",
+    feedback: "Feedback",
+    teacherForm: "Teacher form",
+    name: "First name",
+    lastName: "Last name",
+    birthday: "Date of birth",
+    pricePerHour: "Price per hour",
+    description: "Description",
+    sex: "Sex",
+    male: "Male",
+    female: "Female",
+    uploadPhoto: "Upload your photo",
+    addPhoto: "+ Add photo",
+
+    //validation
+    priceValidation: "Price is required",
+    descriptionValidation: "Description is required",
   },
 
   uk: {
@@ -138,12 +164,6 @@ const messages = {
     list2: "Понад 20 мов",
     list3: "Професійні викладачі та носії мови",
 
-    //Filter
-    language: "Мова",
-    country: "Країна",
-    price: "Ціна",
-    specialization: "Спеціалізація",
-
     // ReviewList
     titleRewiewForm: "Залиште свій відгук про викладача",
     reviewMark: "Оцініть від 1 до 5:",
@@ -160,7 +180,6 @@ const messages = {
     rate: "Рейтинг",
     "footer.text":
       "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
-
     "footer.social": "Coach&Couch в соцмережах:",
     "footer.confidential": "Політика конфіденційності",
     "footer.conditions": "Умови використання",
@@ -173,9 +192,41 @@ const messages = {
 
     // Buttons
     sendBtn: "Відправити",
+    message: "Написати",
     trialLessonBtn: "Пробний урок",
     writeMeBtn: "Написати",
     homepageBtn: "Перейти на головну",
+    publishBtn: "Опублікувати",
+
+    //Status
+    online: "Онлайн",
+
+    //Repeating
+    lessons: "Уроки",
+    languagesTeaching: "Мови викладання",
+    languagesSpoken: "Мови, якими розмовляєте",
+    language: "Мова",
+    country: "Країна",
+    price: "Ціна",
+    specialization: "Спеціалізація",
+    platforms: "Платформи",
+    aboutMe: "Про мене",
+    feedback: "Відгуки",
+    teacherForm: "Анкета викладача",
+    name: "Ім'я",
+    lastName: "Прізвище",
+    birthday: "Дата народження",
+    pricePerHour: "Вартість за годину уроку",
+    description: "Опис",
+    sex: "Стать",
+    male: "Чоловіча",
+    female: "Жіноча",
+    uploadPhoto: "Завантажте свою фотографію",
+    addPhoto: "+ Додати фото",
+
+    //validation
+    priceValidation: "Вкажіть ціну",
+    descriptionValidation: "Введіть опис",
   },
 };
 
