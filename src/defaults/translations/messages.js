@@ -81,6 +81,7 @@ const messages = {
     writeMeBtn: "Contact us",
     homepageBtn: "to main page",
     message: "Send message",
+    publishBtn: "Publish",
 
     //Status
     online: "Online",
@@ -88,6 +89,7 @@ const messages = {
     //Repeating
     lessons: "Lessons",
     languagesTeaching: "Teaching languages",
+    languagesSpoken: "Languages spoken",
     language: "Language",
     country: "Country",
     price: "Price",
@@ -95,6 +97,21 @@ const messages = {
     platforms: "Platforms",
     aboutMe: "About me",
     feedback: "Feedback",
+    teacherForm: "Teacher form",
+    name: "First name",
+    lastName: "Last name",
+    birthday: "Date of birth",
+    pricePerHour: "Price per hour",
+    description: "Description",
+    sex: "Sex",
+    male: "Male",
+    female: "Female",
+    uploadPhoto: "Upload your photo",
+    addPhoto: "+ Add photo",
+
+    //validation
+    priceValidation: "Price is required",
+    descriptionValidation: "Description is required",
   },
 
   uk: {
@@ -163,7 +180,6 @@ const messages = {
     rate: "Рейтинг",
     "footer.text":
       "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
-
     "footer.social": "Coach&Couch в соцмережах:",
     "footer.confidential": "Політика конфіденційності",
     "footer.conditions": "Умови використання",
@@ -180,6 +196,7 @@ const messages = {
     trialLessonBtn: "Пробний урок",
     writeMeBtn: "Написати",
     homepageBtn: "Перейти на головну",
+    publishBtn: "Опублікувати",
 
     //Status
     online: "Онлайн",
@@ -187,6 +204,7 @@ const messages = {
     //Repeating
     lessons: "Уроки",
     languagesTeaching: "Мови викладання",
+    languagesSpoken: "Мови, якими розмовляєте",
     language: "Мова",
     country: "Країна",
     price: "Ціна",
@@ -194,6 +212,21 @@ const messages = {
     platforms: "Платформи",
     aboutMe: "Про мене",
     feedback: "Відгуки",
+    teacherForm: "Анкета викладача",
+    name: "Ім'я",
+    lastName: "Прізвище",
+    birthday: "Дата народження",
+    pricePerHour: "Вартість за годину уроку",
+    description: "Опис",
+    sex: "Стать",
+    male: "Чоловіча",
+    female: "Жіноча",
+    uploadPhoto: "Завантажте свою фотографію",
+    addPhoto: "+ Додати фото",
+
+    //validation
+    priceValidation: "Вкажіть ціну",
+    descriptionValidation: "Введіть опис",
   },
 };
 
