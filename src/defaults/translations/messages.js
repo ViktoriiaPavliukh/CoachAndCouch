@@ -77,11 +77,17 @@ const messages = {
     "footer.developers": "Developer Team Contacts",
     "footer.copyright": "©2023 coach&Couch. All rights reserved.",
 
+    //404
+    errorTitle: "Oops! Page not found.",
+    errorSubtitle: "Check the URL or return to the main page.",
+
     // Buttons
     sendBtn: "Send",
     trialLessonBtn: "Trial lesson",
     writeMeBtn: "Contact us",
+    homepageBtn: "to main page",
   },
+
   uk: {
     "header.teachers": "Головна",
     "header.becomeTeacher": "Стати викладачем",
@@ -161,10 +167,15 @@ const messages = {
     "footer.developers": "Контакти команди розробників",
     "footer.copyright": "©2023 coach&Couch. Усі права захищені.",
 
+    //404
+    errorTitle: "Oops! Сторінку не знайдено",
+    errorSubtitle: "Перевірте URL адресу сторінки або поверніться на головну",
+
     // Buttons
     sendBtn: "Відправити",
     trialLessonBtn: "Пробний урок",
     writeMeBtn: "Написати",
+    homepageBtn: "Перейти на головну",
   },
 };
 
