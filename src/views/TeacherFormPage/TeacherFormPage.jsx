@@ -33,10 +33,10 @@ const initialValues = {
   description: "",
   spokenLanguages: [],
   teachingLanguages: [],
+  specializations: [],
   image: null,
   updateUser: {
     country: "",
-    specializations: [],
     birthday: "",
     firstName: "",
     lastName: "",
@@ -49,27 +49,31 @@ const validationSchema = Yup.object({
   description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
   teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
-  // specializations: Yup.array().required("Specialization is required"),
-  // country: Yup.object().required("Country is required"),
+  specializations: Yup.array().required("Specialization is required"),
   image: Yup.mixed().required("Select image for your advert"),
   updateUser: Yup.object().required("All fields is required"),
 });
 
 export const TeacherFormPage = () => {
   const [image, setImage] = useState("");
-  // const [country, setCountry] = useState("");
+  const [name, setName] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
+
   console.log(user);
   console.log(token);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      setName(user.firstName);
+    }
+  }, [user]);
   useEffect(() => {
     dispatch(getLanguages());
   }, [dispatch]);
   const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
   const languages = useSelector(languagesSelector);
-
   const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
   console.log(countriesList);
@@ -91,7 +95,6 @@ export const TeacherFormPage = () => {
       const updateUser = {
         country: values.updateUser.country.id,
         birthday: "1995-04-23T18:02:22.126Z",
-        specializations: values.updateUser.specializations.map((el) => el.id),
         sex: values.updateUser.sex,
         firstName: values.updateUser.firstName,
         lastName: values.updateUser.lastName,
@@ -100,7 +103,7 @@ export const TeacherFormPage = () => {
       transformedData.append("price", values.price);
       transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages.map((el) => el.id)));
       transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages.map((el) => el.id)));
-
+      transformedData.append("specializations", JSON.stringify(values.specializations.map((el) => el.id)));
       transformedData.append("updateUser", JSON.stringify(updateUser));
 
       transformedData.append("image", values.image);
@@ -147,14 +150,19 @@ export const TeacherFormPage = () => {
           >
             <TextField
               fullWidth
-              focused
+              // focused
               id="firstName"
               name="updateUser.firstName"
               type="text"
               label="Ім'я"
+              hiddenLabel
               variant="outlined"
-              value={formik.values.updateUser.firstName || user.firstName}
-              onChange={formik.handleChange}
+              value={name}
+              // onChange={formik.handleChange}
+              onChange={(event) => {
+                setName(event.target.value);
+                formik.setFieldValue("updateUser.firstName", event.target.value);
+              }}
               onBlur={formik.handleBlur}
               error={formik.touched.firstName && Boolean(formik.errors.firstName)}
               helperText={formik.touched.firstName && formik.errors.firstName}
@@ -294,12 +302,12 @@ export const TeacherFormPage = () => {
               <InputLabel>Спеціалізація</InputLabel>
               <Select
                 id="specializations"
-                name="updateUser.specializations"
+                name="specializations"
                 multiple
                 label="Спеціалізація"
-                value={formik.values.updateUser.specializations}
+                value={formik.values.specializations}
                 onChange={(event) => {
-                  formik.setFieldValue("updateUser.specializations", event.target.value);
+                  formik.setFieldValue("specializations", event.target.value);
                 }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.specializations && Boolean(formik.errors.specializations)}
@@ -356,7 +364,7 @@ export const TeacherFormPage = () => {
               }}
             >
               <FormControlLabel
-                value="Male"
+                value="male"
                 control={
                   <Radio
                     style={{
@@ -389,6 +397,22 @@ export const TeacherFormPage = () => {
                   />
                 }
                 label="Жіноча"
+              />
+              <FormControlLabel
+                value="other"
+                control={
+                  <Radio
+                    id="sexOther"
+                    name="updateUser.sex"
+                    type="radio"
+                    value="other"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.sex && Boolean(formik.errors.sexOther)}
+                    helperText={formik.touched.sex && formik.errors.sex}
+                  />
+                }
+                label="Інша"
               />
             </RadioGroup>
           </FormControl>
