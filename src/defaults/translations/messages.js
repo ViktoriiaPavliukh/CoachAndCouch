@@ -23,12 +23,6 @@ const messages = {
     list2: "Over 20 languages",
     list3: "Professional teachers and native speakers",
 
-    //filter
-    language: "Language",
-    country: "Country",
-    price: "Price",
-    specialization: "Specialization",
-
     //about
     aboutSubtitle:
       "Our platform is here to be your reliable companion on the journey to mastering a new language.",
@@ -54,7 +48,7 @@ const messages = {
     "personalAccount.schedule": "Schedule",
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
-    rate: "Rate",
+    rate: "Rating",
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
     "signup.email": "Enter your email",
@@ -86,6 +80,21 @@ const messages = {
     trialLessonBtn: "Trial lesson",
     writeMeBtn: "Contact us",
     homepageBtn: "to main page",
+    message: "Send message",
+
+    //Status
+    online: "Online",
+
+    //Repeating
+    lessons: "Lessons",
+    languagesTeaching: "Teaching languages",
+    language: "Language",
+    country: "Country",
+    price: "Price",
+    specialization: "Specialization",
+    platforms: "Platforms",
+    aboutMe: "About me",
+    feedback: "Feedback",
   },
 
   uk: {
@@ -138,12 +147,6 @@ const messages = {
     list2: "Понад 20 мов",
     list3: "Професійні викладачі та носії мови",
 
-    //Filter
-    language: "Мова",
-    country: "Країна",
-    price: "Ціна",
-    specialization: "Спеціалізація",
-
     // ReviewList
     titleRewiewForm: "Залиште свій відгук про викладача",
     reviewMark: "Оцініть від 1 до 5:",
@@ -173,9 +176,24 @@ const messages = {
 
     // Buttons
     sendBtn: "Відправити",
+    message: "Написати",
     trialLessonBtn: "Пробний урок",
     writeMeBtn: "Написати",
     homepageBtn: "Перейти на головну",
+
+    //Status
+    online: "Онлайн",
+
+    //Repeating
+    lessons: "Уроки",
+    languagesTeaching: "Мови викладання",
+    language: "Мова",
+    country: "Країна",
+    price: "Ціна",
+    specialization: "Спеціалізація",
+    platforms: "Платформи",
+    aboutMe: "Про мене",
+    feedback: "Відгуки",
   },
 };
 

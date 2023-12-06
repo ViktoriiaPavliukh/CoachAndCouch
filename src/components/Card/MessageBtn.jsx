@@ -1,16 +1,17 @@
 import { PropTypes } from "prop-types";
+import { useIntl } from "react-intl";
 import { Button, Typography } from "@mui/material";
 
-const btnConfig = { label: "Написати", type: "button" };
-
 export function MessageBtn({ sx }) {
+  const intl = useIntl();
   return (
     <Button
-      sx={{ marginLeft: "auto", marginRight: " 20px", p: "10px 18px", ...sx }}
-      type={btnConfig.type}
+      sx={{ marginLeft: "auto", marginRight: " 20px", p: "10px 18px" }}
       variant="contained"
     >
-      <Typography variant="posterButton">{btnConfig.label}</Typography>
+      <Typography variant="posterButton">
+        {intl.formatMessage({ id: "message" })}
+      </Typography>
     </Button>
   );
 }
