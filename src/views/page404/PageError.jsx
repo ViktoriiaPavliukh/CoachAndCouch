@@ -1,20 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CardActionArea,
-  CardActions,
-  Stack,
-} from "@mui/material/";
+import { useIntl } from "react-intl";
+import { Box, Typography, Button } from "@mui/material/";
 import mainBg from "@assets/images/bg.png";
 // import four from "../../assets/icons/four.svg";
 // import zero from "../../assets/icons/zero.svg";
 
 export default function PageError() {
   const navigate = useNavigate();
+  const intl = useIntl();
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/home`);
@@ -58,7 +51,7 @@ export default function PageError() {
           variant="posterBlack"
           sx={{ color: (theme) => theme.palette.textColor.black }}
         >
-          Oops! Сторінку не знайдено
+          {intl.formatMessage({ id: "errorTitle" })}
         </Typography>
         <Typography
           variant="posterSubtitle"
@@ -67,7 +60,7 @@ export default function PageError() {
             color: (theme) => theme.palette.textColor.black,
           }}
         >
-          Перевірте URL адресу сторінки або поверніться на головну{" "}
+          {intl.formatMessage({ id: "errorSubtitle" })}
         </Typography>
         <Button
           type="button"
@@ -89,7 +82,7 @@ export default function PageError() {
             variant="posterButton"
             sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
           >
-            Перейти на головну
+            {intl.formatMessage({ id: "homepageBtn" })}
           </Typography>
         </Button>
       </Box>
