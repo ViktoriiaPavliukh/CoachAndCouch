@@ -9,6 +9,18 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export const Enquiry = () => {
+  const handleUserProfileSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target);
+    const userProfile = {
+      firstName: e.target.firstName.value,
+      country: e.target.country.value,
+      lastName: e.target.lastName.value,
+      sex: e.target.sex.value,
+      aboutMe: e.target.aboutMe.value,
+    };
+    console.log(userProfile);
+  };
   const user = useSelector(selectUserById);
 
   const userId = useSelector(selectUser).id;
@@ -29,7 +41,7 @@ export const Enquiry = () => {
       }}
     >
       <Typography>Profile</Typography>
-      <form>
+      <form onSubmit={handleUserProfileSubmit}>
         <label>
           Name <input type="text" name="firstName" defaultValue={user?.firstName} />
         </label>
@@ -39,7 +51,7 @@ export const Enquiry = () => {
         </label>
         <br />
         <label>
-          Email <input type="email" name="email" defaultValue={user?.email} />
+          Email <input type="email" name="email" disabled defaultValue={user?.email} />
         </label>
         <br />
         <label>
@@ -53,6 +65,15 @@ export const Enquiry = () => {
             name="registeredAt"
             disabled
             defaultValue={user.registeredAt ? format(new Date(user.registeredAt), "dd.mm.yyyy") : ""}
+          />
+        </label>
+        <br />
+        <label>
+          Birthday
+          <input
+            type="text"
+            name="birthday"
+            defaultValue={user.birthday ? format(new Date(user.birthday), "dd.mm.yyyy") : ""}
           />
         </label>
         <br />
@@ -88,6 +109,11 @@ export const Enquiry = () => {
         </label>
         <br />
         <label>Rating: {user.rating}</label>
+        <br />
+        <label>
+          About me <textarea rows="5" cols="45" type="text" name="aboutMe" />
+        </label>
+        <button type="submit">Send</button>
       </form>
     </Box>
   );
