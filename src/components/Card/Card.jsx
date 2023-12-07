@@ -22,7 +22,7 @@ export function Card() {
   const adverts = useSelector(advertsSelector);
   const teacherId = useParams();
   const teacher = adverts.find((advert) => advert.id === +teacherId.id);
-
+  // console.log(adverts);
   return (
     Boolean(teacher) && (
       <Container
@@ -60,9 +60,7 @@ export function Card() {
                 p: 0,
               }}
             >
-              <Typography variant="posterName">
-                {teacher.user.firstName + " " + teacher.user.lastName}
-              </Typography>
+              <Typography variant="posterName">{teacher.user.firstName + " " + teacher.user.lastName}</Typography>
               <img
                 src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
                 srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
@@ -90,28 +88,16 @@ export function Card() {
                   marginRight: "12px",
                 }}
               ></span>
-              <Typography
-                color="grey.700"
-                variant="posterItem"
-                sx={{ mr: 5.5 }}
-              >
+              <Typography color="grey.700" variant="posterItem" sx={{ mr: 5.5 }}>
                 {intl.formatMessage({ id: "online" })}
               </Typography>
-              <Typography
-                variant="posterItem"
-                color="grey.700"
-                sx={{ mr: 0.5 }}
-              >
+              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
                 {intl.formatMessage({ id: "rate" })}:
               </Typography>
               <Typography variant="posterItem" sx={{ mr: 3.5 }}>
                 {teacher.user.rating}
               </Typography>
-              <Typography
-                variant="posterItem"
-                color="grey.700"
-                sx={{ mr: 0.5 }}
-              >
+              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
                 {intl.formatMessage({ id: "lessons" })}:
               </Typography>
               <Typography variant="posterItem">156</Typography>
@@ -120,19 +106,13 @@ export function Card() {
               {intl.formatMessage({ id: "languagesTeaching" })}
             </Typography>
             <CategoryList
-              elements={
-                teacher.teachingLanguages &&
-                teacher.teachingLanguages.map((el) => el.languageUa)
-              }
+              elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)}
             />
             <Typography variant="posterCategory" color="grey.600">
               {intl.formatMessage({ id: "specialization" })}
             </Typography>
             <CategoryList
-              elements={
-                teacher.user.specializations &&
-                teacher.user.specializations.map((el) => el.specializationUa)
-              }
+              elements={teacher.user.specializations && teacher.specializations.map((el) => el.specializationUa)}
             />
             <Typography variant="posterCategory" color="grey.600">
               {intl.formatMessage({ id: "country" })}
@@ -154,17 +134,10 @@ export function Card() {
           <LikeBtn />
         </Box>
         <Box mb="40px">
-          <Typography
-            variant="posterTitle"
-            component="p"
-            color="grey.600"
-            mb="36px"
-          >
+          <Typography variant="posterTitle" component="p" color="grey.600" mb="36px">
             {intl.formatMessage({ id: "aboutMe" })}
           </Typography>
-          <Typography variant="posterDescription">
-            {teacher.description}
-          </Typography>
+          <Typography variant="posterDescription">{teacher.description}</Typography>
         </Box>
         <Box
           sx={{
@@ -184,11 +157,7 @@ export function Card() {
             <Typography variant="posterTitle" color="grey.600" mb="36px">
               {intl.formatMessage({ id: "feedback" })}
             </Typography>
-            <ReviewList
-              elements={teacher.user.feedbacksToMe}
-              id={teacher.user.id}
-              userImage={userImage}
-            />
+            <ReviewList elements={teacher.user.feedbacksToMe} id={teacher.user.id} userImage={userImage} />
           </Box>
           <Box
             sx={{
@@ -207,18 +176,10 @@ export function Card() {
                 mb: 8,
               }}
             >
-              <Button
-                type="button"
-                variant="contained"
-                sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
-              >
-                <Typography variant="posterButton">
-                  {intl.formatMessage({ id: "trialLessonBtn" })}
-                </Typography>
+              <Button type="button" variant="contained" sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}>
+                <Typography variant="posterButton">{intl.formatMessage({ id: "trialLessonBtn" })}</Typography>
               </Button>
-              <Typography variant="posterPrice">
-                {Math.ceil(teacher.price)} $
-              </Typography>
+              <Typography variant="posterPrice">{Math.ceil(teacher.price)} $</Typography>
             </Box>
           </Box>
         </Box>

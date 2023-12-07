@@ -2,6 +2,7 @@ import { PropTypes } from "prop-types";
 import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
 // import { languages } from "@/defaults";
@@ -11,18 +12,21 @@ import { Modal } from "../Modal/Modal";
 
 export function TeacherCard({ teacher }) {
   const [showModal, setShowModal] = useState(false);
-
+  const [isFavorite, setIsFavorite] = useState(false);
   const onShowModalClick = () => {
     setShowModal(true);
   };
   const onBackdropClose = () => {
     setShowModal(false);
   };
-  // console.log(teacher);
+  console.log(teacher);
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/teachers/${teacher.id}`);
+  };
+  const handleFavoriteAdd = () => {
+    setIsFavorite(() => (isFavorite ? false : true));
   };
   // const setBg = () => {
   //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -86,7 +90,7 @@ export function TeacherCard({ teacher }) {
             </Typography>
           </Stack>
 
-          <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
+          <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", height: "21px" }}>
             <Box style={{ display: "flex", gap: "12px", pt: "4px" }}>
               <Box sx={{ display: "flex", gap: "4px" }}>
                 <StarBorderPurple500OutlinedIcon
@@ -98,13 +102,44 @@ export function TeacherCard({ teacher }) {
                 <Typography variant="posterItem">{teacher.user.rating}</Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
-                <FavoriteBorderOutlinedIcon
+                <Button
+                  disableTouchRipple
+                  onClick={handleFavoriteAdd}
                   sx={{
-                    fontSize: "16px",
-                    color: (theme) => theme.palette.textColor.darkGrey,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "none",
+                    backgroundColor: "transparent",
+                    padding: 0,
+                    gap: "4px",
                   }}
-                />
-                <Typography variant="posterItem">{teacher.user.rating}</Typography>
+                >
+                  {!isFavorite && (
+                    <FavoriteBorderOutlinedIcon
+                      sx={{
+                        fontSize: "16px",
+                        color: (theme) => theme.palette.textColor.darkGrey,
+                      }}
+                    />
+                  )}
+                  {isFavorite && (
+                    <FavoriteIcon
+                      sx={{
+                        fontSize: "16px",
+                        fill: "#7ab02e",
+                      }}
+                    />
+                  )}
+                  <Typography
+                    variant="posterItem"
+                    sx={{
+                      color: "rgba(0, 0, 0, 0.87)",
+                    }}
+                  >
+                    {teacher.user.rating}
+                  </Typography>
+                </Button>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
                 <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
