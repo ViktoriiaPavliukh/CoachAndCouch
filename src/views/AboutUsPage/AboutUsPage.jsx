@@ -1,27 +1,130 @@
-import { Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import { useSelector, useDispatch } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+import { Link, useLocation } from "react-router-dom";
+import { Container, Typography, Stack, Button, Box } from "@mui/material";
 
 export function AboutUsPage() {
+  const intl = useIntl();
+  const [pathname, setPathname] = useState("");
+  const path = useLocation().pathname;
+  useEffect(() => {
+    setPathname(path);
+  }, [path]);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   return (
-    <Container
-      sx={{
-        height: "100vh",
-      }}
-    >
-      <h2>Дізнатись більше про нас</h2>
-      <p>
-        What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-        been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-        electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
-        Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus
-        PageMaker including versions of Lorem Ipsum. Why do we use it? It is a long established fact that a reader will
-        be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
-        that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here,
-        making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum
-        as their default model text, and a search for lorem ipsum will uncover many web sites still in their infancy.
-        Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and
-        the like).
-      </p>
+    <Container>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "45px",
+          paddingTop: "187px",
+        }}
+      >
+        <Typography variant="bigTitle">
+          {intl.formatMessage({ id: "header.aboutUs" })}
+        </Typography>
+        <Stack
+          sx={{
+            display: "flex",
+            gap: "58px",
+            flexDirection: "column",
+            alignSelf: "end",
+            maxWidth: "771px",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography
+              variant="text"
+              sx={{ paddingBottom: "9px", borderBottom: "3px solid #146817" }}
+            >
+              Coach&Couch{" "}
+            </Typography>
+            <Typography
+              variant="text"
+              sx={{
+                display: "flex",
+                alignSelf: "end",
+                textAlign: "right",
+                maxWidth: "413px",
+              }}
+            >
+              {intl.formatMessage({ id: "aboutSubtitle" })}
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText1" })}
+            </Typography>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText2" })}
+            </Typography>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText3" })}
+            </Typography>
+          </Box>
+          <Typography variant="textUppercase" sx={{ maxWidth: "473px" }}>
+            {intl.formatMessage({ id: "aboutUpper" })}
+          </Typography>
+          {!isLoggedIn && (
+            <Box>
+              <Button
+                component={Link}
+                to="/login"
+                sx={{
+                  px: "12px",
+                  transition: "color 0.3s",
+                  borderRadius: "6px",
+                  backgroundColor: (theme) =>
+                    pathname === "/login" ? theme.palette.primary.accent : null,
+                  "&:hover": {
+                    backgroundColor: (theme) => theme.palette.primary.accent,
+                    color: "white",
+                  },
+                }}
+              >
+                {" "}
+                <Typography>
+                  {intl.formatMessage({ id: "header.login" })}
+                </Typography>
+              </Button>
+              <Button
+                component={Link}
+                to="/registration"
+                sx={{
+                  px: "12px",
+                  transition: "color 0.3s",
+                  borderRadius: "6px",
+                  backgroundColor: (theme) =>
+                    pathname === "/registration"
+                      ? theme.palette.primary.accent
+                      : null,
+                  "&:hover": {
+                    backgroundColor: (theme) => theme.palette.primary.accent,
+                    color: "white",
+                  },
+                }}
+              >
+                {" "}
+                <Typography>
+                  {intl.formatMessage({ id: "header.registration" })}
+                </Typography>
+              </Button>
+            </Box>
+          )}
+        </Stack>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "45px",
+          paddingTop: "187px",
+        }}
+      ></Box>
     </Container>
   );
 }

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addFeedback, getUserById } from "./operations";
+import { addFeedback, getUserById, deleteUserAsUser } from "./operations";
 
 const userSlice = createSlice({
   name: "user",
@@ -10,6 +10,7 @@ const userSlice = createSlice({
     isLoggedIn: false,
     refreshToken: null,
     accessToken: null,
+    users: [],
   },
   extraReducers: (builder) => {
     builder
@@ -23,6 +24,16 @@ const userSlice = createSlice({
         state.feedbacks.push(action.payload);
         state.isLoading = false;
         state.error = null;
+      })
+      .addCase(deleteUserAsUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.users = state.users.map((el) => {
+          if (el.id === action.payload) {
+            return { ...el, isDeleted: !el.isDeleted };
+          }
+          return el;
+        });
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),

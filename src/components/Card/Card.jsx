@@ -1,3 +1,4 @@
+import { useIntl } from "react-intl";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
@@ -5,76 +6,22 @@ import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
-// import countryLogo from "@assets/templates/emojione-v1_flag-for-ukraine.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useParams } from "react-router-dom";
-
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useEffect } from "react";
 
-// lineheight 52px main title height
-
-// const languages = [
-//   { id: "1", label: "Англійська" },
-//   { id: "2", label: "Іспанська" },
-//   { id: "3", label: "Українська" },
-// ];
-// const specialization = [
-//   { id: "1", label: "Розмовна мова" },
-//   { id: "2", label: "Вивчення азів" },
-//   { id: "3", label: "Для дітей" },
-//   { id: "4", label: "Підготовка для іспитів" },
-//   { id: "5", label: "Для бізнесу" },
-// ];
-// const hobbies = [
-//   { id: "1", label: "Спорт" },
-//   { id: "2", label: "Кіно" },
-//   { id: "3", label: "Творчість" },
-//   { id: "4", label: "Кулінарія" },
-//   { id: "5", label: "Тварини" },
-//   { id: "6", label: "Машини" },
-// ];
-
-// const reviews = [
-//   {
-//     id: "1",
-//     name: "Гліб Карпов",
-//     text: "Найкращий викладач. Дуже сподобалось навчання, готуємося до іспитів разом",
-//     image: userImage,
-//   },
-//   {
-//     id: "2",
-//     name: "Андрій Іващук",
-//     text: "Цікаве спілкування, працюємо над якісною вимовою.  Хочу продовжити навчання саме з чим вчителем",
-//     image: userImage,
-//   },
-//   {
-//     id: "3",
-//     name: "Максим Остапенко ",
-//     text: "Отримав корисні поради щодо вивчення української мови. Гарний вчитель. Рекомендую",
-//     image: userImage,
-//   },
-//   {
-//     id: "4",
-//     name: "Аліна Карпенко",
-//     text: "Дуже сподобався урок. Все чітко та якісно. Приємний у спілкуванні викладач. Готуємось разом для іспитів",
-//     image: userImage,
-//   },
-// ];
-
 export function Card() {
+  const intl = useIntl();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAdverts());
   }, [dispatch]);
 
   const adverts = useSelector(advertsSelector);
-  // console.log(adverts);
   const teacherId = useParams();
-  // console.log(teacherId);
   const teacher = adverts.find((advert) => advert.id === +teacherId.id);
-  // console.log(teacher);
 
   return (
     Boolean(teacher) && (
@@ -113,18 +60,22 @@ export function Card() {
                 p: 0,
               }}
             >
-              <Typography variant="posterName">{teacher.user.firstName + " " + teacher.user.lastName}</Typography>
-              {/* <img src={countryLogo} alt="country flag" style={{ width: "52px", height: "36px", marginLeft: "4px" }} /> */}
-
+              <Typography variant="posterName">
+                {teacher.user.firstName + " " + teacher.user.lastName}
+              </Typography>
               <img
                 src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
                 srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
                 width="40"
                 height="36"
                 alt="ua"
-                style={{ width: "52px", height: "36px", marginLeft: "4px", border: "0.2px solid rgba(0, 0, 0, 0.14)" }}
+                style={{
+                  width: "52px",
+                  height: "36px",
+                  marginLeft: "4px",
+                  border: "0.2px solid rgba(0, 0, 0, 0.14)",
+                }}
               />
-
               <MessageBtn sx={{ display: { xs: "none", lg: "block" } }} />
               <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} />
             </Box>
@@ -139,38 +90,56 @@ export function Card() {
                   marginRight: "12px",
                 }}
               ></span>
-              <Typography color="grey.700" variant="posterItem" sx={{ mr: 5.5 }}>
-                Онлайн
+              <Typography
+                color="grey.700"
+                variant="posterItem"
+                sx={{ mr: 5.5 }}
+              >
+                {intl.formatMessage({ id: "online" })}
               </Typography>
-              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
-                Рейтинг:
+              <Typography
+                variant="posterItem"
+                color="grey.700"
+                sx={{ mr: 0.5 }}
+              >
+                {intl.formatMessage({ id: "rate" })}:
               </Typography>
               <Typography variant="posterItem" sx={{ mr: 3.5 }}>
                 {teacher.user.rating}
               </Typography>
-              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
-                Уроки:
+              <Typography
+                variant="posterItem"
+                color="grey.700"
+                sx={{ mr: 0.5 }}
+              >
+                {intl.formatMessage({ id: "lessons" })}:
               </Typography>
               <Typography variant="posterItem">156</Typography>
             </Box>
             <Typography variant="posterCategory" color="grey.600">
-              Мови викладання
+              {intl.formatMessage({ id: "languagesTeaching" })}
             </Typography>
             <CategoryList
-              elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)}
+              elements={
+                teacher.teachingLanguages &&
+                teacher.teachingLanguages.map((el) => el.languageUa)
+              }
             />
             <Typography variant="posterCategory" color="grey.600">
-              Спеціалізація
+              {intl.formatMessage({ id: "specialization" })}
             </Typography>
             <CategoryList
-              elements={teacher.user.specializations && teacher.user.specializations.map((el) => el.specializationUa)}
+              elements={
+                teacher.user.specializations &&
+                teacher.user.specializations.map((el) => el.specializationUa)
+              }
             />
             <Typography variant="posterCategory" color="grey.600">
-              Країна
+              {intl.formatMessage({ id: "country" })}
             </Typography>
             <CategoryList elements={teacher.user.country?.alpha2.split(" ")} />
             <Typography variant="posterCategory" color="grey.600">
-              Платформи
+              {intl.formatMessage({ id: "platforms" })}
             </Typography>
           </Box>
         </Box>
@@ -185,10 +154,17 @@ export function Card() {
           <LikeBtn />
         </Box>
         <Box mb="40px">
-          <Typography variant="posterTitle" component="p" color="grey.600" mb="36px">
-            Про мене
+          <Typography
+            variant="posterTitle"
+            component="p"
+            color="grey.600"
+            mb="36px"
+          >
+            {intl.formatMessage({ id: "aboutMe" })}
           </Typography>
-          <Typography variant="posterDescription">{teacher.description}</Typography>
+          <Typography variant="posterDescription">
+            {teacher.description}
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -206,9 +182,13 @@ export function Card() {
             }}
           >
             <Typography variant="posterTitle" color="grey.600" mb="36px">
-              Відгуки
+              {intl.formatMessage({ id: "feedback" })}
             </Typography>
-            <ReviewList elements={teacher.user.feedbacksToMe} id={teacher.user.id} userImage={userImage} />
+            <ReviewList
+              elements={teacher.user.feedbacksToMe}
+              id={teacher.user.id}
+              userImage={userImage}
+            />
           </Box>
           <Box
             sx={{
@@ -227,10 +207,18 @@ export function Card() {
                 mb: 8,
               }}
             >
-              <Button type="button" variant="contained" sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}>
-                <Typography variant="posterButton">Пробний урок</Typography>
+              <Button
+                type="button"
+                variant="contained"
+                sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
+              >
+                <Typography variant="posterButton">
+                  {intl.formatMessage({ id: "trialLessonBtn" })}
+                </Typography>
               </Button>
-              <Typography variant="posterPrice">{Math.ceil(teacher.price)} $</Typography>
+              <Typography variant="posterPrice">
+                {Math.ceil(teacher.price)} $
+              </Typography>
             </Box>
           </Box>
         </Box>

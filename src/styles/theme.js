@@ -6,6 +6,7 @@ const createThemeTemplate = (themeColor) => ({
       styleOverrides: {
         body: {
           height: "100vh",
+          fontFamily: "Poppins, sans-serif",
         },
       },
     },
@@ -77,13 +78,16 @@ const createThemeTemplate = (themeColor) => ({
           },
         },
   typography: {
+    fontFamily: "Poppins, sans-serif",
     fontHeading: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "50px",
       fontWeight: "900",
       lineHeight: "60px",
       fontStyle: "normal",
     },
     fontTitle: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "40px",
       fontWeight: "900",
       lineHeight: "28px",
@@ -91,6 +95,7 @@ const createThemeTemplate = (themeColor) => ({
       color: "#5A5E67",
     },
     fontLink: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "22px",
       fontWeight: "300",
       lineHeight: "24px",
@@ -98,6 +103,7 @@ const createThemeTemplate = (themeColor) => ({
       color: "#384C5E",
     },
     fontHeader: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "16px",
       lineHeight: "24px",
       fontStyle: "normal",
@@ -105,12 +111,14 @@ const createThemeTemplate = (themeColor) => ({
       fontWeight: "500",
     },
     posterName: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "48px",
       fontWeight: "900",
       fontStyle: "normal",
       lineHeight: "0.5833",
     },
     posterCategory: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "16px",
       fontStyle: "normal",
       fontWeight: "700",
@@ -118,48 +126,75 @@ const createThemeTemplate = (themeColor) => ({
       textTransform: "uppercase",
     },
     posterItem: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "12px",
       fontStyle: "normal",
       fontWeight: "400",
       lineHeight: "calc(16 / 12)",
     },
     posterTitle: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "24px",
       fontWeight: "700",
       lineHeight: "1",
       textTransform: "uppercase",
     },
     posterBlack: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "30px",
       fontWeight: "600",
       lineHeight: "32px",
       letterSpacing: "0.6px",
     },
     posterSubtitle: {
+      fontFamily: "Poppins, sans-serif",
       pt: "20px",
       fontSize: "18px",
       fontWeight: 400,
       lineHeight: "23.4px",
     },
     posterDescription: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "16px",
       lineHeight: "calc(24 / 16)",
     },
     posterStatus: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "8px",
       lineHeight: "16px",
       fontWeight: "400",
     },
     posterButton: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "14px",
       lineHeight: "calc(16 / 14)",
       fontWeight: "700",
       textTransform: "uppercase",
     },
     posterPrice: {
+      fontFamily: "Poppins, sans-serif",
       fontSize: "36px",
       fontWeight: "700",
       lineHeight: "calc(28 /36)",
+    },
+    bigTitle: {
+      fontFamily: "Poppins, sans-serif",
+      fontSize: "98px",
+      fontWeight: "500",
+      lineHeight: "98px",
+    },
+    text: {
+      fontFamily: "Poppins, sans-serif",
+      fontSize: "18px",
+      fontWeight: 500,
+      lineHeight: "23.4px",
+    },
+    textUppercase: {
+      fontFamily: "Poppins, sans-serif",
+      textTransform: "uppercase",
+      fontSize: "18px",
+      fontWeight: 500,
+      lineHeight: "23.4px",
     },
   },
 });
