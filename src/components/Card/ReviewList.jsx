@@ -76,9 +76,28 @@ export function ReviewList({ elements, id, userImage }) {
                 style={{ width: "85px", height: "85px", borderRadius: "50%" }}
               />
               <Box>
-                <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
-                  {e.fromUser.firstName + " " + e.fromUser.lastName}
-                </Typography>
+                <Box
+                  style={{
+                    display: "flex",
+                    gap: "10px",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
+                    {e.fromUser.firstName + " " + e.fromUser.lastName}
+                  </Typography>
+                  <span
+                    style={{
+                      fontSize: "14px",
+                      lineHeight: "calc(20 / 14)",
+                      color: "grey.600",
+                      marginBottom: "8px",
+                    }}
+                  >
+                    ({e.mark})
+                  </span>
+                </Box>
+
                 <Typography
                   sx={{
                     fontSize: "14px",
