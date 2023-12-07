@@ -24,8 +24,7 @@ const messages = {
     list3: "Professional teachers and native speakers",
 
     //about
-    aboutSubtitle:
-      "Our platform is here to be your reliable companion on the journey to mastering a new language.",
+    aboutSubtitle: "Our platform is here to be your reliable companion on the journey to mastering a new language.",
     aboutText1:
       "We offer a wide range of languages for learning, including popular and less common ones. You can choose the one that interests you the most. Our lessons are designed with modern teaching methods in mind, incorporating audio and video materials, interactive exercises, and the opportunity for free conversation.",
     aboutText2:
@@ -63,8 +62,7 @@ const messages = {
     "signup.privacyLink": "Privacy Policy",
     "signup.alreadyHaveAccount": "Already have an account?",
     "signup.signIn": "Sign In",
-    "footer.text":
-      "Learn your favorite language through individual lessons at any convenient place and time.",
+    "footer.text": "Learn your favorite language through individual lessons at any convenient place and time.",
     "footer.social": "Coach&Couch in social media:",
     "footer.confidential": "Privacy Policy",
     "footer.conditions": "Terms and Conditions",
@@ -106,6 +104,7 @@ const messages = {
     sex: "Sex",
     male: "Male",
     female: "Female",
+    other: "Other",
     uploadPhoto: "Upload your photo",
     addPhoto: "+ Add photo",
 
@@ -146,8 +145,7 @@ const messages = {
     createAccount: "Створити аккаунт",
 
     //about
-    aboutSubtitle:
-      "Наша платформа - це ваш надійний партнер у подорожі до опанування нової мови.",
+    aboutSubtitle: "Наша платформа - це ваш надійний партнер у подорожі до опанування нової мови.",
     aboutText1:
       "Ми пропонуємо широкий вибір мов для вивчення, включаючи популярні та менш поширені мови. Ви можете вибрати ту, яка вас цікавить найбільше. Наші уроки розроблені з урахуванням сучасних методів навчання, і вони включають в себе аудіо та відео матеріали, інтерактивні вправи та можливість вільного спілкування.",
     aboutText2:
@@ -178,8 +176,7 @@ const messages = {
     "personalAccount.settings": "Налаштування",
     "personalAccount.logout": "Вихід",
     rate: "Рейтинг",
-    "footer.text":
-      "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
+    "footer.text": "Вивчайте свою улюблену мову на індивідуальних уроках в будь-якому зручному місці та часі.",
     "footer.social": "Coach&Couch в соцмережах:",
     "footer.confidential": "Політика конфіденційності",
     "footer.conditions": "Умови використання",
@@ -221,6 +218,7 @@ const messages = {
     sex: "Стать",
     male: "Чоловіча",
     female: "Жіноча",
+    other: "Інша",
     uploadPhoto: "Завантажте свою фотографію",
     addPhoto: "+ Додати фото",
 
