@@ -3,30 +3,43 @@ import {
   // Container,
   Box,
   Button,
-  Grid,
+  // Grid,
   Typography,
   List,
   ListItem,
   ListItemText,
   ListItemIcon,
-  Stack,
-  Pagination,
+  // Stack,
+  // Pagination,
 } from "@mui/material";
 import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material";
 import { DescriptionImage } from "../../components/Teachers/DescriptionImage";
-import { Filter } from "../../components/Teachers/Filter";
-import { TeacherCard } from "../../components/Teachers/TeacherCard";
-import { priceOptions } from "@/defaults";
-import usePagination from "../../hooks/usePagination";
-import { useEffect, useState } from "react";
+// import { Filter } from "../../components/Teachers/Filter";
+// import { TeacherCard } from "../../components/Teachers/TeacherCard";
+// import { priceOptions } from "@/defaults";
+// import usePagination from "../../hooks/usePagination";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector, selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
+import {
+  advertsSelector,
+  selectAdvertsIsLoading,
+} from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
-import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
-import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+// import {
+//   countriesSelector,
+//   languagesSelector,
+//   specializationsSelector,
+// } from "@/redux/admin/adminSelector";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
 
 import Loader from "../../components/Loader/Loader";
+import { FilterTeacherPanel } from "@/components/Teachers/FilterPanel";
+import { TeacherListBox } from "@/components/Teachers/TeacherList";
 
 export function TeachersPage() {
   const intl = useIntl();
@@ -45,17 +58,17 @@ export function TeachersPage() {
   const adverts = useSelector(advertsSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
   console.log(adverts);
-  const languages = useSelector(languagesSelector);
-  const countries = useSelector(countriesSelector);
-  const specializations = useSelector(specializationsSelector);
-  let [page, setPage] = useState(1);
-  const PER_PAGE = 9;
-  const count = Math.ceil(adverts.length / PER_PAGE);
-  const items = usePagination(adverts, PER_PAGE);
-  const handleChange = (e, p) => {
-    setPage(p);
-    items.jump(p);
-  };
+  // const languages = useSelector(languagesSelector);
+  // const countries = useSelector(countriesSelector);
+  // const specializations = useSelector(specializationsSelector);
+  // let [page, setPage] = useState(1);
+  // const PER_PAGE = 9;
+  // const count = Math.ceil(adverts.length / PER_PAGE);
+  // const items = usePagination(adverts, PER_PAGE);
+  // const handleChange = (e, p) => {
+  //   setPage(p);
+  //   items.jump(p);
+  // };
 
   const listItemStyles = {
     color: (theme) => theme.palette.textColor.grey,
@@ -125,21 +138,36 @@ export function TeachersPage() {
             >
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
                 </ListItemIcon>
-                <ListItemText primary={intl.formatMessage({ id: "list1" })} sx={listItemStyles} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list1" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
                 </ListItemIcon>
-                <ListItemText primary={intl.formatMessage({ id: "list2" })} sx={listItemStyles} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list2" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
                 </ListItemIcon>
-                <ListItemText primary={intl.formatMessage({ id: "list3" })} sx={listItemStyles} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list3" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
             </List>
             <Button
@@ -153,11 +181,15 @@ export function TeachersPage() {
                 transition: "background-color 0.3s",
                 backgroundColor: (theme) => theme.palette.buttonColor.main,
                 "&:hover": {
-                  backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.darkHover,
                 },
               }}
             >
-              <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
+              <Typography
+                variant="posterButton"
+                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+              >
                 {intl.formatMessage({ id: "learnMore" })}
               </Typography>
             </Button>
@@ -175,7 +207,8 @@ export function TeachersPage() {
           <Loader />
         ) : (
           <>
-            <Stack
+            <FilterTeacherPanel />
+            {/* <Stack
               direction="row"
               sx={{
                 mb: { lg: "43px", md: "58px", xs: "36px" },
@@ -200,8 +233,11 @@ export function TeachersPage() {
                 typeoption="specializationUa"
                 label={intl.formatMessage({ id: "specialization" })}
               />
-            </Stack>
-            <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
+            </Stack> */}
+            <TeacherListBox />
+            {/* <Box
+              sx={{ display: "flex", justifyContent: "center", mb: "115px" }}
+            >
               <Grid
                 container
                 sx={{
@@ -229,7 +265,7 @@ export function TeachersPage() {
               variant="outlined"
               shape="rounded"
               onChange={handleChange}
-            />
+            /> */}
           </>
         )}
       </Box>
