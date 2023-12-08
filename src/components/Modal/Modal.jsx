@@ -1,14 +1,26 @@
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import { TrialLessonWrapper } from "./TrialLessonWrapper";
+import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
 
-export const Modal = ({ onBackdropClose, children }) => {
+export const Modal = ({ onBackdropClose, contentType, children }) => {
   document.body.classList.add("openModal");
   const onBackdrop = (e) => {
     if (e.target === e.currentTarget) {
       onBackdropClose();
       document.body.classList.remove("openModal");
+    }
+  };
+
+  const renderContent = () => {
+    switch (contentType) {
+      case "sendMessage":
+        return <SendMessageWrapper />;
+      case "trialLesson":
+        return <TrialLessonWrapper />;
+      default:
+        return null;
     }
   };
   return createPortal(
@@ -25,7 +37,7 @@ export const Modal = ({ onBackdropClose, children }) => {
         left: 0,
       }}
     >
-      <TrialLessonWrapper>{children}</TrialLessonWrapper>
+      {renderContent()}
     </Box>,
 
     document.querySelector("#modal-root")
