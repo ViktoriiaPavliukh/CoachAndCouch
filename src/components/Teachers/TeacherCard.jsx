@@ -1,23 +1,36 @@
 import { PropTypes } from "prop-types";
-import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CardActionArea,
+  CardActions,
+  Stack,
+} from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
-// import { languages } from "@/defaults";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Modal } from "../Modal/Modal";
 
 export function TeacherCard({ teacher }) {
-  const [showModal, setShowModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
-  const onShowModalClick = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalContentType, setModalContentType] = useState(null);
+
+  const onShowModalClick = (contentType) => {
+    setModalContentType(contentType);
     setShowModal(true);
   };
+
   const onBackdropClose = () => {
     setShowModal(false);
+    setModalContentType(null);
   };
   console.log(teacher);
   const navigate = useNavigate();
@@ -63,8 +76,23 @@ export function TeacherCard({ teacher }) {
           />
         </CardActionArea>
         <CardContent>
-          <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", gap: "24px", mb: "8px" }}>
-            <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: "space-between",
+              alignItems: "center",
+              gap: "24px",
+              mb: "8px",
+            }}
+          >
+            <Stack
+              direction="row"
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
               <Typography
                 // gutterBottom
                 // variant="posterDescription"
@@ -76,21 +104,44 @@ export function TeacherCard({ teacher }) {
 
             <Typography>ID:&nbsp;{teacher.id}</Typography>
           </Stack>
-          <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
+          <Typography
+            variant="posterItem"
+            sx={{ color: (theme) => theme.palette.textColor.grey }}
+          >
             Мови викладання:
           </Typography>
           {Boolean(teacher.teachingLanguages.length) && (
             <CategoryList
-              elements={teacher.teachingLanguages && teacher.teachingLanguages.map((el) => el.languageUa)}
+              elements={
+                teacher.teachingLanguages &&
+                teacher.teachingLanguages.map((el) => el.languageUa)
+              }
             />
           )}
-          <Stack style={{ display: "flex", justifyContent: "flex-start", flexDirection: "row", marginBottom: "20px" }}>
-            <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
+          <Stack
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: "row",
+              marginBottom: "20px",
+            }}
+          >
+            <Typography
+              variant="posterItem"
+              sx={{ color: (theme) => theme.palette.textColor.grey }}
+            >
               Країна: {teacher.user.country?.alpha2}
             </Typography>
           </Stack>
 
-          <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center", height: "21px" }}>
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: "space-between",
+              alignItems: "center",
+              height: "21px",
+            }}
+          >
             <Box style={{ display: "flex", gap: "12px", pt: "4px" }}>
               <Box sx={{ display: "flex", gap: "4px" }}>
                 <StarBorderPurple500OutlinedIcon
@@ -99,7 +150,9 @@ export function TeacherCard({ teacher }) {
                     color: (theme) => theme.palette.textColor.darkGrey,
                   }}
                 />
-                <Typography variant="posterItem">{teacher.user.rating}</Typography>
+                <Typography variant="posterItem">
+                  {teacher.user.rating}
+                </Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
                 <Button
@@ -142,14 +195,21 @@ export function TeacherCard({ teacher }) {
                 </Button>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
-                <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
+                <Typography
+                  variant="posterItem"
+                  sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
+                >
                   Уроки:
                 </Typography>
                 <Typography variant="posterItem">156</Typography>
               </Box>
             </Box>
             <Box>
-              <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
+              <Typography
+                color="grey.700"
+                variant="posterStatus"
+                sx={{ display: "inline-block" }}
+              >
                 <Box
                   component="span"
                   sx={{
@@ -168,7 +228,7 @@ export function TeacherCard({ teacher }) {
         </CardContent>
         <CardActions>
           <Button
-            onClick={onShowModalClick}
+            onClick={() => onShowModalClick("trialLesson")}
             variant="contained"
             sx={{
               width: "100vw",
@@ -191,9 +251,10 @@ export function TeacherCard({ teacher }) {
         </CardActions>
       </Card>
       {showModal && (
-        <Modal onBackdropClose={onBackdropClose}>
-          <div>Модалка</div>
-        </Modal>
+        <Modal
+          onBackdropClose={onBackdropClose}
+          contentType={modalContentType}
+        />
       )}
     </>
   );
