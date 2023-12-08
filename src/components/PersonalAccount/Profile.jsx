@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export const Enquiry = () => {
+export const Profile = () => {
   const handleUserProfileSubmit = (e) => {
     e.preventDefault();
     console.log(e.target);
@@ -43,19 +43,36 @@ export const Enquiry = () => {
       <Typography>Profile</Typography>
       <form onSubmit={handleUserProfileSubmit}>
         <label>
-          Name <input type="text" name="firstName" defaultValue={user?.firstName} />
+          Name{" "}
+          <input type="text" name="firstName" defaultValue={user?.firstName} />
         </label>
         <br />
         <label>
-          Surename <input type="text" name="lastName" defaultValue={user?.lastName || ""} />
+          Surename{" "}
+          <input
+            type="text"
+            name="lastName"
+            defaultValue={user?.lastName || ""}
+          />
         </label>
         <br />
         <label>
-          Email <input type="email" name="email" disabled defaultValue={user?.email} />
+          Email{" "}
+          <input
+            type="email"
+            name="email"
+            disabled
+            defaultValue={user?.email}
+          />
         </label>
         <br />
         <label>
-          Country <input type="text" name="country" defaultValue={user?.country?.alpha2} />
+          Country{" "}
+          <input
+            type="text"
+            name="country"
+            defaultValue={user?.country?.alpha2}
+          />
         </label>
         <br />
         <label>
@@ -64,7 +81,11 @@ export const Enquiry = () => {
             type="text"
             name="registeredAt"
             disabled
-            defaultValue={user.registeredAt ? format(new Date(user.registeredAt), "dd.mm.yyyy") : ""}
+            defaultValue={
+              user.registeredAt
+                ? format(new Date(user.registeredAt), "dd.mm.yyyy")
+                : ""
+            }
           />
         </label>
         <br />
@@ -73,7 +94,9 @@ export const Enquiry = () => {
           <input
             type="text"
             name="birthday"
-            defaultValue={user.birthday ? format(new Date(user.birthday), "dd.mm.yyyy") : ""}
+            defaultValue={
+              user.birthday ? format(new Date(user.birthday), "dd.mm.yyyy") : ""
+            }
           />
         </label>
         <br />

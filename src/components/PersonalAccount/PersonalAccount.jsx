@@ -1,14 +1,20 @@
 import "react-calendar/dist/Calendar.css";
 // import { enUS } from "date-fns/locale";
 import { useIntl } from "react-intl";
-import { Container, Box, Typography, FormControl, TextField } from "@mui/material";
+import {
+  Container,
+  Box,
+  Typography,
+  FormControl,
+  TextField,
+} from "@mui/material";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 // import { PersonalImage } from "./PersonalImage";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
 import homeIcon from "../../assets/icons/interface-dashboard-layout-circle--app-application-dashboard-home-layout-circle.svg";
 import mouse from "../../assets/icons/computer-mouse--computer-device-electronics-mouse.svg";
-import notepad from "../../assets/icons/interface-content-note-pad-text--content-notes-book-notepad-notebook.svg";
+// import notepad from "../../assets/icons/interface-content-note-pad-text--content-notes-book-notepad-notebook.svg";
 import checklist from "../../assets/icons/interface-file-clipboard-check--checkmark-edit-task-edition-checklist-check-success-clipboard-form.svg";
 import settings from "../../assets/icons/interface-setting-cog--work-loading-cog-gear-settings-machine.svg";
 // import envelope from "../../assets/icons/mail-send-envelope--envelope-email-message-unopened-sealed-close.svg";
@@ -33,6 +39,7 @@ export function PersonalAccount() {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const intl = useIntl();
+  console.log(intl);
   // console.log(user);
 
   const handleLogout = () => {
@@ -143,7 +150,11 @@ export function PersonalAccount() {
         </FormControl>
 
         {/* <PersonalImage advertImagePath={user.advert?.imagePath} /> */}
-        <Typography gutterBottom variant="fontTitle" sx={{ display: "flex", paddingTop: "32px" }}>
+        <Typography
+          gutterBottom
+          variant="fontTitle"
+          sx={{ display: "flex", paddingTop: "32px" }}
+        >
           {user.firstName} {user.lastName}
         </Typography>
         <Box
@@ -155,10 +166,22 @@ export function PersonalAccount() {
             paddingLeft: "16px",
           }}
         >
-          <Box component={Link} to="main" sx={linkStyles}>
-            <img src={homeIcon} alt="Home Icon" />
+          <Box component={Link} to="teachers" sx={linkStyles}>
+            <img src={mouse} alt="teachers" />
             <Typography variant="fontLink" noWrap>
-              {intl.formatMessage({ id: "dashboard" })}
+              {intl.formatMessage({ id: "personalAccount.teachers" })}
+            </Typography>
+          </Box>
+          <Box component={Link} to="advertisements" sx={linkStyles}>
+            <img src={mouse} alt="advertisements" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "personalAccount.advertisements" })}
+            </Typography>
+          </Box>
+          <Box component={Link} to="profile" sx={linkStyles}>
+            <img src={checklist} alt="profile" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "personalAccount.profile" })}
             </Typography>
           </Box>
           <Box component={Link} to="lessons" sx={linkStyles}>
@@ -167,18 +190,24 @@ export function PersonalAccount() {
               {intl.formatMessage({ id: "personalAccount.lessons" })}
             </Typography>
           </Box>
-          <Box component={Link} to="enquiry" sx={linkStyles}>
-            <img src={checklist} alt="enquiry" />
+          <Box component={Link} to="likes" sx={linkStyles}>
+            <img src={mouse} alt="likes" />
             <Typography variant="fontLink" noWrap>
-              {intl.formatMessage({ id: "personalAccount.profile" })}
+              {intl.formatMessage({ id: "personalAccount.likes" })}
             </Typography>
           </Box>
-          <Box component={Link} to="schedule" sx={linkStyles}>
+          <Box component={Link} to="feedback" sx={linkStyles}>
+            <img src={mouse} alt="feeddback" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "personalAccount.feedback" })}
+            </Typography>
+          </Box>
+          {/* <Box component={Link} to="schedule" sx={linkStyles}>
             <img src={notepad} alt="schedule" />
             <Typography variant="fontLink" noWrap>
               {intl.formatMessage({ id: "personalAccount.schedule" })}
             </Typography>
-          </Box>
+          </Box> */}
           {/* <Box component={Link} to="messages" sx={linkStyles}>
             <img src={envelope} alt="messages" />
             <Typography variant="fontLink" noWrap>
@@ -189,6 +218,12 @@ export function PersonalAccount() {
             <img src={settings} alt="settings" />
             <Typography variant="fontLink" noWrap>
               {intl.formatMessage({ id: "personalAccount.settings" })}
+            </Typography>
+          </Box>
+          <Box component={Link} to="main" sx={linkStyles}>
+            <img src={homeIcon} alt="Home Icon" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "dashboard" })}
             </Typography>
           </Box>
           <Box component={Link} sx={linkStyles} onClick={handleLogout}>
