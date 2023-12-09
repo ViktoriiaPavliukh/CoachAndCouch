@@ -1,3 +1,4 @@
+import { useIntl } from "react-intl";
 import { PropTypes } from "prop-types";
 import {
   Box,
@@ -22,6 +23,7 @@ export function TeacherCard({ teacher }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+  const intl = useIntl();
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -108,7 +110,7 @@ export function TeacherCard({ teacher }) {
             variant="posterItem"
             sx={{ color: (theme) => theme.palette.textColor.grey }}
           >
-            Мови викладання:
+            {intl.formatMessage({ id: "languagesTeaching" })}:
           </Typography>
           {Boolean(teacher.teachingLanguages.length) && (
             <CategoryList
@@ -130,7 +132,8 @@ export function TeacherCard({ teacher }) {
               variant="posterItem"
               sx={{ color: (theme) => theme.palette.textColor.grey }}
             >
-              Країна: {teacher.user.country?.alpha2}
+              {intl.formatMessage({ id: "country" })}:{" "}
+              {teacher.user.country?.alpha2}
             </Typography>
           </Stack>
 
@@ -199,7 +202,7 @@ export function TeacherCard({ teacher }) {
                   variant="posterItem"
                   sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
                 >
-                  Уроки:
+                  {intl.formatMessage({ id: "lessons" })}:
                 </Typography>
                 <Typography variant="posterItem">156</Typography>
               </Box>
@@ -221,7 +224,7 @@ export function TeacherCard({ teacher }) {
                     mr: "4px",
                   }}
                 />
-                Онлайн
+                {intl.formatMessage({ id: "online" })}
               </Typography>
             </Box>
           </Stack>
@@ -246,7 +249,7 @@ export function TeacherCard({ teacher }) {
               },
             }}
           >
-            ПРОБНИЙ УРОК
+            {intl.formatMessage({ id: "trialLessonBtn" })}
           </Button>
         </CardActions>
       </Card>
