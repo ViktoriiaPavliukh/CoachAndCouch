@@ -3,18 +3,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { deleteUserAsUser } from "../../redux/user/operations";
-import "react-calendar/dist/Calendar.css";
+// import "react-calendar/dist/Calendar.css";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
 // import { enUS } from "date-fns/locale";
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  Avatar,
-} from "@mui/material";
+import { Box, Typography, Button, Card, CardContent, Avatar } from "@mui/material";
 import { green } from "@mui/material/colors";
 import Time from "./Time";
 import Calendar from "react-calendar";
@@ -60,17 +53,12 @@ export const MainPage = () => {
           <Avatar sx={{ bgcolor: green[500] }} aria-label="rate"></Avatar>
           <Box>
             <Typography>{intl.formatMessage({ id: "rate" })}</Typography>
-            <Typography>{user.rating}</Typography>
-            <Typography> Молодець! Так тримати</Typography>
+            <Typography>{user.rating}/5</Typography>
           </Box>
         </Card>
       </Box>
       <Box>
-        <Typography
-          variant="h5"
-          noWrap
-          sx={{ paddingTop: "32px", mb: "16px", textTransform: "uppercase" }}
-        >
+        <Typography variant="h5" noWrap sx={{ paddingTop: "32px", mb: "16px", textTransform: "uppercase" }}>
           {intl.formatMessage({ id: "personalAccount.schedule" })}
         </Typography>
         <Box sx={{ display: "flex", flexDirection: "row", gap: "40px" }}>
@@ -112,7 +100,7 @@ export const MainPage = () => {
               onChange={setDate}
               value={date}
               onClickDay={() => setShowTime(true)}
-              locale="en-US"
+              locale={("en-US", { week: { dow: 1 } })}
             />
           </Box>
         </Box>
