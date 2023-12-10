@@ -1,4 +1,4 @@
-export const TrialLessonWrapper = () => {
+export const SendMessageWrapper = () => {
   return (
     <div
       style={{
@@ -14,7 +14,7 @@ export const TrialLessonWrapper = () => {
         alignItems: "center",
       }}
     >
-      Hello! I am your modal window for trial lesson.
+      Hello! I am your modal window to send message.
     </div>
   );
 };
