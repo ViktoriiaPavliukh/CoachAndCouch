@@ -22,8 +22,8 @@ import PageError from "./views/page404/PageError";
 import {
   MainPage,
   Lessons,
-  // Schedule,
-  // Messages,
+  Schedule,
+  Messages,
   Settings,
   Profile,
   Teachers,
@@ -89,8 +89,8 @@ export default function App() {
             <Route path="likes" element={<LikesPages />} />
             <Route path="feedback" element={<Feedback />} />
             <Route path="main" element={<MainPage />} />
-            {/* <Route path="schedule" element={<Schedule />} />
-            <Route path="messages" element={<Messages />} /> */}
+            <Route path="schedule" element={<Schedule />} />
+            <Route path="messages" element={<Messages />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Route>

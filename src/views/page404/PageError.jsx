@@ -10,7 +10,7 @@ export default function PageError() {
   const intl = useIntl();
   const handleClick = (e) => {
     e.preventDefault();
-    navigate(`/home`);
+    navigate(`/`);
   };
   return (
     <Box
