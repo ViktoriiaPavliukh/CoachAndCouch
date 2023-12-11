@@ -4,7 +4,7 @@ import { TrialLessonWrapper } from "./TrialLessonWrapper";
 import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
 
-export const Modal = ({ onBackdropClose, contentType, children }) => {
+export const Modal = ({ onBackdropClose, contentType }) => {
   document.body.classList.add("openModal");
   const onBackdrop = (e) => {
     if (e.target === e.currentTarget) {

@@ -1,9 +1,5 @@
 import { priceOptions } from "@/defaults";
-import {
-  countriesSelector,
-  languagesSelector,
-  specializationsSelector,
-} from "@/redux/admin/adminSelector";
+import { languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 // import {
 //   getCountries,
 //   getLanguages,
@@ -16,19 +12,25 @@ import { Stack } from "@mui/material";
 // import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+// import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+// import { useEffect } from "react";
+import countries from "../../defaults/countries/countries.json";
 
 export function FilterTeacherPanel() {
-  //   const dispatch = useDispatch();
-  //   useEffect(() => {
-  // dispatch(getAdverts());
-  //     dispatch(getLanguages());
-  //     dispatch(getSpecializations());
-  //     dispatch(getCountries());
-  //   }, [dispatch]);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(getAdverts());
+  //   dispatch(getLanguages());
+  //   dispatch(getSpecializations());
+  //   dispatch(getCountries());
+  // }, [dispatch]);
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
-  const countries = useSelector(countriesSelector);
+  // const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
+  const en = useSelector(selectCurrentLanguage);
+  console.log(en);
   return (
     <Stack
       direction="row"
@@ -49,23 +51,19 @@ export function FilterTeacherPanel() {
     >
       <Filter
         options={languages}
-        typeoption="languageUa"
+        typeoption={en == "en" ? "languageEn" : "languageUa"}
         keyfield="id"
         label={intl.formatMessage({ id: "language" })}
       />
       <Filter
         options={countries}
-        typeoption="alpha2"
+        typeoption={en == "en" ? "nameEng" : "nameShort"}
         label={intl.formatMessage({ id: "country" })}
       />
-      <Filter
-        options={priceOptions}
-        typeoption="title"
-        label={intl.formatMessage({ id: "price" })}
-      />
+      <Filter options={priceOptions} typeoption="title" label={intl.formatMessage({ id: "price" })} />
       <Filter
         options={specializations}
-        typeoption="specializationUa"
+        typeoption={en == "en" ? "specializationEn" : "specializationUa"}
         label={intl.formatMessage({ id: "specialization" })}
       />
     </Stack>
