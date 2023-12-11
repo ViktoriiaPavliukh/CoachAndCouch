@@ -1,15 +1,6 @@
 import { useIntl } from "react-intl";
 import { PropTypes } from "prop-types";
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  CardActionArea,
-  CardActions,
-  Stack,
-} from "@mui/material/";
+import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -18,12 +9,17 @@ import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Modal } from "../Modal/Modal";
+import countries from "../../defaults/countries/countries.json";
+import { useSelector } from "react-redux";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import countriesCase from "@/helpers/countriesCase";
 
 export function TeacherCard({ teacher }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const intl = useIntl();
+  const en = useSelector(selectCurrentLanguage);
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -106,17 +102,14 @@ export function TeacherCard({ teacher }) {
 
             <Typography>ID:&nbsp;{teacher.id}</Typography>
           </Stack>
-          <Typography
-            variant="posterItem"
-            sx={{ color: (theme) => theme.palette.textColor.grey }}
-          >
+          <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
             {intl.formatMessage({ id: "languagesTeaching" })}:
           </Typography>
           {Boolean(teacher.teachingLanguages.length) && (
             <CategoryList
               elements={
                 teacher.teachingLanguages &&
-                teacher.teachingLanguages.map((el) => el.languageUa)
+                teacher.teachingLanguages.map((el) => (en == "en" ? el.languageEn : el.languageUa))
               }
             />
           )}
@@ -128,12 +121,11 @@ export function TeacherCard({ teacher }) {
               marginBottom: "20px",
             }}
           >
-            <Typography
-              variant="posterItem"
-              sx={{ color: (theme) => theme.palette.textColor.grey }}
-            >
-              {intl.formatMessage({ id: "country" })}:{" "}
-              {teacher.user.country?.alpha2}
+            <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
+              {intl.formatMessage({ id: "country" })}:&nbsp;
+              {en == "en"
+                ? countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameEng)
+                : countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameShort)}
             </Typography>
           </Stack>
 
@@ -153,9 +145,7 @@ export function TeacherCard({ teacher }) {
                     color: (theme) => theme.palette.textColor.darkGrey,
                   }}
                 />
-                <Typography variant="posterItem">
-                  {teacher.user.rating}
-                </Typography>
+                <Typography variant="posterItem">{teacher.user.rating}</Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
                 <Button
@@ -198,21 +188,14 @@ export function TeacherCard({ teacher }) {
                 </Button>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
-                <Typography
-                  variant="posterItem"
-                  sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
-                >
+                <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.darkGrey }}>
                   {intl.formatMessage({ id: "lessons" })}:
                 </Typography>
                 <Typography variant="posterItem">156</Typography>
               </Box>
             </Box>
             <Box>
-              <Typography
-                color="grey.700"
-                variant="posterStatus"
-                sx={{ display: "inline-block" }}
-              >
+              <Typography color="grey.700" variant="posterStatus" sx={{ display: "inline-block" }}>
                 <Box
                   component="span"
                   sx={{
@@ -253,12 +236,7 @@ export function TeacherCard({ teacher }) {
           </Button>
         </CardActions>
       </Card>
-      {showModal && (
-        <Modal
-          onBackdropClose={onBackdropClose}
-          contentType={modalContentType}
-        />
-      )}
+      {showModal && <Modal onBackdropClose={onBackdropClose} contentType={modalContentType} />}
     </>
   );
 }

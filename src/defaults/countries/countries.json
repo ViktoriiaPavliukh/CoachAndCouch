@@ -1,0 +1,2002 @@
+[
+  {
+    "code": "4",
+    "alpha2": "AF",
+    "alpha3": "AFG",
+    "nameShort": "АФГАНІСТАН",
+    "nameLong": "Ісламська республіка Афганістан",
+    "nameEng": "Afghanistan"
+  },
+  {
+    "code": "8",
+    "alpha2": "AL",
+    "alpha3": "ALB",
+    "nameShort": "АЛБАНІЯ",
+    "nameLong": "Республіка Албанія",
+    "nameEng": "Albania"
+  },
+  {
+    "code": "10",
+    "alpha2": "AQ",
+    "alpha3": "ATA",
+    "nameShort": "АНТАРКТИКА",
+    "nameLong": "АНТАРКТИКА",
+    "nameEng": "Antarctica"
+  },
+  {
+    "code": "12",
+    "alpha2": "DZ",
+    "alpha3": "DZA",
+    "nameShort": "АЛЖИР",
+    "nameLong": "Алжирська Народна Демократична Республіка",
+    "nameEng": "Algeria"
+  },
+  {
+    "code": "16",
+    "alpha2": "AS",
+    "alpha3": "ASM",
+    "nameShort": "АМЕРИКАНСЬКЕ САМОА",
+    "nameLong": "АМЕРИКАНСЬКЕ САМОА",
+    "nameEng": "American Samoa"
+  },
+  {
+    "code": "20",
+    "alpha2": "AD",
+    "alpha3": "AND",
+    "nameShort": "АНДОРРА",
+    "nameLong": "Князівство Андорра",
+    "nameEng": "Andorra"
+  },
+  {
+    "code": "24",
+    "alpha2": "AO",
+    "alpha3": "AGO",
+    "nameShort": "АНГОЛА",
+    "nameLong": "Республіка Ангола",
+    "nameEng": "Angola"
+  },
+  {
+    "code": "28",
+    "alpha2": "AG",
+    "alpha3": "ATG",
+    "nameShort": "АНТИГУА І БАРБУДА",
+    "nameLong": "Антигуа і Барбуда",
+    "nameEng": "Antigua and Barbuda"
+  },
+  {
+    "code": "31",
+    "alpha2": "AZ",
+    "alpha3": "AZE",
+    "nameShort": "АЗЕРБАЙДЖАН",
+    "nameLong": "Азербайджанська Республіка",
+    "nameEng": "Azerbaijan"
+  },
+  {
+    "code": "32",
+    "alpha2": "AR",
+    "alpha3": "ARG",
+    "nameShort": "АРГЕНТИНА",
+    "nameLong": "Аргентинська Республіка",
+    "nameEng": "Argentina"
+  },
+  {
+    "code": "36",
+    "alpha2": "AU",
+    "alpha3": "AUS",
+    "nameShort": "АВСТРАЛІЯ",
+    "nameLong": "АВСТРАЛІЯ",
+    "nameEng": "Australia"
+  },
+  {
+    "code": "40",
+    "alpha2": "AT",
+    "alpha3": "AUT",
+    "nameShort": "АВСТРІЯ",
+    "nameLong": "Австрійська Республіка",
+    "nameEng": "Austria"
+  },
+  {
+    "code": "44",
+    "alpha2": "BS",
+    "alpha3": "BHS",
+    "nameShort": "БАГАМСЬКІ ОСТРОВИ",
+    "nameLong": "Співдружність Багамських Островів",
+    "nameEng": "Bahamas"
+  },
+  {
+    "code": "48",
+    "alpha2": "BH",
+    "alpha3": "BHR",
+    "nameShort": "БАХРЕЙН",
+    "nameLong": "Королівство Бахрейн",
+    "nameEng": "Bahrain"
+  },
+  {
+    "code": "50",
+    "alpha2": "BD",
+    "alpha3": "BGD",
+    "nameShort": "БАНГЛАДЕШ",
+    "nameLong": "Народна Республіка Бангладеш",
+    "nameEng": "Bangladesh"
+  },
+  {
+    "code": "51",
+    "alpha2": "AM",
+    "alpha3": "ARM",
+    "nameShort": "ВІРМЕНІЯ",
+    "nameLong": "Республіка Вірменія",
+    "nameEng": "Armenia"
+  },
+  {
+    "code": "52",
+    "alpha2": "BB",
+    "alpha3": "BRB",
+    "nameShort": "БАРБАДОС",
+    "nameLong": "БАРБАДОС",
+    "nameEng": "Barbados"
+  },
+  {
+    "code": "56",
+    "alpha2": "BE",
+    "alpha3": "BEL",
+    "nameShort": "БЕЛЬГІЯ",
+    "nameLong": "Королівство Бельгія",
+    "nameEng": "Belgium"
+  },
+  {
+    "code": "60",
+    "alpha2": "BM",
+    "alpha3": "BMU",
+    "nameShort": "БЕРМУДСЬКІ ОСТРОВИ",
+    "nameLong": "БЕРМУДСЬКІ ОСТРОВИ",
+    "nameEng": "Bermuda"
+  },
+  {
+    "code": "64",
+    "alpha2": "BT",
+    "alpha3": "BTN",
+    "nameShort": "БУТАН",
+    "nameLong": "Королівство Бутан",
+    "nameEng": "Bhutan"
+  },
+  {
+    "code": "68",
+    "alpha2": "BO",
+    "alpha3": "BOL",
+    "nameShort": "БОЛІВІЯ",
+    "nameLong": "Багатонаціональна держава Болівія",
+    "nameEng": "Bolivia, Plurinational State of"
+  },
+  {
+    "code": "70",
+    "alpha2": "BA",
+    "alpha3": "BIH",
+    "nameShort": "БОСНІЯ І ГЕРЦЕГОВИНА",
+    "nameLong": "Боснія і Герцеговина",
+    "nameEng": "Bosnia and Herzegovina"
+  },
+  {
+    "code": "72",
+    "alpha2": "BW",
+    "alpha3": "BWA",
+    "nameShort": "БОТСВАНА",
+    "nameLong": "Республіка Ботсвана",
+    "nameEng": "Botswana"
+  },
+  {
+    "code": "74",
+    "alpha2": "BV",
+    "alpha3": "BVT",
+    "nameShort": "ОСТРІВ БУВЕ",
+    "nameLong": "ОСТРІВ БУВЕ",
+    "nameEng": "Bouvet Island"
+  },
+  {
+    "code": "76",
+    "alpha2": "BR",
+    "alpha3": "BRA",
+    "nameShort": "БРАЗИЛІЯ",
+    "nameLong": "Федеративна Республіка Бразилія",
+    "nameEng": "Brazil"
+  },
+  {
+    "code": "84",
+    "alpha2": "BZ",
+    "alpha3": "BLZ",
+    "nameShort": "БЕЛІЗ",
+    "nameLong": "БЕЛІЗ",
+    "nameEng": "Belize"
+  },
+  {
+    "code": "86",
+    "alpha2": "IO",
+    "alpha3": "IOT",
+    "nameShort": "БРИТАНСЬКА ТЕРИТОРІЯ В ІНДІЙСЬКОМУ ОКЕАНІ",
+    "nameLong": "БРИТАНСЬКА ТЕРИТОРІЯ В ІНДІЙСЬКОМУ ОКЕАНІ",
+    "nameEng": "British Indian Ocean Territory"
+  },
+  {
+    "code": "90",
+    "alpha2": "SB",
+    "alpha3": "SLB",
+    "nameShort": "СОЛОМОНОВІ ОСТРОВИ",
+    "nameLong": "СОЛОМОНОВІ ОСТРОВИ",
+    "nameEng": "Solomon Islands"
+  },
+  {
+    "code": "92",
+    "alpha2": "VG",
+    "alpha3": "VGB",
+    "nameShort": "ВІРГІНСЬКІ ОСТРОВИ (БРИТ.)",
+    "nameLong": "Британські Віргінські Острови",
+    "nameEng": "Virgin Islands, British"
+  },
+  {
+    "code": "96",
+    "alpha2": "BN",
+    "alpha3": "BRN",
+    "nameShort": "БРУНЕЙ-ДАРУССАЛАМ",
+    "nameLong": "БРУНЕЙ-ДАРУССАЛАМ",
+    "nameEng": "Brunei Darussalam"
+  },
+  {
+    "code": "100",
+    "alpha2": "BG",
+    "alpha3": "BGR",
+    "nameShort": "БОЛГАРІЯ",
+    "nameLong": "Республіка Болгарія",
+    "nameEng": "Bulgaria"
+  },
+  {
+    "code": "104",
+    "alpha2": "MM",
+    "alpha3": "MMR",
+    "nameShort": "М'ЯНМА",
+    "nameLong": "Республіка Союзу М'янма",
+    "nameEng": "Myanmar"
+  },
+  {
+    "code": "108",
+    "alpha2": "BI",
+    "alpha3": "BDI",
+    "nameShort": "БУРУНДІ",
+    "nameLong": "Республіка Бурунді",
+    "nameEng": "Burundi"
+  },
+  {
+    "code": "112",
+    "alpha2": "BY",
+    "alpha3": "BLR",
+    "nameShort": "БІЛОРУСЬ",
+    "nameLong": "Республіка Білорусь",
+    "nameEng": "Belarus"
+  },
+  {
+    "code": "116",
+    "alpha2": "KH",
+    "alpha3": "KHM",
+    "nameShort": "КАМБОДЖА",
+    "nameLong": "Королівство Камбоджа",
+    "nameEng": "Cambodia"
+  },
+  {
+    "code": "120",
+    "alpha2": "CM",
+    "alpha3": "CMR",
+    "nameShort": "КАМЕРУН",
+    "nameLong": "Республіка Камерун",
+    "nameEng": "Cameroon"
+  },
+  {
+    "code": "124",
+    "alpha2": "CA",
+    "alpha3": "CAN",
+    "nameShort": "КАНАДА",
+    "nameLong": "КАНАДА",
+    "nameEng": "Canada"
+  },
+  {
+    "code": "132",
+    "alpha2": "CV",
+    "alpha3": "CPV",
+    "nameShort": "КАБО-ВЕРДЕ",
+    "nameLong": "Республіка Кабо-Верде",
+    "nameEng": "Cabo Verde"
+  },
+  {
+    "code": "136",
+    "alpha2": "KY",
+    "alpha3": "CYM",
+    "nameShort": "КАЙМАНОВІ ОСТРОВИ",
+    "nameLong": "КАЙМАНОВІ ОСТРОВИ",
+    "nameEng": "Cayman Islands"
+  },
+  {
+    "code": "140",
+    "alpha2": "CF",
+    "alpha3": "CAF",
+    "nameShort": "ЦЕНТРАЛЬНОАФРИКАНСЬКА РЕСПУБЛІКА",
+    "nameLong": "ЦЕНТРАЛЬНОАФРИКАНСЬКА РЕСПУБЛІКА",
+    "nameEng": "Central African Republic"
+  },
+  {
+    "code": "144",
+    "alpha2": "LK",
+    "alpha3": "LKA",
+    "nameShort": "ШРИ-ЛАНКА",
+    "nameLong": "Демократична Соціалістична Республіка Шри-Ланка",
+    "nameEng": "Sri Lanka"
+  },
+  {
+    "code": "148",
+    "alpha2": "TD",
+    "alpha3": "TCD",
+    "nameShort": "ЧАД",
+    "nameLong": "Республіка Чад",
+    "nameEng": "Chad"
+  },
+  {
+    "code": "152",
+    "alpha2": "CL",
+    "alpha3": "CHL",
+    "nameShort": "ЧИЛІ",
+    "nameLong": "Республіка Чилі",
+    "nameEng": "Chile"
+  },
+  {
+    "code": "156",
+    "alpha2": "CN",
+    "alpha3": "CHN",
+    "nameShort": "КИТАЙ",
+    "nameLong": "Китайська Народна Республіка",
+    "nameEng": "China"
+  },
+  {
+    "code": "158",
+    "alpha2": "TW",
+    "alpha3": "TWN",
+    "nameShort": "ТАЙВАНЬ, ПРОВІНЦІЯ КИТАЮ",
+    "nameLong": "ТАЙВАНЬ, ПРОВІНЦІЯ  КИТАЮ",
+    "nameEng": "Taiwan, Province of China"
+  },
+  {
+    "code": "162",
+    "alpha2": "CX",
+    "alpha3": "CXR",
+    "nameShort": "ОСТРІВ РІЗДВА",
+    "nameLong": "ОСТРІВ РІЗДВА",
+    "nameEng": "Christmas Island"
+  },
+  {
+    "code": "166",
+    "alpha2": "CC",
+    "alpha3": "CCK",
+    "nameShort": "КОКОСОВІ (КІЛІНГ) ОСТРОВИ",
+    "nameLong": "Кокосові (Кілінг) острови",
+    "nameEng": "Cocos (Keeling) Islands"
+  },
+  {
+    "code": "170",
+    "alpha2": "CO",
+    "alpha3": "COL",
+    "nameShort": "КОЛУМБІЯ",
+    "nameLong": "Республіка Колумбія",
+    "nameEng": "Colombia"
+  },
+  {
+    "code": "174",
+    "alpha2": "KM",
+    "alpha3": "COM",
+    "nameShort": "КОМОРИ",
+    "nameLong": "Союз Коморських Островів",
+    "nameEng": "Comoros"
+  },
+  {
+    "code": "175",
+    "alpha2": "YT",
+    "alpha3": "MYT",
+    "nameShort": "МАЙОТТА",
+    "nameLong": "МАЙОТТА",
+    "nameEng": "Mayotte"
+  },
+  {
+    "code": "178",
+    "alpha2": "CG",
+    "alpha3": "COG",
+    "nameShort": "КОНГО",
+    "nameLong": "Республіка Конго",
+    "nameEng": "Congo"
+  },
+  {
+    "code": "180",
+    "alpha2": "CD",
+    "alpha3": "COD",
+    "nameShort": "КОНГО, ДЕМОКРАТИЧНА РЕСПУБЛІКА",
+    "nameLong": "Демократична Республіка Конго",
+    "nameEng": "Congo, Democratic Republic of the"
+  },
+  {
+    "code": "184",
+    "alpha2": "CK",
+    "alpha3": "COK",
+    "nameShort": "ОСТРОВИ КУКА",
+    "nameLong": "ОСТРОВИ КУКА",
+    "nameEng": "Cook Islands"
+  },
+  {
+    "code": "188",
+    "alpha2": "CR",
+    "alpha3": "CRI",
+    "nameShort": "КОСТА-РИКА",
+    "nameLong": "Республіка Коста-Рика",
+    "nameEng": "Costa Rica"
+  },
+  {
+    "code": "191",
+    "alpha2": "HR",
+    "alpha3": "HRV",
+    "nameShort": "ХОРВАТІЯ",
+    "nameLong": "Республіка Хорватія",
+    "nameEng": "Croatia"
+  },
+  {
+    "code": "192",
+    "alpha2": "CU",
+    "alpha3": "CUB",
+    "nameShort": "КУБА",
+    "nameLong": "Республіка Куба",
+    "nameEng": "Cuba"
+  },
+  {
+    "code": "196",
+    "alpha2": "CY",
+    "alpha3": "CYP",
+    "nameShort": "КІПР",
+    "nameLong": "Республіка Кіпр",
+    "nameEng": "Cyprus"
+  },
+  {
+    "code": "203",
+    "alpha2": "CZ",
+    "alpha3": "CZE",
+    "nameShort": "ЧЕХІЯ",
+    "nameLong": "Чеська Республіка",
+    "nameEng": "Czech Republic"
+  },
+  {
+    "code": "204",
+    "alpha2": "BJ",
+    "alpha3": "BEN",
+    "nameShort": "БЕНІН",
+    "nameLong": "Республіка Бенін",
+    "nameEng": "Benin"
+  },
+  {
+    "code": "208",
+    "alpha2": "DK",
+    "alpha3": "DNK",
+    "nameShort": "ДАНІЯ",
+    "nameLong": "Королівство Данія",
+    "nameEng": "Denmark"
+  },
+  {
+    "code": "212",
+    "alpha2": "DM",
+    "alpha3": "DMA",
+    "nameShort": "ДОМІНІКА",
+    "nameLong": "Співдружність Домініки",
+    "nameEng": "Dominica"
+  },
+  {
+    "code": "214",
+    "alpha2": "DO",
+    "alpha3": "DOM",
+    "nameShort": "ДОМІНІКАНСЬКА РЕСПУБЛІКА",
+    "nameLong": "ДОМІНІКАНСЬКА РЕСПУБЛІКА",
+    "nameEng": "Dominican Republic"
+  },
+  {
+    "code": "218",
+    "alpha2": "EC",
+    "alpha3": "ECU",
+    "nameShort": "ЕКВАДОР",
+    "nameLong": "Республіка Еквадор",
+    "nameEng": "Ecuador"
+  },
+  {
+    "code": "222",
+    "alpha2": "SV",
+    "alpha3": "SLV",
+    "nameShort": "САЛЬВАДОР",
+    "nameLong": "Республіка Ель-Сальвадор",
+    "nameEng": "El Salvador"
+  },
+  {
+    "code": "226",
+    "alpha2": "GQ",
+    "alpha3": "GNQ",
+    "nameShort": "ЕКВАТОРІАЛЬНА ГВІНЕЯ",
+    "nameLong": "Республіка Екваторіальна Гвінея",
+    "nameEng": "Equatorial Guinea"
+  },
+  {
+    "code": "231",
+    "alpha2": "ET",
+    "alpha3": "ETH",
+    "nameShort": "ЕФІОПІЯ",
+    "nameLong": "Федеративна Демократична Республіка Ефіопія",
+    "nameEng": "Ethiopia"
+  },
+  {
+    "code": "232",
+    "alpha2": "ER",
+    "alpha3": "ERI",
+    "nameShort": "ЕРИТРЕЯ",
+    "nameLong": "ЕРИТРЕЯ",
+    "nameEng": "Eritrea"
+  },
+  {
+    "code": "233",
+    "alpha2": "EE",
+    "alpha3": "EST",
+    "nameShort": "ЕСТОНІЯ",
+    "nameLong": "Республіка Естонія",
+    "nameEng": "Estonia"
+  },
+  {
+    "code": "234",
+    "alpha2": "FO",
+    "alpha3": "FRO",
+    "nameShort": "ФАРЕРСЬКІ ОСТРОВИ",
+    "nameLong": "ФАРЕРСЬКІ ОСТРОВИ",
+    "nameEng": "Faroe Islands"
+  },
+  {
+    "code": "238",
+    "alpha2": "FK",
+    "alpha3": "FLK",
+    "nameShort": "ФОЛКЛЕНДСЬКІ (МАЛЬВІНСЬКІ) ОСТРОВИ",
+    "nameLong": "ФОЛКЛЕНДСЬКІ (МАЛЬВІНСЬКІ) ОСТРОВИ",
+    "nameEng": "Falkland Islands (Malvinas)"
+  },
+  {
+    "code": "239",
+    "alpha2": "GS",
+    "alpha3": "SGS",
+    "nameShort": "ПІВДЕННА ДЖОРДЖІЯ ТА ПІВДЕННІ САНДВІЧЕВІ ОСТРОВИ",
+    "nameLong": "ПІВДЕННА ДЖОРДЖІЯ ТА ПІВДЕННІ САНДВІЧЕВІ ОСТРОВИ",
+    "nameEng": "South Georgia and the South Sandwich Islands"
+  },
+  {
+    "code": "242",
+    "alpha2": "FJ",
+    "alpha3": "FJI",
+    "nameShort": "ФІДЖІ",
+    "nameLong": "Республіка Фіджі",
+    "nameEng": "Fiji"
+  },
+  {
+    "code": "246",
+    "alpha2": "FI",
+    "alpha3": "FIN",
+    "nameShort": "ФІНЛЯНДІЯ",
+    "nameLong": "Республіка Фінляндія",
+    "nameEng": "Finland"
+  },
+  {
+    "code": "248",
+    "alpha2": "AX",
+    "alpha3": "ALA",
+    "nameShort": "АЛАНДСЬКІ ОСТРОВИ",
+    "nameLong": "АЛАНДСЬКІ ОСТРОВИ",
+    "nameEng": "Aland Islands"
+  },
+  {
+    "code": "250",
+    "alpha2": "FR",
+    "alpha3": "FRA",
+    "nameShort": "ФРАНЦІЯ",
+    "nameLong": "Французька Республіка",
+    "nameEng": "France"
+  },
+  {
+    "code": "254",
+    "alpha2": "GF",
+    "alpha3": "GUF",
+    "nameShort": "ФРАНЦУЗЬКА ГВІАНА",
+    "nameLong": "Французька Гвіана",
+    "nameEng": "French Guiana"
+  },
+  {
+    "code": "258",
+    "alpha2": "PF",
+    "alpha3": "PYF",
+    "nameShort": "ФРАНЦУЗЬКА ПОЛІНЕЗІЯ",
+    "nameLong": "ФРАНЦУЗЬКА ПОЛІНЕЗІЯ",
+    "nameEng": "French Polynesia"
+  },
+  {
+    "code": "260",
+    "alpha2": "TF",
+    "alpha3": "ATF",
+    "nameShort": "ФРАНЦУЗЬКІ ПІВДЕННІ ТЕРИТОРІЇ",
+    "nameLong": "ФРАНЦУЗЬКІ ПІВДЕННІ ТЕРИТОРІЇ",
+    "nameEng": "French Southern Territories"
+  },
+  {
+    "code": "262",
+    "alpha2": "DJ",
+    "alpha3": "DJI",
+    "nameShort": "ДЖИБУТІ",
+    "nameLong": "Республіка Джибуті",
+    "nameEng": "Djibouti"
+  },
+  {
+    "code": "266",
+    "alpha2": "GA",
+    "alpha3": "GAB",
+    "nameShort": "ГАБОН",
+    "nameLong": "Габонська Республіка",
+    "nameEng": "Gabon"
+  },
+  {
+    "code": "268",
+    "alpha2": "GE",
+    "alpha3": "GEO",
+    "nameShort": "ГРУЗІЯ",
+    "nameLong": "ГРУЗІЯ",
+    "nameEng": "Georgia"
+  },
+  {
+    "code": "270",
+    "alpha2": "GM",
+    "alpha3": "GMB",
+    "nameShort": "ГАМБІЯ",
+    "nameLong": "Республіка Гамбія",
+    "nameEng": "Gambia"
+  },
+  {
+    "code": "275",
+    "alpha2": "PS",
+    "alpha3": "PSE",
+    "nameShort": "ПАЛЕСТИНА",
+    "nameLong": "Держава Палестина",
+    "nameEng": "State of Palestine"
+  },
+  {
+    "code": "276",
+    "alpha2": "DE",
+    "alpha3": "DEU",
+    "nameShort": "НІМЕЧЧИНА",
+    "nameLong": "Федеративна Республiка Німеччина",
+    "nameEng": "Germany"
+  },
+  {
+    "code": "288",
+    "alpha2": "GH",
+    "alpha3": "GHA",
+    "nameShort": "ГАНА",
+    "nameLong": "Республіка Гана",
+    "nameEng": "Ghana"
+  },
+  {
+    "code": "292",
+    "alpha2": "GI",
+    "alpha3": "GIB",
+    "nameShort": "ГІБРАЛТАР",
+    "nameLong": "Гібралтар",
+    "nameEng": "Gibraltar"
+  },
+  {
+    "code": "296",
+    "alpha2": "KI",
+    "alpha3": "KIR",
+    "nameShort": "КІРИБАТІ",
+    "nameLong": "Республіка Кірибаті",
+    "nameEng": "Kiribati"
+  },
+  {
+    "code": "300",
+    "alpha2": "GR",
+    "alpha3": "GRC",
+    "nameShort": "ГРЕЦІЯ",
+    "nameLong": "Грецька Республіка",
+    "nameEng": "Greece"
+  },
+  {
+    "code": "304",
+    "alpha2": "GL",
+    "alpha3": "GRL",
+    "nameShort": "ГРЕНЛАНДІЯ",
+    "nameLong": "Гренландія",
+    "nameEng": "Greenland"
+  },
+  {
+    "code": "308",
+    "alpha2": "GD",
+    "alpha3": "GRD",
+    "nameShort": "ГРЕНАДА",
+    "nameLong": "Гренада",
+    "nameEng": "Grenada"
+  },
+  {
+    "code": "312",
+    "alpha2": "GP",
+    "alpha3": "GLP",
+    "nameShort": "ГВАДЕЛУПА",
+    "nameLong": "Гваделупа",
+    "nameEng": "Guadeloupe"
+  },
+  {
+    "code": "316",
+    "alpha2": "GU",
+    "alpha3": "GUM",
+    "nameShort": "ГУАМ",
+    "nameLong": "Гуам",
+    "nameEng": "Guam"
+  },
+  {
+    "code": "320",
+    "alpha2": "GT",
+    "alpha3": "GTM",
+    "nameShort": "ГВАТЕМАЛА",
+    "nameLong": "Республіка Гватемала",
+    "nameEng": "Guatemala"
+  },
+  {
+    "code": "324",
+    "alpha2": "GN",
+    "alpha3": "GIN",
+    "nameShort": "ГВІНЕЯ",
+    "nameLong": "Республіка Гвінея",
+    "nameEng": "Guinea"
+  },
+  {
+    "code": "328",
+    "alpha2": "GY",
+    "alpha3": "GUY",
+    "nameShort": "ГАЯНА",
+    "nameLong": "Республіка Гаяна",
+    "nameEng": "Guyana"
+  },
+  {
+    "code": "332",
+    "alpha2": "HT",
+    "alpha3": "HTI",
+    "nameShort": "ГАЇТІ",
+    "nameLong": "Республіка Гаїті",
+    "nameEng": "Haiti"
+  },
+  {
+    "code": "334",
+    "alpha2": "HM",
+    "alpha3": "HMD",
+    "nameShort": "ОСТРІВ ГЕРД І ОСТРОВИ МАКДОНАЛД",
+    "nameLong": "ОСТРІВ ГЕРД І ОСТРОВИ МАКДОНАЛД",
+    "nameEng": "Heard Island and McDonald Islands"
+  },
+  {
+    "code": "336",
+    "alpha2": "VA",
+    "alpha3": "VAT",
+    "nameShort": "СВЯТИЙ ПРЕСТОЛ (ДЕРЖАВА-МІСТО ВАТИКАН)",
+    "nameLong": "СВЯТИЙ ПРЕСТОЛ (ДЕРЖАВА-МІСТО ВАТИКАН)",
+    "nameEng": "Holly See (Vatican City State)"
+  },
+  {
+    "code": "340",
+    "alpha2": "HN",
+    "alpha3": "HND",
+    "nameShort": "ГОНДУРАС",
+    "nameLong": "Республіка Гондурас",
+    "nameEng": "Honduras"
+  },
+  {
+    "code": "344",
+    "alpha2": "HK",
+    "alpha3": "HKG",
+    "nameShort": "ГОНКОНГ",
+    "nameLong": "Особливий адміністративний район Китаю Гонконг",
+    "nameEng": "Hong Kong"
+  },
+  {
+    "code": "348",
+    "alpha2": "HU",
+    "alpha3": "HUN",
+    "nameShort": "УГОРЩИНА",
+    "nameLong": "УГОРЩИНА",
+    "nameEng": "Hungary"
+  },
+  {
+    "code": "352",
+    "alpha2": "IS",
+    "alpha3": "ISL",
+    "nameShort": "ІСЛАНДІЯ",
+    "nameLong": "Республіка Ісландія",
+    "nameEng": "Iceland"
+  },
+  {
+    "code": "356",
+    "alpha2": "IN",
+    "alpha3": "IND",
+    "nameShort": "ІНДІЯ",
+    "nameLong": "Республіка Індія",
+    "nameEng": "India"
+  },
+  {
+    "code": "360",
+    "alpha2": "ID",
+    "alpha3": "IDN",
+    "nameShort": "ІНДОНЕЗІЯ",
+    "nameLong": "Республіка Індонезія",
+    "nameEng": "Indonesia"
+  },
+  {
+    "code": "364",
+    "alpha2": "IR",
+    "alpha3": "IRN",
+    "nameShort": "ІРАН, ІСЛАМСЬКА РЕСПУБЛІКА",
+    "nameLong": "Ісламська Республіка Іран",
+    "nameEng": "Iran, Islamic Republic of"
+  },
+  {
+    "code": "368",
+    "alpha2": "IQ",
+    "alpha3": "IRQ",
+    "nameShort": "ІРАК",
+    "nameLong": "Республіка Ірак",
+    "nameEng": "Iraq"
+  },
+  {
+    "code": "372",
+    "alpha2": "IE",
+    "alpha3": "IRL",
+    "nameShort": "ІРЛАНДІЯ",
+    "nameLong": "ІРЛАНДІЯ",
+    "nameEng": "Ireland"
+  },
+  {
+    "code": "376",
+    "alpha2": "IL",
+    "alpha3": "ISR",
+    "nameShort": "ІЗРАЇЛЬ",
+    "nameLong": "Держава Ізраїль",
+    "nameEng": "Israel"
+  },
+  {
+    "code": "380",
+    "alpha2": "IT",
+    "alpha3": "ITA",
+    "nameShort": "ІТАЛІЯ",
+    "nameLong": "Італійська Республіка",
+    "nameEng": "Italy"
+  },
+  {
+    "code": "384",
+    "alpha2": "CI",
+    "alpha3": "CIV",
+    "nameShort": "КОТ-Д'ІВУАР",
+    "nameLong": "Республіка Кот-Д'Івуар",
+    "nameEng": "Cote  d'Ivoire"
+  },
+  {
+    "code": "388",
+    "alpha2": "JM",
+    "alpha3": "JAM",
+    "nameShort": "ЯМАЙКА",
+    "nameLong": "ЯМАЙКА",
+    "nameEng": "Jamaica"
+  },
+  {
+    "code": "392",
+    "alpha2": "JP",
+    "alpha3": "JPN",
+    "nameShort": "ЯПОНІЯ",
+    "nameLong": "ЯПОНІЯ",
+    "nameEng": "Japan"
+  },
+  {
+    "code": "398",
+    "alpha2": "KZ",
+    "alpha3": "KAZ",
+    "nameShort": "КАЗАХСТАН",
+    "nameLong": "Республіка Казахстан",
+    "nameEng": "Kazakhstan"
+  },
+  {
+    "code": "400",
+    "alpha2": "JO",
+    "alpha3": "JOR",
+    "nameShort": "ЙОРДАНІЯ",
+    "nameLong": "Йорданське Хашимітське Королівство",
+    "nameEng": "Jordan"
+  },
+  {
+    "code": "404",
+    "alpha2": "KE",
+    "alpha3": "KEN",
+    "nameShort": "КЕНІЯ",
+    "nameLong": "Республіка Кенія",
+    "nameEng": "Kenya"
+  },
+  {
+    "code": "408",
+    "alpha2": "KP",
+    "alpha3": "PRK",
+    "nameShort": "КОРЕЙСЬКА НАРОДНО-ДЕМОКРАТИЧНА РЕСПУБЛІКА",
+    "nameLong": "КОРЕЙСЬКА НАРОДНО-ДЕМОКРАТИЧНА РЕСПУБЛІКА",
+    "nameEng": "Korea, Democratic People?s Republic"
+  },
+  {
+    "code": "410",
+    "alpha2": "KR",
+    "alpha3": "KOR",
+    "nameShort": "КОРЕЯ, РЕСПУБЛІКА",
+    "nameLong": "Республіка Корея",
+    "nameEng": "Korea, Republic of"
+  },
+  {
+    "code": "414",
+    "alpha2": "KW",
+    "alpha3": "KWT",
+    "nameShort": "КУВЕЙТ",
+    "nameLong": "Держава Кувейт",
+    "nameEng": "Kuwait"
+  },
+  {
+    "code": "417",
+    "alpha2": "KG",
+    "alpha3": "KGZ",
+    "nameShort": "КИРГИЗСТАН",
+    "nameLong": "Киргизька Республіка",
+    "nameEng": "Kyrgyzstan"
+  },
+  {
+    "code": "418",
+    "alpha2": "LA",
+    "alpha3": "LAO",
+    "nameShort": "ЛАОСЬКА НАРОДНО-ДЕМОКРАТИЧНА РЕСПУБЛІКА",
+    "nameLong": "ЛАОСЬКА НАРОДНО-ДЕМОКРАТИЧНА РЕСПУБЛІКА",
+    "nameEng": "Lao People?s Democratic Republic"
+  },
+  {
+    "code": "422",
+    "alpha2": "LB",
+    "alpha3": "LBN",
+    "nameShort": "ЛІВАН",
+    "nameLong": "Ліванська Республіка",
+    "nameEng": "Lebanon"
+  },
+  {
+    "code": "426",
+    "alpha2": "LS",
+    "alpha3": "LSO",
+    "nameShort": "ЛЕСОТО",
+    "nameLong": "Королівство Лесото",
+    "nameEng": "Lesotho"
+  },
+  {
+    "code": "428",
+    "alpha2": "LV",
+    "alpha3": "LVA",
+    "nameShort": "ЛАТВІЯ",
+    "nameLong": "Латвійська Республіка",
+    "nameEng": "Latvia"
+  },
+  {
+    "code": "430",
+    "alpha2": "LR",
+    "alpha3": "LBR",
+    "nameShort": "ЛІБЕРІЯ",
+    "nameLong": "Республіка Ліберія",
+    "nameEng": "Liberia"
+  },
+  {
+    "code": "434",
+    "alpha2": "LY",
+    "alpha3": "LBY",
+    "nameShort": "ЛІВІЯ",
+    "nameLong": "ЛІВІЯ",
+    "nameEng": "Libya"
+  },
+  {
+    "code": "438",
+    "alpha2": "LI",
+    "alpha3": "LIE",
+    "nameShort": "ЛІХТЕНШТЕЙН",
+    "nameLong": "Князівство Ліхтенштейн",
+    "nameEng": "Liechtenstein"
+  },
+  {
+    "code": "440",
+    "alpha2": "LT",
+    "alpha3": "LTU",
+    "nameShort": "ЛИТВА",
+    "nameLong": "Литовська Республіка",
+    "nameEng": "Lithuania"
+  },
+  {
+    "code": "442",
+    "alpha2": "LU",
+    "alpha3": "LUX",
+    "nameShort": "ЛЮКСЕМБУРГ",
+    "nameLong": "Велике Герцогство Люксембург",
+    "nameEng": "Luxembourg"
+  },
+  {
+    "code": "446",
+    "alpha2": "MO",
+    "alpha3": "MAC",
+    "nameShort": "МАКАО",
+    "nameLong": "Особливий адміністративний район Китаю Макао",
+    "nameEng": "Macaо"
+  },
+  {
+    "code": "450",
+    "alpha2": "MG",
+    "alpha3": "MDG",
+    "nameShort": "МАДАГАСКАР",
+    "nameLong": "Республіка Мадагаскар",
+    "nameEng": "Madagascar"
+  },
+  {
+    "code": "454",
+    "alpha2": "MW",
+    "alpha3": "MWI",
+    "nameShort": "МАЛАВІ",
+    "nameLong": "Республіка Малаві",
+    "nameEng": "Malawi"
+  },
+  {
+    "code": "458",
+    "alpha2": "MY",
+    "alpha3": "MYS",
+    "nameShort": "МАЛАЙЗІЯ",
+    "nameLong": "МАЛАЙЗІЯ",
+    "nameEng": "Malaysia"
+  },
+  {
+    "code": "462",
+    "alpha2": "MV",
+    "alpha3": "MDV",
+    "nameShort": "МАЛЬДІВИ",
+    "nameLong": "Мальдівська Республіка",
+    "nameEng": "Maldives"
+  },
+  {
+    "code": "466",
+    "alpha2": "ML",
+    "alpha3": "MLI",
+    "nameShort": "МАЛІ",
+    "nameLong": "Республіка Малі",
+    "nameEng": "Mali"
+  },
+  {
+    "code": "470",
+    "alpha2": "MT",
+    "alpha3": "MLT",
+    "nameShort": "МАЛЬТА",
+    "nameLong": "Республіка Мальта",
+    "nameEng": "Malta"
+  },
+  {
+    "code": "474",
+    "alpha2": "MQ",
+    "alpha3": "MTQ",
+    "nameShort": "МАРТИНІКА",
+    "nameLong": "Мартиніка",
+    "nameEng": "Martinique"
+  },
+  {
+    "code": "478",
+    "alpha2": "MR",
+    "alpha3": "MRT",
+    "nameShort": "МАВРИТАНІЯ",
+    "nameLong": "Ісламська Республіка Мавританія",
+    "nameEng": "Mauritania"
+  },
+  {
+    "code": "480",
+    "alpha2": "MU",
+    "alpha3": "MUS",
+    "nameShort": "МАВРИКІЙ",
+    "nameLong": "Республіка Маврикій",
+    "nameEng": "Mauritius"
+  },
+  {
+    "code": "484",
+    "alpha2": "MX",
+    "alpha3": "MEX",
+    "nameShort": "МЕКСИКА",
+    "nameLong": "Мексиканські Сполучені Штати",
+    "nameEng": "Mexico"
+  },
+  {
+    "code": "492",
+    "alpha2": "MC",
+    "alpha3": "MCO",
+    "nameShort": "МОНАКО",
+    "nameLong": "Князівство Монако",
+    "nameEng": "Monaco"
+  },
+  {
+    "code": "496",
+    "alpha2": "MN",
+    "alpha3": "MNG",
+    "nameShort": "МОНГОЛІЯ",
+    "nameLong": "МОНГОЛІЯ",
+    "nameEng": "Mongolia"
+  },
+  {
+    "code": "498",
+    "alpha2": "MD",
+    "alpha3": "MDA",
+    "nameShort": "МОЛДОВА, РЕСПУБЛІКА",
+    "nameLong": "Республіка Молдова",
+    "nameEng": "Moldova, Republic of"
+  },
+  {
+    "code": "499",
+    "alpha2": "ME",
+    "alpha3": "MNE",
+    "nameShort": "ЧОРНОГОРІЯ",
+    "nameLong": "ЧОРНОГОРІЯ",
+    "nameEng": "Montenegro"
+  },
+  {
+    "code": "500",
+    "alpha2": "MS",
+    "alpha3": "MSR",
+    "nameShort": "МОНТСЕРРАТ",
+    "nameLong": "МОНТСЕРРАТ",
+    "nameEng": "Montserrat"
+  },
+  {
+    "code": "504",
+    "alpha2": "MA",
+    "alpha3": "MAR",
+    "nameShort": "МАРОККО",
+    "nameLong": "Королівство Марокко",
+    "nameEng": "Morocco"
+  },
+  {
+    "code": "508",
+    "alpha2": "MZ",
+    "alpha3": "MOZ",
+    "nameShort": "МОЗАМБІК",
+    "nameLong": "Республіка Мозамбік",
+    "nameEng": "Mozambique"
+  },
+  {
+    "code": "512",
+    "alpha2": "OM",
+    "alpha3": "OMN",
+    "nameShort": "ОМАН",
+    "nameLong": "Султанат Оман",
+    "nameEng": "Oman"
+  },
+  {
+    "code": "516",
+    "alpha2": "NA",
+    "alpha3": "NAM",
+    "nameShort": "НАМІБІЯ",
+    "nameLong": "Республікa Намібія",
+    "nameEng": "Namibia"
+  },
+  {
+    "code": "520",
+    "alpha2": "NR",
+    "alpha3": "NRU",
+    "nameShort": "НАУРУ",
+    "nameLong": "Республіка Науру",
+    "nameEng": "Nauru"
+  },
+  {
+    "code": "524",
+    "alpha2": "NP",
+    "alpha3": "NPL",
+    "nameShort": "НЕПАЛ",
+    "nameLong": "Королівство Непал",
+    "nameEng": "Nepаl"
+  },
+  {
+    "code": "528",
+    "alpha2": "NL",
+    "alpha3": "NLD",
+    "nameShort": "НІДЕРЛАНДИ",
+    "nameLong": "Королівство Нідерландів",
+    "nameEng": "Netherlands"
+  },
+  {
+    "code": "531",
+    "alpha2": "CW",
+    "alpha3": "CUW",
+    "nameShort": "КЮРАСАО",
+    "nameLong": "КЮРАСАО",
+    "nameEng": "Cura?ao"
+  },
+  {
+    "code": "533",
+    "alpha2": "AW",
+    "alpha3": "ABW",
+    "nameShort": "АРУБА",
+    "nameLong": "АРУБА",
+    "nameEng": "Aruba"
+  },
+  {
+    "code": "534",
+    "alpha2": "SX",
+    "alpha3": "SXM",
+    "nameShort": "СІНТ-МАРТЕН (НІДЕРЛАНДСЬКА ЧАСТИНА)",
+    "nameLong": "СІНТ-МАРТЕН (НІДЕРЛАНДСЬКА ЧАСТИНА)",
+    "nameEng": "Sint-Maarten (Dutch part)"
+  },
+  {
+    "code": "535",
+    "alpha2": "BQ",
+    "alpha3": "BES",
+    "nameShort": "БОНАЙРЕ, СІНТ-ЕСТАТІУС І САБА",
+    "nameLong": "БОНАЙРЕ, СІНТ-ЕСТАТІУС І САБА",
+    "nameEng": "Bonaire, Saint Eustatius and Saba"
+  },
+  {
+    "code": "540",
+    "alpha2": "NC",
+    "alpha3": "NCL",
+    "nameShort": "НОВА КАЛЕДОНІЯ",
+    "nameLong": "НОВА КАЛЕДОНІЯ",
+    "nameEng": "New Caledonia"
+  },
+  {
+    "code": "548",
+    "alpha2": "VU",
+    "alpha3": "VUT",
+    "nameShort": "ВАНУАТУ",
+    "nameLong": "Республіка Вануату",
+    "nameEng": "Vanuatu"
+  },
+  {
+    "code": "554",
+    "alpha2": "NZ",
+    "alpha3": "NZL",
+    "nameShort": "НОВА ЗЕЛАНДІЯ",
+    "nameLong": "НОВА ЗЕЛАНДІЯ",
+    "nameEng": "New Zealand"
+  },
+  {
+    "code": "558",
+    "alpha2": "NI",
+    "alpha3": "NIC",
+    "nameShort": "НІКАРАГУА",
+    "nameLong": "Республіка Нікарагуа",
+    "nameEng": "Nicaragua"
+  },
+  {
+    "code": "562",
+    "alpha2": "NE",
+    "alpha3": "NER",
+    "nameShort": "НІГЕР",
+    "nameLong": "Республіка Нігер",
+    "nameEng": "Niger"
+  },
+  {
+    "code": "566",
+    "alpha2": "NG",
+    "alpha3": "NGA",
+    "nameShort": "НІГЕРІЯ",
+    "nameLong": "Федеративна Республіка Нігерія",
+    "nameEng": "Nigeria"
+  },
+  {
+    "code": "570",
+    "alpha2": "NU",
+    "alpha3": "NIU",
+    "nameShort": "НІУЕ",
+    "nameLong": "НІУЕ",
+    "nameEng": "Niue"
+  },
+  {
+    "code": "574",
+    "alpha2": "NF",
+    "alpha3": "NFK",
+    "nameShort": "ОСТРІВ НОРФОЛК",
+    "nameLong": "ОСТРІВ НОРФОЛК",
+    "nameEng": "Norfolk Island"
+  },
+  {
+    "code": "578",
+    "alpha2": "NO",
+    "alpha3": "NOR",
+    "nameShort": "НОРВЕГІЯ",
+    "nameLong": "Королівство Норвегія",
+    "nameEng": "Norway"
+  },
+  {
+    "code": "580",
+    "alpha2": "MP",
+    "alpha3": "MNP",
+    "nameShort": "ПІВНІЧНІ МАРІАНСЬКІ ОСТРОВИ",
+    "nameLong": "Співдружність Північних Маріанських Островів",
+    "nameEng": "Northern Mariana Islands"
+  },
+  {
+    "code": "581",
+    "alpha2": "UM",
+    "alpha3": "UMI",
+    "nameShort": "МАЛІ ВІДДАЛЕНІ ОСТРОВИ США",
+    "nameLong": "МАЛІ ВІДДАЛЕНІ ОСТРОВИ США",
+    "nameEng": "United States Minor Outlying Islands"
+  },
+  {
+    "code": "583",
+    "alpha2": "FM",
+    "alpha3": "FSM",
+    "nameShort": "МІКРОНЕЗІЯ, ФЕДЕРАТИВНІ ШТАТИ",
+    "nameLong": "Федеративні Штати Мікронезії",
+    "nameEng": "Micronesia, Federated States of"
+  },
+  {
+    "code": "584",
+    "alpha2": "MH",
+    "alpha3": "MHL",
+    "nameShort": "МАРШАЛЛОВІ ОСТРОВИ",
+    "nameLong": "Республіка Маршаллові Острови",
+    "nameEng": "Marshall Islands"
+  },
+  {
+    "code": "585",
+    "alpha2": "PW",
+    "alpha3": "PLW",
+    "nameShort": "ПАЛАУ",
+    "nameLong": "Республіка Палау",
+    "nameEng": "Palau"
+  },
+  {
+    "code": "586",
+    "alpha2": "PK",
+    "alpha3": "PAK",
+    "nameShort": "ПАКИСТАН",
+    "nameLong": "Ісламська Республіка Пакистан",
+    "nameEng": "Pakistan"
+  },
+  {
+    "code": "591",
+    "alpha2": "PA",
+    "alpha3": "PAN",
+    "nameShort": "ПАНАМА",
+    "nameLong": "Республіка Панама",
+    "nameEng": "Panama"
+  },
+  {
+    "code": "598",
+    "alpha2": "PG",
+    "alpha3": "PNG",
+    "nameShort": "ПАПУА-НОВА ГВІНЕЯ",
+    "nameLong": "Папуа-Нова Гвінея",
+    "nameEng": "Papua New Guinea"
+  },
+  {
+    "code": "600",
+    "alpha2": "PY",
+    "alpha3": "PRY",
+    "nameShort": "ПАРАГВАЙ",
+    "nameLong": "Республіка Парагвай",
+    "nameEng": "Paraguay"
+  },
+  {
+    "code": "604",
+    "alpha2": "PE",
+    "alpha3": "PER",
+    "nameShort": "ПЕРУ",
+    "nameLong": "Республіка Перу",
+    "nameEng": "Peru"
+  },
+  {
+    "code": "608",
+    "alpha2": "PH",
+    "alpha3": "PHL",
+    "nameShort": "ФІЛІППІНИ",
+    "nameLong": "Республіка Філіппіни",
+    "nameEng": "Philippines"
+  },
+  {
+    "code": "612",
+    "alpha2": "PN",
+    "alpha3": "PCN",
+    "nameShort": "ПІТКЕРН",
+    "nameLong": "ПІТКЕРН",
+    "nameEng": "Pitcairn"
+  },
+  {
+    "code": "616",
+    "alpha2": "PL",
+    "alpha3": "POL",
+    "nameShort": "ПОЛЬЩА",
+    "nameLong": "Республіка Польща",
+    "nameEng": "Poland"
+  },
+  {
+    "code": "620",
+    "alpha2": "PT",
+    "alpha3": "PRT",
+    "nameShort": "ПОРТУГАЛІЯ",
+    "nameLong": "Португальська Республіка",
+    "nameEng": "Portugal"
+  },
+  {
+    "code": "624",
+    "alpha2": "GW",
+    "alpha3": "GNB",
+    "nameShort": "ГВІНЕЯ-БІСАУ",
+    "nameLong": "Республіка Гвінея-Бісау",
+    "nameEng": "Guinea-Bissau"
+  },
+  {
+    "code": "626",
+    "alpha2": "TL",
+    "alpha3": "TLS",
+    "nameShort": "ТИМОР-ЛЕШТІ",
+    "nameLong": "Демократична Республіка Тимор-Лешті",
+    "nameEng": "Timor-Leste"
+  },
+  {
+    "code": "630",
+    "alpha2": "PR",
+    "alpha3": "PRI",
+    "nameShort": "ПУЕРТО-РИКО",
+    "nameLong": "Пуерто-Рико",
+    "nameEng": "Puerto Rico"
+  },
+  {
+    "code": "634",
+    "alpha2": "QA",
+    "alpha3": "QAT",
+    "nameShort": "КАТАР",
+    "nameLong": "Держава Катар",
+    "nameEng": "Qatar"
+  },
+  {
+    "code": "638",
+    "alpha2": "RE",
+    "alpha3": "REU",
+    "nameShort": "РЕЮНЬЙОН",
+    "nameLong": "РЕЮНЬЙОН",
+    "nameEng": "R?union"
+  },
+  {
+    "code": "642",
+    "alpha2": "RO",
+    "alpha3": "ROU",
+    "nameShort": "РУМУНІЯ",
+    "nameLong": "РУМУНІЯ",
+    "nameEng": "Romania"
+  },
+  {
+    "code": "643",
+    "alpha2": "RU",
+    "alpha3": "RUS",
+    "nameShort": "РОСІЙСЬКА ФЕДЕРАЦІЯ",
+    "nameLong": "РОСІЙСЬКА ФЕДЕРАЦІЯ",
+    "nameEng": "Russian Federation"
+  },
+  {
+    "code": "646",
+    "alpha2": "RW",
+    "alpha3": "RWA",
+    "nameShort": "РУАНДА",
+    "nameLong": "Руандійська Республіка",
+    "nameEng": "Rwanda"
+  },
+  {
+    "code": "652",
+    "alpha2": "BL",
+    "alpha3": "BLM",
+    "nameShort": "СЕН-БАРТЕЛЕМІ",
+    "nameLong": "СЕН-БАРТЕЛЕМІ",
+    "nameEng": "Saint Barth?lemy"
+  },
+  {
+    "code": "654",
+    "alpha2": "SH",
+    "alpha3": "SHN",
+    "nameShort": "ОСТРІВ СВЯТОЇ ЄЛЕНИ",
+    "nameLong": "ОСТРІВ СВЯТОЇ ЄЛЕНИ",
+    "nameEng": "Saint Helena"
+  },
+  {
+    "code": "659",
+    "alpha2": "KN",
+    "alpha3": "KNA",
+    "nameShort": "СЕНТ-КІТС І НЕВІС",
+    "nameLong": "СЕНТ-КІТС І НЕВІС",
+    "nameEng": "Saint Kitts аnd Nevis"
+  },
+  {
+    "code": "660",
+    "alpha2": "AI",
+    "alpha3": "AIA",
+    "nameShort": "АНГІЛЬЯ",
+    "nameLong": "Ангілья",
+    "nameEng": "Anguilla"
+  },
+  {
+    "code": "662",
+    "alpha2": "LC",
+    "alpha3": "LCA",
+    "nameShort": "СЕНТ-ЛЮСІЯ",
+    "nameLong": "СЕНТ-ЛЮСІЯ",
+    "nameEng": "Saint Lucia"
+  },
+  {
+    "code": "663",
+    "alpha2": "MF",
+    "alpha3": "MAF",
+    "nameShort": "СЕН-МАРТЕН (ФРАНЦУЗСЬКА ЧАСТИНА)",
+    "nameLong": "СЕН-МАРТЕН (ФРАНЦУЗСЬКА ЧАСТИНА)",
+    "nameEng": "Saint Martin (French part)"
+  },
+  {
+    "code": "666",
+    "alpha2": "PM",
+    "alpha3": "SPM",
+    "nameShort": "СЕН-П'ЄР І МІКЕЛОН",
+    "nameLong": "СЕН-П'ЄР І МІКЕЛОН",
+    "nameEng": "Saint Pierre and Miquelon"
+  },
+  {
+    "code": "670",
+    "alpha2": "VC",
+    "alpha3": "VCT",
+    "nameShort": "СЕНТ-ВІНСЕНТ І ГРЕНАДІНИ",
+    "nameLong": "Сент-Вінсент і Гренадіни",
+    "nameEng": "Saint Vincent and the Grenadines"
+  },
+  {
+    "code": "674",
+    "alpha2": "SM",
+    "alpha3": "SMR",
+    "nameShort": "САН-МАРИНО",
+    "nameLong": "Республіка Сан-Марино",
+    "nameEng": "San Marino"
+  },
+  {
+    "code": "678",
+    "alpha2": "ST",
+    "alpha3": "STP",
+    "nameShort": "САН-ТОМЕ І ПРИНСІПІ",
+    "nameLong": "Демократична Республіка Сан-Томе і Принсіпі",
+    "nameEng": "Sao Tome and Principe"
+  },
+  {
+    "code": "680",
+    "alpha2": "-",
+    "alpha3": "-",
+    "nameShort": "САРК",
+    "nameLong": "САРК",
+    "nameEng": "Sark"
+  },
+  {
+    "code": "682",
+    "alpha2": "SA",
+    "alpha3": "SAU",
+    "nameShort": "САУДІВСЬКА АРАВІЯ",
+    "nameLong": "Королівство Саудівська Аравія",
+    "nameEng": "Saudi Arabia"
+  },
+  {
+    "code": "686",
+    "alpha2": "SN",
+    "alpha3": "SEN",
+    "nameShort": "СЕНЕГАЛ",
+    "nameLong": "Республіка Сенегал",
+    "nameEng": "Senegal"
+  },
+  {
+    "code": "688",
+    "alpha2": "RS",
+    "alpha3": "SRB",
+    "nameShort": "СЕРБІЯ",
+    "nameLong": "СЕРБІЯ",
+    "nameEng": "Serbia"
+  },
+  {
+    "code": "690",
+    "alpha2": "SC",
+    "alpha3": "SYC",
+    "nameShort": "СЕЙШЕЛЬСЬКІ ОСТРОВИ",
+    "nameLong": "Республіка Сейшельські Острови",
+    "nameEng": "Seychelles"
+  },
+  {
+    "code": "694",
+    "alpha2": "SL",
+    "alpha3": "SLE",
+    "nameShort": "СЬЄРРА-ЛЕОНЕ",
+    "nameLong": "Республіка Сьєрра-Леоне",
+    "nameEng": "Sierra Leone"
+  },
+  {
+    "code": "702",
+    "alpha2": "SG",
+    "alpha3": "SGP",
+    "nameShort": "СИНГАПУР",
+    "nameLong": "Республіка Сингапур",
+    "nameEng": "Singapore"
+  },
+  {
+    "code": "703",
+    "alpha2": "SK",
+    "alpha3": "SVK",
+    "nameShort": "СЛОВАЧЧИНА",
+    "nameLong": "Словацька Республіка",
+    "nameEng": "Slovakia"
+  },
+  {
+    "code": "704",
+    "alpha2": "VN",
+    "alpha3": "VNM",
+    "nameShort": "В'ЄТНАМ",
+    "nameLong": "Соціалістична Республіка В'єтнам",
+    "nameEng": "Viet Nam"
+  },
+  {
+    "code": "705",
+    "alpha2": "SI",
+    "alpha3": "SVN",
+    "nameShort": "СЛОВЕНІЯ",
+    "nameLong": "Рecпублікa Словенія",
+    "nameEng": "Slovenia"
+  },
+  {
+    "code": "706",
+    "alpha2": "SO",
+    "alpha3": "SOM",
+    "nameShort": "СОМАЛІ",
+    "nameLong": "Сомалійська Республіка",
+    "nameEng": "Somalia"
+  },
+  {
+    "code": "710",
+    "alpha2": "ZA",
+    "alpha3": "ZAF",
+    "nameShort": "ПІВДЕННА АФРИКА",
+    "nameLong": "Південноафриканська Республіка",
+    "nameEng": "South Africa"
+  },
+  {
+    "code": "716",
+    "alpha2": "ZW",
+    "alpha3": "ZWE",
+    "nameShort": "ЗІМБАБВЕ",
+    "nameLong": "Республіка Зімбабве",
+    "nameEng": "Zimbabwe"
+  },
+  {
+    "code": "724",
+    "alpha2": "ES",
+    "alpha3": "ESP",
+    "nameShort": "ІСПАНІЯ",
+    "nameLong": "Королівство Іспанія",
+    "nameEng": "Spain"
+  },
+  {
+    "code": "728",
+    "alpha2": "SS",
+    "alpha3": "SSD",
+    "nameShort": "ПІВДЕННИЙ СУДАН",
+    "nameLong": "Республіка Південний Судан",
+    "nameEng": "South Sudan"
+  },
+  {
+    "code": "729",
+    "alpha2": "SD",
+    "alpha3": "SDN",
+    "nameShort": "СУДАН",
+    "nameLong": "Республіка Судан",
+    "nameEng": "Sudan"
+  },
+  {
+    "code": "732",
+    "alpha2": "EH",
+    "alpha3": "ESH",
+    "nameShort": "ЗАХІДНА САХАРА",
+    "nameLong": "ЗАХІДНА САХАРА",
+    "nameEng": "Western Sahara"
+  },
+  {
+    "code": "740",
+    "alpha2": "SR",
+    "alpha3": "SUR",
+    "nameShort": "СУРИНАМ",
+    "nameLong": "Республіка Суринам",
+    "nameEng": "Suriname"
+  },
+  {
+    "code": "744",
+    "alpha2": "SJ",
+    "alpha3": "SJM",
+    "nameShort": "ШПІЦБЕРГЕН ТА ЯН-МАЄН",
+    "nameLong": "Шпіцберген та Ян-Маєн",
+    "nameEng": "Svalbard and Jan Mayen"
+  },
+  {
+    "code": "748",
+    "alpha2": "SZ",
+    "alpha3": "SWZ",
+    "nameShort": "СВАЗІЛЕНД",
+    "nameLong": "Королівство Свазіленд",
+    "nameEng": "Swaziland"
+  },
+  {
+    "code": "752",
+    "alpha2": "SE",
+    "alpha3": "SWE",
+    "nameShort": "ШВЕЦІЯ",
+    "nameLong": "Королівство Швеція",
+    "nameEng": "Sweden"
+  },
+  {
+    "code": "756",
+    "alpha2": "CH",
+    "alpha3": "CHE",
+    "nameShort": "ШВЕЙЦАРІЯ",
+    "nameLong": "Швейцарська Конфедерація",
+    "nameEng": "Switzerland"
+  },
+  {
+    "code": "760",
+    "alpha2": "SY",
+    "alpha3": "SYR",
+    "nameShort": "СИРІЙСЬКА АРАБСЬКА РЕСПУБЛІКА",
+    "nameLong": "СИРІЙСЬКА АРАБСЬКА РЕСПУБЛІКА",
+    "nameEng": "Syrian Arab Republic"
+  },
+  {
+    "code": "762",
+    "alpha2": "TJ",
+    "alpha3": "TJK",
+    "nameShort": "ТАДЖИКИСТАН",
+    "nameLong": "Республіка Таджикистан",
+    "nameEng": "Tajikistan"
+  },
+  {
+    "code": "764",
+    "alpha2": "TH",
+    "alpha3": "THA",
+    "nameShort": "ТАЇЛАНД",
+    "nameLong": "Королівство Таїланд",
+    "nameEng": "Thailand"
+  },
+  {
+    "code": "768",
+    "alpha2": "TG",
+    "alpha3": "TGO",
+    "nameShort": "ТОГО",
+    "nameLong": "Тоголезька Республіка",
+    "nameEng": "Togo"
+  },
+  {
+    "code": "772",
+    "alpha2": "TK",
+    "alpha3": "TKL",
+    "nameShort": "ТОКЕЛАУ",
+    "nameLong": "ТОКЕЛАУ",
+    "nameEng": "Tokelau"
+  },
+  {
+    "code": "776",
+    "alpha2": "TO",
+    "alpha3": "TON",
+    "nameShort": "ТОНГА",
+    "nameLong": "Королівство Тонга",
+    "nameEng": "Tonga"
+  },
+  {
+    "code": "780",
+    "alpha2": "TT",
+    "alpha3": "TTO",
+    "nameShort": "ТРИНІДАД І ТОБАГО",
+    "nameLong": "Республіка Тринідад і Тобаго",
+    "nameEng": "Trinidad and Tobago"
+  },
+  {
+    "code": "784",
+    "alpha2": "AE",
+    "alpha3": "ARE",
+    "nameShort": "ОБ'ЄДНАНІ АРАБСЬКІ ЕМІРАТИ",
+    "nameLong": "ОБ'ЄДНАНІ АРАБСЬКІ ЕМІРАТИ",
+    "nameEng": "United Arab Emirates"
+  },
+  {
+    "code": "788",
+    "alpha2": "TN",
+    "alpha3": "TUN",
+    "nameShort": "ТУНІС",
+    "nameLong": "Туніська Республіка",
+    "nameEng": "Tunisia"
+  },
+  {
+    "code": "792",
+    "alpha2": "TR",
+    "alpha3": "TUR",
+    "nameShort": "ТУРЕЧЧИНА",
+    "nameLong": "Турецька Республіка",
+    "nameEng": "Turkey"
+  },
+  {
+    "code": "795",
+    "alpha2": "TM",
+    "alpha3": "TKM",
+    "nameShort": "ТУРКМЕНИСТАН",
+    "nameLong": "Туркменистан",
+    "nameEng": "Turkmenistan"
+  },
+  {
+    "code": "796",
+    "alpha2": "TC",
+    "alpha3": "TCA",
+    "nameShort": "ОСТРОВИ ТЕРКС І КАЙКОС",
+    "nameLong": "ОСТРОВИ ТЕРКС І КАЙКОС",
+    "nameEng": "Turks and Caicos Islands"
+  },
+  {
+    "code": "798",
+    "alpha2": "TV",
+    "alpha3": "TUV",
+    "nameShort": "ТУВАЛУ",
+    "nameLong": "ТУВАЛУ",
+    "nameEng": "Tuvalu"
+  },
+  {
+    "code": "800",
+    "alpha2": "UG",
+    "alpha3": "UGA",
+    "nameShort": "УГАНДА",
+    "nameLong": "Республіка Уганда",
+    "nameEng": "Uganda"
+  },
+  {
+    "code": "804",
+    "alpha2": "UA",
+    "alpha3": "UKR",
+    "nameShort": "УКРАЇНА",
+    "nameLong": "УКРАЇНА",
+    "nameEng": "Ukraine"
+  },
+  {
+    "code": "807",
+    "alpha2": "MK",
+    "alpha3": "MKD",
+    "nameShort": "РЕСПУБЛІКА МАКЕДОНІЯ (КОЛИШНЯ ЮГОСЛАВСЬКА РЕСПУБЛІ",
+    "nameLong": "Республіка Македонія (колишня Югославська республіка)",
+    "nameEng": "Macedonia (The former Yugoslav Republic of)"
+  },
+  {
+    "code": "818",
+    "alpha2": "EG",
+    "alpha3": "EGY",
+    "nameShort": "ЄГИПЕТ",
+    "nameLong": "Арабська Республіка Єгипет",
+    "nameEng": "Egypt"
+  },
+  {
+    "code": "826",
+    "alpha2": "GB",
+    "alpha3": "GBR",
+    "nameShort": "ВЕЛИКА БРИТАНІЯ",
+    "nameLong": "Сполучене Королівство Великої Британії та Північної Ірландії",
+    "nameEng": "United Kingdom"
+  },
+  {
+    "code": "831",
+    "alpha2": "GG",
+    "alpha3": "GGY",
+    "nameShort": "ГЕРНСІ",
+    "nameLong": "Гернсі",
+    "nameEng": "Guernsey"
+  },
+  {
+    "code": "832",
+    "alpha2": "JE",
+    "alpha3": "JEY",
+    "nameShort": "ДЖЕРСІ",
+    "nameLong": "ДЖЕРСІ",
+    "nameEng": "Jersey"
+  },
+  {
+    "code": "833",
+    "alpha2": "IM",
+    "alpha3": "IMN",
+    "nameShort": "ОСТРІВ МЕН",
+    "nameLong": "ОСТРІВ МЕН",
+    "nameEng": "Isle of Man"
+  },
+  {
+    "code": "834",
+    "alpha2": "TZ",
+    "alpha3": "TZA",
+    "nameShort": "ТАНЗАНІЯ, ОБ'ЄДНАНА РЕСПУБЛІКА",
+    "nameLong": "Об'єднана Республіка Танзія",
+    "nameEng": "Tanzania, United Republic of"
+  },
+  {
+    "code": "840",
+    "alpha2": "US",
+    "alpha3": "USA",
+    "nameShort": "США",
+    "nameLong": "Сполучені Штати Америки",
+    "nameEng": "United States"
+  },
+  {
+    "code": "850",
+    "alpha2": "VI",
+    "alpha3": "VIR",
+    "nameShort": "ВІРГІНСЬКІ ОСТРОВИ (США)",
+    "nameLong": "Віргінські Острови Сполучених Штатів Америки",
+    "nameEng": "Virgin Islands, U.S."
+  },
+  {
+    "code": "854",
+    "alpha2": "BF",
+    "alpha3": "BFA",
+    "nameShort": "БУРКІНА-ФАСО",
+    "nameLong": "БУРКІНА-ФАСО",
+    "nameEng": "Burkina Faso"
+  },
+  {
+    "code": "858",
+    "alpha2": "UY",
+    "alpha3": "URY",
+    "nameShort": "УРУГВАЙ",
+    "nameLong": "Східна Республіка Уругвай",
+    "nameEng": "Uruguay"
+  },
+  {
+    "code": "860",
+    "alpha2": "UZ",
+    "alpha3": "UZB",
+    "nameShort": "УЗБЕКИСТАН",
+    "nameLong": "Республіка Узбекистан",
+    "nameEng": "Uzbekistan"
+  },
+  {
+    "code": "862",
+    "alpha2": "VE",
+    "alpha3": "VEN",
+    "nameShort": "ВЕНЕСУЕЛА",
+    "nameLong": "ВЕНЕСУЕЛА",
+    "nameEng": "Venezuela (Bolivarian Republic of)"
+  },
+  {
+    "code": "876",
+    "alpha2": "WF",
+    "alpha3": "WLF",
+    "nameShort": "УОЛЛІС І ФУТУНА",
+    "nameLong": "УОЛЛІС І ФУТУНА",
+    "nameEng": "Wallis and Futuna Islands"
+  },
+  {
+    "code": "882",
+    "alpha2": "WS",
+    "alpha3": "WSM",
+    "nameShort": "САМОА",
+    "nameLong": "Незалежна держава Самоа",
+    "nameEng": "Samoa"
+  },
+  {
+    "code": "887",
+    "alpha2": "YE",
+    "alpha3": "YEM",
+    "nameShort": "ЄМЕН",
+    "nameLong": "Єменська Республіка",
+    "nameEng": "Yemen"
+  },
+  {
+    "code": "894",
+    "alpha2": "ZM",
+    "alpha3": "ZMB",
+    "nameShort": "ЗАМБІЯ",
+    "nameLong": "Республіка Замбія",
+    "nameEng": "Zambia"
+  }
+]

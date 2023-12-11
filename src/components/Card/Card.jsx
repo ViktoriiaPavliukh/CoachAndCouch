@@ -12,10 +12,14 @@ import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
+import countriesCase from "@/helpers/countriesCase";
+import countries from "../../defaults/countries/countries.json";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 
 export function Card() {
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+  const en = useSelector(selectCurrentLanguage);
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -72,9 +76,7 @@ export function Card() {
                 p: 0,
               }}
             >
-              <Typography variant="posterName">
-                {teacher.user.firstName + " " + teacher.user.lastName}
-              </Typography>
+              <Typography variant="posterName">{teacher.user.firstName + " " + teacher.user.lastName}</Typography>
               <img
                 src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
                 srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
@@ -105,28 +107,16 @@ export function Card() {
                   marginRight: "12px",
                 }}
               ></span>
-              <Typography
-                color="grey.700"
-                variant="posterItem"
-                sx={{ mr: 5.5 }}
-              >
+              <Typography color="grey.700" variant="posterItem" sx={{ mr: 5.5 }}>
                 {intl.formatMessage({ id: "online" })}
               </Typography>
-              <Typography
-                variant="posterItem"
-                color="grey.700"
-                sx={{ mr: 0.5 }}
-              >
+              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
                 {intl.formatMessage({ id: "rate" })}:
               </Typography>
               <Typography variant="posterItem" sx={{ mr: 3.5 }}>
                 {teacher.user.rating}
               </Typography>
-              <Typography
-                variant="posterItem"
-                color="grey.700"
-                sx={{ mr: 0.5 }}
-              >
+              <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
                 {intl.formatMessage({ id: "lessons" })}:
               </Typography>
               <Typography variant="posterItem">156</Typography>
@@ -137,7 +127,7 @@ export function Card() {
             <CategoryList
               elements={
                 teacher.teachingLanguages &&
-                teacher.teachingLanguages.map((el) => el.languageUa)
+                teacher.teachingLanguages.map((el) => (en == "en" ? el.languageEn : el.languageUa))
               }
             />
             <Typography variant="posterCategory" color="grey.600">
@@ -145,14 +135,22 @@ export function Card() {
             </Typography>
             <CategoryList
               elements={
-                teacher.user.specializations &&
-                teacher.specializations.map((el) => el.specializationUa)
+                teacher.specializations &&
+                teacher.specializations.map((el) => (en == "en" ? el.specializationEn : el.specializationUa))
               }
             />
             <Typography variant="posterCategory" color="grey.600">
               {intl.formatMessage({ id: "country" })}
             </Typography>
-            <CategoryList elements={teacher.user.country?.alpha2.split(" ")} />
+            <CategoryList
+              elements={
+                teacher.user.country && en == "en"
+                  ? countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameEng).split(",")
+                  : countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameShort).split(
+                      ","
+                    )
+              }
+            />
             <Typography variant="posterCategory" color="grey.600">
               {intl.formatMessage({ id: "platforms" })}
             </Typography>
@@ -165,23 +163,14 @@ export function Card() {
             mb: "20px",
           }}
         >
-          <MessageBtn
-            onShowModalClick={() => onShowModalClick("sendMessage")}
-          />
+          <MessageBtn onShowModalClick={() => onShowModalClick("sendMessage")} />
           <LikeBtn />
         </Box>
         <Box mb="40px">
-          <Typography
-            variant="posterTitle"
-            component="p"
-            color="grey.600"
-            mb="36px"
-          >
+          <Typography variant="posterTitle" component="p" color="grey.600" mb="36px">
             {intl.formatMessage({ id: "aboutMe" })}
           </Typography>
-          <Typography variant="posterDescription">
-            {teacher.description}
-          </Typography>
+          <Typography variant="posterDescription">{teacher.description}</Typography>
         </Box>
         <Box
           sx={{
@@ -201,11 +190,7 @@ export function Card() {
             <Typography variant="posterTitle" color="grey.600" mb="36px">
               {intl.formatMessage({ id: "feedback" })}
             </Typography>
-            <ReviewList
-              elements={teacher.user.feedbacksToMe}
-              id={teacher.user.id}
-              userImage={userImage}
-            />
+            <ReviewList elements={teacher.user.feedbacksToMe} id={teacher.user.id} userImage={userImage} />
           </Box>
           <Box
             sx={{
@@ -230,22 +215,13 @@ export function Card() {
                 variant="contained"
                 sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
               >
-                <Typography variant="posterButton">
-                  {intl.formatMessage({ id: "trialLessonBtn" })}
-                </Typography>
+                <Typography variant="posterButton">{intl.formatMessage({ id: "trialLessonBtn" })}</Typography>
               </Button>
-              <Typography variant="posterPrice">
-                {Math.ceil(teacher.price)} $
-              </Typography>
+              <Typography variant="posterPrice">{Math.ceil(teacher.price)} $</Typography>
             </Box>
           </Box>
         </Box>
-        {showModal && (
-          <Modal
-            onBackdropClose={onBackdropClose}
-            contentType={modalContentType}
-          />
-        )}
+        {showModal && <Modal onBackdropClose={onBackdropClose} contentType={modalContentType} />}
       </Container>
     )
   );
