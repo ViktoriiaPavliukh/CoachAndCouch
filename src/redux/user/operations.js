@@ -70,3 +70,27 @@ export const deleteUserAsUser = createAsyncThunk(
     }
   }
 );
+
+export const sendMessageFromUser = createAsyncThunk(
+  "user/sendMessage",
+  async ({ userId, message }, thunkAPI) => {
+    try {
+      const userToken = thunkAPI.getState().auth.accessToken;
+
+      token.set(userToken);
+
+      const { data } = await privateAPI.post(
+        `/users/${userId}/mail`,
+        { message },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      );
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
