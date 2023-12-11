@@ -14,10 +14,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
 import homeIcon from "../../assets/icons/interface-dashboard-layout-circle--app-application-dashboard-home-layout-circle.svg";
 import mouse from "../../assets/icons/computer-mouse--computer-device-electronics-mouse.svg";
-// import notepad from "../../assets/icons/interface-content-note-pad-text--content-notes-book-notepad-notebook.svg";
+import notepad from "../../assets/icons/interface-content-note-pad-text--content-notes-book-notepad-notebook.svg";
 import checklist from "../../assets/icons/interface-file-clipboard-check--checkmark-edit-task-edition-checklist-check-success-clipboard-form.svg";
 import settings from "../../assets/icons/interface-setting-cog--work-loading-cog-gear-settings-machine.svg";
-// import envelope from "../../assets/icons/mail-send-envelope--envelope-email-message-unopened-sealed-close.svg";
+import envelope from "../../assets/icons/mail-send-envelope--envelope-email-message-unopened-sealed-close.svg";
 import logout from "../../assets/icons/logout.svg";
 import { selectUser } from "../../redux/auth/selectors";
 import { useState } from "react";
@@ -166,18 +166,6 @@ export function PersonalAccount() {
             paddingLeft: "16px",
           }}
         >
-          <Box component={Link} to="teachers" sx={linkStyles}>
-            <img src={mouse} alt="teachers" />
-            <Typography variant="fontLink" noWrap>
-              {intl.formatMessage({ id: "personalAccount.teachers" })}
-            </Typography>
-          </Box>
-          <Box component={Link} to="advertisements" sx={linkStyles}>
-            <img src={mouse} alt="advertisements" />
-            <Typography variant="fontLink" noWrap>
-              {intl.formatMessage({ id: "personalAccount.advertisements" })}
-            </Typography>
-          </Box>
           <Box component={Link} to="profile" sx={linkStyles}>
             <img src={checklist} alt="profile" />
             <Typography variant="fontLink" noWrap>
@@ -190,10 +178,29 @@ export function PersonalAccount() {
               {intl.formatMessage({ id: "personalAccount.lessons" })}
             </Typography>
           </Box>
+          <Box component={Link} to="schedule" sx={linkStyles}>
+            <img src={notepad} alt="schedule" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "personalAccount.schedule" })}
+            </Typography>
+          </Box>
+
+          <Box component={Link} to="messages" sx={linkStyles}>
+            <img src={envelope} alt="messages" />
+            <Typography variant="fontLink" noWrap>
+              Повідомлення
+            </Typography>
+          </Box>
           <Box component={Link} to="likes" sx={linkStyles}>
             <img src={mouse} alt="likes" />
             <Typography variant="fontLink" noWrap>
               {intl.formatMessage({ id: "personalAccount.likes" })}
+            </Typography>
+          </Box>
+          <Box component={Link} to="advertisements" sx={linkStyles}>
+            <img src={mouse} alt="advertisements" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "personalAccount.advertisements" })}
             </Typography>
           </Box>
           <Box component={Link} to="feedback" sx={linkStyles}>
@@ -202,28 +209,24 @@ export function PersonalAccount() {
               {intl.formatMessage({ id: "personalAccount.feedback" })}
             </Typography>
           </Box>
-          {/* <Box component={Link} to="schedule" sx={linkStyles}>
-            <img src={notepad} alt="schedule" />
+
+          {/* <Box component={Link} to="teachers" sx={linkStyles}>
+            <img src={mouse} alt="teachers" />
             <Typography variant="fontLink" noWrap>
-              {intl.formatMessage({ id: "personalAccount.schedule" })}
+              {intl.formatMessage({ id: "personalAccount.teachers" })}
             </Typography>
           </Box> */}
-          {/* <Box component={Link} to="messages" sx={linkStyles}>
-            <img src={envelope} alt="messages" />
-            <Typography variant="fontLink" noWrap>
-              Повідомлення
-            </Typography>
-          </Box> */}
-          <Box component={Link} to="settings" sx={linkStyles}>
-            <img src={settings} alt="settings" />
-            <Typography variant="fontLink" noWrap>
-              {intl.formatMessage({ id: "personalAccount.settings" })}
-            </Typography>
-          </Box>
+
           <Box component={Link} to="main" sx={linkStyles}>
             <img src={homeIcon} alt="Home Icon" />
             <Typography variant="fontLink" noWrap>
               {intl.formatMessage({ id: "dashboard" })}
+            </Typography>
+          </Box>
+          <Box component={Link} to="settings" sx={linkStyles}>
+            <img src={settings} alt="settings" />
+            <Typography variant="fontLink" noWrap>
+              {intl.formatMessage({ id: "personalAccount.settings" })}
             </Typography>
           </Box>
           <Box component={Link} sx={linkStyles} onClick={handleLogout}>
