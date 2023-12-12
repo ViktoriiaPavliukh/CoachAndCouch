@@ -44,6 +44,8 @@ const messages = {
     "personalAccount.lessons": "My Lessons",
     "personalAccount.profile": "Profile",
     "personalAccount.teachers": "Teachers",
+    "personalAccount.messages": "Messages",
+
     "personalAccount.advertisements": "My advertisements",
     "personalAccount.likes": "Favourites",
     "personalAccount.feedback": "Feedback",
@@ -173,10 +175,11 @@ const messages = {
     deleteAccount: "Видалити аккаунт",
 
     dashboard: "Дашборд",
-    "personalAccount.lessons": "Уроки",
+    "personalAccount.lessons": "Мої заняття",
     "personalAccount.profile": "Профіль",
     "personalAccount.teachers": "Викладачі",
-    "personalAccount.advertisements": "Оголошення(для викладача)",
+    "personalAccount.messages": "Повідомлення",
+    "personalAccount.advertisements": "Мої оголошення(для викладача)",
     "personalAccount.likes": "Обрані",
     "personalAccount.feedback": "Відгуки",
     "personalAccount.enquiry": "Моя анкета",
