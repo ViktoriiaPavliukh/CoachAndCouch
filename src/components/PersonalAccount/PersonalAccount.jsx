@@ -9,7 +9,7 @@ import {
   FormControl,
   TextField,
 } from "@mui/material";
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 // import { PersonalImage } from "./PersonalImage";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
@@ -19,9 +19,12 @@ import {
   Calendar,
   Edit2,
   FileText,
+  Grid,
+  Heart,
   LogOut,
   MessageSquare,
   Settings,
+  Smile,
   Tablet,
 } from "react-feather";
 
@@ -30,6 +33,8 @@ const linkStyles = {
   gap: "16px",
   padding: "12px",
   textDecoration: "none",
+};
+const titleStyles = {
   color: "#384C5E",
   fontSize: "22px",
   fontWeight: "300",
@@ -40,6 +45,18 @@ const IconStyles = {
   color: "#384C5E",
   size: 24,
 };
+const activeLinks = {
+  color: "#24BF2A",
+};
+
+const activeTitleStyles = {
+  ...titleStyles,
+  ...activeLinks,
+};
+const activeIconStyles = {
+  ...IconStyles,
+  ...activeLinks,
+};
 
 export function PersonalAccount() {
   const [image, setImage] = useState("");
@@ -47,8 +64,9 @@ export function PersonalAccount() {
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const intl = useIntl();
-  console.log(intl);
-  // console.log(user);
+  const location = useLocation();
+  console.log(location);
+  console.log(user);
 
   const handleLogout = () => {
     dispatch(logoutUser());
@@ -175,66 +193,190 @@ export function PersonalAccount() {
           }}
         >
           <Box component={Link} to="profile" sx={linkStyles}>
-            <FileText style={IconStyles} />
-            <Typography variant="fontLink" noWrap>
+            <FileText
+              style={
+                location.pathname === `/user/${user.id}/profile`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/profile`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.profile" })}
             </Typography>
           </Box>
           <Box component={Link} to="lessons" sx={linkStyles}>
-            <Edit2 style={IconStyles} />
-            <Typography variant="fontLink" noWrap>
+            <Edit2
+              style={
+                location.pathname === `/user/${user.id}/lessons`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/lessons`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.lessons" })}
             </Typography>
           </Box>
           <Box component={Link} to="schedule" sx={linkStyles}>
-            <Calendar style={IconStyles} />
-            <Typography variant="fontLink" noWrap>
+            <Calendar
+              style={
+                location.pathname === `/user/${user.id}/schedule`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/schedule`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.schedule" })}
             </Typography>
           </Box>
-
           <Box component={Link} to="messages" sx={linkStyles}>
-            <MessageSquare style={IconStyles} />
+            <MessageSquare
+              style={
+                location.pathname === `/user/${user.id}/messages`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
 
-            <Typography variant="fontLink" noWrap>
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/messages`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.messages" })}
             </Typography>
           </Box>
           <Box component={Link} to="likes" sx={linkStyles}>
-            {/* <img src={mouse} alt="likes" /> */}
-            <Typography variant="fontLink" noWrap>
+            <Heart
+              style={
+                location.pathname === `/user/${user.id}/likes`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/likes`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.likes" })}
             </Typography>
           </Box>
           <Box component={Link} to="advertisements" sx={linkStyles}>
-            <Tablet style={IconStyles} />
-
-            <Typography variant="fontLink" noWrap>
+            <Tablet
+              style={
+                location.pathname === `/user/${user.id}/advertisements`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/advertisements`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.advertisements" })}
             </Typography>
           </Box>
           <Box component={Link} to="feedback" sx={linkStyles}>
-            {/* <img src={mouse} alt="feeddback" /> */}
-            <Typography variant="fontLink" noWrap>
+            <Smile
+              style={
+                location.pathname === `/user/${user.id}/feedback`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/feedback`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.feedback" })}
             </Typography>
           </Box>
 
           <Box component={Link} to="main" sx={linkStyles}>
-            {/* <img src={homeIcon} alt="Home Icon" /> */}
-            <Typography variant="fontLink" noWrap>
+            <Grid
+              style={
+                location.pathname === `/user/${user.id}/main`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/main`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "dashboard" })}
             </Typography>
           </Box>
           <Box component={Link} to="settings" sx={linkStyles}>
-            <Settings style={IconStyles} />
-            <Typography variant="fontLink" noWrap>
+            <Settings
+              style={
+                location.pathname === `/user/${user.id}/settings`
+                  ? activeIconStyles
+                  : IconStyles
+              }
+            />
+            <Typography
+              variant="fontLink"
+              noWrap
+              sx={
+                location.pathname === `/user/${user.id}/settings`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
+            >
               {intl.formatMessage({ id: "personalAccount.settings" })}
             </Typography>
           </Box>
           <Box component={Link} sx={linkStyles} onClick={handleLogout}>
             <LogOut style={IconStyles} />
-            <Typography variant="fontLink" noWrap>
+            <Typography variant="fontLink" noWrap sx={titleStyles}>
               {intl.formatMessage({ id: "personalAccount.logout" })}
             </Typography>
           </Box>
