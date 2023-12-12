@@ -1,18 +1,18 @@
 // teacher/Messages.jsx
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getTeacherMessages } from "@/redux/teacher/operations";
+// import { useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { getTeacherMessages } from "@/redux/teacher/operations";
 // import { selectTeacherMessages } from "@/redux/teacher/selectors";
 import { Box, Typography } from "@mui/material";
 
-export const Messages = ({ teacherId }) => {
-  const dispatch = useDispatch();
+export const Messages = () => {
+  // const dispatch = useDispatch();
 
   // Assuming getTeacherMessages is an action that directly updates the Redux store
-  useEffect(() => {
-    dispatch(getTeacherMessages(teacherId));
-  }, [dispatch, teacherId]);
+  // useEffect(() => {
+  //   dispatch(getTeacherMessages(teacherId));
+  // }, [dispatch, teacherId]);
 
   // const messages = useSelector((state) => state.teacher.messages);
 
@@ -25,17 +25,7 @@ export const Messages = ({ teacherId }) => {
         flexDirection: "column",
       }}
     >
-      <Typography>Teacher Messages</Typography>
-      {/* {messages.length === 0 ? (
-        <Typography>No messages available.</Typography>
-      ) : (
-        <ul>
-          {messages.map((message) => (
-            <li key={message.id}>{message.text}</li>
-            // Render other message details as needed...
-          ))}
-        </ul>
-      )} */}
+      <Typography> Messages</Typography>
     </Box>
   );
 };
