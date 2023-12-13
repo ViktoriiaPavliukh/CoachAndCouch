@@ -2,24 +2,34 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { selectUser } from "../../redux/auth/selectors";
+import { selectUser, selectToken } from "../../redux/auth/selectors";
 import { sendMessageFromUser } from "../../redux/user/operations";
 import { Box, TextField, Button, Snackbar, Alert, Link } from "@mui/material";
 
-export const SendMessageWrapper = () => {
+export const SendMessageWrapper = ({ id }) => {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
+  // const handleSendMessage = async () => {
+  //   try {
+  //     await sendMessageFromUser({ id, message });
+  //     setSentMessage({ message: "Your message has been sent." });
+  //     setMessage("");
+  //     setSnackbarOpen(true);
+  //   } catch (error) {
+  //     console.error("Error sending message:", error);
+  //   }
+  // };
   const handleSendMessage = async () => {
     try {
-      await sendMessageFromUser({ userId: user.id, message });
-
+      // Dispatch the action using the thunk
+      await dispatch(sendMessageFromUser({ id, message }));
       setSentMessage({ message: "Your message has been sent." });
       setMessage("");
       setSnackbarOpen(true);
-      console.log(message);
     } catch (error) {
       console.error("Error sending message:", error);
     }

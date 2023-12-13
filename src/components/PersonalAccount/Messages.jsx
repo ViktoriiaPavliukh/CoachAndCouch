@@ -1,22 +1,15 @@
-// teacher/Messages.jsx
-
-// import { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { getTeacherMessages } from "@/redux/teacher/operations";
-// import { selectTeacherMessages } from "@/redux/teacher/selectors";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMessages } from "@/redux/user/operations";
 import { Box, Typography } from "@mui/material";
 
 export const Messages = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // Assuming getTeacherMessages is an action that directly updates the Redux store
-  // useEffect(() => {
-  //   dispatch(getTeacherMessages(teacherId));
-  // }, [dispatch, teacherId]);
+  useEffect(() => {
+    dispatch(getAllMessages);
+  }, [dispatch]);
 
-  // const messages = useSelector((state) => state.teacher.messages);
-
-  // console.log(messages);
 
   return (
     <Box
