@@ -4,7 +4,8 @@ import { TrialLessonWrapper } from "./TrialLessonWrapper/TrialLessonWrapper";
 import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
 
-export const Modal = ({ onBackdropClose, contentType }) => {
+export const Modal = ({ onBackdropClose, contentType, id }) => {
+  // console.log(id);
   document.body.classList.add("openModal");
   const onBackdrop = (e) => {
     if (e.target === e.currentTarget) {
@@ -16,7 +17,7 @@ export const Modal = ({ onBackdropClose, contentType }) => {
   const renderContent = () => {
     switch (contentType) {
       case "sendMessage":
-        return <SendMessageWrapper />;
+        return <SendMessageWrapper id={id} />;
       case "trialLesson":
         return <TrialLessonWrapper />;
       default:
@@ -46,5 +47,5 @@ export const Modal = ({ onBackdropClose, contentType }) => {
 
 Modal.propTypes = {
   onBackdropClose: PropTypes.func.isRequired,
-  // children: PropTypes.node.isRequired,
+
 };

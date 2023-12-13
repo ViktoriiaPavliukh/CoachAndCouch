@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addFeedback, getUserById, deleteUserAsUser } from "./operations";
+import {
+  addFeedback,
+  getUserById,
+  deleteUserAsUser,
+  sendMessageFromUser,
+  getUserMessages,
+} from "./operations";
 
 const userSlice = createSlice({
   name: "user",
@@ -11,6 +17,7 @@ const userSlice = createSlice({
     refreshToken: null,
     accessToken: null,
     users: [],
+    messages: [],
   },
   extraReducers: (builder) => {
     builder
@@ -34,6 +41,30 @@ const userSlice = createSlice({
           }
           return el;
         });
+      })
+      .addCase(sendMessageFromUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.messages = action.payload;
+      })
+      .addCase(sendMessageFromUser.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(sendMessageFromUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserMessages.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.messages = action.payload;
+      })
+      .addCase(getUserMessages.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getUserMessages.pending, (state) => {
+        state.isLoading = true;
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
