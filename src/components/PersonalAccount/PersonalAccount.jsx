@@ -65,8 +65,8 @@ export function PersonalAccount() {
   const navigate = useNavigate();
   const intl = useIntl();
   const location = useLocation();
-  console.log(location);
-  console.log(user);
+  // console.log(location);
+  // console.log(user);
 
   const handleLogout = () => {
     dispatch(logoutUser());

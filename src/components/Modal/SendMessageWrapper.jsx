@@ -13,19 +13,8 @@ export const SendMessageWrapper = ({ id }) => {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  // const handleSendMessage = async () => {
-  //   try {
-  //     await sendMessageFromUser({ id, message });
-  //     setSentMessage({ message: "Your message has been sent." });
-  //     setMessage("");
-  //     setSnackbarOpen(true);
-  //   } catch (error) {
-  //     console.error("Error sending message:", error);
-  //   }
-  // };
   const handleSendMessage = async () => {
     try {
-      // Dispatch the action using the thunk
       await dispatch(sendMessageFromUser({ id, message }));
       setSentMessage({ message: "Your message has been sent." });
       setMessage("");
