@@ -18,14 +18,12 @@ export function ReviewList({ elements, id, userImage }) {
   const token = useSelector(selectToken);
   const en = useSelector(selectCurrentLanguage);
   const userId = useSelector(selectUser).id;
-  console.log(userId);
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
     const feedback = {
       mark: Number(e.target.mark?.value),
       message: e.target.message?.value,
     };
-    console.log(feedback, id);
     if (!token) {
       if (en === "en") {
         toast.error("Only authorized users can post reviews", {
@@ -53,7 +51,7 @@ export function ReviewList({ elements, id, userImage }) {
     dispatch(addFeedback({ id, feedback }));
     e.target.reset();
   };
-  console.log(elements);
+  // console.log(elements);
 
   return isLoading ? (
     <Loader />

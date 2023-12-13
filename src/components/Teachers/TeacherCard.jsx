@@ -30,7 +30,6 @@ export function TeacherCard({ teacher }) {
     setShowModal(false);
     setModalContentType(null);
   };
-  console.log(teacher);
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
