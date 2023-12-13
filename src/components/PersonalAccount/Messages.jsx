@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMessages } from "@/redux/user/operations";
-import { Box, Typography } from "@mui/material";
+import { getUserMessages } from "@/redux/user/operations";
+import { selectMessages } from "@/redux/user/selectors";
+import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
 
 export const Messages = () => {
   const dispatch = useDispatch();
+  const messages = useSelector(selectMessages);
+  const intl = useIntl();
 
   useEffect(() => {
-    dispatch(getAllMessages);
+    dispatch(getUserMessages());
   }, [dispatch]);
-
 
   return (
     <Box
@@ -18,7 +21,19 @@ export const Messages = () => {
         flexDirection: "column",
       }}
     >
-      <Typography> Messages</Typography>
+      <Typography variant="h5">
+        {intl.formatMessage({ id: "personalAccount.messages" })}
+      </Typography>
+      <List>
+        {messages.map((message) => (
+          <ListItem key={message.id}>
+            <ListItemText
+              primary={message.message}
+              secondary={new Date(message.writtedAt).toLocaleString()}
+            />
+          </ListItem>
+        ))}
+      </List>
     </Box>
   );
 };

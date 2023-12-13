@@ -70,49 +70,12 @@ export const deleteUserAsUser = createAsyncThunk(
   }
 );
 
-// export const sendMessageFromUser = createAsyncThunk(
-//   "user/sendMessage",
-//   async ({ message }, thunkAPI) => {
-//     try {
-//       const userToken = thunkAPI.getState().auth.accessToken;
-//       const userId = thunkAPI.getState().auth.user.id;
-//       console.log(userId);
-//       console.log(userToken);
-//       token.set(userToken);
-//       console.log(message);
-
-//       // Send the message
-//       await privateAPI.post(
-//         `/users/30/conversation`,
-//         { message },
-//         {
-//           headers: { Authorization: `Bearer ${userToken}` },
-//         }
-//       );
-
-//       const response = await privateAPI.get(`/users/30/conversation`, {
-//         headers: { Authorization: `Bearer ${userToken}` },
-//       });
-
-//       const messages = response.data;
-
-//       console.log(messages);
-
-//       return messages;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
 export const sendMessageFromUser = createAsyncThunk(
   "user/sendMessage",
   async ({ id, message }, thunkAPI) => {
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
-      const userId = thunkAPI.getState().auth.user.id;
-      token.set(userToken);
 
-      // Send the message
       await privateAPI.post(
         `/users/${id}/conversation`,
         { message },
@@ -121,54 +84,28 @@ export const sendMessageFromUser = createAsyncThunk(
         }
       );
 
-      // Fetch updated conversation/messages after sending the message
-      // const response = await privateAPI.get(
-      //   `/users/${id}/conversation`,
-      //   {
-      //     headers: { Authorization: `Bearer ${userToken}` },
-      //   }
-      // );
+      const response = await privateAPI.get(`/users/${id}/conversation`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
 
-      // const messages = response.data;
-      // console.log(messages);
-      // return messages;
+      const messages = response.data;
+      return messages;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-// export const sendMessageFromUser = createAsyncThunk(
-//   "user/sendMessage",
-//   async (dataMessage, thunkAPI) => {
-//     const { id, message } = dataMessage;
-//     try {
-//       const userToken = thunkAPI.getState().auth.accessToken;
-//       token.set(userToken);
-//       const { data } = await privateAPI.post(
-//         `/users/${id}/conversation`,
-//         message, {
-//           headers: { Authorization: `Bearer ${userToken}` },
-//         }
-//       );
-//       return data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-export const getAllMessages = createAsyncThunk(
-  "user/getAllMessages",
-  async (id, thunkAPI) => {
+export const getUserMessages = createAsyncThunk(
+  "user/getUserMessages",
+  async (_, thunkAPI) => {
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
-      const userId = thunkAPI.getState().auth.user.id;
-      console.log(userId.id);
-      token.set(userToken);
-      const { data } = await privateAPI.get(`/users/${userId}/conversation`);
-      console.log(data);
-      return data;
+      const response = await privateAPI.get(`/users/conversations`, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
+      const messages = response.data;
+      return messages;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
