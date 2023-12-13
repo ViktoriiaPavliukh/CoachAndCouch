@@ -1,8 +1,32 @@
 import PhoneNumber from "./PhoneNumber";
 import { Link } from "react-router-dom";
-import { Box, Container, Typography, Paper, Stack } from "@mui/material";
-import LanguageSwitcher from "../Header/LanguageSwitcher";
 import { useIntl } from "react-intl";
+import {
+  Box,
+  Container,
+  Typography,
+  Paper,
+  Stack,
+  IconButton,
+} from "@mui/material";
+import LanguageSwitcher from "../Header/LanguageSwitcher";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import FacebookIcon from "@mui/icons-material/FacebookRounded";
+
+const ExternalLink = ({ to, children, ...rest }) => {
+  return (
+    <a href={to} target="_blank" rel="noopener noreferrer" {...rest}>
+      <IconButton
+        size="large"
+        color="inherit"
+        sx={{ color: "white", padding: "3px" }}
+      >
+        {children}
+      </IconButton>
+    </a>
+  );
+};
 
 export default function Footer() {
   const phoneNumber1 = "+38(093) 033 80 21";
@@ -15,7 +39,7 @@ export default function Footer() {
       component={"footer"}
       sx={{
         backgroundColor: (theme) => theme.palette.primary.main,
-        paddingY: "44px",
+        paddingY: "60px",
       }}
     >
       <Container
@@ -28,50 +52,140 @@ export default function Footer() {
           color: "white",
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-          <Stack direction="row" spacing={2}>
-            <Typography
-              variant="h6"
-              noWrap
-              component={Link}
-              to="home"
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+            gap: "56px",
+          }}
+        >
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <Box
               sx={{
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                color: "inherit",
-                textDecoration: "none",
-                opacity: "0.9",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              Coach&#x26;Couch
-            </Typography>
-            <LanguageSwitcher />
-          </Stack>
-          <Typography>{intl.formatMessage({ id: "footer.text" })}</Typography>
-          <Stack direction="row" spacing={6}>
-            <Stack>
-              <PhoneNumber phoneNumber={phoneNumber1} />
-              <PhoneNumber phoneNumber={phoneNumber2} />
+              {" "}
               <Typography
-                component="a"
-                href={`mailto:coachandcouch@gmail.com`}
-                style={{ textDecoration: "none", color: "inherit" }}
+                variant="posterBlack"
+                noWrap
+                component={Link}
+                to="home"
+                sx={{
+                  display: "flex",
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  color: "inherit",
+                  textDecoration: "none",
+                  opacity: "0.9",
+                  paddingy: "10px",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
               >
-                coachandcouch@gmail.com
+                Coach&#x26;Couch
               </Typography>
-            </Stack>
-            <Typography>{intl.formatMessage({ id: "footer.social" })}</Typography>
+            </Box>
+            <Box sx={{ display: "flex" }}>
+              {/* <LanguageSwitcher /> */}
+              {/* <Typography>
+                {intl.formatMessage({ id: "footer.text" })}
+              </Typography> */}
+              <Stack direction="row" spacing={6}>
+                <Stack
+                  direction="column"
+                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                >
+                  <Typography>
+                    {intl.formatMessage({ id: "footer.confidential" })}
+                  </Typography>
+                  <Typography>
+                    {intl.formatMessage({ id: "footer.conditions" })}
+                  </Typography>
+                  <Typography>
+                    {intl.formatMessage({ id: "footer.developers" })}
+                  </Typography>
+                </Stack>
+                <Stack
+                  direction="column"
+                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                >
+                  <PhoneNumber phoneNumber={phoneNumber1} />
+                  <PhoneNumber phoneNumber={phoneNumber2} />
+                  <Typography
+                    component="a"
+                    href={`mailto:coachandcouch@gmail.com`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    coachandcouch@gmail.com
+                  </Typography>
+                </Stack>
+                <Box
+                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                >
+                  <Typography>
+                    {intl.formatMessage({ id: "footer.social" })}
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    sx={{
+                      display: "flex",
+                      gap: "0",
+                    }}
+                  >
+                    <ExternalLink
+                      to="https://www.instagram.com"
+                      aria-label="Instagram"
+                    >
+                      <InstagramIcon
+                        sx={{
+                          color: (theme) => theme.palette.textColor.header,
+                        }}
+                      />
+                    </ExternalLink>
+                    <ExternalLink
+                      to="https://www.telegram.org"
+                      aria-label="Telegram"
+                    >
+                      <TelegramIcon
+                        sx={{
+                          padding: "0px",
+                          color: (theme) => theme.palette.textColor.header,
+                        }}
+                      />
+                    </ExternalLink>
+                    <ExternalLink
+                      to="https://www.facebook.com"
+                      aria-label="Facebook"
+                    >
+                      <FacebookIcon
+                        sx={{
+                          color: (theme) => theme.palette.textColor.header,
+                        }}
+                      />
+                    </ExternalLink>
+                  </Stack>
+                </Box>
+              </Stack>
+            </Box>
           </Stack>
-          <Stack direction="row" spacing={2}>
-            <Typography>{intl.formatMessage({ id: "footer.confidential" })}</Typography>
-            <Typography>{intl.formatMessage({ id: "footer.conditions" })}</Typography>
-            <Typography>{intl.formatMessage({ id: "footer.developers" })}</Typography>
-          </Stack>
-          <Typography>{intl.formatMessage({ id: "footer.copyright" })}</Typography>
+          <Typography>
+            {intl.formatMessage({ id: "footer.copyright" })}
+          </Typography>
         </Box>
       </Container>
-      {/* </AppBar> */}
     </Paper>
   );
 }
