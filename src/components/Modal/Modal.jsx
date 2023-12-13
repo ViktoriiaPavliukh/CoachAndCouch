@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
-import { TrialLessonWrapper } from "./TrialLessonWrapper";
+import { TrialLessonWrapper } from "./TrialLessonWrapper/TrialLessonWrapper";
 import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
 
@@ -46,5 +46,5 @@ export const Modal = ({ onBackdropClose, contentType }) => {
 
 Modal.propTypes = {
   onBackdropClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  // children: PropTypes.node.isRequired,
 };
