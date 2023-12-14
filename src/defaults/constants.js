@@ -46,6 +46,7 @@ export const priceOptions = [
   // Додайте більше варіантів часу уроку
 ];
 
+
 // export const specializationOptions = [
 //   { title: "Розмовна мова", specialization: "Speaking" },
 //   { title: "Вивчення азів", specialization: "Beginner" },
@@ -120,3 +121,4 @@ export const hobbyOptions = [
 //     description: "Certified language instructor fluent in English, Spanish, and French.",
 //   },
 // ];
+

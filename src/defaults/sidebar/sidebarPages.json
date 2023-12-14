@@ -1,0 +1,30 @@
+[
+    {"page": "profile",
+    "icon": "FileText"
+    
+},
+{"page": "lessons",
+    "icon": "Edit2"
+},
+{"page": "schedule",
+    "icon": "Calendar"
+},
+{"page": "messages",
+    "icon": "MessageSquare"
+},
+{"page": "likes",
+    "icon": "Heart"
+},
+{"page": "advertisements",
+    "icon": "Tablet"
+},
+{"page": "feedback",
+    "icon": "Smile"
+},
+{"page": "main",
+    "icon": "Grid"
+},
+{"page": "settings",
+    "icon": "Settings"
+}
+]
