@@ -46,6 +46,7 @@ const messages = {
     "personalAccount.profile": "Profile",
     "personalAccount.teachers": "Teachers",
     "personalAccount.messages": "Messages",
+    "personalAccount.main": "Dashboard",
 
     "personalAccount.advertisements": "My advertisements",
     "personalAccount.likes": "Favourites",
@@ -188,6 +189,8 @@ const messages = {
     "personalAccount.enquiry": "Моя анкета",
     "personalAccount.schedule": "Розклад",
     "personalAccount.settings": "Налаштування",
+    "personalAccount.main": "Дашборд",
+
     "personalAccount.logout": "Вихід",
     rate: "Рейтинг",
     "footer.text":

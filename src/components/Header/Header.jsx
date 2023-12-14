@@ -245,7 +245,7 @@ export function Header() {
               <Box display="flex" direction="row">
                 <MenuItem
                   onClick={() => {
-                    handleCloseNavMenu(`/user/${user.id}/main`);
+                    handleCloseNavMenu(`/user/${user.id}/profile`);
                   }}
                   user={user}
                   sx={{
