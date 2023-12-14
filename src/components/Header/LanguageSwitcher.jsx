@@ -15,18 +15,31 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", gap: "0" }}>
+    <Box
+      sx={{
+        display: "flex",
+        gap: "0",
+        "&:hover": {
+          color: (theme) => theme.palette.primary.accent,
+        },
+      }}
+    >
       <IconButton
         onClick={handleToggleLanguage}
         color="inherit"
-        sx={{ padding: 0 }}
+        sx={{
+          padding: 0,
+        }}
       >
         <LanguageIcon sx={{ padding: 0 }} />
       </IconButton>
       <Button
         onClick={handleToggleLanguage}
         color="inherit"
-        sx={{ padding: 0, minWidth: "34px" }}
+        sx={{
+          padding: 0,
+          minWidth: "34px",
+        }}
       >
         {currentLanguage === "uk" ? "Укр" : "Eng"}
       </Button>

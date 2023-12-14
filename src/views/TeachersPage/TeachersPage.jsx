@@ -1,9 +1,7 @@
 import { useIntl } from "react-intl";
 import {
-  // Container,
   Box,
   Button,
-  // Grid,
   Typography,
   List,
   ListItem,
@@ -14,15 +12,20 @@ import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material"
 import { DescriptionImage } from "../../components/Teachers/DescriptionImage";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertsSelector, selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
+import {
+  advertsSelector,
+  selectAdvertsIsLoading,
+} from "@/redux/marketplace/adverts/advertsSelector";
 import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
-// import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
-
 import Loader from "../../components/Loader/Loader";
 import { FilterTeacherPanel } from "@/components/Teachers/FilterPanel";
 import { TeacherListBox } from "@/components/Teachers/TeacherList";
-import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
 
 export function TeachersPage() {
   const intl = useIntl();
@@ -40,10 +43,9 @@ export function TeachersPage() {
   }, [dispatch]);
   const adverts = useSelector(advertsSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
-  console.log(adverts);
 
   const listItemStyles = {
-    color: (theme) => theme.palette.textColor.grey,
+    color: (theme) => theme.palette.textColor.fontColor,
     fontSize: "20px",
     fontStyle: "normal",
     fontWeight: "400",
@@ -54,7 +56,6 @@ export function TeachersPage() {
       <Box
         maxWidth="1168px"
         width="100%"
-        // minWidth="320px"
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -100,22 +101,37 @@ export function TeachersPage() {
               }}
             >
               <ListItem sx={{ padding: "0" }}>
-                <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
-                </ListItemIcon>
-                <ListItemText primary={intl.formatMessage({ id: "list1" })} sx={listItemStyles} />
+                {/* <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
+                </ListItemIcon> */}
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list1" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
-                <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
-                </ListItemIcon>
-                <ListItemText primary={intl.formatMessage({ id: "list2" })} sx={listItemStyles} />
+                {/* <ListItemIcon sx={{ minWidth: "35px" }}>
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
+                </ListItemIcon> */}
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list2" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
-                <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon sx={{ color: (theme) => theme.palette.primary.accent }} />
-                </ListItemIcon>
-                <ListItemText primary={intl.formatMessage({ id: "list3" })} sx={listItemStyles} />
+                {/* <ListItemIcon sx={{ minWidth: "35px" }}>
+                  <FiberManualRecordIcon
+                    sx={{ color: (theme) => theme.palette.primary.accent }}
+                  />
+                </ListItemIcon> */}
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list3" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
             </List>
             <Button
@@ -129,11 +145,15 @@ export function TeachersPage() {
                 transition: "background-color 0.3s",
                 backgroundColor: (theme) => theme.palette.buttonColor.main,
                 "&:hover": {
-                  backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.darkHover,
                 },
               }}
             >
-              <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
+              <Typography
+                variant="posterButton"
+                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+              >
                 {intl.formatMessage({ id: "learnMore" })}
               </Typography>
             </Button>

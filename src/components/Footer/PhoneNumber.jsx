@@ -6,7 +6,9 @@ const PhoneNumber = ({ phoneNumber }) => {
     <Typography
       component="a"
       href={`tel:${phoneNumber}`}
-      style={{ textDecoration: "none", color: "inherit" }}
+      sx={{ textDecoration: "none", color: "inherit", "&:hover": {
+                        color: (theme) => theme.palette.primary.accent,
+      }}}
     >
       {phoneNumber}
     </Typography>

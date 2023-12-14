@@ -29,23 +29,19 @@ import { changeTheme } from "@/redux/theme/slice";
 import { styled } from "@mui/material/styles";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-// import { FormattedMessage } from "react-intl";
-
-// import messages from "../../defaults/translations/messages";
-
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
-    color: (theme) => theme.palette.primary.switch,
+    color: (theme) => theme.palette.buttonColor.themeSwitch,
   },
   "& .MuiSwitch-switchBase": {
-    color: theme.palette.primary.switch,
+    color: theme.palette.buttonColor.themeSwitch,
   },
   "& .MuiSwitch-thumb": {
-    color: theme.palette.primary.switch,
+    color: theme.palette.buttonColor.themeSwitch,
   },
   "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-    backgroundColor: theme.palette.primary.switch,
-    color: theme.palette.primary.switch,
+    backgroundColor: theme.palette.buttonColor.themeSwitch,
+    color: theme.palette.buttonColor.themeSwitch,
   },
   "& .MuiSwitch-track": {
     backgroundColor: theme.palette.primary.accent,
@@ -68,7 +64,12 @@ const MenuMobItem = styled(MenuItem)(() => ({
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
     <Link to={to} sx={{ color: "white", padding: "px" }}>
-      <IconButton size="large" color="inherit" sx={{ color: "white", padding: "3px" }} {...rest}>
+      <IconButton
+        size="large"
+        color="inherit"
+        sx={{ color: "white", padding: "3px" }}
+        {...rest}
+      >
         {children}
       </IconButton>
     </Link>
@@ -77,7 +78,6 @@ const ExternalLink = ({ to, children, ...rest }) => {
 
 export function Header() {
   const user = useSelector(selectUser);
-  // console.log(user);
   const [pathname, setPathname] = useState("");
   const path = useLocation().pathname;
   const intl = useIntl();
@@ -111,7 +111,10 @@ export function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: (theme) => theme.palette.primary.main }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
+    >
       <Container sx={{ padding: { sm: "0 16px", md: "0 23px" } }}>
         <Toolbar
           disableGutters
@@ -129,12 +132,12 @@ export function Header() {
             to="/"
             sx={{
               display: { xs: "none", md: "flex" },
-              // marginRight: "5%",
-              fontFamily: "monospace",
               fontWeight: 700,
-              color: "inherit",
+              color: (theme) => theme.palette.textColor.logo,
               textDecoration: "none",
-              opacity: "0.9",
+              "&:hover": {
+                color: (theme) => theme.palette.primary.accent,
+              },
             }}
           >
             Coach&#x26;Couch
@@ -169,7 +172,10 @@ export function Header() {
                   handleCloseNavMenu(link);
                 }}
                 sx={{
-                  color: (theme) => theme.palette.textColor.header,
+                  color: (theme) =>
+                    pathname === `/${link}` || pathname === `${link}`
+                      ? theme.palette.textColor.black
+                      : theme.palette.textColor.header,
                   display: "block",
                   textTransform: "lowercase",
                   "&:first-letter": {
@@ -177,9 +183,11 @@ export function Header() {
                   },
                   transition: "color 0.3s",
                   backgroundColor: (theme) =>
-                    pathname === `/${link}` || pathname === `${link}` ? theme.palette.primary.accent : null,
+                    pathname === `/${link}` || pathname === `${link}`
+                      ? theme.palette.buttonColor.header
+                      : null,
                   "&:hover": {
-                    color: (theme) => theme.palette.textColor.menuHover,
+                    color: (theme) => theme.palette.primary.accent,
                   },
                 }}
               >
@@ -195,24 +203,44 @@ export function Header() {
             }}
           >
             <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
-              <InstagramIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
+              <InstagramIcon
+                sx={{
+                  color: (theme) => theme.palette.textColor.header,
+                  "&:hover": {
+                    color: (theme) => theme.palette.primary.accent,
+                  },
+                }}
+              />
             </ExternalLink>
             <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
               <TelegramIcon
                 sx={{
                   padding: "0px",
                   color: (theme) => theme.palette.textColor.header,
+                  "&:hover": {
+                    color: (theme) => theme.palette.primary.accent,
+                  },
                 }}
               />
             </ExternalLink>
             <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
-              <FacebookRoundedIcon sx={{ color: (theme) => theme.palette.textColor.header }} />
+              <FacebookRoundedIcon
+                sx={{
+                  color: (theme) => theme.palette.textColor.header,
+                  "&:hover": {
+                    color: (theme) => theme.palette.primary.accent,
+                  },
+                }}
+              />
             </ExternalLink>
           </Stack>
-
           <Stack direction="row" sx={{ display: { xs: "none", lg: "flex" } }}>
             <LanguageSwitcher />
-            <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
+            <GreenSwitch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
             {isLoggedIn ? (
               <Box display="flex" direction="row">
                 <MenuItem
@@ -222,8 +250,7 @@ export function Header() {
                   user={user}
                   sx={{
                     "&:hover": {
-                      backgroundColor: (theme) => theme.palette.primary.accent,
-                      borderRadius: "6px",
+                      color: (theme) => theme.palette.primary.accent,
                     },
                   }}
                 >
@@ -234,14 +261,19 @@ export function Header() {
                   onClick={handleLogout}
                   sx={{
                     px: "12px",
-
+                    borderColor: (theme) => theme.palette.primary.accent,
+                    borderRadius: "6px",
+                    borderWidth: "1px",
+                    borderStyle: "solid",
                     "&:hover": {
                       backgroundColor: (theme) => theme.palette.primary.accent,
-                      borderRadius: "6px",
+                      color: (theme) => theme.palette.textColor.black,
                     },
                   }}
                 >
-                  <Typography textAlign="center">{intl.formatMessage({ id: "header.logout" })}</Typography>
+                  <Typography textAlign="center">
+                    {intl.formatMessage({ id: "header.logout" })}
+                  </Typography>
                 </MenuItem>
               </Box>
             ) : (
@@ -251,17 +283,29 @@ export function Header() {
                     px: "12px",
                     transition: "color 0.3s",
                     borderRadius: "6px",
-                    backgroundColor: (theme) => (pathname === "/login" ? theme.palette.primary.accent : null),
+                    color: (theme) =>
+                      pathname === "/login"
+                        ? theme.palette.textColor.header
+                        : theme.palette.textColor.header,
+                    backgroundColor: (theme) =>
+                      pathname === "/login" ? null : null,
+                    borderColor: (theme) => theme.palette.primary.accent,
+                    borderWidth: "1px",
+                    borderStyle: "solid",
                     "&:hover": {
-                      backgroundColor: (theme) => theme.palette.primary.accent,
+                      color: (theme) => theme.palette.primary.accent,
                     },
+                    marginRight: "12px",
+                    textTransform: "uppercase",
                   }}
                   key={title}
                   onClick={() => {
                     navigate(link);
                   }}
                 >
-                  <Typography textAlign="center">{intl.formatMessage({ id: "header.login" })}</Typography>
+                  <Typography textAlign="center">
+                    {intl.formatMessage({ id: "header.login" })}
+                  </Typography>
                 </MenuItem>
               ))
             )}
@@ -275,14 +319,22 @@ export function Header() {
                     }}
                     sx={{
                       px: "12px",
+                      color: (theme) =>
+                        pathname === "/registration" || pathname === "/"
+                          ? theme.palette.textColor.black
+                          : theme.palette.textColor.black,
                       backgroundColor: (theme) =>
-                        pathname === "/registration" || pathname === "/" ? theme.palette.primary.accent : null,
+                        pathname === "/registration" || pathname === "/"
+                          ? theme.palette.buttonColor.header
+                          : theme.palette.buttonColor.header,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
 
                       "&:hover": {
-                        backgroundColor: (theme) => theme.palette.primary.accent,
+                        backgroundColor: (theme) =>
+                          theme.palette.primary.accent,
                       },
+                      textTransform: "uppercase",
                     }}
                   >
                     <Typography textAlign="center">{title}</Typography>
@@ -291,9 +343,15 @@ export function Header() {
               </Box>
             )}
           </Stack>
-          <Box sx={{ display: { xs: "flex", lg: "none" }, alignItems: "center" }}>
+          <Box
+            sx={{ display: { xs: "flex", lg: "none" }, alignItems: "center" }}
+          >
             <LanguageSwitcher />
-            <GreenSwitch checked={checked} onChange={handleChange} inputProps={{ "aria-label": "controlled" }} />
+            <GreenSwitch
+              checked={checked}
+              onChange={handleChange}
+              inputProps={{ "aria-label": "controlled" }}
+            />
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -343,7 +401,9 @@ export function Header() {
                         padding: "6px 16px",
                       }}
                     >
-                      <Typography textAlign="center">{intl.formatMessage({ id: "header.profile" })}</Typography>
+                      <Typography textAlign="center">
+                        {intl.formatMessage({ id: "header.profile" })}
+                      </Typography>
                     </Typography>
                   </MenuMobItem>
                   <MenuMobItem
