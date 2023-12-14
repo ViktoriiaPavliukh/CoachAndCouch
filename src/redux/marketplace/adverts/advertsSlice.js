@@ -1,16 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteAdvertsById, getAdverts, postAdvert } from "./operations";
+import { deleteAdvertsById, favoriteAdvert, getAdvertById, getAdverts, postAdvert } from "./operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
   initialState: {
     items: [],
+    advert: {},
     isLoading: false,
     error: null,
   },
   extraReducers: (builder) => {
     builder
-
+      .addCase(favoriteAdvert.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = action.payload;
+      })
+      .addCase(getAdvertById.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.advert = action.payload;
+      })
       .addCase(getAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
