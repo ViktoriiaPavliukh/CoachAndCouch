@@ -75,7 +75,7 @@ const messages = {
     "footer.confidential": "Privacy Policy",
     "footer.conditions": "Terms and Conditions",
     "footer.developers": "Developer Team Contacts",
-    "footer.copyright": "©2023 coach&Couch. All rights reserved.",
+    "footer.copyright": "©2023 Coach&Couch. All rights reserved.",
 
     //404
     errorTitle: "Oops! Page not found.",
@@ -196,7 +196,7 @@ const messages = {
     "footer.confidential": "Політика конфіденційності",
     "footer.conditions": "Умови використання",
     "footer.developers": "Контакти команди розробників",
-    "footer.copyright": "©2023 coach&Couch. Усі права захищені.",
+    "footer.copyright": "©2023 Coach&Couch. Усі права захищені.",
 
     //404
     errorTitle: "Oops! Сторінку не знайдено",

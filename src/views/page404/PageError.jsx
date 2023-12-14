@@ -18,7 +18,7 @@ export default function PageError() {
         backgroundImage: `url(${mainBg})`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        width: "100%",
+        width: "100vw",
         height: "calc(100vh - 70px)",
         display: "flex",
         flexDirection: "column",

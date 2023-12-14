@@ -17,7 +17,7 @@ export default function Layout() {
         sx={{
           padding: { sm: "0 16px", md: "0 23px" },
           border: "1px solid red",
-          backgroundColor: "background.paper",
+          backgroundColor: "background",
           display: "flex",
           justifyContent: "center",
           maxWidth: "100vw",

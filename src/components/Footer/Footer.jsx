@@ -84,7 +84,6 @@ export default function Footer() {
                 to="home"
                 sx={{
                   display: "flex",
-                  fontFamily: "monospace",
                   fontWeight: 700,
                   color: "inherit",
                   textDecoration: "none",
@@ -93,6 +92,9 @@ export default function Footer() {
                   justifyContent: "center",
                   alignItems: "center",
                   textAlign: "center",
+                  "&:hover": {
+                    color: (theme) => theme.palette.primary.accent,
+                  },
                 }}
               >
                 Coach&#x26;Couch
@@ -108,13 +110,37 @@ export default function Footer() {
                   direction="column"
                   sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
-                  <Typography>
+                  <Typography
+                    component="a"
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: (theme) => theme.palette.primary.accent,
+                      },
+                    }}
+                  >
                     {intl.formatMessage({ id: "footer.confidential" })}
                   </Typography>
-                  <Typography>
+                  <Typography
+                    component="a"
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: (theme) => theme.palette.primary.accent,
+                      },
+                    }}
+                  >
                     {intl.formatMessage({ id: "footer.conditions" })}
                   </Typography>
-                  <Typography>
+                  <Typography
+                    component="a"
+                    sx={{
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: (theme) => theme.palette.primary.accent,
+                      },
+                    }}
+                  >
                     {intl.formatMessage({ id: "footer.developers" })}
                   </Typography>
                 </Stack>
@@ -127,7 +153,13 @@ export default function Footer() {
                   <Typography
                     component="a"
                     href={`mailto:coachandcouch@gmail.com`}
-                    style={{ textDecoration: "none", color: "inherit" }}
+                    sx={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      "&:hover": {
+                        color: (theme) => theme.palette.primary.accent,
+                      },
+                    }}
                   >
                     coachandcouch@gmail.com
                   </Typography>
@@ -152,6 +184,9 @@ export default function Footer() {
                       <InstagramIcon
                         sx={{
                           color: (theme) => theme.palette.textColor.header,
+                          "&:hover": {
+                            color: (theme) => theme.palette.primary.accent,
+                          },
                         }}
                       />
                     </ExternalLink>
@@ -163,6 +198,9 @@ export default function Footer() {
                         sx={{
                           padding: "0px",
                           color: (theme) => theme.palette.textColor.header,
+                          "&:hover": {
+                            color: (theme) => theme.palette.primary.accent,
+                          },
                         }}
                       />
                     </ExternalLink>
@@ -173,6 +211,9 @@ export default function Footer() {
                       <FacebookIcon
                         sx={{
                           color: (theme) => theme.palette.textColor.header,
+                          "&:hover": {
+                            color: (theme) => theme.palette.primary.accent,
+                          },
                         }}
                       />
                     </ExternalLink>
