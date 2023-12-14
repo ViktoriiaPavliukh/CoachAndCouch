@@ -10,16 +10,20 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import { Modal } from "../Modal/Modal";
 import countries from "../../defaults/countries/countries.json";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countriesCase from "@/helpers/countriesCase";
+import { roundRating } from "@/helpers/roundRating";
+import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
 
 export function TeacherCard({ teacher }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
+  const dispatch = useDispatch();
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -31,16 +35,20 @@ export function TeacherCard({ teacher }) {
     setModalContentType(null);
   };
   const navigate = useNavigate();
-  const handleClick = (e) => {
-    e.preventDefault();
+
+  const handleClick = () => {
+    // e.preventDefault();
+
     navigate(`/teachers/${teacher.id}`);
   };
-  const handleFavoriteAdd = () => {
+  const handleFavoriteAdd = (id) => {
     setIsFavorite(() => (isFavorite ? false : true));
+    dispatch(favoriteAdvert(id));
   };
   // const setBg = () => {
   //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
   // };
+
   return (
     <>
       <Card
@@ -54,11 +62,11 @@ export function TeacherCard({ teacher }) {
           // backgroundColor: setBg,
         }}
       >
-        <CardActionArea onClick={handleClick}>
+        <CardActionArea onClick={() => handleClick()}>
           <TeacherImage src={teacher.imagePath} />
           <img
-            src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
-            srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
+            src={`https://flagcdn.com/w40/${teacher.user?.country?.alpha2.toLowerCase()}.png`}
+            srcSet={`https://flagcdn.com/w80/${teacher.user?.country?.alpha2.toLowerCase()}.png 2x`}
             width="40"
             height="36"
             alt="ua"
@@ -123,8 +131,8 @@ export function TeacherCard({ teacher }) {
             <Typography variant="posterItem" sx={{ color: (theme) => theme.palette.textColor.grey }}>
               {intl.formatMessage({ id: "country" })}:&nbsp;
               {en == "en"
-                ? countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameEng)
-                : countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameShort)}
+                ? countriesCase(countries.find((el) => el.alpha2 == teacher.user?.country?.alpha2).nameEng)
+                : countriesCase(countries.find((el) => el.alpha2 == teacher.user?.country?.alpha2).nameShort)}
             </Typography>
           </Stack>
 
@@ -144,12 +152,12 @@ export function TeacherCard({ teacher }) {
                     color: (theme) => theme.palette.textColor.darkGrey,
                   }}
                 />
-                <Typography variant="posterItem">{teacher.user.rating}</Typography>
+                <Typography variant="posterItem">{roundRating(teacher.user.rating)}</Typography>
               </Box>
               <Box sx={{ display: "flex", gap: "4px" }}>
                 <Button
                   disableTouchRipple
-                  onClick={handleFavoriteAdd}
+                  onClick={() => handleFavoriteAdd(teacher.id)}
                   sx={{
                     display: "flex",
                     justifyContent: "center",
@@ -182,7 +190,7 @@ export function TeacherCard({ teacher }) {
                       color: "rgba(0, 0, 0, 0.87)",
                     }}
                   >
-                    {teacher.user.rating}
+                    {roundRating(teacher.user.rating)}
                   </Typography>
                 </Button>
               </Box>

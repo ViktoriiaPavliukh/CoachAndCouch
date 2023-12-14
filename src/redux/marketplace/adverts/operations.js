@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunkAPI) => {
   try {
     const { data } = await publicAPI.get(`/adverts`);
-    // console.log(data);
     if (thunkAPI.status === 201) {
       toast.success("You add the advert", {
         icon: "🚀",
@@ -17,7 +16,6 @@ export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunk
         icon: false,
       });
     }
-
     return data;
   } catch (error) {
     toast.error(error.message);
@@ -25,38 +23,50 @@ export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunk
   }
 });
 
-export const getAdvertsById = async (id) => {
-  const { data } = await publicAPI.get(`/adverts/${id}`);
-  // console.log(data);
-  return data;
-};
+export const getAdvertById = createAsyncThunk("adverts/getAdvertById", async (id, thunkAPI) => {
+  try {
+    const { data } = await publicAPI.get(`/adverts/${id}`);
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
 
 export const deleteAdvertsById = createAsyncThunk("adverts/deleteAdvertsById", async (id, thunkAPI) => {
   try {
     const userToken = thunkAPI.getState().auth.accessToken;
     token.set(userToken);
-    // console.log(userToken);
     const { data } = await privateAPI.put(`/adverts/${id}`);
     console.log(`adverts id = ${id} was deleted`);
     return data;
   } catch (error) {
-    // console.log(error.message);
-    //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
     return thunkAPI.rejectWithValue(error.message);
   }
 });
 
 export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertData, thunkAPI) => {
   try {
-    // console.log(thunkAPI.getState());
     const userToken = thunkAPI.getState().auth.accessToken;
-    // console.log(userToken);
     token.set(userToken);
     const { data } = await privateAPI.post("/adverts", advertData);
-    // console.log("Advertisement created:", data);
     return data;
   } catch (error) {
-    // console.error("Error creating advertisement:", error);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const favoriteAdvert = createAsyncThunk("adverts/favoriteAdverts", async (id, thunkAPI) => {
+  try {
+    const userToken = thunkAPI.getState().auth.accessToken;
+    token.set(userToken);
+    const { data } = await privateAPI.put(`/adverts/${id}/favorite`);
+
+    console.log(`adverts id = ${id} was add to your favorite`);
+    toast.success(`adverts id = ${id} was add to your favorite`, {
+      icon: false,
+    });
+    return data;
+  } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
