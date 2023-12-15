@@ -1,21 +1,18 @@
 import { priceOptions } from "@/defaults";
-import { languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
+import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 // import {
 //   getCountries,
 //   getLanguages,
 //   getSpecializations,
 // } from "@/redux/admin/operations";
 import { Filter } from "../../components/Teachers/Filter";
-
-// import { Filter } from "@mui/icons-material";
 import { Stack } from "@mui/material";
-// import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
-// import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
-// import { useEffect } from "react";
-import countries from "../../defaults/countries/countries.json";
+
+import countriesJSON from "../../defaults/countries/countries.json";
+import countriesCase from "@/helpers/countriesCase";
 
 export function FilterTeacherPanel() {
   // const dispatch = useDispatch();
@@ -27,7 +24,7 @@ export function FilterTeacherPanel() {
   // }, [dispatch]);
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
-  // const countries = useSelector(countriesSelector);
+  const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
   const en = useSelector(selectCurrentLanguage);
   console.log(en);
@@ -56,7 +53,12 @@ export function FilterTeacherPanel() {
         label={intl.formatMessage({ id: "language" })}
       />
       <Filter
-        options={countries}
+        options={[...countries].map((el) => ({
+          id: el.id,
+          alpha2: el.alpha2,
+          nameEng: countriesCase(countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng),
+          nameShort: countriesCase(countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameShort),
+        }))}
         typeoption={en == "en" ? "nameEng" : "nameShort"}
         label={intl.formatMessage({ id: "country" })}
       />
