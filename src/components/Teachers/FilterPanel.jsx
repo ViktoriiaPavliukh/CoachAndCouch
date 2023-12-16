@@ -1,10 +1,10 @@
 import { priceOptions } from "@/defaults";
-import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
-// import {
-//   getCountries,
-//   getLanguages,
-//   getSpecializations,
-// } from "@/redux/admin/operations";
+import {
+  countriesSelector,
+  languagesSelector,
+  specializationsSelector,
+} from "@/redux/admin/adminSelector";
+
 import { Filter } from "../../components/Teachers/Filter";
 import { Stack } from "@mui/material";
 import { useIntl } from "react-intl";
@@ -13,21 +13,30 @@ import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSli
 
 import countriesJSON from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
+import { useState } from "react";
+import { PropTypes } from "prop-types";
 
-export function FilterTeacherPanel() {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(getAdverts());
-  //   dispatch(getLanguages());
-  //   dispatch(getSpecializations());
-  //   dispatch(getCountries());
-  // }, [dispatch]);
+export function FilterTeacherPanel({ onFiltersChange }) {
+  const [selectedFilters, setSelectedFilters] = useState({
+    language: null,
+    country: null,
+    price: null,
+    specialization: null,
+  });
+
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
   const en = useSelector(selectCurrentLanguage);
-  console.log(en);
+  const handleFilterChange = (filterType, selectedValue) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: selectedValue,
+    }));
+    onFiltersChange(selectedFilters);
+  };
+
   return (
     <Stack
       direction="row"
@@ -51,23 +60,47 @@ export function FilterTeacherPanel() {
         typeoption={en == "en" ? "languageEn" : "languageUa"}
         keyfield="id"
         label={intl.formatMessage({ id: "language" })}
+        onFilterChange={(selectedValue) =>
+          handleFilterChange("language", selectedValue)
+        }
       />
       <Filter
         options={[...countries].map((el) => ({
           id: el.id,
           alpha2: el.alpha2,
-          nameEng: countriesCase(countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng),
-          nameShort: countriesCase(countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameShort),
+          nameEng: countriesCase(
+            countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng
+          ),
+          nameShort: countriesCase(
+            countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameShort
+          ),
         }))}
         typeoption={en == "en" ? "nameEng" : "nameShort"}
         label={intl.formatMessage({ id: "country" })}
+        onFilterChange={(selectedValue) =>
+          handleFilterChange("country", selectedValue)
+        }
       />
-      <Filter options={priceOptions} typeoption="title" label={intl.formatMessage({ id: "price" })} />
+      <Filter
+        options={priceOptions}
+        typeoption="title"
+        label={intl.formatMessage({ id: "price" })}
+        onFilterChange={(selectedValue) =>
+          handleFilterChange("price", selectedValue)
+        }
+      />
       <Filter
         options={specializations}
         typeoption={en == "en" ? "specializationEn" : "specializationUa"}
         label={intl.formatMessage({ id: "specialization" })}
+        onFilterChange={(selectedValue) =>
+          handleFilterChange("specialization", selectedValue)
+        }
       />
     </Stack>
   );
 }
+
+FilterTeacherPanel.propTypes = {
+  onFiltersChange: PropTypes.func,
+};

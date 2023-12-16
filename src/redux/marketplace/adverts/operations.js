@@ -70,3 +70,13 @@ export const favoriteAdvert = createAsyncThunk("adverts/favoriteAdverts", async 
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+export const filterAdverts = createAsyncThunk("adverts/filterAdverts", async (filters, thunkAPI) => {
+  try {
+    const { data } = await privateAPI.put(`adverts?language=${filters[0].language.id}&country=${filters[1].country.id}&specialization=${filters[2].specialization.id}`);
+    console.log(`adverts was filtered`);
+    
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

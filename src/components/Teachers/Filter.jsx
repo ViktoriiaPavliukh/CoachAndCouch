@@ -8,17 +8,21 @@ const filterOptions = createFilterOptions({
   stringify: (option) => option.typeoption,
 });
 
-export const Filter = ({ options, typeoption, label }) => {
-  const [value, setValue] = useState("");
+export const Filter = ({ options, typeoption, label, onFilterChange }) => {
+  const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   console.log(value);
+  // console.log(inputValue);
   return (
     <Autocomplete
       id={`${label}-filter`}
+      // freeSolo
       options={options}
       // value={value}
       onChange={(event, newValue) => {
-        setValue(newValue);
+        setValue(newValue.id);
+        // console.log(value);
+        onFilterChange(newValue.id);
       }}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
@@ -49,4 +53,5 @@ Filter.propTypes = {
   typeoption: PropTypes.string,
   label: PropTypes.string,
   getOptionLabel: PropTypes.string,
+  onFilterChange: PropTypes.func,
 };
