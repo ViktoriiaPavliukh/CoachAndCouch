@@ -14,7 +14,7 @@ function getCurrentMonday() {
 }
 
 // api/teacher/<id>/get-free-schedule/<week> <- monday
-const response = ["2023-12-17 17:00", "2023-12-17 18:00", "2023-12-17 19:00", "2023-12-17 21:00"];
+const response = ["2023-12-18 17:00", "2023-12-18 18:00", "2023-12-18 19:00", "2023-12-17 21:00"];
 
 export const TrialLessonWrapper = () => {
   const [selected, setSelected] = useState();
