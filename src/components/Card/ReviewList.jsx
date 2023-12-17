@@ -11,12 +11,16 @@ import { useIntl } from "react-intl";
 import format from "date-fns/format";
 import { useState } from "react";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
+import { advertByIdSelector } from "@/redux/marketplace/adverts/advertsSelector";
 
-export function ReviewList({ elements, id, userImage, advertId }) {
+export function ReviewList({ id, userImage, advertId }) {
+  const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
+  console.log(reviews);
+
   const [showAll, setShowAll] = useState(false);
   const defaultShow = 3;
-  const showAllByDefault = elements.length <= defaultShow;
-  const elementsToShow = showAll || showAllByDefault ? elements : elements.slice(0, defaultShow);
+  const showAllByDefault = reviews.length <= defaultShow;
+  const elementsToShow = showAll || showAllByDefault ? reviews : reviews.slice(0, defaultShow);
 
   const [updateFeedback, setFeedback] = useState({ mark: "", message: "" });
   console.log(updateFeedback);
@@ -26,8 +30,10 @@ export function ReviewList({ elements, id, userImage, advertId }) {
   const token = useSelector(selectToken);
   const en = useSelector(selectCurrentLanguage);
   const userId = useSelector(selectUser).id;
+
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
+
     const feedback = {
       mark: Number(e.target.mark?.value),
       message: e.target.message?.value,
@@ -58,8 +64,8 @@ export function ReviewList({ elements, id, userImage, advertId }) {
       }
       return;
     }
-    dispatch(addFeedback({ id, feedback }));
-    dispatch(getAdvertById(advertId));
+    dispatch(addFeedback({ id, feedback })).then(() => dispatch(getAdvertById(advertId)));
+
     e.target.reset();
   };
   // console.log(elements);
@@ -160,7 +166,7 @@ export function ReviewList({ elements, id, userImage, advertId }) {
           padding: "8px 16px",
           marginBottom: "30px",
         }}
-        onSubmit={reviewHandleSubmit}
+        onSubmit={(e) => reviewHandleSubmit(e)}
       >
         <Typography
           component="p"

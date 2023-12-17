@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material";
+import { MyCalendar } from "../MyCalendar/MyCalendar";
 
 export const Schedule = () => {
   return (
@@ -9,6 +10,7 @@ export const Schedule = () => {
       }}
     >
       <Typography>My Schedule</Typography>
+      <MyCalendar />
     </Box>
   );
 };
