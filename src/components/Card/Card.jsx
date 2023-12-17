@@ -204,7 +204,7 @@ export function Card() {
                   {intl.formatMessage({ id: "feedback" })} ({teacher.user.feedbacksToMe.length})
                 </Typography>
                 <ReviewList
-                  elements={teacher.user.feedbacksToMe}
+                  // elements={teacher.user.feedbacksToMe}
                   id={teacher.user.id}
                   userImage={userImage}
                   advertId={teacher.id}

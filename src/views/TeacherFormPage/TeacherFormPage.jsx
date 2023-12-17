@@ -57,7 +57,6 @@ const validationSchema = Yup.object({
 export const TeacherFormPage = () => {
   const intl = useIntl();
   const [image, setImage] = useState("");
-  const [name, setName] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
@@ -66,13 +65,9 @@ export const TeacherFormPage = () => {
   console.log(token);
   const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
-      setName(user.firstName);
-    }
-  }, [user]);
-  useEffect(() => {
     dispatch(getLanguages());
   }, [dispatch]);
+
   const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
@@ -86,6 +81,11 @@ export const TeacherFormPage = () => {
     dispatch(getSpecializations());
     dispatch(getCountries());
   }, [dispatch, advertId, navigate]);
+
+  console.log("user", user);
+  initialValues.updateUser.firstName = user.firstName;
+  initialValues.updateUser.lastName = user.lastName;
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -156,13 +156,10 @@ export const TeacherFormPage = () => {
               type="text"
               label={intl.formatMessage({ id: "name" })}
               hiddenLabel
+              InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
               variant="outlined"
-              value={name}
-              // onChange={formik.handleChange}
-              onChange={(event) => {
-                setName(event.target.value);
-                formik.setFieldValue("updateUser.firstName", event.target.value);
-              }}
+              value={formik.values.updateUser.firstName}
+              onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.firstName && Boolean(formik.errors.firstName)}
               helperText={formik.touched.firstName && formik.errors.firstName}
@@ -173,6 +170,7 @@ export const TeacherFormPage = () => {
               name="updateUser.lastName"
               type="text"
               label={intl.formatMessage({ id: "lastName" })}
+              InputLabelProps={{ shrink: !!formik.values.updateUser.lastName }}
               variant="outlined"
               value={formik.values.updateUser.lastName}
               onChange={formik.handleChange}

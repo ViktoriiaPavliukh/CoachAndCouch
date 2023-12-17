@@ -1,24 +1,69 @@
 import { format } from "date-fns";
 import { Shedule } from "./Shedule";
 import { Button } from "@mui/material";
+import { useState } from "react";
+
+function getCurrentMonday() {
+  const now = new Date();
+  const currentDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  let mon = new Date(currentDay);
+  mon.setDate(mon.getDate() - (mon.getDay() == 0 ? 7 : mon.getDay()) + 1);
+
+  return mon;
+}
+
+// api/teacher/<id>/get-free-schedule/<week> <- monday
+const response = ["2023-12-17 17:00", "2023-12-17 18:00", "2023-12-17 19:00", "2023-12-17 21:00"];
 
 export const TrialLessonWrapper = () => {
-  let currentDay = new Date();
-  console.log(currentDay.getDate());
-  // console.log(new Date(currentDay.getFullYear(), currentDay.getMonth(), currentDay.getDate()));
-  let mon = new Date();
-  let nextWeek = 0;
-  mon.setDate(mon.getDate() - (mon.getDay() == 0 ? 7 : mon.getDay()) + nextWeek);
-  // console.log(mon);
+  const [selected, setSelected] = useState();
+  const [monday, setMonday] = useState(getCurrentMonday());
 
+  // request...
+  const schedule = new Map();
+  for (const d of response) {
+    const date = new Date(d);
+    const day = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+
+    let hours = schedule.get(day);
+    if (!hours) {
+      hours = new Set();
+      schedule.set(day, hours);
+    }
+
+    hours.add(date.getHours());
+  }
+
+  const now = new Date();
   let week = [];
 
   for (let i = 0; i < 7; i++) {
-    let day = new Date(mon);
-    day.setDate(day.getDate() + i + 1);
+    let day = new Date(monday);
+    day.setDate(day.getDate() + i);
     week.push(day);
   }
-  const handlerNextWeek = () => {};
+
+  const shiftWeek = (value) => {
+    const date = new Date(monday);
+    date.setDate(date.getDate() + 7 * value);
+    setMonday(date);
+  };
+
+  const getSelectedHour = (d) => {
+    if (!selected) return null;
+    if (isSameDay(selected, d)) return selected.getHours();
+    return null;
+  };
+
+  const getAvailableHours = (d) => {
+    return schedule.get(d.getTime()) ?? new Set();
+  };
+
+  const isSameDay = (a, b) => {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  };
+
   return (
     <div
       style={{
@@ -45,9 +90,12 @@ export const TrialLessonWrapper = () => {
         }}
       >
         <div style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap", gap: "20px", alignSelf: "center" }}>
-          <button>prev</button>
-          <div>{format(new Date(), "MMM yyyy")}</div>
-          <button onClick={handlerNextWeek}>next</button>
+          <button onClick={() => shiftWeek(-1)} disabled={monday <= now}>
+            prev
+          </button>
+          <div>{format(monday, "MMM yyyy")}</div>
+          <button onClick={() => shiftWeek(+1)}>next</button>
+          <button onClick={() => setMonday(getCurrentMonday())}>today</button>
         </div>
 
         <ul style={{ display: "flex", justifyContent: "space-between", width: "435px" }}>
@@ -57,8 +105,8 @@ export const TrialLessonWrapper = () => {
                 style={{
                   border: "none",
                   borderRadius: "4px",
-                  backgroundColor: currentDay.getDate() === el.getDate() ? "green" : "transparent",
-                  color: currentDay.getDate() === el.getDate() ? "white" : "inherit",
+                  backgroundColor: isSameDay(now, el) ? "green" : "transparent",
+                  color: isSameDay(now, el) ? "white" : "inherit",
                   padding: 0,
                   width: "50px",
                 }}
@@ -81,7 +129,12 @@ export const TrialLessonWrapper = () => {
         >
           {week.map((el, idx) => (
             <li key={idx} style={{ display: "block" }}>
-              <Shedule day={el} />
+              <Shedule
+                day={el}
+                hour={getSelectedHour(el)}
+                availableHours={getAvailableHours(el)}
+                scheduleChanged={setSelected}
+              />
             </li>
           ))}
         </ul>
