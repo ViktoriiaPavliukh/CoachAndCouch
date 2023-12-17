@@ -72,7 +72,20 @@ export const favoriteAdvert = createAsyncThunk("adverts/favoriteAdverts", async 
 });
 export const filterAdverts = createAsyncThunk("adverts/filterAdverts", async (filters, thunkAPI) => {
   try {
-    const { data } = await privateAPI.put(`adverts?language=${filters[0].language.id}&country=${filters[1].country.id}&specialization=${filters[2].specialization.id}`);
+    const queryParams = new URLSearchParams();
+
+    if (filters.language) {
+      queryParams.append('language', filters.language);
+    }
+    if (filters.country) {
+      queryParams.append('country', filters.country);
+    }
+    if (filters.specialization) {
+      queryParams.append('specialization', filters.specialization);
+    }
+    const queryString = queryParams.toString();
+    
+    const { data } = await privateAPI.get(`adverts?${queryString}`);
     console.log(`adverts was filtered`);
     
     return data;

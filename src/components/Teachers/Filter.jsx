@@ -9,10 +9,8 @@ const filterOptions = createFilterOptions({
 });
 
 export const Filter = ({ options, typeoption, label, onFilterChange }) => {
-  const [value, setValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
-  console.log(value);
-  // console.log(inputValue);
+
   return (
     <Autocomplete
       id={`${label}-filter`}
@@ -20,8 +18,7 @@ export const Filter = ({ options, typeoption, label, onFilterChange }) => {
       options={options}
       // value={value}
       onChange={(event, newValue) => {
-        setValue(newValue.id);
-        // console.log(value);
+        console.log(newValue.id);
         onFilterChange(newValue.id);
       }}
       inputValue={inputValue}

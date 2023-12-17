@@ -18,12 +18,7 @@ import {
 } from "@/redux/admin/operations";
 
 export function Teachers() {
-  const [selectedFilters, setSelectedFilters] = useState({
-    language: null,
-    country: null,
-    price: null,
-    specialization: null,
-  });
+  const [filters, setFilters] = useState();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,13 +29,17 @@ export function Teachers() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(filterAdverts(selectedFilters));
-  }, [dispatch, selectedFilters]);
+    dispatch(filterAdverts(filters));
+  }, [dispatch, filters]);
 
   const isLoading = useSelector(selectAdvertsIsLoading);
-  // const handleFiltersChange = (filters) => {
-  //   setSelectedFilters(filters);
-  // };
+  const onFiltersChange = (newFilters) => {
+    setFilters(newFilters);
+    // setFilters((prevFilters) => ({
+    //   ...prevFilters,
+    //   ...newFilters,
+    // }));
+  };
   return (
     <>
       <Box
@@ -58,11 +57,7 @@ export function Teachers() {
           <Loader />
         ) : (
           <>
-            <FilterTeacherPanel
-              onFiltersChange={(filters) => {
-                setSelectedFilters(filters);
-              }}
-            />
+            <FilterTeacherPanel onFiltersChange={onFiltersChange} />
             <TeacherListBox />
           </>
         )}

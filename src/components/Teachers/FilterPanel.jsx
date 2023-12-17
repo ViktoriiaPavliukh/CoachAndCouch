@@ -17,12 +17,7 @@ import { useState } from "react";
 import { PropTypes } from "prop-types";
 
 export function FilterTeacherPanel({ onFiltersChange }) {
-  const [selectedFilters, setSelectedFilters] = useState({
-    language: null,
-    country: null,
-    price: null,
-    specialization: null,
-  });
+  const [selectedFilters, setSelectedFilters] = useState();
 
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
@@ -34,8 +29,12 @@ export function FilterTeacherPanel({ onFiltersChange }) {
       ...prevFilters,
       [filterType]: selectedValue,
     }));
-    onFiltersChange(selectedFilters);
+    // onFiltersChange(selectedFilters);
   };
+
+  // useEffect(() => {
+  //   console.log(selectedFilters);
+  // }, [selectedFilters, onFiltersChange]);
 
   return (
     <Stack
@@ -63,6 +62,12 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("language", selectedValue)
         }
+        // onFilterChange={(selectedValue) =>
+        //   setSelectedFilters((prevFilters) => ({
+        //     ...prevFilters,
+        //     language: selectedValue,
+        //   }))
+        // }
       />
       <Filter
         options={[...countries].map((el) => ({
@@ -80,6 +85,13 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("country", selectedValue)
         }
+
+        // onFilterChange={(selectedValue) =>
+        //   setSelectedFilters((prevFilters) => ({
+        //     ...prevFilters,
+        //     country: selectedValue,
+        //   }))
+        // }
       />
       <Filter
         options={priceOptions}
@@ -88,6 +100,13 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("price", selectedValue)
         }
+
+        // onFilterChange={(selectedValue) =>
+        //   setSelectedFilters((prevFilters) => ({
+        //     ...prevFilters,
+        //     price: selectedValue,
+        //   }))
+        // }
       />
       <Filter
         options={specializations}
@@ -96,6 +115,13 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("specialization", selectedValue)
         }
+
+        // onFilterChange={(selectedValue) =>
+        //   setSelectedFilters((prevFilters) => ({
+        //     ...prevFilters,
+        //     specialization: selectedValue,
+        //   }))
+        // }
       />
     </Stack>
   );
