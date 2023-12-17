@@ -9,6 +9,7 @@ export function TeacherListBox() {
   // let [page, setPage] = useState(1);
 
   const adverts = useSelector(advertsSelector);
+  console.log(adverts);
   // const PER_PAGE = 9;
   // const items = usePagination(adverts, PER_PAGE);
   // const count = Math.ceil(adverts.length / PER_PAGE);
@@ -29,8 +30,8 @@ export function TeacherListBox() {
             justifyContent: "center",
           }}
         >
-          {adverts &&
-            adverts.map((teacher) => {
+          {adverts.adverts &&
+            adverts.adverts.map((teacher) => {
               return (
                 <Grid item key={teacher.id}>
                   <TeacherCard teacher={teacher} />
