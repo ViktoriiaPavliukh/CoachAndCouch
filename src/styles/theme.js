@@ -35,6 +35,7 @@ const createThemeTemplate = (themeColor) => ({
           buttonColor: {
             header: "#7AB02E",
             main: "#7AB02E",
+            secondary: "#0E5B1D",
             hover: "#ADCF7D",
             darkHover: "#7ab02e",
             fontColor: "#FFF",
@@ -68,6 +69,7 @@ const createThemeTemplate = (themeColor) => ({
           buttonColor: {
             header: "#EEC700",
             main: "#EEC700",
+            secondary: "#EEC700",
             hover: "#ffea9e",
             darkHover: "#ffea9e",
             fontColor: "#000",

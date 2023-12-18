@@ -329,7 +329,6 @@ export function Header() {
                           : theme.palette.buttonColor.header,
                       borderRadius: "6px",
                       transition: "background-color 0.3s",
-
                       "&:hover": {
                         backgroundColor: (theme) =>
                           theme.palette.primary.accent,
