@@ -56,7 +56,7 @@ export function SignUp() {
           display: "flex",
           flexDirection: "column",
           alignItems: "left",
-          backgroundColor: (theme) => theme.palette.background.paper,
+          backgroundColor: (theme) => theme.palette.background,
           backgroundSize: "cover",
           maxWidth: "440px",
           padding: "40px 56px",
@@ -200,8 +200,12 @@ export function SignUp() {
             sx={{
               mt: 3,
               mb: 2,
-              textTransform: "none",
-              backgroundColor: (theme) => theme.palette.buttonColor.main,
+              textTransform: "upperCase",
+              backgroundColor: (theme) => theme.palette.buttonColor.secondary,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+              },
+              color: (theme) => theme.palette.textColor.black,
             }}
           >
             {isLoggedIn ? (
