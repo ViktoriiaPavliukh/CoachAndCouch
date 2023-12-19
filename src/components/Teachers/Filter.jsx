@@ -3,29 +3,40 @@ import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import { useState } from "react";
 
-const filterOptions = createFilterOptions({
-  matchFrom: "start",
-  stringify: (option) => option.typeoption,
-});
-
 export const Filter = ({ options, typeoption, label, onFilterChange }) => {
   const [inputValue, setInputValue] = useState("");
-
+  const [query, setQuery] = useState("");
+  const filterOptions = createFilterOptions({
+    matchFrom: "start",
+    stringify: (option) => option[typeoption] || query,
+  });
   return (
     <Autocomplete
       id={`${label}-filter`}
-      // freeSolo
+      freeSolo
       options={options}
       // value={value}
       onChange={(event, newValue) => {
-        console.log(newValue.id);
-        onFilterChange(newValue.id);
+        console.log(newValue?.id || "null");
+        console.log(query);
+        if (newValue) {
+          onFilterChange(newValue.id);
+        } else {
+          onFilterChange("");
+        }
+      }}
+      isOptionEqualToValue={(option, newValue) => {
+        return option.id === newValue.id;
       }}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
+        setQuery(event.target.value);
+        console.log(query);
       }}
-      getOptionLabel={(options) => options[typeoption]}
+      getOptionLabel={(option) => {
+        return option[typeoption];
+      }}
       filterOptions={filterOptions}
       sx={{ minWidth: { md: 274, xs: 180 }, fontSize: "10px" }}
       renderInput={(params) => <TextField {...params} label={label} />}
