@@ -1,30 +1,30 @@
 [
     {"page": "profile",
-    "icon": "FileText"
+    "iconFeatherName": "FileText"
     
 },
 {"page": "lessons",
-    "icon": "Edit2"
+    "iconFeatherName": "Edit2"
 },
 {"page": "schedule",
-    "icon": "Calendar"
+    "iconFeatherName": "Calendar"
 },
 {"page": "messages",
-    "icon": "MessageSquare"
+    "iconFeatherName": "MessageSquare"
 },
 {"page": "likes",
-    "icon": "Heart"
+    "iconFeatherName": "Heart"
 },
 {"page": "advertisements",
-    "icon": "Tablet"
+    "iconFeatherName": "Tablet"
 },
 {"page": "feedback",
-    "icon": "Smile"
+    "iconFeatherName": "Smile"
 },
 {"page": "main",
-    "icon": "Grid"
+    "iconFeatherName": "Grid"
 },
 {"page": "settings",
-    "icon": "Settings"
+    "iconFeatherName": "Settings"
 }
 ]

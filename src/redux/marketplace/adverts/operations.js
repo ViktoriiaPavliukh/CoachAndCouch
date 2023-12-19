@@ -70,3 +70,26 @@ export const favoriteAdvert = createAsyncThunk("adverts/favoriteAdverts", async 
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+export const filterAdverts = createAsyncThunk("adverts/filterAdverts", async (filters, thunkAPI) => {
+  try {
+    const queryParams = new URLSearchParams();
+
+    if (filters.language) {
+      queryParams.append('language', filters.language);
+    }
+    if (filters.country) {
+      queryParams.append('country', filters.country);
+    }
+    if (filters.specialization) {
+      queryParams.append('specialization', filters.specialization);
+    }
+    const queryString = queryParams.toString();
+    
+    const { data } = await privateAPI.get(`adverts?${queryString}`);
+    console.log(`adverts was filtered`);
+    
+    return data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

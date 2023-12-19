@@ -61,7 +61,7 @@ export const Sidebar = () => {
       }}
     >
       {sidebarPages.map((item, index) => {
-        const IconComponent = FeatherIcons[item.icon];
+        const IconComponent = FeatherIcons[item.iconFeatherName];
         return (
           <Box component={Link} to={item.page} sx={linkStyles} key={index}>
             {IconComponent && (
