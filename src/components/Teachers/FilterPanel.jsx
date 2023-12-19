@@ -1,9 +1,5 @@
 import { priceOptions } from "@/defaults";
-import {
-  countriesSelector,
-  languagesSelector,
-  specializationsSelector,
-} from "@/redux/admin/adminSelector";
+import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
 
 import { Filter } from "../../components/Teachers/Filter";
 import { Stack } from "@mui/material";
@@ -27,18 +23,14 @@ export function FilterTeacherPanel({ onFiltersChange }) {
 
   useEffect(() => {
     onFiltersChange(selectedFilters);
-    console.log(selectedFilters);
-  }, [selectedFilters, onFiltersChange]);
-  // console.log(selectedFilters);
+    console.log("selectedFilters", selectedFilters);
+  }, [selectedFilters]);
 
   const handleFilterChange = (filterType, selectedValue) => {
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
       [filterType]: selectedValue,
     }));
-    // const newSelectedFilters = () => selectedFilters;
-    // console.log(newSelectedFilters);
-    // return onFiltersChange(selectedFilters);
   };
 
   return (
@@ -64,47 +56,35 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         typeoption={en == "en" ? "languageEn" : "languageUa"}
         keyfield="id"
         label={intl.formatMessage({ id: "language" })}
-        onFilterChange={(selectedValue) =>
-          handleFilterChange("language", selectedValue)
-        }
+        onFilterChange={(selectedValue) => handleFilterChange("language", selectedValue)}
       />
       <Filter
         options={[...countries].map((el) => ({
           id: el.id,
           alpha2: el.alpha2,
-          nameEng: countriesCase(
-            countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng
-          ),
-          nameShort: countriesCase(
-            countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameShort
-          ),
+          nameEng: countriesCase(countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng),
+          nameShort: countriesCase(countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameShort),
         }))}
         typeoption={en == "en" ? "nameEng" : "nameShort"}
         label={intl.formatMessage({ id: "country" })}
-        onFilterChange={(selectedValue) =>
-          handleFilterChange("country", selectedValue)
-        }
+        onFilterChange={(selectedValue) => handleFilterChange("country", selectedValue)}
       />
       <Filter
         options={priceOptions}
         typeoption="title"
         label={intl.formatMessage({ id: "price" })}
-        onFilterChange={(selectedValue) =>
-          handleFilterChange("price", selectedValue)
-        }
+        onFilterChange={(selectedValue) => handleFilterChange("price", selectedValue)}
       />
       <Filter
         options={specializations}
         typeoption={en == "en" ? "specializationEn" : "specializationUa"}
         label={intl.formatMessage({ id: "specialization" })}
-        onFilterChange={(selectedValue) =>
-          handleFilterChange("specialization", selectedValue)
-        }
+        onFilterChange={(selectedValue) => handleFilterChange("specialization", selectedValue)}
       />
     </Stack>
   );
 }
 
 FilterTeacherPanel.propTypes = {
-  onFiltersChange: PropTypes.func,
+  onFiltersChange: PropTypes.func.isRequired,
 };
