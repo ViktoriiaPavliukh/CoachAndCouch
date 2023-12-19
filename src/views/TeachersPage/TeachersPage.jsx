@@ -1,31 +1,45 @@
 import { useIntl } from "react-intl";
-import { Box, Button, Typography, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
-import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+// import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material";
 import { DescriptionImage } from "../../components/Teachers/DescriptionImage";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
 import { selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
-import { getAdverts } from "@/redux/marketplace/adverts/operations";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
-import { FilterTeacherPanel } from "@/components/Teachers/FilterPanel";
-import { TeacherListBox } from "@/components/Teachers/TeacherList";
-import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
+
+import { TeacherFilterResult } from "@/components/Teachers/TeacherFilterResult";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
+import { getAdverts } from "@/redux/marketplace/adverts/operations";
 
 export function TeachersPage() {
   const intl = useIntl();
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
     navigate(`/about`);
   };
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAdverts());
     dispatch(getLanguages());
     dispatch(getSpecializations());
     dispatch(getCountries());
   }, [dispatch]);
+
   // const adverts = useSelector(advertsSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
 
@@ -36,6 +50,7 @@ export function TeachersPage() {
     fontWeight: "400",
     lineHeight: "16px",
   };
+
   return (
     <>
       <Box
@@ -91,7 +106,10 @@ export function TeachersPage() {
                     sx={{ color: (theme) => theme.palette.primary.accent }}
                   />
                 </ListItemIcon> */}
-                <ListItemText primary={intl.formatMessage({ id: "list1" })} sx={listItemStyles} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list1" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 {/* <ListItemIcon sx={{ minWidth: "35px" }}>
@@ -99,7 +117,10 @@ export function TeachersPage() {
                     sx={{ color: (theme) => theme.palette.primary.accent }}
                   />
                 </ListItemIcon> */}
-                <ListItemText primary={intl.formatMessage({ id: "list2" })} sx={listItemStyles} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list2" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 {/* <ListItemIcon sx={{ minWidth: "35px" }}>
@@ -107,7 +128,10 @@ export function TeachersPage() {
                     sx={{ color: (theme) => theme.palette.primary.accent }}
                   />
                 </ListItemIcon> */}
-                <ListItemText primary={intl.formatMessage({ id: "list3" })} sx={listItemStyles} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "list3" })}
+                  sx={listItemStyles}
+                />
               </ListItem>
             </List>
             <Button
@@ -121,11 +145,15 @@ export function TeachersPage() {
                 transition: "background-color 0.3s",
                 backgroundColor: (theme) => theme.palette.buttonColor.main,
                 "&:hover": {
-                  backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.darkHover,
                 },
               }}
             >
-              <Typography variant="posterButton" sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}>
+              <Typography
+                variant="posterButton"
+                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+              >
                 {intl.formatMessage({ id: "learnMore" })}
               </Typography>
             </Button>
@@ -139,14 +167,7 @@ export function TeachersPage() {
             <DescriptionImage />
           </Box>
         </Box>
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <>
-            <FilterTeacherPanel />
-            <TeacherListBox />
-          </>
-        )}
+        {isLoading ? <Loader /> : <TeacherFilterResult />}
       </Box>
     </>
   );

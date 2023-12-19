@@ -116,7 +116,12 @@ export const MyCalendar = () => (
       events={eventsList}
       startAccessor="start"
       endAccessor="end"
-      style={{ width: "100%", display: "flex", paddingTop: "20px", height: "75vh" }}
+      style={{
+        width: "100%",
+        display: "flex",
+        paddingTop: "20px",
+        height: "75vh",
+      }}
       timeslots={2}
       selectable={true}
       popup

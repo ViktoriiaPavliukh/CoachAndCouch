@@ -13,28 +13,33 @@ import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSli
 
 import countriesJSON from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 
 export function FilterTeacherPanel({ onFiltersChange }) {
-  const [selectedFilters, setSelectedFilters] = useState();
+  const [selectedFilters, setSelectedFilters] = useState({});
 
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
   const en = useSelector(selectCurrentLanguage);
+
+  useEffect(() => {
+    onFiltersChange(selectedFilters);
+    console.log(selectedFilters);
+  }, [selectedFilters, onFiltersChange]);
+  // console.log(selectedFilters);
+
   const handleFilterChange = (filterType, selectedValue) => {
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
       [filterType]: selectedValue,
     }));
-    // onFiltersChange(selectedFilters);
+    // const newSelectedFilters = () => selectedFilters;
+    // console.log(newSelectedFilters);
+    // return onFiltersChange(selectedFilters);
   };
-
-  // useEffect(() => {
-  //   console.log(selectedFilters);
-  // }, [selectedFilters, onFiltersChange]);
 
   return (
     <Stack
@@ -62,12 +67,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("language", selectedValue)
         }
-        // onFilterChange={(selectedValue) =>
-        //   setSelectedFilters((prevFilters) => ({
-        //     ...prevFilters,
-        //     language: selectedValue,
-        //   }))
-        // }
       />
       <Filter
         options={[...countries].map((el) => ({
@@ -85,13 +84,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("country", selectedValue)
         }
-
-        // onFilterChange={(selectedValue) =>
-        //   setSelectedFilters((prevFilters) => ({
-        //     ...prevFilters,
-        //     country: selectedValue,
-        //   }))
-        // }
       />
       <Filter
         options={priceOptions}
@@ -100,13 +92,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("price", selectedValue)
         }
-
-        // onFilterChange={(selectedValue) =>
-        //   setSelectedFilters((prevFilters) => ({
-        //     ...prevFilters,
-        //     price: selectedValue,
-        //   }))
-        // }
       />
       <Filter
         options={specializations}
@@ -115,13 +100,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         onFilterChange={(selectedValue) =>
           handleFilterChange("specialization", selectedValue)
         }
-
-        // onFilterChange={(selectedValue) =>
-        //   setSelectedFilters((prevFilters) => ({
-        //     ...prevFilters,
-        //     specialization: selectedValue,
-        //   }))
-        // }
       />
     </Stack>
   );
