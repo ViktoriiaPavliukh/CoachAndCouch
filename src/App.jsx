@@ -26,7 +26,6 @@ import {
   Messages,
   Settings,
   Profile,
-  Teachers,
   Advertisements,
   LikesPages,
   Feedback,
@@ -82,7 +81,6 @@ export default function App() {
             }
           />
           <Route path="user/:id" element={<PersonalAccount />}>
-            <Route path="teachers" element={<Teachers />} />
             <Route path="advertisements" element={<Advertisements />} />
             <Route path="profile" element={<Profile />} />
             <Route path="lessons" element={<Lessons />} />
