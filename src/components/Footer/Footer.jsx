@@ -13,6 +13,7 @@ import LanguageSwitcher from "../Header/LanguageSwitcher";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookIcon from "@mui/icons-material/FacebookRounded";
+import logo from "@assets/icons/logo.svg";
 
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
@@ -39,7 +40,7 @@ export default function Footer() {
       component={"footer"}
       sx={{
         backgroundColor: (theme) => theme.palette.primary.main,
-        paddingY: "60px",
+        paddingY: { xs: "48px", lg: "60px" },
       }}
     >
       <Container
@@ -50,6 +51,7 @@ export default function Footer() {
           alignItems: "center",
           justifyContent: "start",
           color: "white",
+          padding: { xs: "0 60px", lg: "0 60px" },
         }}
       >
         <Box
@@ -58,60 +60,69 @@ export default function Footer() {
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
-            gap: "56px",
+            gap: { xs: "40px", lg: "56px" },
           }}
         >
           <Stack
             sx={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: { xs: "column", lg: "row" },
               justifyContent: "space-between",
               width: "100%",
+              gap: { xs: "40px", lg: "0" },
             }}
           >
             <Box
+              component={Link}
+              to="/"
               sx={{
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              {" "}
-              <Typography
-                variant="posterBlack"
-                noWrap
-                component={Link}
-                to="home"
-                sx={{
-                  display: "flex",
-                  fontWeight: 700,
-                  color: "inherit",
-                  textDecoration: "none",
-                  opacity: "0.9",
-                  paddingy: "10px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  "&:hover": {
-                    color: (theme) => theme.palette.primary.accent,
-                  },
+              <img
+                src={logo}
+                alt="logo"
+                style={{
+                  maxWidth: "100%",
                 }}
-              >
-                Coach&#x26;Couch
-              </Typography>
+              />
             </Box>
-            <Box sx={{ display: "flex" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               {/* <LanguageSwitcher /> */}
               {/* <Typography>
                 {intl.formatMessage({ id: "footer.text" })}
               </Typography> */}
-              <Stack direction="row" spacing={6}>
+              <Stack
+                sx={{
+                  maxWidth: { md: "584px", lg: "100%" },
+                  display: "flex",
+                  flexWrap: "wrap",
+                  flexDirection: { xs: "column", md: "row" },
+                  justifyContent: "space-between",
+
+                  gap: { xs: "36px 0", lg: "24px 64px" },
+                }}
+              >
                 <Stack
                   direction="column"
-                  sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
                 >
                   <Typography
                     component="a"
+                    variant="text"
                     sx={{
                       cursor: "pointer",
                       "&:hover": {
@@ -123,6 +134,7 @@ export default function Footer() {
                   </Typography>
                   <Typography
                     component="a"
+                    variant="text"
                     sx={{
                       cursor: "pointer",
                       "&:hover": {
@@ -134,6 +146,7 @@ export default function Footer() {
                   </Typography>
                   <Typography
                     component="a"
+                    variant="text"
                     sx={{
                       cursor: "pointer",
                       "&:hover": {
@@ -152,6 +165,7 @@ export default function Footer() {
                   <PhoneNumber phoneNumber={phoneNumber2} />
                   <Typography
                     component="a"
+                    variant="text"
                     href={`mailto:coachandcouch@gmail.com`}
                     sx={{
                       textDecoration: "none",
@@ -167,7 +181,7 @@ export default function Footer() {
                 <Box
                   sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
-                  <Typography>
+                  <Typography variant="text">
                     {intl.formatMessage({ id: "footer.social" })}
                   </Typography>
                   <Stack
@@ -222,7 +236,10 @@ export default function Footer() {
               </Stack>
             </Box>
           </Stack>
-          <Typography>
+          <Typography
+            variant="text"
+            sx={{ width: { xs: "82%", md: "100%" }, textAlign: "center" }}
+          >
             {intl.formatMessage({ id: "footer.copyright" })}
           </Typography>
         </Box>
