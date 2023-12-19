@@ -5,10 +5,15 @@ const PhoneNumber = ({ phoneNumber }) => {
   return (
     <Typography
       component="a"
+      variant="text"
       href={`tel:${phoneNumber}`}
-      sx={{ textDecoration: "none", color: "inherit", "&:hover": {
-                        color: (theme) => theme.palette.primary.accent,
-      }}}
+      sx={{
+        textDecoration: "none",
+        color: "inherit",
+        "&:hover": {
+          color: (theme) => theme.palette.primary.accent,
+        },
+      }}
     >
       {phoneNumber}
     </Typography>

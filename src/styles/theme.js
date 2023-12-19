@@ -198,8 +198,8 @@ const createThemeTemplate = (themeColor) => ({
     text: {
       fontFamily: "Mulish, sans-serif",
       fontSize: "18px",
-      fontWeight: 500,
-      lineHeight: "23.4px",
+      fontWeight: 400,
+      lineHeight: "28px",
     },
     textUppercase: {
       fontFamily: "Mulish, sans-serif",
