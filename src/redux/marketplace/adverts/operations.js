@@ -61,8 +61,7 @@ export const favoriteAdvert = createAsyncThunk("adverts/favoriteAdverts", async 
     token.set(userToken);
     const { data } = await privateAPI.put(`/adverts/${id}/favorite`);
 
-    console.log(`adverts id = ${id} was add to your favorite`);
-    toast.success(`adverts id = ${id} was add to your favorite`, {
+    toast.success(`adverts id = ${id} was add/remove to your favorite`, {
       icon: false,
     });
     return data;
@@ -76,20 +75,20 @@ export const filterAdverts = createAsyncThunk("adverts/filterAdverts", async (fi
     console.log(queryParams);
 
     if (filters.language) {
-      queryParams.append('language', filters.language);
+      queryParams.append("language", filters.language);
     }
     if (filters.country) {
-      queryParams.append('country', filters.country);
+      queryParams.append("country", filters.country);
     }
     if (filters.specialization) {
-      queryParams.append('specialization', filters.specialization);
+      queryParams.append("specialization", filters.specialization);
     }
     const queryString = queryParams.toString();
     console.log(queryString);
 
-    const { data } = await publicAPI.get(`adverts?${queryString}`);
+    const { data } = await publicAPI.get(`/adverts?${queryString}`);
     console.log(`adverts was filtered`);
-    
+
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
