@@ -14,10 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countriesCase from "@/helpers/countriesCase";
 import { roundRating } from "@/helpers/roundRating";
-import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
+import { favoriteAdvert, getAdverts } from "@/redux/marketplace/adverts/operations";
+// import { selectUser } from "@/redux/auth/selectors";
 
 export function TeacherCard({ teacher }) {
+  // const user = useSelector(selectUser);
+  // console.log(user);
+
   const [isFavorite, setIsFavorite] = useState(false);
+  // console.log(isFavorite);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
 
@@ -42,8 +47,10 @@ export function TeacherCard({ teacher }) {
     navigate(`/teachers/${teacher.id}`);
   };
   const handleFavoriteAdd = (id) => {
-    setIsFavorite(() => (isFavorite ? false : true));
-    dispatch(favoriteAdvert(id));
+    // setIsFavorite(() => (isFavorite ? false : true));
+
+    dispatch(favoriteAdvert(id)).then(() => dispatch(getAdverts()));
+    // console.log(teacher, id);
   };
   // const setBg = () => {
   //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
@@ -190,7 +197,7 @@ export function TeacherCard({ teacher }) {
                       color: "rgba(0, 0, 0, 0.87)",
                     }}
                   >
-                    {roundRating(teacher.user.rating)}
+                    {teacher.likes.length}
                   </Typography>
                 </Button>
               </Box>

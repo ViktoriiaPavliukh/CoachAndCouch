@@ -3,6 +3,7 @@ import { TeacherCard } from "./TeacherCard";
 // import usePagination from "../../hooks/usePagination";
 import { useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+
 // import { useState } from "react";
 
 export function TeacherListBox() {
@@ -31,7 +32,7 @@ export function TeacherListBox() {
           }}
         >
           {adverts.adverts &&
-            adverts.adverts.map((teacher) => {
+            adverts.adverts?.map((teacher) => {
               return (
                 <Grid item key={teacher.id}>
                   <TeacherCard teacher={teacher} />

@@ -14,6 +14,12 @@ import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import { advertByIdSelector } from "@/redux/marketplace/adverts/advertsSelector";
 
 export function ReviewList({ id, userImage, advertId }) {
+  const [rating, setRating] = useState(null);
+  const [hover, setHover] = useState(null);
+  const totalStars = 5;
+  // const handleChange = (e) => {
+  //   setTotalStars(parseInt(e.target.value, 10));
+  // };
   const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
   console.log(reviews);
 
@@ -35,7 +41,7 @@ export function ReviewList({ id, userImage, advertId }) {
     e.preventDefault();
 
     const feedback = {
-      mark: Number(e.target.mark?.value),
+      mark: rating,
       message: e.target.message?.value,
     };
     console.log(feedback);
@@ -185,15 +191,46 @@ export function ReviewList({ id, userImage, advertId }) {
           }}
         >
           <label> {intl.formatMessage({ id: "reviewMark" })}</label>
-          <input
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            {[...Array(totalStars)].map((star, index) => {
+              const currentRating = index + 1;
+              return (
+                <label key={index}>
+                  <input type="radio" name="rating" value={currentRating} onChange={() => setRating(currentRating)} />
+                  <span
+                    className="star"
+                    style={{
+                      color: currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9",
+                    }}
+                    onMouseEnter={() => setHover(currentRating)}
+                    onMouseLeave={() => setHover(null)}
+                  >
+                    &#9733;
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+          {/* <label style={{ fontWeight: 400 }}>
+            Number of stars:
+            <input
+              style={{ marginLeft: "12px", maxWidth: "50px" }}
+              onChange={handleChange}
+              value={totalStars}
+              type="number"
+              min={1}
+            />
+          </label> */}
+
+          {/* <input
             type="number"
             style={{ height: "30px", borderRadius: "4px", padding: "12px" }}
             name="mark"
             min="1"
             max="5"
-            defaultValue={updateFeedback.mark}
-            onChange={(e) => setFeedback({ ...updateFeedback, mark: e.target.value })}
-          />
+            defaultValue={rating}
+            onChange={() => setFeedback({ ...updateFeedback, mark: rating })}
+          /> */}
         </div>
 
         <div
