@@ -15,21 +15,20 @@ import { advertByIdSelector } from "@/redux/marketplace/adverts/advertsSelector"
 
 export function ReviewList({ id, userImage, advertId }) {
   const [rating, setRating] = useState(null);
+
   const [hover, setHover] = useState(null);
   const totalStars = 5;
-  // const handleChange = (e) => {
-  //   setTotalStars(parseInt(e.target.value, 10));
-  // };
+
   const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
-  console.log(reviews);
+  // console.log(reviews);
 
   const [showAll, setShowAll] = useState(false);
   const defaultShow = 3;
   const showAllByDefault = reviews.length <= defaultShow;
   const elementsToShow = showAll || showAllByDefault ? reviews : reviews.slice(0, defaultShow);
 
-  const [updateFeedback, setFeedback] = useState({ mark: "", message: "" });
-  console.log(updateFeedback);
+  const [message, setMessage] = useState("");
+  // console.log(message);
   const intl = useIntl();
   const dispatch = useDispatch();
 
@@ -39,10 +38,34 @@ export function ReviewList({ id, userImage, advertId }) {
 
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
-
+    // console.log(rating);
+    if (rating === null) {
+      if (en === "en") {
+        toast.error("Please, enter the rating", {
+          icon: false,
+        });
+      } else {
+        toast.error("Введіть будь-ласка рейтинг", {
+          icon: false,
+        });
+      }
+      return;
+    }
+    if (message === "") {
+      if (en === "en") {
+        toast.error("Please, leave the comment", {
+          icon: false,
+        });
+      } else {
+        toast.error(" Залиште будь-ласка коментар", {
+          icon: false,
+        });
+      }
+      return;
+    }
     const feedback = {
       mark: rating,
-      message: e.target.message?.value,
+      message: message,
     };
     console.log(feedback);
 
@@ -70,6 +93,7 @@ export function ReviewList({ id, userImage, advertId }) {
       }
       return;
     }
+
     dispatch(addFeedback({ id, feedback })).then(() => dispatch(getAdvertById(advertId)));
 
     e.target.reset();
@@ -191,12 +215,19 @@ export function ReviewList({ id, userImage, advertId }) {
           }}
         >
           <label> {intl.formatMessage({ id: "reviewMark" })}</label>
-          <div style={{ display: "flex", flexDirection: "row" }}>
+          <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "10px", height: "40px" }}>
             {[...Array(totalStars)].map((star, index) => {
               const currentRating = index + 1;
               return (
                 <label key={index}>
-                  <input type="radio" name="rating" value={currentRating} onChange={() => setRating(currentRating)} />
+                  <input
+                    type="radio"
+                    name="rating"
+                    value={currentRating}
+                    onChange={() => {
+                      setRating(currentRating);
+                    }}
+                  />
                   <span
                     className="star"
                     style={{
@@ -210,29 +241,13 @@ export function ReviewList({ id, userImage, advertId }) {
                 </label>
               );
             })}
+            {rating && (
+              <span>
+                {rating}/{totalStars}
+              </span>
+            )}
           </div>
-          {/* <label style={{ fontWeight: 400 }}>
-            Number of stars:
-            <input
-              style={{ marginLeft: "12px", maxWidth: "50px" }}
-              onChange={handleChange}
-              value={totalStars}
-              type="number"
-              min={1}
-            />
-          </label> */}
-
-          {/* <input
-            type="number"
-            style={{ height: "30px", borderRadius: "4px", padding: "12px" }}
-            name="mark"
-            min="1"
-            max="5"
-            defaultValue={rating}
-            onChange={() => setFeedback({ ...updateFeedback, mark: rating })}
-          /> */}
         </div>
-
         <div
           style={{
             display: "flex",
@@ -244,8 +259,8 @@ export function ReviewList({ id, userImage, advertId }) {
           <textarea
             style={{ height: "200px", borderRadius: "4px", padding: "12px" }}
             name="message"
-            defaultValue={updateFeedback.message}
-            onChange={(e) => setFeedback({ ...updateFeedback, message: e.target.value })}
+            // value={updateFeedback.message}
+            onChange={(e) => setMessage(e.target.value)}
           ></textarea>
         </div>
         <Button type="submit" sx={{ alignSelf: "center", p: "10px 18px" }} variant="contained">
