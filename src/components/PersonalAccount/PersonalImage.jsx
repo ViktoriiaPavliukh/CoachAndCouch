@@ -6,14 +6,14 @@ export function PersonalImage({ src, advertImagePath }) {
   return (
     <CardMedia
       component="img"
-      src={ (advertImagePath || mainImage)}
+      src={advertImagePath || mainImage}
       alt="Teacher's profile"
       sx={{
         display: "flex",
-        width: "275px",
-        height: "214px",
-        borderRadius: "0px",
-        alignSelf: "stretch",
+        width: "150px",
+        height: "150px",
+        borderRadius: "50%",
+        // alignSelf: "stretch",
       }}
     />
   );
