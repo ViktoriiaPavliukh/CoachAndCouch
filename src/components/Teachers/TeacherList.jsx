@@ -27,7 +27,7 @@ export function TeacherListBox({ page, setPage }) {
           }}
         >
           {adverts.adverts &&
-            adverts.adverts.map((teacher) => {
+            adverts.adverts?.map((teacher) => {
               return (
                 <Grid item key={teacher.id}>
                   <TeacherCard teacher={teacher} />
