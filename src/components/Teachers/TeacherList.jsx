@@ -1,23 +1,19 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Pagination } from "@mui/material";
 import { TeacherCard } from "./TeacherCard";
-// import usePagination from "../../hooks/usePagination";
+import usePagination from "../../hooks/usePagination";
 import { useSelector } from "react-redux";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
-// import { useState } from "react";
+import { PropTypes } from "prop-types";
 
-export function TeacherListBox() {
-  // let [page, setPage] = useState(1);
-
+export function TeacherListBox({ page, setPage }) {
   const adverts = useSelector(advertsSelector);
-  console.log(adverts);
-  // const PER_PAGE = 9;
-  // const items = usePagination(adverts, PER_PAGE);
-  // const count = Math.ceil(adverts.length / PER_PAGE);
-  // const handleChange = (e, p) => {
-  //   setPage(p);
-  //   items.jump(p);
-  // };
-
+  const PER_PAGE = 9;
+  const items = usePagination(adverts, PER_PAGE);
+  const count = adverts.totalPages;
+  const handleChange = (e, p) => {
+    setPage(p);
+    items.jump(p);
+  };
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "center", mb: "115px" }}>
@@ -40,7 +36,7 @@ export function TeacherListBox() {
             })}
         </Grid>
       </Box>
-      {/* <Pagination
+      <Pagination
         sx={{ marginBottom: "50px" }}
         count={count}
         size="large"
@@ -48,7 +44,11 @@ export function TeacherListBox() {
         variant="outlined"
         shape="rounded"
         onChange={handleChange}
-      /> */}
+      />
     </>
   );
 }
+TeacherListBox.propTypes = {
+  page: PropTypes.number.isRequired,
+  setPage: PropTypes.func.isRequired,
+};
