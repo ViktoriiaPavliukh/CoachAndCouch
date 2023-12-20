@@ -25,7 +25,7 @@ export function Card() {
   const en = useSelector(selectCurrentLanguage);
   const teacherId = useParams();
   const isLoading = useSelector(selectAdvertsIsLoading);
-  console.log(teacherId);
+  // console.log(teacherId);
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
     setShowModal(true);
@@ -101,11 +101,10 @@ export function Card() {
                       border: "0.2px solid rgba(0, 0, 0, 0.14)",
                     }}
                   />
-                  {/* <MessageBtn
-                    onShowModalClick={() => onShowModalClick("sendMessage")}
-                    sx={{ display: { xs: "none", lg: "block" } }}
-                  /> */}
-                  {/* <LikeBtn sx={{ display: { xs: "none", lg: "block" } }} /> */}
+                  <Box sx={{ display: { xs: "none", lg: "flex", alignItems: "center", mb: "20px" } }}>
+                    <MessageBtn onShowModalClick={() => onShowModalClick("sendMessage")} />
+                    <LikeBtn />
+                  </Box>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
                   <span

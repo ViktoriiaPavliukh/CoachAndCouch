@@ -64,11 +64,13 @@ export const TeacherFormPage = () => {
   console.log(user);
   console.log(token);
   const navigate = useNavigate();
-  useEffect(() => {
-    dispatch(getLanguages());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getLanguages());
+  // }, [dispatch]);
 
-  const advertId = useSelector(advertsSelector).find((advert) => advert.user.id === user.id)?.id || null;
+  const adverts = useSelector(advertsSelector)?.adverts;
+  const advertId = adverts ? adverts.find((advert) => advert.user.id === user.id).id : null;
+
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
