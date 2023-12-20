@@ -89,6 +89,7 @@ const messages = {
     homepageBtn: "to main page",
     message: "Send message",
     publishBtn: "Publish",
+    editBtn: "Edit",
 
     //Status
     online: "Online",
@@ -108,6 +109,7 @@ const messages = {
     name: "First name",
     lastName: "Last name",
     birthday: "Date of birth",
+    registrationDate: "Registration date",
     pricePerHour: "Price per hour",
     description: "Description",
     sex: "Sex",
@@ -212,6 +214,7 @@ const messages = {
     writeMeBtn: "Написати",
     homepageBtn: "Перейти на головну",
     publishBtn: "Опублікувати",
+    editBtn: "Редагувати",
 
     //Status
     online: "Онлайн",
@@ -231,6 +234,7 @@ const messages = {
     name: "Ім'я",
     lastName: "Прізвище",
     birthday: "Дата народження",
+    registrationDate: "Дата реєстрації",
     pricePerHour: "Вартість за годину уроку",
     description: "Опис",
     sex: "Стать",
