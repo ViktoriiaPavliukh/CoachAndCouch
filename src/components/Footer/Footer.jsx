@@ -13,7 +13,7 @@ import LanguageSwitcher from "../Header/LanguageSwitcher";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookIcon from "@mui/icons-material/FacebookRounded";
-import logo from "@assets/icons/logo.svg";
+import Logo from "./../Logo";
 
 const ExternalLink = ({ to, children, ...rest }) => {
   return (
@@ -72,23 +72,7 @@ export default function Footer() {
               gap: { xs: "40px", lg: "0" },
             }}
           >
-            <Box
-              component={Link}
-              to="/"
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <img
-                src={logo}
-                alt="logo"
-                style={{
-                  maxWidth: "100%",
-                }}
-              />
-            </Box>
+            <Logo width="239px" />
             <Box
               sx={{
                 display: "flex",

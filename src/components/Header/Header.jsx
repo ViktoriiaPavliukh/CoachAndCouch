@@ -1,6 +1,5 @@
 import { PropTypes } from "prop-types";
 import { useIntl } from "react-intl";
-
 import {
   AppBar,
   Box,
@@ -28,6 +27,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
 import { styled } from "@mui/material/styles";
 import LanguageSwitcher from "./LanguageSwitcher";
+import Logo from "./../Logo";
 
 const GreenSwitch = styled(Switch)(({ theme }) => ({
   "& .MuiSwitch-switchBase.Mui-checked": {
@@ -125,44 +125,22 @@ export function Header() {
             color: (theme) => theme.palette.textColor.header,
           }}
         >
-          <Typography
-            variant="h5"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              display: { xs: "none", md: "flex" },
-              fontWeight: 700,
-              color: (theme) => theme.palette.textColor.logo,
-              textDecoration: "none",
-              "&:hover": {
-                color: (theme) => theme.palette.primary.accent,
-              },
-            }}
+          <IconButton
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            color="inherit"
+            onClick={handleOpenNavMenu}
           >
-            Coach&#x26;Couch
-          </Typography>
-          <Typography
-            variant="h6"
-            noWrap
-            component={Link}
-            to="/"
-            sx={{
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Coach&#x26;Couch
-          </Typography>
+            <MenuIcon sx={{ display: { xs: "flex", lg: "none" } }} />
+          </IconButton>
+          <Logo width="130px" />
           <Box
             sx={{
               flexGrow: 1,
               display: { xs: "none", lg: "flex" },
-              gap: "1rem",
+              gap: "56px",
             }}
           >
             {pages.slice(0, 3).map(({ title, link }) => (
@@ -172,6 +150,9 @@ export function Header() {
                   handleCloseNavMenu(link);
                 }}
                 sx={{
+                  fontSize: "18px",
+                  lineHeight: "28px",
+                  fontWeight: 400,
                   color: (theme) =>
                     pathname === `/${link}` || pathname === `${link}`
                       ? theme.palette.textColor.black
@@ -195,7 +176,7 @@ export function Header() {
               </Button>
             ))}
           </Box>
-          <Stack
+          {/* <Stack
             direction="row"
             sx={{
               display: { xs: "none", lg: "flex" },
@@ -233,14 +214,14 @@ export function Header() {
                 }}
               />
             </ExternalLink>
-          </Stack>
+          </Stack> */}
           <Stack direction="row" sx={{ display: { xs: "none", lg: "flex" } }}>
-            <LanguageSwitcher />
             <GreenSwitch
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
             />
+            <LanguageSwitcher />
             {isLoggedIn ? (
               <Box display="flex" direction="row">
                 <MenuItem
@@ -351,16 +332,6 @@ export function Header() {
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
             />
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-              onClick={handleOpenNavMenu}
-            >
-              <MenuIcon />
-            </IconButton>
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -386,13 +357,16 @@ export function Header() {
                 <div>
                   <MenuMobItem
                     // disableGutters={true}
-                    sx={{ width: "100%", padding: 0 }}
+                    sx={{
+                      width: "100%",
+                      padding: 0,
+                      backgroundColor: (theme) => theme.palette.background,
+                    }}
                     onClick={() => {
                       handleCloseNavMenu(`/user/${user.id}/main`);
                     }}
                   >
                     <Typography
-                      textAlign="center"
                       variant="fontHeader"
                       sx={{
                         mr: 0,
@@ -400,7 +374,7 @@ export function Header() {
                         padding: "6px 16px",
                       }}
                     >
-                      <Typography textAlign="center">
+                      <Typography variant="fontHeader">
                         {intl.formatMessage({ id: "header.profile" })}
                       </Typography>
                     </Typography>
@@ -412,10 +386,11 @@ export function Header() {
                     }}
                     sx={{
                       padding: 0,
+                      backgroundColor: (theme) => theme.palette.background,
                     }}
                   >
                     <Typography
-                      textAlign="center"
+                      textAlign="left"
                       variant="fontHeader"
                       sx={{
                         mr: 0,
@@ -435,10 +410,11 @@ export function Header() {
                     }}
                     sx={{
                       padding: 0,
+                      backgroundColor: (theme) => theme.palette.background,
                     }}
                   >
                     <Typography
-                      textAlign="center"
+                      textAlign="left"
                       variant="fontHeader"
                       sx={{
                         mr: 0,
@@ -456,11 +432,12 @@ export function Header() {
                     }}
                     sx={{
                       padding: 0,
+                      backgroundColor: (theme) => theme.palette.background,
                     }}
                   >
                     <Typography
                       // disableGutters={true}
-                      textAlign="center"
+                      textAlign="left"
                       variant="fontHeader"
                       sx={{
                         mr: 0,
@@ -481,10 +458,11 @@ export function Header() {
                   }}
                   sx={{
                     padding: 0,
+                    backgroundColor: (theme) => theme.palette.background,
                   }}
                 >
                   <Typography
-                    textAlign="center"
+                    textAlign="left"
                     variant="fontHeader"
                     sx={{
                       mr: 0,
