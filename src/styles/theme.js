@@ -116,11 +116,10 @@ const createThemeTemplate = (themeColor) => ({
     },
     fontHeader: {
       fontFamily: "Mulish, sans-serif",
-      fontSize: "16px",
-      lineHeight: "24px",
+      fontSize: "24px",
+      lineHeight: "32px",
       fontStyle: "normal",
-      letterSpacing: "0.32px",
-      fontWeight: "500",
+      fontWeight: "400",
     },
     posterName: {
       fontFamily: "Mulish, sans-serif",

@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IconButton, Box, Button } from "@mui/material";
-import LanguageIcon from "@mui/icons-material/Language";
 import {
   toggleLanguage,
   selectCurrentLanguage,
@@ -30,18 +29,32 @@ const LanguageSwitcher = () => {
         sx={{
           padding: 0,
         }}
-      >
-        <LanguageIcon sx={{ padding: 0 }} />
-      </IconButton>
+      ></IconButton>
       <Button
         onClick={handleToggleLanguage}
         color="inherit"
         sx={{
           padding: 0,
-          minWidth: "34px",
+          fontSize: "16px",
         }}
       >
-        {currentLanguage === "uk" ? "Укр" : "Eng"}
+        <span
+          style={{
+            fontWeight: currentLanguage === "uk" ? 700 : 400,
+            color: currentLanguage === "uk" ? "#FFF" : "#9CA3AF",
+          }}
+        >
+          УК
+        </span>{" "}
+        &nbsp;|&nbsp;{" "}
+        <span
+          style={{
+            fontWeight: currentLanguage === "en" ? 700 : 400,
+            color: currentLanguage === "en" ? "#FFF" : "#9CA3AF",
+          }}
+        >
+          EN
+        </span>
       </Button>
     </Box>
   );
