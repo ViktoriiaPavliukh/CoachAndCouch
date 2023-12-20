@@ -5,29 +5,43 @@ import Loader from "../../components/Loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
-import { filterAdverts } from "@/redux/marketplace/adverts/operations";
+import {
+  filterAdverts,
+  getAdverts,
+} from "@/redux/marketplace/adverts/operations";
 
 export function TeacherFilterResult() {
   const [filters, setFilters] = useState({});
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAdvertsIsLoading);
 
   useEffect(() => {
-    console.log("use effect", filters, Object.keys(filters).length);
     Object.keys(filters).length > 0 && dispatch(filterAdverts(filters));
-  }, [dispatch, filters]);
+    Object.keys(filters).length === 0 && dispatch(getAdverts(page));
+  }, [dispatch, filters, page]);
 
   const onFiltersChange = (newFilters) => {
-    console.log("filters", newFilters);
     setFilters((prevFilters) => ({
       ...prevFilters,
       ...newFilters,
     }));
   };
+
+  const onResetFilter = () => {
+    setFilters({});
+  };
   return (
     <>
-      <FilterTeacherPanel onFiltersChange={onFiltersChange} />
-      {isLoading ? <Loader /> : <TeacherListBox />}
+      <FilterTeacherPanel
+        onFiltersChange={onFiltersChange}
+        onResetFilter={onResetFilter}
+      />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <TeacherListBox page={page} setPage={setPage} />
+      )}
     </>
   );
 }

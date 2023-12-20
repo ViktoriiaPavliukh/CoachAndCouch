@@ -15,6 +15,7 @@ export const Filter = ({ options, typeoption, label, onFilterChange }) => {
       id={`${label}-filter`}
       freeSolo
       options={options}
+      clearOnBlur
       // value={value}
       onChange={(event, newValue) => {
         console.log(newValue?.id || "null");
@@ -30,9 +31,15 @@ export const Filter = ({ options, typeoption, label, onFilterChange }) => {
       }}
       inputValue={inputValue}
       onInputChange={(event, newInputValue) => {
+        // if (reason === "reset") {
+        //   setInputValue("");
+        //   setQuery("");
+        // } else {
+        // console.log(event.target.value);
         setInputValue(newInputValue);
         setQuery(event.target.value);
         console.log(query);
+        // }
       }}
       getOptionLabel={(option) => {
         return option[typeoption];

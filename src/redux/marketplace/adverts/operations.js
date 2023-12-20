@@ -3,9 +3,10 @@ import { publicAPI } from "@/services/publicAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-export const getAdverts = createAsyncThunk("adverts/getAdverts", async (_, thunkAPI) => {
+export const getAdverts = createAsyncThunk("adverts/getAdverts", async (currentPage, thunkAPI) => {
   try {
-    const { data } = await publicAPI.get(`/adverts`);
+    const { data } = await publicAPI.get(`/adverts?page=${currentPage}`);
+    
     if (thunkAPI.status === 201) {
       toast.success("You add the advert", {
         icon: "🚀",
@@ -72,8 +73,6 @@ export const favoriteAdvert = createAsyncThunk("adverts/favoriteAdverts", async 
 export const filterAdverts = createAsyncThunk("adverts/filterAdverts", async (filters, thunkAPI) => {
   try {
     const queryParams = new URLSearchParams();
-    console.log(queryParams);
-
     if (filters.language) {
       queryParams.append("language", filters.language);
     }
@@ -84,10 +83,7 @@ export const filterAdverts = createAsyncThunk("adverts/filterAdverts", async (fi
       queryParams.append("specialization", filters.specialization);
     }
     const queryString = queryParams.toString();
-    console.log(queryString);
-
-    const { data } = await publicAPI.get(`/adverts?${queryString}`);
-    console.log(`adverts was filtered`);
+    const { data } = await publicAPI.get(`adverts?${queryString}`);    
 
     return data;
   } catch (error) {
