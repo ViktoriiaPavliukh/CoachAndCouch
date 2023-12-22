@@ -1,21 +1,13 @@
 import "react-calendar/dist/Calendar.css";
 
-import {
-  Container,
-  Box,
-  Typography,
-  FormControl,
-  TextField,
-} from "@mui/material";
+import { Box } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/auth/selectors";
-import { useState } from "react";
 
 import { Sidebar } from "./Sidebar";
 
 export function PersonalAccount() {
-  const [image, setImage] = useState("");
   const user = useSelector(selectUser);
   const navigate = useNavigate();
 
@@ -25,19 +17,38 @@ export function PersonalAccount() {
   }
 
   return (
-    <Container
-      component="div"
+    // <Container
+    //   component="div"
+    //   sx={
+    //     {
+    //   pt: 11,
+    //   maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
+    //   pl: { lg: "30px", md: "20px", sm: "15px" },
+    //   pr: { lg: "30px", md: "20px", sm: "15px" },
+    //   display: "flex",
+    //   justifyContent: "flex-start",
+    //   gap: "122px",
+    //   height: "100%",
+    //   pb: "79px",
+    //     }
+    //   }
+    // >
+    <Box
       sx={{
+        display: "flex",
+        alignItems: { xs: "center", lg: "flex-start" },
+        justifyContent: "flex-start",
+        flexDirection: { xs: "column", lg: "row" },
+        width: "100%",
+        paddingTop: { xs: "32px", md: "40px" },
         paddingY: "40px",
         paddingX: { xs: "0", md: "37px" },
-        display: "flex",
         gap: "40px",
         height: "100%",
       }}
     >
       <Sidebar />
-
       <Outlet />
-    </Container>
+    </Box>
   );
 }

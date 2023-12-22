@@ -15,7 +15,7 @@ export default function Layout() {
       <Header />
       <Container
         sx={{
-          padding: { sm: "0 16px", md: "0 23px" },
+          padding: { xs: "0 16px", md: "0 23px" },
           border: "1px solid red",
           backgroundColor: "background",
           display: "flex",

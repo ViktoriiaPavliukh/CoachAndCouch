@@ -1,7 +1,7 @@
 import { PropTypes } from "prop-types";
 import { Box, Button, List, ListItem, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { addFeedback } from "@/redux/user/operations";
+import { addFeedback } from "@/redux/users/operations";
 
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { toast } from "react-toastify";
@@ -223,6 +223,7 @@ export function ReviewList({ id, userImage, advertId }) {
                   <input
                     type="radio"
                     name="rating"
+                    className="starRating"
                     value={currentRating}
                     onChange={() => {
                       setRating(currentRating);

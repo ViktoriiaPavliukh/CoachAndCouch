@@ -46,7 +46,7 @@ img {
 .custom-link:hover {
   color: #0e5b1d;
 }
-input[type="radio"] {
+.starRating {
   display: none;
 }
 .star {

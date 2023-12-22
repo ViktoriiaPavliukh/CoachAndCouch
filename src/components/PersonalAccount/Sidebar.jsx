@@ -65,21 +65,13 @@ export const Sidebar = () => {
           <Box component={Link} to={item.page} sx={linkStyles} key={index}>
             {IconComponent && (
               <IconComponent
-                style={
-                  location.pathname === `/user/${user.id}/${item.page}`
-                    ? activeIconStyles
-                    : IconStyles
-                }
+                style={location.pathname === `/user/${user.id}/${item.page}` ? activeIconStyles : IconStyles}
               />
             )}
             <Typography
               variant="fontLink"
               noWrap
-              sx={
-                location.pathname === `/user/${user.id}/${item.page}`
-                  ? activeTitleStyles
-                  : titleStyles
-              }
+              sx={location.pathname === `/user/${user.id}/${item.page}` ? activeTitleStyles : titleStyles}
             >
               {intl.formatMessage({ id: `personalAccount.${item.page}` })}
             </Typography>

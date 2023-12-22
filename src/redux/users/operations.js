@@ -2,7 +2,7 @@ import { privateAPI } from "@/services/privateAPI";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { token } from "../../services/privateAPI";
 
-export const getUserById = createAsyncThunk("admin/getUsersAsAdmin", async (id, thunkAPI) => {
+export const getUserById = createAsyncThunk("users/getUserById", async (id, thunkAPI) => {
   try {
     const persistToken = thunkAPI.getState().auth.accessToken;
     token.set(persistToken);
@@ -10,7 +10,23 @@ export const getUserById = createAsyncThunk("admin/getUsersAsAdmin", async (id, 
     const { data } = await privateAPI.get(`/users/${id}`, {
       headers: { Authorization: `Bearer ${persistToken}` },
     });
-    // console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log(error.message);
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
+
+export const getCurrentUser = createAsyncThunk("users/getCurrentUser", async (_, thunkAPI) => {
+  try {
+    const persistToken = thunkAPI.getState().auth.accessToken;
+    token.set(persistToken);
+    // console.log(persistToken);
+    const { data } = await privateAPI.get(`/users`, {
+      headers: { Authorization: `Bearer ${persistToken}` },
+    });
+
     return data;
   } catch (error) {
     console.log(error.message);

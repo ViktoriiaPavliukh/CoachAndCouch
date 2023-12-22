@@ -64,9 +64,6 @@ export const TeacherFormPage = () => {
   console.log(user);
   console.log(token);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   dispatch(getLanguages());
-  // }, [dispatch]);
 
   const adverts = useSelector(advertsSelector)?.adverts;
   const advertId = adverts ? adverts.find((advert) => advert.user.id === user.id).id : null;
@@ -215,6 +212,7 @@ export const TeacherFormPage = () => {
                   ))}
               </Select>
             </FormControl>
+
             <TextField
               label={intl.formatMessage({ id: "birthday" })}
               style={{

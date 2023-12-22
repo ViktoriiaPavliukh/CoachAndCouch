@@ -1,17 +1,8 @@
 import { selectUser } from "@/redux/auth/selectors";
-import { getUserById } from "@/redux/user/operations";
-import { selectUserById } from "@/redux/user/selectors";
+import { getUserById } from "@/redux/users/operations";
+import { selectUserById } from "@/redux/users/selectors";
 import { useIntl } from "react-intl";
-import {
-  Box,
-  Button,
-  TextField,
-  Select,
-  MenuItem,
-  Stack,
-  FormControl,
-  InputLabel,
-} from "@mui/material";
+import { Box, Button, TextField, Select, MenuItem, Stack, FormControl, InputLabel } from "@mui/material";
 // import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { format } from "date-fns";
 import { useEffect } from "react";
@@ -88,38 +79,21 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "birthday" })}
               name="birthday"
-              defaultValue={
-                user.birthday
-                  ? format(new Date(user.birthday), "dd.MM.yyyy")
-                  : ""
-              }
+              defaultValue={user.birthday ? format(new Date(user.birthday), "dd.MM.yyyy") : ""}
               sx={{ width: { xs: "100%", lg: "48%" } }}
               variant="outlined"
             />
-            <FormControl
-              variant="outlined"
-              sx={{ width: { xs: "100%", lg: "48%" } }}
-            >
-              <InputLabel htmlFor="sex-label">
-                {intl.formatMessage({ id: "sex" })}
-              </InputLabel>
+            <FormControl variant="outlined" sx={{ width: { xs: "100%", lg: "48%" } }}>
+              <InputLabel htmlFor="sex-label">{intl.formatMessage({ id: "sex" })}</InputLabel>
               <Select
                 label={intl.formatMessage({ id: "sex" })}
                 name="sex"
                 value={user.sex}
                 onChange={(e) => console.log(e.target.value)}
               >
-                <MenuItem value="male">
-                  {intl.formatMessage({ id: "male" })}
-                </MenuItem>
-                <MenuItem value="female">
-                  {" "}
-                  {intl.formatMessage({ id: "female" })}
-                </MenuItem>
-                <MenuItem value="other">
-                  {" "}
-                  {intl.formatMessage({ id: "other" })}
-                </MenuItem>
+                <MenuItem value="male">{intl.formatMessage({ id: "male" })}</MenuItem>
+                <MenuItem value="female"> {intl.formatMessage({ id: "female" })}</MenuItem>
+                <MenuItem value="other"> {intl.formatMessage({ id: "other" })}</MenuItem>
               </Select>
             </FormControl>
             <TextField
@@ -133,11 +107,7 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "registrationDate" })}
               name="registeredAt"
-              defaultValue={
-                user.registeredAt
-                  ? format(new Date(user.registeredAt), "dd.MM.yyyy HH:mm")
-                  : ""
-              }
+              defaultValue={user.registeredAt ? format(new Date(user.registeredAt), "dd.MM.yyyy HH:mm") : ""}
               variant="outlined"
               sx={{ width: "100%" }}
               disabled
