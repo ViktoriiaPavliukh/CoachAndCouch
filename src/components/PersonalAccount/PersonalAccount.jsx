@@ -2,7 +2,6 @@ import "react-calendar/dist/Calendar.css";
 
 import { Box } from "@mui/material";
 import { Outlet, useNavigate } from "react-router-dom";
-// import { PersonalImage } from "./PersonalImage";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/auth/selectors";
 
@@ -42,6 +41,10 @@ export function PersonalAccount() {
         flexDirection: { xs: "column", lg: "row" },
         width: "100%",
         paddingTop: { xs: "32px", md: "40px" },
+        paddingY: "40px",
+        paddingX: { xs: "0", md: "37px" },
+        gap: "40px",
+        height: "100%",
       }}
     >
       <Sidebar />

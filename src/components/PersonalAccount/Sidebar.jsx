@@ -55,9 +55,8 @@ export const Sidebar = () => {
       sx={{
         display: { xs: "none", lg: "flex" },
         flexDirection: "column",
-        gap: "16px",
-        marginTop: "44px",
-        paddingLeft: "16px",
+        gap: "32px",
+        paddingX: "16px",
       }}
     >
       {sidebarPages.map((item, index) => {
