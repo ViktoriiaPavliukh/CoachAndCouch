@@ -32,7 +32,7 @@ const sexSelect = [
 
   {
     id: 2,
-    sex: "woman",
+    sex: "female",
     sexEn: "Female",
     sexUa: "Жіноча",
   },
