@@ -15,9 +15,14 @@ import countriesJSON from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
-
-export function FilterTeacherPanel({ onFiltersChange, onResetFilter }) {
-  const [selectedFilters, setSelectedFilters] = useState({});
+const initialState = {
+  language: "",
+  country: "",
+  price: "",
+  specialization: "",
+};
+export function FilterTeacherPanel({ onFiltersChange }) {
+  const [selectedFilters, setSelectedFilters] = useState(initialState);
 
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
@@ -37,8 +42,7 @@ export function FilterTeacherPanel({ onFiltersChange, onResetFilter }) {
   };
 
   const handleResetFilter = () => {
-    setSelectedFilters({});
-    onResetFilter();
+    setSelectedFilters(initialState);
   };
 
   return (
@@ -63,10 +67,15 @@ export function FilterTeacherPanel({ onFiltersChange, onResetFilter }) {
         options={languages}
         typeoption={en == "en" ? "languageEn" : "languageUa"}
         keyfield="id"
-        label={intl.formatMessage({ id: "language" })}
+        label={
+          selectedFilters.language === ""
+            ? intl.formatMessage({ id: "language" })
+            : ""
+        }
         onFilterChange={(selectedValue) =>
           handleFilterChange("language", selectedValue)
         }
+        currentInputId={selectedFilters.language}
       />
       <Filter
         options={[...countries].map((el) => ({
@@ -80,26 +89,42 @@ export function FilterTeacherPanel({ onFiltersChange, onResetFilter }) {
           ),
         }))}
         typeoption={en == "en" ? "nameEng" : "nameShort"}
-        label={intl.formatMessage({ id: "country" })}
+        label={
+          selectedFilters.country === ""
+            ? intl.formatMessage({ id: "country" })
+            : ""
+        }
         onFilterChange={(selectedValue) =>
           handleFilterChange("country", selectedValue)
         }
+        currentInputId={selectedFilters.country}
       />
       <Filter
         options={priceOptions}
         typeoption="title"
-        label={intl.formatMessage({ id: "price" })}
+        label={
+          selectedFilters.price === ""
+            ? intl.formatMessage({ id: "price" })
+            : ""
+        }
         onFilterChange={(selectedValue) =>
           handleFilterChange("price", selectedValue)
         }
+        currentInputId={selectedFilters.price}
       />
+
       <Filter
         options={specializations}
         typeoption={en == "en" ? "specializationEn" : "specializationUa"}
-        label={intl.formatMessage({ id: "specialization" })}
+        label={
+          selectedFilters.specialization === ""
+            ? intl.formatMessage({ id: "specialization" })
+            : ""
+        }
         onFilterChange={(selectedValue) =>
           handleFilterChange("specialization", selectedValue)
         }
+        currentInputId={selectedFilters.specialization}
       />
       <Button onClick={handleResetFilter}>Reset filters</Button>
     </Stack>
@@ -108,5 +133,4 @@ export function FilterTeacherPanel({ onFiltersChange, onResetFilter }) {
 
 FilterTeacherPanel.propTypes = {
   onFiltersChange: PropTypes.func.isRequired,
-  onResetFilter: PropTypes.func.isRequired,
 };

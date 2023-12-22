@@ -7,16 +7,7 @@ export const getAdverts = createAsyncThunk("adverts/getAdverts", async (currentP
   try {
     const { data } = await publicAPI.get(`/adverts?page=${currentPage}`);
     
-    if (thunkAPI.status === 201) {
-      toast.success("You add the advert", {
-        icon: "🚀",
-      });
-    }
-    if (thunkAPI.status === 404) {
-      toast.error("You entered incorrect data", {
-        icon: false,
-      });
-    }
+    
     return data;
   } catch (error) {
     toast.error(error.message);
@@ -50,6 +41,16 @@ export const postAdvert = createAsyncThunk("adverts/postAdvert", async (advertDa
     const userToken = thunkAPI.getState().auth.accessToken;
     token.set(userToken);
     const { data } = await privateAPI.post("/adverts", advertData);
+    // if (thunkAPI.status === 201) {
+    //   toast.success("You add the advert", {
+    //     icon: "🚀",
+    //   });
+    // }
+    // if (thunkAPI.status === 404) {
+    //   toast.error("You entered incorrect data", {
+    //     icon: false,
+    //   });
+    // }
     return data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
