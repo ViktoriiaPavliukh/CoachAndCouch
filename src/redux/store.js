@@ -7,7 +7,7 @@ import { advertsReducer } from "./marketplace/adverts/advertsSlice";
 
 import { initReducer } from "./init/initSlice";
 import { adminReducer } from "./admin/adminSlice";
-import { userReducer } from "./user/userSlice";
+import { usersReducer } from "./users/usersSlice";
 import { languageReducer } from "./marketplace/languages/languageSlice";
 
 const authPersistConfig = {
@@ -36,7 +36,7 @@ export const store = configureStore({
     adverts: advertsReducer,
     admin: adminReducer,
     init: initReducer,
-    user: userReducer,
+    users: usersReducer,
     language: persistedLanguageReducer,
   },
   middleware: (getDefaultMiddleware) =>

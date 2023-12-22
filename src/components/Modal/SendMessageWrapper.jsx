@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { selectUser, selectToken } from "../../redux/auth/selectors";
-import { sendMessageFromUser } from "../../redux/user/operations";
+import { sendMessageFromUser } from "../../redux/users/operations";
 import { Box, TextField, Button, Snackbar, Alert, Link } from "@mui/material";
 
 export const SendMessageWrapper = ({ id }) => {
@@ -55,11 +55,7 @@ export const SendMessageWrapper = ({ id }) => {
             onChange={(e) => setMessage(e.target.value)}
             style={{ marginBottom: "16px", width: "100%" }}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSendMessage}
-          >
+          <Button variant="contained" color="primary" onClick={handleSendMessage}>
             Send Message
           </Button>
         </>
@@ -91,17 +87,8 @@ export const SendMessageWrapper = ({ id }) => {
         </>
       )}
 
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={6000}
-        onClose={handleSnackbarClose}
-      >
-        <Alert
-          elevation={6}
-          variant="filled"
-          onClose={handleSnackbarClose}
-          severity="success"
-        >
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+        <Alert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
           {sentMessage?.message}
         </Alert>
       </Snackbar>

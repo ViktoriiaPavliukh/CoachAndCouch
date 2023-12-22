@@ -5,12 +5,14 @@ import {
   deleteUserAsUser,
   sendMessageFromUser,
   getUserMessages,
+  getCurrentUser,
 } from "./operations";
 
-const userSlice = createSlice({
-  name: "user",
+const usersSlice = createSlice({
+  name: "users",
   initialState: {
     user: {},
+    currentUser: {},
     feedbacks: [],
     isLoading: true,
     isLoggedIn: false,
@@ -21,6 +23,12 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        state.isLoggedIn = true;
+        state.isLoading = false;
+        state.error = null;
+      })
       .addCase(getUserById.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isLoggedIn = true;
@@ -83,4 +91,4 @@ const userSlice = createSlice({
   },
 });
 
-export const userReducer = userSlice.reducer;
+export const usersReducer = usersSlice.reducer;

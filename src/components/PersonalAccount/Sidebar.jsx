@@ -53,7 +53,7 @@ export const Sidebar = () => {
   return (
     <Box
       sx={{
-        display: "flex",
+        display: { xs: "none", lg: "flex" },
         flexDirection: "column",
         gap: "16px",
         marginTop: "44px",
@@ -66,21 +66,13 @@ export const Sidebar = () => {
           <Box component={Link} to={item.page} sx={linkStyles} key={index}>
             {IconComponent && (
               <IconComponent
-                style={
-                  location.pathname === `/user/${user.id}/${item.page}`
-                    ? activeIconStyles
-                    : IconStyles
-                }
+                style={location.pathname === `/user/${user.id}/${item.page}` ? activeIconStyles : IconStyles}
               />
             )}
             <Typography
               variant="fontLink"
               noWrap
-              sx={
-                location.pathname === `/user/${user.id}/${item.page}`
-                  ? activeTitleStyles
-                  : titleStyles
-              }
+              sx={location.pathname === `/user/${user.id}/${item.page}` ? activeTitleStyles : titleStyles}
             >
               {intl.formatMessage({ id: `personalAccount.${item.page}` })}
             </Typography>

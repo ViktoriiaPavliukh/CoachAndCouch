@@ -1,6 +1,6 @@
 import { selectUser } from "@/redux/auth/selectors";
-import { getUserById } from "@/redux/user/operations";
-import { selectUserById } from "@/redux/user/selectors";
+import { getUserById } from "@/redux/users/operations";
+import { selectUserById } from "@/redux/users/selectors";
 
 import { Box, Typography } from "@mui/material";
 import { format } from "date-fns";
@@ -78,7 +78,7 @@ export const Profile = () => {
         </label>
         <br />
         <label>
-          Sex
+          Sex:
           <input
             type="radio"
             name="sex"

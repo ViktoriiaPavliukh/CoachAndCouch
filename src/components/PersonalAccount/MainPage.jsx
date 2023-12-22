@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
-import { deleteUserAsUser } from "../../redux/user/operations";
+import { deleteUserAsUser } from "../../redux/users/operations";
 // import "react-calendar/dist/Calendar.css";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
