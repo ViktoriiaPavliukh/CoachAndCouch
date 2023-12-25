@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { format } from "date-fns";
 
 const initialValues = {
   price: 0,
@@ -22,27 +23,27 @@ const initialValues = {
   },
 };
 
-const sexSelect = [
-  {
-    id: 1,
-    sex: "man",
-    sexEn: "Man",
-    sexUa: "Чоловіча",
-  },
+// const sexSelect = [
+//   {
+//     id: 1,
+//     sex: "man",
+//     sexEn: "Man",
+//     sexUa: "Чоловіча",
+//   },
 
-  {
-    id: 2,
-    sex: "female",
-    sexEn: "Female",
-    sexUa: "Жіноча",
-  },
-  {
-    id: 3,
-    sex: "other",
-    sexEn: "Other",
-    sexUa: "Інша",
-  },
-];
+//   {
+//     id: 2,
+//     sex: "female",
+//     sexEn: "Female",
+//     sexUa: "Жіноча",
+//   },
+//   {
+//     id: 3,
+//     sex: "other",
+//     sexEn: "Other",
+//     sexUa: "Інша",
+//   },
+// ];
 
 const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
@@ -55,14 +56,22 @@ const validationSchema = Yup.object({
 });
 
 export const PersonalAdvertForm = ({ currentUser, countriesList, languages, specializations }) => {
-  //   const dispatch = useDispatch();
   const intl = useIntl();
-  //   const countriesList = useSelector(countriesSelector);
-  //   console.log(countriesList);
   const [image, setImage] = useState(currentUser.advert.imagePath);
-  //   useEffect(() => {
-  //     dispatch(getCountries());
-  //   }, [dispatch]);
+
+  initialValues.price = currentUser.advert.price;
+  initialValues.description = currentUser.advert.description;
+  // initialValues.specializations = currentUser.advert.specialization;
+  // initialValues.spokenLanguages = currentUser.advert.spokenLanguages((el) => languages.find((lang) => lang.id === el));
+  initialValues.updateUser.firstName = currentUser.firstName;
+  initialValues.updateUser.lastName = currentUser.lastName;
+  initialValues.updateUser.country = currentUser.country;
+  initialValues.updateUser.birthday = currentUser.birthday;
+  initialValues.updateUser.sex = currentUser.sex;
+
+  console.log(initialValues);
+
+  // initialValues.specializations = currentUser.advert.specializations.map((spec) => spec);
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -70,7 +79,7 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
       const transformedData = new FormData();
       const updateUser = {
         country: values.updateUser.country.id,
-        birthday: "1995-04-23T18:02:22.126Z",
+        birthday: values.updateUser.birthday,
         sex: values.updateUser.sex,
         firstName: values.updateUser.firstName,
         lastName: values.updateUser.lastName,
@@ -83,6 +92,7 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
       transformedData.append("updateUser", JSON.stringify(updateUser));
       transformedData.append("image", values.image);
       // dispatch(postAdvert(transformedData));
+      console.log(transformedData);
     },
   });
 
@@ -225,6 +235,14 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
           style={{
             width: "100%",
           }}
+          id="userBirthday"
+          name="updateUser.birthday"
+          InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
+          value={format(new Date(formik.values.updateUser.birthday), "dd.MM.yyyy")}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+          helperText={formik.touched.birthday && formik.errors.birthday}
         />
         <FormControl variant="outlined" sx={{ width: "100%" }}>
           <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
@@ -234,8 +252,9 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
             // }}
             id="country"
             name="updateUser.country"
-            label="country"
-            defaultValue={currentUser.country ? currentUser.country : formik.values.country}
+            label={intl.formatMessage({ id: "country" })}
+            inputlabelprops={{ shrink: !!formik.values.updateUser.country }}
+            value={formik.values.updateUser.country}
             onChange={(event) => {
               formik.setFieldValue("updateUser.country", event.target.value);
               console.log(event.target.value);
@@ -246,7 +265,7 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
           >
             {countriesList &&
               countriesList.map((country) => (
-                <MenuItem key={uuidv4()} value={country}>
+                <MenuItem key={country.alpha2} value={country}>
                   {country.alpha2}
                 </MenuItem>
               ))}
@@ -256,23 +275,19 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
           <InputLabel> {intl.formatMessage({ id: "sex" })}</InputLabel>
           <Select
             id="sex"
-            name="sex"
-            // multiple
-            label="Стать"
-            value={formik.values.sex}
+            name="updateUser.sex"
+            label={intl.formatMessage({ id: "sex" })}
+            value={formik.values.updateUser.sex}
             onChange={(event) => {
-              formik.setFieldValue("sex", event.target.value);
+              formik.setFieldValue("updateUser.sex", event.target.value);
+              console.log(event.target.value);
             }}
             onBlur={formik.handleBlur}
             error={formik.touched.sex && Boolean(formik.errors.sex)}
-            renderValue={(selected) => selected.sexUa}
           >
-            {sexSelect &&
-              sexSelect.map((sex) => (
-                <MenuItem key={uuidv4()} value={sex}>
-                  {sex.sexUa}
-                </MenuItem>
-              ))}
+            <MenuItem value="male">{intl.formatMessage({ id: "male" })}</MenuItem>
+            <MenuItem value="female"> {intl.formatMessage({ id: "female" })}</MenuItem>
+            <MenuItem value="other"> {intl.formatMessage({ id: "other" })}</MenuItem>
           </Select>
         </FormControl>
         <TextField
@@ -378,10 +393,13 @@ export const PersonalAdvertForm = ({ currentUser, countriesList, languages, spec
           helperText={formik.touched.description && formik.errors.description}
         />
         <TextField
+          InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
+          disabled
           label="Дата реєстрації"
           style={{
             width: "100%",
           }}
+          value={format(new Date(currentUser.advert.createdAt), "dd.MM.yyyy HH:mm")}
         />
         <Button variant="contained" type="submit">
           {intl.formatMessage({ id: "publishBtn" })}
