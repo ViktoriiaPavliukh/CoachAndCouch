@@ -31,7 +31,10 @@ const createThemeTemplate = (themeColor) => ({
           secondary: {
             main: "#e4eadd",
           },
-          background: "#FFF",
+          background: {
+            paper: "#FFF",
+            default: "#FFF",
+          },
           buttonColor: {
             header: "#7AB02E",
             main: "#7AB02E",
@@ -65,7 +68,11 @@ const createThemeTemplate = (themeColor) => ({
           secondary: {
             main: "#e4eadd",
           },
-          background: "#292A2A",
+          // background: "#292A2A",
+          background: {
+            paper: "#292A2A",
+            default: "#292A2A",
+          },
           buttonColor: {
             header: "#EEC700",
             main: "#EEC700",

@@ -83,7 +83,8 @@ export const TeacherFormPage = () => {
 
   console.log("user", user);
   initialValues.updateUser.firstName = user.firstName;
-  initialValues.updateUser.lastName = user.lastName;
+  initialValues.updateUser.lastName = user.lastName ?? "";
+  initialValues.updateUser.country = user.country ?? "";
 
   const formik = useFormik({
     initialValues,
@@ -195,7 +196,7 @@ export const TeacherFormPage = () => {
                 id="country"
                 name="updateUser.country"
                 label="country"
-                value={user.country ? user.country : formik.values.country}
+                value={formik.values.country}
                 onChange={(event) => {
                   formik.setFieldValue("updateUser.country", event.target.value);
                   console.log(event.target.value);

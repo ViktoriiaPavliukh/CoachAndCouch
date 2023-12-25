@@ -42,7 +42,7 @@ export function Card() {
   }, [dispatch, teacherId]);
 
   const teacher = useSelector(advertByIdSelector);
-  // console.log(teacher);
+  console.log(teacher);
 
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   // console.log(teacher);
