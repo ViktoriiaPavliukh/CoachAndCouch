@@ -37,12 +37,26 @@ export function TeacherListBox({ page, setPage }) {
         </Grid>
       </Box>
       <Pagination
-        sx={{ marginBottom: "50px" }}
+        sx={{
+          marginBottom: "50px",
+          padding: "14px 41px",
+          borderRadius: "15px",
+          background: "#FFF",
+          boxShadow:
+            "0px 8px 16px 0px rgba(0, 0, 0, 0.08), 0px 0px 4px 0px rgba(0, 0, 0, 0.04)}",
+          "& .MuiPaginationItem-page.Mui-selected": {
+            color: "#FFF",
+          },
+          "& .MuiPagination-ul": {
+            gap: "24px",
+          },
+        }}
         count={count}
+        color="buttonColor"
         size="large"
         page={page}
-        variant="outlined"
-        shape="rounded"
+        siblingCount={0}
+        boundaryCount={2}
         onChange={handleChange}
       />
     </>

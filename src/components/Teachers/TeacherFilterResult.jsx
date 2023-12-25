@@ -9,9 +9,14 @@ import {
   filterAdverts,
   getAdverts,
 } from "@/redux/marketplace/adverts/operations";
-
+const initialState = {
+  language: "",
+  country: "",
+  price: "",
+  specialization: "",
+};
 export function TeacherFilterResult() {
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState(initialState);
   const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const isLoading = useSelector(selectAdvertsIsLoading);
@@ -28,14 +33,14 @@ export function TeacherFilterResult() {
     }));
   };
 
-  const onResetFilter = () => {
-    setFilters({});
-  };
+  // const onResetFilter = () => {
+  //   setFilters(initialState);
+  // };
   return (
     <>
       <FilterTeacherPanel
         onFiltersChange={onFiltersChange}
-        onResetFilter={onResetFilter}
+        // onResetFilters={onResetFilter}
       />
       {isLoading ? (
         <Loader />
