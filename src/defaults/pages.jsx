@@ -2,6 +2,42 @@ import { FormattedMessage } from "react-intl";
 
 export const pages = [
   {
+    title: <FormattedMessage id="personalAccount.profile" />,
+    link: "profile",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.lessons" />,
+    link: "lessons",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.schedule" />,
+    link: "schedule",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.messages" />,
+    link: "messages",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.likes" />,
+    link: "likes",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.feedback" />,
+    link: "feedback",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.advertisements" />,
+    link: "advertisements",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.dashboard" />,
+    link: "dashboard",
+  },
+  {
+    title: <FormattedMessage id="personalAccount.settings" />,
+    link: "settings",
+  },
+  {
     title: <FormattedMessage id="header.teachers" />,
     link: "/",
   },
@@ -14,47 +50,11 @@ export const pages = [
     link: "about",
   },
   {
-    title: <FormattedMessage id="header.profile" />,
-    link: "user",
-  },
-  {
     title: <FormattedMessage id="header.login" />,
     link: "login",
   },
   {
     title: <FormattedMessage id="header.registration" />,
     link: "registration",
-  },
-  {
-    title: <FormattedMessage id="header.lessons" />,
-    link: "lessons",
-  },
-  {
-    title: <FormattedMessage id="header.schedule" />,
-    link: "schedule",
-  },
-  {
-    title: <FormattedMessage id="header.messages" />,
-    link: "messages",
-  },
-  {
-    title: <FormattedMessage id="header.likes" />,
-    link: "likes",
-  },
-  {
-    title: <FormattedMessage id="header.feedback" />,
-    link: "feedback",
-  },
-  {
-    title: <FormattedMessage id="header.advertisements" />,
-    link: "advertisements",
-  },
-  {
-    title: <FormattedMessage id="header.dashboard" />,
-    link: "dashboard",
-  },
-  {
-    title: <FormattedMessage id="header.settings" />,
-    link: "settings",
   },
 ];

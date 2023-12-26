@@ -56,7 +56,7 @@ const MenuMobItem = styled(MenuItem)(() => ({
   "& .MuiMenuItem-root": {
     color: "white",
   },
-  "& .MuiTypography-root": {
+  "& .MuiPaper-root": {
     width: "100%",
   },
 }));
@@ -143,7 +143,7 @@ export function Header() {
               gap: "56px",
             }}
           >
-            {pages.slice(0, 3).map(({ title, link }) => (
+            {pages.slice(9, 12).map(({ title, link }) => (
               <Button
                 key={title.props.id}
                 onClick={() => {
@@ -258,7 +258,7 @@ export function Header() {
                 </MenuItem>
               </Box>
             ) : (
-              pages.slice(4, 5).map(({ title, link }) => (
+              pages.slice(12, 13).map(({ title, link }) => (
                 <MenuItem
                   sx={{
                     px: "12px",
@@ -292,7 +292,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(5, 6).map(({ title, link }) => (
+                {pages.slice(13).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -324,7 +324,10 @@ export function Header() {
             )}
           </Stack>
           <Box
-            sx={{ display: { xs: "flex", lg: "none" }, alignItems: "center" }}
+            sx={{
+              display: { xs: "flex", lg: "none" },
+              alignItems: "center",
+            }}
           >
             <LanguageSwitcher />
             <GreenSwitch
@@ -348,108 +351,29 @@ export function Header() {
               onClose={() => {
                 handleCloseNavMenu();
               }}
-              sx={{
-                display: { xs: "block", lg: "none" },
-                padding: "10px",
+              PaperProps={{
+                style: {
+                  height: "100%",
+                  width: "100%",
+                  padding: "40px 60px",
+                },
               }}
+              MenuListProps={{
+                style: {
+                  // display: "flex",
+                  // flexDirection: "column",
+                  // gap: "32px",
+                  padding: "0",
+                },
+              }}
+              // sx={{
+              //   height: "100%",
+              //   width: "100%",
+              //   display: { xs: "block", lg: "none" },
+              // padding: "10px",
+              // }}
             >
-              {isLoggedIn ? (
-                <div>
-                  <MenuMobItem
-                    // disableGutters={true}
-                    sx={{
-                      width: "100%",
-                      padding: 0,
-                      backgroundColor: (theme) => theme.palette.background,
-                    }}
-                    onClick={() => {
-                      handleCloseNavMenu(`/user/${user.id}/main`);
-                    }}
-                  >
-                    <Typography
-                      variant="fontHeader"
-                      sx={{
-                        mr: 0,
-                        borderBottom: "1px solid green",
-                        padding: "6px 16px",
-                      }}
-                    >
-                      <Typography variant="fontHeader">
-                        {intl.formatMessage({ id: "header.profile" })}
-                      </Typography>
-                    </Typography>
-                  </MenuMobItem>
-                  <MenuMobItem
-                    // disableGutters={true}
-                    onClick={() => {
-                      handleLogout("/");
-                    }}
-                    sx={{
-                      padding: 0,
-                      backgroundColor: (theme) => theme.palette.background,
-                    }}
-                  >
-                    <Typography
-                      textAlign="left"
-                      variant="fontHeader"
-                      sx={{
-                        mr: 0,
-                        padding: "6px 16px",
-                      }}
-                    >
-                      {intl.formatMessage({ id: "header.logout" })}
-                    </Typography>
-                  </MenuMobItem>
-                </div>
-              ) : (
-                <div>
-                  <MenuMobItem
-                    // disableGutters={true}
-                    onClick={() => {
-                      handleCloseNavMenu("/login");
-                    }}
-                    sx={{
-                      padding: 0,
-                      backgroundColor: (theme) => theme.palette.background,
-                    }}
-                  >
-                    <Typography
-                      textAlign="left"
-                      variant="fontHeader"
-                      sx={{
-                        mr: 0,
-                        padding: "6px 16px",
-                      }}
-                    >
-                      {intl.formatMessage({ id: "header.login" })}
-                    </Typography>
-                  </MenuMobItem>
-
-                  <MenuMobItem
-                    disableGutters={true}
-                    onClick={() => {
-                      handleCloseNavMenu("/registration");
-                    }}
-                    sx={{
-                      padding: 0,
-                      backgroundColor: (theme) => theme.palette.background,
-                    }}
-                  >
-                    <Typography
-                      // disableGutters={true}
-                      textAlign="left"
-                      variant="fontHeader"
-                      sx={{
-                        mr: 0,
-                        padding: "6px 16px",
-                      }}
-                    >
-                      {intl.formatMessage({ id: "header.registration" })}
-                    </Typography>
-                  </MenuMobItem>
-                </div>
-              )}
-              {pages.slice(0, 3).map(({ title, link }) => (
+              {pages.slice(9, 12).map(({ title, link }) => (
                 <MenuMobItem
                   // disableGutters={true}
                   key={title.props.id}
@@ -473,6 +397,129 @@ export function Header() {
                   </Typography>
                 </MenuMobItem>
               ))}
+              {isLoggedIn ? (
+                <div>
+                  <Box sx={{ borderTop: "1px solid #4B5563" }}>
+                    {pages.slice(0, 8).map(({ title, link }) => (
+                      <MenuMobItem
+                        // disableGutters={true}
+                        key={title.props.id}
+                        onClick={() => {
+                          handleCloseNavMenu(`/user/${user.id}/${link}`);
+                        }}
+                        sx={{
+                          padding: 0,
+                          backgroundColor: (theme) => theme.palette.background,
+                        }}
+                      >
+                        <Typography
+                          textAlign="left"
+                          variant="fontHeader"
+                          sx={{
+                            mr: 0,
+                            padding: "6px 16px",
+                          }}
+                        >
+                          {title}
+                        </Typography>
+                      </MenuMobItem>
+                    ))}
+                  </Box>
+                  <Box sx={{ borderTop: "1px solid #4B5563" }}>
+                    {pages.slice(8, 9).map(({ title, link }) => (
+                      <MenuMobItem
+                        key={title.props.id}
+                        onClick={() => {
+                          handleCloseNavMenu(`/user/${user.id}/${link}`);
+                        }}
+                        sx={{
+                          padding: 0,
+                          backgroundColor: (theme) => theme.palette.background,
+                        }}
+                      >
+                        <Typography
+                          textAlign="left"
+                          variant="fontHeader"
+                          sx={{
+                            mr: 0,
+                            padding: "6px 16px",
+                          }}
+                        >
+                          {title}
+                        </Typography>
+                      </MenuMobItem>
+                    ))}
+                    <MenuMobItem
+                      onClick={() => {
+                        handleLogout("/");
+                      }}
+                      sx={{
+                        padding: 0,
+                        backgroundColor: (theme) => theme.palette.background,
+                      }}
+                    >
+                      <Typography
+                        textAlign="left"
+                        variant="fontHeader"
+                        sx={{
+                          mr: 0,
+                          padding: "6px 16px",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "header.logout" })}
+                      </Typography>
+                    </MenuMobItem>
+                  </Box>
+                </div>
+              ) : (
+                <div>
+                  <Box sx={{ borderTop: "1px solid #4B5563" }}>
+                    <MenuMobItem
+                      onClick={() => {
+                        handleCloseNavMenu("/login");
+                      }}
+                      sx={{
+                        padding: 0,
+                        backgroundColor: (theme) => theme.palette.background,
+                      }}
+                    >
+                      <Typography
+                        textAlign="left"
+                        variant="fontHeader"
+                        sx={{
+                          mr: 0,
+                          padding: "6px 16px",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "header.login" })}
+                      </Typography>
+                    </MenuMobItem>
+
+                    <MenuMobItem
+                      disableGutters={true}
+                      onClick={() => {
+                        handleCloseNavMenu("/registration");
+                      }}
+                      sx={{
+                        padding: 0,
+                        backgroundColor: (theme) => theme.palette.background,
+                      }}
+                    >
+                      <Typography
+                        // disableGutters={true}
+                        textAlign="left"
+                        variant="fontHeader"
+                        sx={{
+                          mr: 0,
+                          padding: "6px 16px",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "header.registration" })}
+                      </Typography>
+                    </MenuMobItem>
+                  </Box>
+                </div>
+              )}
             </Menu>
           </Box>
         </Toolbar>
