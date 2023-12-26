@@ -5,14 +5,6 @@ export const pages = [
     title: <FormattedMessage id="header.teachers" />,
     link: "/",
   },
-  // {
-  //   title: "Бізнес",
-  //   link: "",
-  // },
-  // {
-  //   title: "Для дітей",
-  //   link: "",
-  // },
   {
     title: <FormattedMessage id="header.becomeTeacher" />,
     link: "teacherform",
@@ -32,5 +24,37 @@ export const pages = [
   {
     title: <FormattedMessage id="header.registration" />,
     link: "registration",
+  },
+  {
+    title: <FormattedMessage id="header.lessons" />,
+    link: "lessons",
+  },
+  {
+    title: <FormattedMessage id="header.schedule" />,
+    link: "schedule",
+  },
+  {
+    title: <FormattedMessage id="header.messages" />,
+    link: "messages",
+  },
+  {
+    title: <FormattedMessage id="header.likes" />,
+    link: "likes",
+  },
+  {
+    title: <FormattedMessage id="header.feedback" />,
+    link: "feedback",
+  },
+  {
+    title: <FormattedMessage id="header.advertisements" />,
+    link: "advertisements",
+  },
+  {
+    title: <FormattedMessage id="header.dashboard" />,
+    link: "dashboard",
+  },
+  {
+    title: <FormattedMessage id="header.settings" />,
+    link: "settings",
   },
 ];

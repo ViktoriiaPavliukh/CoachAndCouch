@@ -14,9 +14,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import TelegramIcon from "@mui/icons-material/Telegram";
-import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
+// import InstagramIcon from "@mui/icons-material/Instagram";
+// import TelegramIcon from "@mui/icons-material/Telegram";
+// import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
@@ -268,7 +268,7 @@ export function Header() {
                       pathname === "/login"
                         ? theme.palette.textColor.header
                         : theme.palette.textColor.header,
-                    backgroundColor: (theme) =>
+                    backgroundColor: () =>
                       pathname === "/login" ? null : null,
                     borderColor: (theme) => theme.palette.primary.accent,
                     borderWidth: "1px",
