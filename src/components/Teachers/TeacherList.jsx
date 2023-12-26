@@ -41,9 +41,11 @@ export function TeacherListBox({ page, setPage }) {
           marginBottom: "50px",
           padding: "14px 41px",
           borderRadius: "15px",
-          background: "#FFF",
-          boxShadow:
-            "0px 8px 16px 0px rgba(0, 0, 0, 0.08), 0px 0px 4px 0px rgba(0, 0, 0, 0.04)}",
+          background: (theme) => theme.palette.background,
+          backgroundImage:
+            "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))",
+          // background: "#FFF",
+          boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
           "& .MuiPaginationItem-page.Mui-selected": {
             color: "#FFF",
           },
