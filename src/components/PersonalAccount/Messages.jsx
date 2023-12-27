@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserMessages } from "@/redux/users/operations";
@@ -21,11 +21,16 @@ export const Messages = () => {
         flexDirection: "column",
       }}
     >
-      <Typography variant="h5">{intl.formatMessage({ id: "personalAccount.messages" })}</Typography>
+      <Typography variant="h5">
+        {intl.formatMessage({ id: "personalAccount.messages" })}
+      </Typography>
       <List>
         {messages.map((message) => (
           <ListItem key={message.id}>
-            <ListItemText primary={message.message} secondary={new Date(message.writtedAt).toLocaleString()} />
+            <ListItemText
+              primary={message.message}
+              secondary={new Date(message.writtedAt).toLocaleString()}
+            />
           </ListItem>
         ))}
       </List>

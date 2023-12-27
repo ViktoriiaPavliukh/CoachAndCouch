@@ -1,12 +1,12 @@
 import { LogOut } from "react-feather";
 import * as FeatherIcons from "react-feather";
-import sidebarPages from "../../defaults/sidebar/sidebarPages.json";
 import { useIntl } from "react-intl";
 import { logoutUser } from "../../redux/auth/operations";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Typography } from "@mui/material";
 import { selectUser } from "@/redux/auth/selectors";
+import { pages } from "@/defaults";
 
 const linkStyles = {
   display: "flex",
@@ -59,26 +59,34 @@ export const Sidebar = () => {
         paddingX: "16px",
       }}
     >
-      {sidebarPages.map((item, index) => {
+      {pages.slice(0, 9).map((item, index) => {
         const IconComponent = FeatherIcons[item.iconFeatherName];
         return (
-          <Box component={Link} to={item.page} sx={linkStyles} key={index}>
+          <Box component={Link} to={item.link} sx={linkStyles} key={index}>
             {IconComponent && (
               <IconComponent
-                style={location.pathname === `/user/${user.id}/${item.page}` ? activeIconStyles : IconStyles}
+                style={
+                  location.pathname === `/user/${user.id}/${item.link}`
+                    ? activeIconStyles
+                    : IconStyles
+                }
               />
             )}
             <Typography
               variant="fontLink"
               noWrap
-              sx={location.pathname === `/user/${user.id}/${item.page}` ? activeTitleStyles : titleStyles}
+              sx={
+                location.pathname === `/user/${user.id}/${item.link}`
+                  ? activeTitleStyles
+                  : titleStyles
+              }
             >
-              {intl.formatMessage({ id: `personalAccount.${item.page}` })}
+              {item.title}
             </Typography>
           </Box>
         );
       })}
-      <Box component={Link} sx={linkStyles} onClick={handleLogout}>
+      <Box component={Link} to="/" sx={linkStyles} onClick={handleLogout}>
         <LogOut style={IconStyles} />
         <Typography variant="fontLink" noWrap sx={titleStyles}>
           {intl.formatMessage({ id: "personalAccount.logout" })}
@@ -87,202 +95,3 @@ export const Sidebar = () => {
     </Box>
   );
 };
-{
-  /* <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "16px",
-        marginTop: "44px",
-        paddingLeft: "16px",
-      }}
-    >
-      <Box component={Link} to="profile" sx={linkStyles}>
-        <FileText
-          style={
-            location.pathname === `/user/${user.id}/profile`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/profile`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.profile" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="lessons" sx={linkStyles}>
-        <Edit2
-          style={
-            location.pathname === `/user/${user.id}/lessons`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/lessons`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.lessons" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="schedule" sx={linkStyles}>
-        <Calendar
-          style={
-            location.pathname === `/user/${user.id}/schedule`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/schedule`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.schedule" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="messages" sx={linkStyles}>
-        <MessageSquare
-          style={
-            location.pathname === `/user/${user.id}/messages`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/messages`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.messages" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="likes" sx={linkStyles}>
-        <Heart
-          style={
-            location.pathname === `/user/${user.id}/likes`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/likes`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.likes" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="advertisements" sx={linkStyles}>
-        <Tablet
-          style={
-            location.pathname === `/user/${user.id}/advertisements`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/advertisements`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.advertisements" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="feedback" sx={linkStyles}>
-        <Smile
-          style={
-            location.pathname === `/user/${user.id}/feedback`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/feedback`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.feedback" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="main" sx={linkStyles}>
-        <Grid
-          style={
-            location.pathname === `/user/${user.id}/main`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/main`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "dashboard" })}
-        </Typography>
-      </Box>
-      <Box component={Link} to="settings" sx={linkStyles}>
-        <Settings
-          style={
-            location.pathname === `/user/${user.id}/settings`
-              ? activeIconStyles
-              : IconStyles
-          }
-        />
-        <Typography
-          variant="fontLink"
-          noWrap
-          sx={
-            location.pathname === `/user/${user.id}/settings`
-              ? activeTitleStyles
-              : titleStyles
-          }
-        >
-          {intl.formatMessage({ id: "personalAccount.settings" })}
-        </Typography>
-      </Box>
-      <Box component={Link} sx={linkStyles} onClick={handleLogout}>
-        <LogOut style={IconStyles} />
-        <Typography variant="fontLink" noWrap sx={titleStyles}>
-          {intl.formatMessage({ id: "personalAccount.logout" })}
-        </Typography>
-      </Box>
-    </Box> */
-}

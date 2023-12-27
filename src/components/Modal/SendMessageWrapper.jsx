@@ -4,7 +4,15 @@ import { Link as ReactLink, useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { selectUser, selectToken } from "../../redux/auth/selectors";
 import { sendMessageFromUser } from "../../redux/users/operations";
-import { Box, TextField, Button, Snackbar, Alert, Link } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  Link,
+  Typography,
+} from "@mui/material";
 
 export const SendMessageWrapper = ({ id }) => {
   const [message, setMessage] = useState("");
@@ -53,16 +61,25 @@ export const SendMessageWrapper = ({ id }) => {
             variant="outlined"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            style={{ marginBottom: "16px", width: "100%" }}
+            style={{
+              marginBottom: "16px",
+              width: "100%",
+              borderRadius: "8px",
+              border: "1px solid var(--gray-gray-300, #D1D5DB)",
+            }}
           />
-          <Button variant="contained" color="primary" onClick={handleSendMessage}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSendMessage}
+          >
             Send Message
           </Button>
         </>
       ) : (
         <>
-          <p>
-            To send a message, please{" "}
+          <Typography color="primary">
+            To send a message, please
             <Link
               component={ReactLink}
               to="/login"
@@ -71,8 +88,8 @@ export const SendMessageWrapper = ({ id }) => {
               sx={{ textAlign: "center", mt: 2, display: "block" }}
             >
               log in
-            </Link>{" "}
-            or{" "}
+            </Link>
+            or
             <Link
               component={ReactLink}
               to="/registration"
@@ -82,13 +99,21 @@ export const SendMessageWrapper = ({ id }) => {
             >
               register
             </Link>
-            .
-          </p>
+          </Typography>
         </>
       )}
 
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
-        <Alert elevation={6} variant="filled" onClose={handleSnackbarClose} severity="success">
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+      >
+        <Alert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
           {sentMessage?.message}
         </Alert>
       </Snackbar>
