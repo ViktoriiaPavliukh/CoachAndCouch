@@ -40,9 +40,13 @@ function handleLoginFulfilled(state, { payload }) {
   state.isLoading = false;
   state.en = JSON.parse(localStorage.getItem("persist:language"));
   if ([...Object.values(state.en)[0]].splice(1, 2).join("") === "en")
-    toast.success(`Welcome ${state.user.firstName} to Coach&Coach`, { icon: false });
+    toast.success(`Welcome ${state.user.firstName} to Coach&Coach`, {
+      icon: false,
+    });
   else {
-    toast.success(`Вітаємо ${state.user.firstName} у Coach&Coach`, { icon: false });
+    toast.success(`Вітаємо ${state.user.firstName} у Coach&Coach`, {
+      icon: false,
+    });
   }
 }
 
@@ -54,9 +58,13 @@ function handleRegisterFulfilled(state, { payload }) {
   state.isLoading = false;
   state.en = JSON.parse(localStorage.getItem("persist:language"));
   if ([...Object.values(state.en)[0]].splice(1, 2).join("") === "en")
-    toast.success(`Welcome ${state.user.firstName} to Coach&Coach`, { icon: false });
+    toast.success(`Welcome ${state.user.firstName} to Coach&Coach`, {
+      icon: false,
+    });
   else {
-    toast.success(`Вітаємо ${state.user.firstName} у Coach&Coach`, { icon: false });
+    toast.success(`Вітаємо ${state.user.firstName} у Coach&Coach`, {
+      icon: false,
+    });
   }
 }
 
@@ -77,7 +85,7 @@ function handleLogoutFulfilled(state) {
   state.en = JSON.parse(localStorage.getItem("persist:language"));
   const lang = [...Object.values(state.en)[0]].splice(1, 2).join("");
   if (lang === "en") {
-    toast.warn("You exit from your acount");
+    toast.warn("You are logged out of your acount");
   } else {
     toast.warn("Ви вийшли зі свого акаунту");
   }
@@ -93,8 +101,12 @@ function handleRejected(state, { payload: { type, message }, error }) {
     if (lang === "en") toast.error("No internet connection", { icon: false });
     else toast.error("Відсутнє інтернет-з'єднання", { icon: false });
   }
-  if (message === "Request failed with status code 403" || message === "Request failed with status code 400") {
-    if (lang === "en") toast.error("Invalid email or password", { icon: false });
+  if (
+    message === "Request failed with status code 403" ||
+    message === "Request failed with status code 400"
+  ) {
+    if (lang === "en")
+      toast.error("Invalid email or password", { icon: false });
     else toast.error("Невірна електронна пошта чи пароль ", { icon: false });
     return;
   } else {

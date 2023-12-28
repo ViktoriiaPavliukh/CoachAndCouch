@@ -86,7 +86,7 @@ export default function App() {
             <Route path="lessons" element={<Lessons />} />
             <Route path="likes" element={<LikesPages />} />
             <Route path="feedback" element={<Feedback />} />
-            <Route path="main" element={<MainPage />} />
+            <Route path="dashboard" element={<MainPage />} />
             <Route path="schedule" element={<Schedule />} />
             <Route path="messages" element={<Messages />} />
             <Route path="settings" element={<Settings />} />
