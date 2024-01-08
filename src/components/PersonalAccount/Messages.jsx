@@ -8,6 +8,7 @@ import { Box, Typography, List, ListItem, ListItemText } from "@mui/material";
 export const Messages = () => {
   const dispatch = useDispatch();
   const messages = useSelector(selectMessages);
+  console.log(messages);
   const intl = useIntl();
 
   useEffect(() => {
@@ -24,16 +25,20 @@ export const Messages = () => {
       <Typography variant="h5">
         {intl.formatMessage({ id: "personalAccount.messages" })}
       </Typography>
-      <List>
-        {messages.map((message) => (
-          <ListItem key={message.id}>
-            <ListItemText
-              primary={message.message}
-              secondary={new Date(message.writtedAt).toLocaleString()}
-            />
-          </ListItem>
-        ))}
-      </List>
+      {messages.length !== 0 ? (
+        <List>
+          {messages.map((message) => (
+            <ListItem key={message.id}>
+              <ListItemText
+                primary={message.message}
+                secondary={new Date(message.writtedAt).toLocaleString()}
+              />
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <p> у вас ще немає повідомлень</p>
+      )}
     </Box>
   );
 };

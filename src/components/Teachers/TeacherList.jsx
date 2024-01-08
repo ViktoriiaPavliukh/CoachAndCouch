@@ -7,6 +7,7 @@ import { PropTypes } from "prop-types";
 
 export function TeacherListBox({ page, setPage }) {
   const adverts = useSelector(advertsSelector);
+  console.log(adverts);
   const PER_PAGE = 9;
   const items = usePagination(adverts, PER_PAGE);
   const count = adverts.totalPages;
@@ -57,8 +58,8 @@ export function TeacherListBox({ page, setPage }) {
         color="buttonColor"
         size="large"
         page={page}
-        siblingCount={0}
-        boundaryCount={2}
+        // siblingCount={0}
+        // boundaryCount={2}
         onChange={handleChange}
       />
     </>

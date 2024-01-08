@@ -1,7 +1,10 @@
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { advertByIdSelector, selectAdvertsIsLoading } from "@/redux/marketplace/adverts/advertsSelector";
+import {
+  advertByIdSelector,
+  selectAdvertsIsLoading,
+} from "@/redux/marketplace/adverts/advertsSelector";
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Container, Typography } from "@mui/material";
@@ -45,7 +48,6 @@ export function Card() {
   console.log(teacher);
 
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
-  // console.log(teacher);
   return (
     <Container
       component="div"
@@ -87,7 +89,9 @@ export function Card() {
                     p: 0,
                   }}
                 >
-                  <Typography variant="posterName">{teacher.user.firstName + " " + teacher.user.lastName}</Typography>
+                  <Typography variant="posterName">
+                    {teacher.user.firstName + " " + teacher.user.lastName}
+                  </Typography>
                   <img
                     src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
                     srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
@@ -101,8 +105,19 @@ export function Card() {
                       border: "0.2px solid rgba(0, 0, 0, 0.14)",
                     }}
                   />
-                  <Box sx={{ display: { xs: "none", lg: "flex", alignItems: "center", mb: "20px" } }}>
-                    <MessageBtn onShowModalClick={() => onShowModalClick("sendMessage")} />
+                  <Box
+                    sx={{
+                      display: {
+                        xs: "none",
+                        lg: "flex",
+                        alignItems: "center",
+                        mb: "20px",
+                      },
+                    }}
+                  >
+                    <MessageBtn
+                      onShowModalClick={() => onShowModalClick("sendMessage")}
+                    />
                     <LikeBtn />
                   </Box>
                 </Box>
@@ -117,16 +132,28 @@ export function Card() {
                       marginRight: "12px",
                     }}
                   ></span>
-                  <Typography color="grey.700" variant="posterItem" sx={{ mr: 5.5 }}>
+                  <Typography
+                    color="grey.700"
+                    variant="posterItem"
+                    sx={{ mr: 5.5 }}
+                  >
                     {intl.formatMessage({ id: "online" })}
                   </Typography>
-                  <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
+                  <Typography
+                    variant="posterItem"
+                    color="grey.700"
+                    sx={{ mr: 0.5 }}
+                  >
                     {intl.formatMessage({ id: "rate" })}:
                   </Typography>
                   <Typography variant="posterItem" sx={{ mr: 3.5 }}>
                     {roundRating(teacher.user.rating)}
                   </Typography>
-                  <Typography variant="posterItem" color="grey.700" sx={{ mr: 0.5 }}>
+                  <Typography
+                    variant="posterItem"
+                    color="grey.700"
+                    sx={{ mr: 0.5 }}
+                  >
                     {intl.formatMessage({ id: "lessons" })}:
                   </Typography>
                   <Typography variant="posterItem">156</Typography>
@@ -137,7 +164,9 @@ export function Card() {
                 <CategoryList
                   elements={
                     teacher.teachingLanguages &&
-                    teacher.teachingLanguages.map((el) => (en == "en" ? el.languageEn : el.languageUa))
+                    teacher.teachingLanguages.map((el) =>
+                      en == "en" ? el.languageEn : el.languageUa
+                    )
                   }
                 />
                 <Typography variant="posterCategory" color="grey.600">
@@ -146,7 +175,9 @@ export function Card() {
                 <CategoryList
                   elements={
                     teacher.specializations &&
-                    teacher.specializations.map((el) => (en == "en" ? el.specializationEn : el.specializationUa))
+                    teacher.specializations.map((el) =>
+                      en == "en" ? el.specializationEn : el.specializationUa
+                    )
                   }
                 />
                 <Typography variant="posterCategory" color="grey.600">
@@ -155,11 +186,15 @@ export function Card() {
                 <CategoryList
                   elements={
                     teacher.user.country && en == "en"
-                      ? countriesCase(countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameEng).split(
-                          ","
-                        )
+                      ? countriesCase(
+                          countries.find(
+                            (el) => el.alpha2 === teacher.user.country?.alpha2
+                          ).nameEng
+                        ).split(",")
                       : countriesCase(
-                          countries.find((el) => el.alpha2 === teacher.user.country?.alpha2).nameShort
+                          countries.find(
+                            (el) => el.alpha2 === teacher.user.country?.alpha2
+                          ).nameShort
                         ).split(",")
                   }
                 />
@@ -175,14 +210,23 @@ export function Card() {
                 mb: "20px",
               }}
             >
-              <MessageBtn onShowModalClick={() => onShowModalClick("sendMessage")} />
+              <MessageBtn
+                onShowModalClick={() => onShowModalClick("sendMessage")}
+              />
               <LikeBtn />
             </Box>
             <Box mb="40px">
-              <Typography variant="posterTitle" component="p" color="grey.600" mb="36px">
+              <Typography
+                variant="posterTitle"
+                component="p"
+                color="grey.600"
+                mb="36px"
+              >
                 {intl.formatMessage({ id: "aboutMe" })}
               </Typography>
-              <Typography variant="posterDescription">{teacher.description}</Typography>
+              <Typography variant="posterDescription">
+                {teacher.description}
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -200,7 +244,8 @@ export function Card() {
                 }}
               >
                 <Typography variant="posterTitle" color="grey.600" mb="36px">
-                  {intl.formatMessage({ id: "feedback" })} ({teacher.user.feedbacksToMe.length})
+                  {intl.formatMessage({ id: "feedback" })} (
+                  {teacher.user.feedbacksToMe.length})
                 </Typography>
                 <ReviewList
                   // elements={teacher.user.feedbacksToMe}
@@ -232,14 +277,22 @@ export function Card() {
                     variant="contained"
                     sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
                   >
-                    <Typography variant="posterButton">{intl.formatMessage({ id: "trialLessonBtn" })}</Typography>
+                    <Typography variant="posterButton">
+                      {intl.formatMessage({ id: "trialLessonBtn" })}
+                    </Typography>
                   </Button>
-                  <Typography variant="posterPrice">{Math.ceil(teacher.price)} $</Typography>
+                  <Typography variant="posterPrice">
+                    {Math.ceil(teacher.price)} $
+                  </Typography>
                 </Box>
               </Box>
             </Box>
             {showModal && (
-              <Modal id={teacher.user.id} onBackdropClose={onBackdropClose} contentType={modalContentType} />
+              <Modal
+                id={teacher.id}
+                onBackdropClose={onBackdropClose}
+                contentType={modalContentType}
+              />
             )}
           </>
         )

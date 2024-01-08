@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { PropTypes } from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
-import { useIntl } from "react-intl";
-import { selectUser, selectToken } from "../../redux/auth/selectors";
+import { selectUser } from "../../redux/auth/selectors";
 import { sendMessageFromUser } from "../../redux/users/operations";
 import {
   Box,
@@ -14,12 +14,13 @@ import {
   Typography,
 } from "@mui/material";
 
-export const SendMessageWrapper = ({ id }) => {
+export const SendMessageWrapper = ({ id, onBackdropClose }) => {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSendMessage = async () => {
     try {
@@ -27,6 +28,8 @@ export const SendMessageWrapper = ({ id }) => {
       setSentMessage({ message: "Your message has been sent." });
       setMessage("");
       setSnackbarOpen(true);
+      navigate(`/teachers/${id}`);
+      onBackdropClose();
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -43,13 +46,14 @@ export const SendMessageWrapper = ({ id }) => {
         position: "absolute",
         top: "50%",
         left: "50%",
-        backgroundColor: "white",
+        background: "white",
         transform: "translate(-50%,-50%)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         padding: "16px",
+        color: "#D1D5DB",
       }}
     >
       {user.id ? (
@@ -65,7 +69,9 @@ export const SendMessageWrapper = ({ id }) => {
               marginBottom: "16px",
               width: "100%",
               borderRadius: "8px",
-              border: "1px solid var(--gray-gray-300, #D1D5DB)",
+              // color: "#D1D5DB",
+
+              // border: "1px solid var(--gray-gray-300, #D1D5DB)",
             }}
           />
           <Button
@@ -119,4 +125,8 @@ export const SendMessageWrapper = ({ id }) => {
       </Snackbar>
     </Box>
   );
+};
+SendMessageWrapper.propTypes = {
+  id: PropTypes.number.isRequired,
+  onBackdropClose: PropTypes.func.isRequired,
 };
