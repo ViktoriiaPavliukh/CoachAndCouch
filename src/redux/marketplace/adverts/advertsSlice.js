@@ -32,7 +32,6 @@ const advertsSlice = createSlice({
       .addCase(getAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        console.log(action.payload);
         state.adverts = action.payload;
       })
       .addCase(postAdvert.fulfilled, (state, action) => {

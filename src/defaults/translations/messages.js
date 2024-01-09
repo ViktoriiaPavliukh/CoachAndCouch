@@ -40,6 +40,7 @@ const messages = {
     reviewMark: "Rate this type 1 to 5:",
     reviewMessage: "Your comment:",
     deleteAccount: "Delete account",
+    filterAdverts: "There are no adverts in the selected categories",
 
     dashboard: "Dashboard",
     "personalAccount.profile": "Profile",
@@ -176,6 +177,7 @@ const messages = {
     reviewMark: "Оцініть від 1 до 5:",
     reviewMessage: "Ваш відгук:",
     deleteAccount: "Видалити аккаунт",
+    filterAdverts: "Немає оголошень за обраними категоріями",
 
     dashboard: "Дашборд",
     "personalAccount.profile": "Профіль",

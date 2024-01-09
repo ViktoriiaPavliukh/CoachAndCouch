@@ -1,4 +1,6 @@
-import { Box, Grid, Pagination } from "@mui/material";
+import { Box, Grid, Pagination, Typography } from "@mui/material";
+import { useIntl } from "react-intl";
+
 import { TeacherCard } from "./TeacherCard";
 import usePagination from "../../hooks/usePagination";
 import { useSelector } from "react-redux";
@@ -7,10 +9,11 @@ import { PropTypes } from "prop-types";
 
 export function TeacherListBox({ page, setPage }) {
   const adverts = useSelector(advertsSelector);
-  console.log(adverts);
   const PER_PAGE = 9;
   const items = usePagination(adverts, PER_PAGE);
   const count = adverts.totalPages;
+  const intl = useIntl();
+
   const handleChange = (e, p) => {
     setPage(p);
     items.jump(p);
@@ -27,14 +30,19 @@ export function TeacherListBox({ page, setPage }) {
             justifyContent: "center",
           }}
         >
-          {adverts.adverts &&
+          {adverts.adverts.length ? (
             adverts.adverts?.map((teacher) => {
               return (
                 <Grid item key={teacher.id}>
                   <TeacherCard teacher={teacher} />
                 </Grid>
               );
-            })}
+            })
+          ) : (
+            <Typography>
+              {intl.formatMessage({ id: "filterAdverts" })}
+            </Typography>
+          )}
         </Grid>
       </Box>
       <Pagination
@@ -58,8 +66,8 @@ export function TeacherListBox({ page, setPage }) {
         color="buttonColor"
         size="large"
         page={page}
-        // siblingCount={0}
-        // boundaryCount={2}
+        siblingCount={0}
+        boundaryCount={2}
         onChange={handleChange}
       />
     </>

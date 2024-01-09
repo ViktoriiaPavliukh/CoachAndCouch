@@ -7,9 +7,8 @@ export const getAdverts = createAsyncThunk(
   "adverts/getAdverts",
   async (currentPage, thunkAPI) => {
     try {
-      console.log(currentPage);
-      const { data } = await publicAPI.get(`/adverts?page=${currentPage}`);
-
+      const page = currentPage || 1;
+      const { data } = await publicAPI.get(`/adverts?page=${page}`);
       return data;
     } catch (error) {
       toast.error(error.message);

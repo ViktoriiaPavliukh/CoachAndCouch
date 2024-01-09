@@ -28,7 +28,6 @@ export function Card() {
   const en = useSelector(selectCurrentLanguage);
   const teacherId = useParams();
   const isLoading = useSelector(selectAdvertsIsLoading);
-  // console.log(teacherId);
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
     setShowModal(true);
@@ -45,7 +44,6 @@ export function Card() {
   }, [dispatch, teacherId]);
 
   const teacher = useSelector(advertByIdSelector);
-  console.log(teacher);
 
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
