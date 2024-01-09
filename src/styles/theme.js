@@ -56,6 +56,7 @@ const createThemeTemplate = (themeColor) => ({
             iconsGrey: "#7D7D7D",
             menuHover: "#A4E941",
             black: "#FFF",
+            fontError: "#000",
           },
         }
       : {
@@ -94,6 +95,7 @@ const createThemeTemplate = (themeColor) => ({
             iconsGrey: "#7D7D7D",
             menuHover: "#030904",
             black: "#000",
+            fontError: "#FBFDF6",
           },
         },
   typography: {
@@ -159,17 +161,15 @@ const createThemeTemplate = (themeColor) => ({
     },
     posterBlack: {
       fontFamily: "Mulish, sans-serif",
-      fontSize: "30px",
-      fontWeight: "600",
-      lineHeight: "32px",
-      letterSpacing: "0.6px",
+      fontSize: "36px",
+      fontWeight: "400",
+      lineHeight: "40px",
     },
     posterSubtitle: {
       fontFamily: "Mulish, sans-serif",
-      pt: "20px",
       fontSize: "18px",
       fontWeight: 400,
-      lineHeight: "23.4px",
+      lineHeight: "28px",
     },
     posterDescription: {
       fontFamily: "Mulish, sans-serif",
@@ -186,8 +186,9 @@ const createThemeTemplate = (themeColor) => ({
       fontFamily: "Mulish, sans-serif",
       fontSize: "14px",
       lineHeight: "calc(16 / 14)",
-      fontWeight: "700",
+      fontWeight: "400",
       textTransform: "uppercase",
+      lineHeight: "20px"
     },
     posterPrice: {
       fontFamily: "Mulish, sans-serif",
