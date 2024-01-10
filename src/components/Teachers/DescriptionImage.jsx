@@ -1,11 +1,11 @@
-import descriptionImage from "@assets/templates/teachers.svg";
+import descriptionImage from "@assets/templates/student.png";
 export function DescriptionImage() {
   return (
     <img
       src={descriptionImage}
-      alt="Teachers"
+      alt="student"
       style={{
-        maxWidth: "100%"
+        width: "800px",
       }}
     />
   );
