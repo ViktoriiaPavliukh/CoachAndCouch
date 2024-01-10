@@ -25,8 +25,16 @@ import { v4 as uuidv4 } from "uuid";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getCountries, getLanguages, getSpecializations } from "@/redux/admin/operations";
-import { countriesSelector, languagesSelector, specializationsSelector } from "@/redux/admin/adminSelector";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
+import {
+  countriesSelector,
+  languagesSelector,
+  specializationsSelector,
+} from "@/redux/admin/adminSelector";
 
 const initialValues = {
   price: 0,
@@ -48,7 +56,10 @@ const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),
   spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(1, "Select at least one teaching language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
   specializations: Yup.array().required("Specialization is required"),
   image: Yup.mixed().required("Select image for your advert"),
   updateUser: Yup.object().required("All fields is required"),
@@ -66,7 +77,9 @@ export const TeacherFormPage = () => {
   const navigate = useNavigate();
 
   const adverts = useSelector(advertsSelector)?.adverts;
-  const advertId = adverts ? adverts.find((advert) => advert.user.id === user.id).id : null;
+  const advertId = adverts
+    ? adverts.find((advert) => advert.user.id === user.id)
+    : null;
 
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
@@ -100,9 +113,18 @@ export const TeacherFormPage = () => {
       };
       transformedData.append("description", values.description);
       transformedData.append("price", values.price);
-      transformedData.append("spokenLanguages", JSON.stringify(values.spokenLanguages.map((el) => el.id)));
-      transformedData.append("teachingLanguages", JSON.stringify(values.teachingLanguages.map((el) => el.id)));
-      transformedData.append("specializations", JSON.stringify(values.specializations.map((el) => el.id)));
+      transformedData.append(
+        "spokenLanguages",
+        JSON.stringify(values.spokenLanguages.map((el) => el.id))
+      );
+      transformedData.append(
+        "teachingLanguages",
+        JSON.stringify(values.teachingLanguages.map((el) => el.id))
+      );
+      transformedData.append(
+        "specializations",
+        JSON.stringify(values.specializations.map((el) => el.id))
+      );
       transformedData.append("updateUser", JSON.stringify(updateUser));
 
       transformedData.append("image", values.image);
@@ -137,7 +159,9 @@ export const TeacherFormPage = () => {
         }}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Typography style={{ textTransform: "uppercase", marginBottom: "40px" }}>
+          <Typography
+            style={{ textTransform: "uppercase", marginBottom: "40px" }}
+          >
             {intl.formatMessage({ id: "teacherForm" })}
           </Typography>
           <Stack
@@ -161,7 +185,9 @@ export const TeacherFormPage = () => {
               value={formik.values.updateUser.firstName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+              error={
+                formik.touched.firstName && Boolean(formik.errors.firstName)
+              }
               helperText={formik.touched.firstName && formik.errors.firstName}
             />
             <TextField
@@ -198,7 +224,10 @@ export const TeacherFormPage = () => {
                 label="country"
                 value={formik.values.country}
                 onChange={(event) => {
-                  formik.setFieldValue("updateUser.country", event.target.value);
+                  formik.setFieldValue(
+                    "updateUser.country",
+                    event.target.value
+                  );
                   console.log(event.target.value);
                 }}
                 onBlur={formik.handleBlur}
@@ -248,7 +277,9 @@ export const TeacherFormPage = () => {
             }}
           >
             <FormControl fullWidth variant="outlined">
-              <InputLabel>{intl.formatMessage({ id: "languagesSpoken" })}</InputLabel>
+              <InputLabel>
+                {intl.formatMessage({ id: "languagesSpoken" })}
+              </InputLabel>
               <Select
                 id="spokenLanguages"
                 name="spokenLanguages"
@@ -259,8 +290,13 @@ export const TeacherFormPage = () => {
                   formik.setFieldValue("spokenLanguages", event.target.value);
                 }}
                 onBlur={formik.handleBlur}
-                error={formik.touched.spokenLanguages && Boolean(formik.errors.spokenLanguages)}
-                renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
+                error={
+                  formik.touched.spokenLanguages &&
+                  Boolean(formik.errors.spokenLanguages)
+                }
+                renderValue={(selected) =>
+                  selected.map((language) => language.languageUa).join(", ")
+                }
               >
                 {languages &&
                   languages.map((language) => (
@@ -272,7 +308,9 @@ export const TeacherFormPage = () => {
             </FormControl>
 
             <FormControl fullWidth variant="outlined">
-              <InputLabel>{intl.formatMessage({ id: "languagesTeaching" })}</InputLabel>
+              <InputLabel>
+                {intl.formatMessage({ id: "languagesTeaching" })}
+              </InputLabel>
               <Select
                 id="teachingLanguages"
                 name="teachingLanguages"
@@ -283,8 +321,13 @@ export const TeacherFormPage = () => {
                   formik.setFieldValue("teachingLanguages", event.target.value);
                 }}
                 onBlur={formik.handleBlur}
-                error={formik.touched.teachingLanguages && Boolean(formik.errors.teachingLanguages)}
-                renderValue={(selected) => selected.map((language) => language.languageUa).join(", ")}
+                error={
+                  formik.touched.teachingLanguages &&
+                  Boolean(formik.errors.teachingLanguages)
+                }
+                renderValue={(selected) =>
+                  selected.map((language) => language.languageUa).join(", ")
+                }
               >
                 {languages &&
                   languages.map((language) => (
@@ -296,7 +339,10 @@ export const TeacherFormPage = () => {
             </FormControl>
 
             <FormControl fullWidth variant="outlined">
-              <InputLabel> {intl.formatMessage({ id: "specialization" })}</InputLabel>
+              <InputLabel>
+                {" "}
+                {intl.formatMessage({ id: "specialization" })}
+              </InputLabel>
               <Select
                 id="specializations"
                 name="specializations"
@@ -307,8 +353,15 @@ export const TeacherFormPage = () => {
                   formik.setFieldValue("specializations", event.target.value);
                 }}
                 onBlur={formik.handleBlur}
-                error={formik.touched.specializations && Boolean(formik.errors.specializations)}
-                renderValue={(selected) => selected.map((specialization) => specialization.specializationUa).join(", ")}
+                error={
+                  formik.touched.specializations &&
+                  Boolean(formik.errors.specializations)
+                }
+                renderValue={(selected) =>
+                  selected
+                    .map((specialization) => specialization.specializationUa)
+                    .join(", ")
+                }
               >
                 {specializations &&
                   specializations.map((specialization) => (
@@ -336,8 +389,12 @@ export const TeacherFormPage = () => {
               value={formik.values.description}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.description && Boolean(formik.errors.description)}
-              helperText={formik.touched.description && formik.errors.description}
+              error={
+                formik.touched.description && Boolean(formik.errors.description)
+              }
+              helperText={
+                formik.touched.description && formik.errors.description
+              }
             />
           </Stack>
 
@@ -398,7 +455,9 @@ export const TeacherFormPage = () => {
                     value="other"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    error={formik.touched.sex && Boolean(formik.errors.sexOther)}
+                    error={
+                      formik.touched.sex && Boolean(formik.errors.sexOther)
+                    }
                     helperText={formik.touched.sex && formik.errors.sex}
                   />
                 }
