@@ -1,18 +1,29 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "@/redux/auth/selectors";
 import { getUserById } from "@/redux/users/operations";
 import { selectUserById } from "@/redux/users/selectors";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
-import { Box, Button, TextField, Select, MenuItem, Stack, FormControl, InputLabel } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  Stack,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 // import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { format } from "date-fns";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { PersonalImage } from "./PersonalImage";
+import countries from "../../defaults/countries/countries.json";
+import countriesCase from "@/helpers/countriesCase";
 
 export const Profile = () => {
   const handleUserProfileSubmit = (e) => {
     e.preventDefault();
-    console.log(e.target);
     const userProfile = {
       firstName: e.target.firstName.value,
       country: e.target.country.value,
@@ -24,6 +35,7 @@ export const Profile = () => {
   const user = useSelector(selectUserById);
   const userId = useSelector(selectUser).id;
   const intl = useIntl();
+  const en = useSelector(selectCurrentLanguage);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,7 +53,7 @@ export const Profile = () => {
             flexDirection: { xs: "column", lg: "row" },
             gap: "24px",
             justifyContent: { xs: "center" },
-            alignItems: { xs: "center" },
+            alignItems: { xs: "center", lg: "flex-start" },
           }}
         >
           <PersonalImage advertImagePath={user.advert?.imagePath} />
@@ -60,6 +72,7 @@ export const Profile = () => {
               defaultValue={user?.firstName}
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
+              disabled
             />
             <TextField
               label={intl.formatMessage({ id: "lastName" })}
@@ -67,6 +80,7 @@ export const Profile = () => {
               defaultValue={user?.lastName || ""}
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
+              disabled
             />
             <TextField
               label="Email"
@@ -79,35 +93,71 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "birthday" })}
               name="birthday"
-              defaultValue={user.birthday ? format(new Date(user.birthday), "dd.MM.yyyy") : ""}
+              disabled
+              defaultValue={
+                user.birthday
+                  ? format(new Date(user.birthday), "dd.MM.yyyy")
+                  : ""
+              }
               sx={{ width: { xs: "100%", lg: "48%" } }}
               variant="outlined"
             />
-            <FormControl variant="outlined" sx={{ width: { xs: "100%", lg: "48%" } }}>
-              <InputLabel htmlFor="sex-label">{intl.formatMessage({ id: "sex" })}</InputLabel>
+            <FormControl
+              variant="outlined"
+              sx={{ width: { xs: "100%", lg: "48%" } }}
+            >
+              <InputLabel htmlFor="sex-label">
+                {intl.formatMessage({ id: "sex" })}
+              </InputLabel>
               <Select
                 label={intl.formatMessage({ id: "sex" })}
+                disabled
                 name="sex"
                 value={user.sex}
                 onChange={(e) => console.log(e.target.value)}
               >
-                <MenuItem value="male">{intl.formatMessage({ id: "male" })}</MenuItem>
-                <MenuItem value="female"> {intl.formatMessage({ id: "female" })}</MenuItem>
-                <MenuItem value="other"> {intl.formatMessage({ id: "other" })}</MenuItem>
+                <MenuItem value="male">
+                  {intl.formatMessage({ id: "male" })}
+                </MenuItem>
+                <MenuItem value="female">
+                  {" "}
+                  {intl.formatMessage({ id: "female" })}
+                </MenuItem>
+                <MenuItem value="other">
+                  {" "}
+                  {intl.formatMessage({ id: "other" })}
+                </MenuItem>
               </Select>
             </FormControl>
             <TextField
               id="country"
               name="updateUser.country"
               label={intl.formatMessage({ id: "country" })}
-              defaultValue={user?.country?.alpha2}
+              disabled
+              defaultValue={
+                user?.country?.alpha2
+                  ? countriesCase(
+                      en === "en"
+                        ? countries.find(
+                            (el) => el.alpha2 === user?.country?.alpha2
+                          )?.nameEng || ""
+                        : countries.find(
+                            (el) => el.alpha2 === user?.country?.alpha2
+                          )?.nameShort || ""
+                    )
+                  : ""
+              }
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
             />
             <TextField
               label={intl.formatMessage({ id: "registrationDate" })}
               name="registeredAt"
-              defaultValue={user.registeredAt ? format(new Date(user.registeredAt), "dd.MM.yyyy HH:mm") : ""}
+              defaultValue={
+                user.registeredAt
+                  ? format(new Date(user.registeredAt), "dd.MM.yyyy HH:mm")
+                  : ""
+              }
               variant="outlined"
               sx={{ width: "100%" }}
               disabled
@@ -129,6 +179,7 @@ export const Profile = () => {
             label={intl.formatMessage({ id: "description" })}
             id="description"
             placeholder={intl.formatMessage({ id: "description" })}
+            disabled
           />
           <Button
             type="submit"
