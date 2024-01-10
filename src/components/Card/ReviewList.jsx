@@ -1,5 +1,5 @@
 import { PropTypes } from "prop-types";
-import { Box, Button, List, ListItem, Typography } from "@mui/material";
+import { Box, Button, List, ListItem, Input, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeedback } from "@/redux/users/operations";
 
@@ -20,12 +20,12 @@ export function ReviewList({ id, userImage, advertId }) {
   const totalStars = 5;
 
   const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
-  // console.log(reviews);
 
   const [showAll, setShowAll] = useState(false);
   const defaultShow = 3;
   const showAllByDefault = reviews.length <= defaultShow;
-  const elementsToShow = showAll || showAllByDefault ? reviews : reviews.slice(0, defaultShow);
+  const elementsToShow =
+    showAll || showAllByDefault ? reviews : reviews.slice(0, defaultShow);
 
   const [message, setMessage] = useState("");
   // console.log(message);
@@ -94,7 +94,9 @@ export function ReviewList({ id, userImage, advertId }) {
       return;
     }
 
-    dispatch(addFeedback({ id, feedback })).then(() => dispatch(getAdvertById(advertId)));
+    dispatch(addFeedback({ id, feedback })).then(() =>
+      dispatch(getAdvertById(advertId))
+    );
 
     e.target.reset();
   };
@@ -128,9 +130,15 @@ export function ReviewList({ id, userImage, advertId }) {
           </button>
         )}
         {[...elementsToShow]
-          .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+          .sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
           .map((e) => (
-            <ListItem key={e.id} sx={{ display: "flex", flexDirection: "column" }}>
+            <ListItem
+              key={e.id}
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
               <Box sx={{ display: "flex", gap: "24px", width: "100%" }}>
                 <img
                   src={userImage}
@@ -145,7 +153,12 @@ export function ReviewList({ id, userImage, advertId }) {
                       alignItems: "center",
                     }}
                   >
-                    <Typography component="p" variant="posterCategory" color="primary.main" sx={{ mb: "8px" }}>
+                    <Typography
+                      component="p"
+                      variant="posterCategory"
+                      color="primary.main"
+                      sx={{ mb: "8px" }}
+                    >
                       {e.fromUser.firstName + " " + e.fromUser.lastName}
                     </Typography>
                     <span
@@ -215,9 +228,18 @@ export function ReviewList({ id, userImage, advertId }) {
           }}
         >
           <label> {intl.formatMessage({ id: "reviewMark" })}</label>
-          <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "10px", height: "40px" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              height: "40px",
+            }}
+          >
             {[...Array(totalStars)].map((star, index) => {
               const currentRating = index + 1;
+              const isLastStar = index === totalStars - 1;
+
               return (
                 <label key={index}>
                   <input
@@ -232,7 +254,12 @@ export function ReviewList({ id, userImage, advertId }) {
                   <span
                     className="star"
                     style={{
-                      color: currentRating <= (hover || rating) ? "#ffc107" : "#e4e5e9",
+                      paddingRight: isLastStar ? "0" : "15px",
+                      margin: "0",
+                      color:
+                        currentRating <= (hover || rating)
+                          ? "#ffc107"
+                          : "#e4e5e9",
                     }}
                     onMouseEnter={() => setHover(currentRating)}
                     onMouseLeave={() => setHover(null)}
@@ -257,15 +284,31 @@ export function ReviewList({ id, userImage, advertId }) {
           }}
         >
           <label>{intl.formatMessage({ id: "reviewMessage" })}</label>
-          <textarea
-            style={{ height: "200px", borderRadius: "4px", padding: "12px" }}
+          <Input
+            disableUnderline
+            sx={{
+              height: "200px",
+              borderRadius: "4px",
+              padding: "12px 16px",
+              border: "1px solid #D1D5DB",
+              color: (theme) => theme.palette.textColor.fontColor,
+              backgroundColor: (theme) => theme.palette.background,
+              alignItems: "start",
+            }}
             name="message"
-            // value={updateFeedback.message}
+            value={message}
             onChange={(e) => setMessage(e.target.value)}
-          ></textarea>
+            inputProps={{ style: { textAlign: "start" } }}
+          />
         </div>
-        <Button type="submit" sx={{ alignSelf: "center", p: "10px 18px" }} variant="contained">
-          <Typography variant="posterButton">{intl.formatMessage({ id: "sendBtn" })}</Typography>
+        <Button
+          type="submit"
+          sx={{ alignSelf: "center", p: "10px 18px" }}
+          variant="contained"
+        >
+          <Typography variant="posterButton">
+            {intl.formatMessage({ id: "sendBtn" })}
+          </Typography>
         </Button>
       </form>
     </>

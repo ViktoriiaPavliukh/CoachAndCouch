@@ -7,10 +7,12 @@ export function MessageBtn({ onShowModalClick }) {
   return (
     <Button
       onClick={onShowModalClick}
-      sx={{ marginLeft: "auto", marginRight: " 20px", p: "10px 18px" }}
+      sx={{ marginLeft: "125px", marginRight: " 20px", p: "10px 18px" }}
       variant="contained"
     >
-      <Typography variant="posterButton">{intl.formatMessage({ id: "message" })}</Typography>
+      <Typography variant="posterButton">
+        {intl.formatMessage({ id: "message" })}
+      </Typography>
     </Button>
   );
 }

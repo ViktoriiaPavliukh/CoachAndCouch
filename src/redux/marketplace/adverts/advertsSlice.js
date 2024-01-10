@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteAdvertsById, favoriteAdvert, getAdvertById, getAdverts, postAdvert, filterAdverts } from "./operations";
+import {
+  deleteAdvertsById,
+  favoriteAdvert,
+  getAdvertById,
+  getAdverts,
+  postAdvert,
+  filterAdverts,
+} from "./operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
@@ -37,7 +44,9 @@ const advertsSlice = createSlice({
       .addCase(deleteAdvertsById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        const index = state.items.findIndex((advert) => advert.id === action.payload.id);
+        const index = state.items.findIndex(
+          (advert) => advert.id === action.payload.id
+        );
         state.adverts.adverts.splice(index, 1);
       })
       .addCase(filterAdverts.fulfilled, (state, action) => {

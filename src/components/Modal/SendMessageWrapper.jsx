@@ -1,25 +1,49 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
+import { PropTypes } from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { Link as ReactLink, useNavigate } from "react-router-dom";
-import { useIntl } from "react-intl";
-import { selectUser, selectToken } from "../../redux/auth/selectors";
+import { selectUser } from "../../redux/auth/selectors";
 import { sendMessageFromUser } from "../../redux/users/operations";
 import {
   Box,
-  TextField,
   Button,
   Snackbar,
   Alert,
   Link,
   Typography,
+  InputLabel,
+  Input,
 } from "@mui/material";
+import { useIntl } from "react-intl";
 
-export const SendMessageWrapper = ({ id }) => {
+const labelStyle = {
+  marginRight: "auto",
+  marginBottom: "8px",
+  fontSize: "14px",
+  color: "#1F2937",
+  lineHeight: "1.43",
+  marginTop: "16px",
+};
+const textInputStyle = {
+  width: "100%",
+  borderRadius: "8px",
+  padding: "8px 16px",
+  border: "1px solid #D1D5DB",
+  color: "#1F2937",
+  fontSize: "18px",
+  lineHeight: "1.56",
+  "& ::placeholder": {
+    opacity: "1",
+  },
+};
+export const SendMessageWrapper = ({ id, onBackdropClose }) => {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const user = useSelector(selectUser);
+  const intl = useIntl();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSendMessage = async () => {
     try {
@@ -27,6 +51,8 @@ export const SendMessageWrapper = ({ id }) => {
       setSentMessage({ message: "Your message has been sent." });
       setMessage("");
       setSnackbarOpen(true);
+      navigate(`/teachers/${id}`);
+      onBackdropClose();
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -38,43 +64,92 @@ export const SendMessageWrapper = ({ id }) => {
   return (
     <Box
       sx={{
-        width: "500px",
-        height: "500px",
+        width: "670px",
+        // height: "500px",
         position: "absolute",
         top: "50%",
         left: "50%",
-        backgroundColor: "white",
+        background: "white",
         transform: "translate(-50%,-50%)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "16px",
+        padding: "20px 40px",
+        color: "#D1D5DB",
       }}
     >
       {user.id ? (
         <>
-          <TextField
-            label="Type your message"
+          <Typography
+            sx={{
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "1.4",
+              color: "#000",
+              marginRight: "auto",
+            }}
+          >
+            {intl.formatMessage({ id: "sendMessageTitle" })}
+          </Typography>
+          <InputLabel sx={labelStyle}>
+            {intl.formatMessage({ id: "messageSubject" })}
+          </InputLabel>
+          <Input
+            placeholder={intl.formatMessage({ id: "messageSubject" })}
             multiline
-            rows={4}
-            variant="outlined"
+            disableUnderline
+            sx={textInputStyle}
+          />
+          <InputLabel sx={labelStyle}>
+            {intl.formatMessage({ id: "messageEnterBody" })}
+          </InputLabel>
+          <Input
+            placeholder={intl.formatMessage({ id: "messageBody" })}
+            multiline
+            disableUnderline
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            style={{
-              marginBottom: "16px",
-              width: "100%",
-              borderRadius: "8px",
-              border: "1px solid var(--gray-gray-300, #D1D5DB)",
-            }}
+            sx={textInputStyle}
           />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSendMessage}
+          <Box
+            sx={{
+              display: "flex",
+              gap: "16px",
+              marginLeft: "auto",
+              marginTop: "29px",
+            }}
           >
-            Send Message
-          </Button>
+            <Button
+              sx={{
+                border: "1px solid #0E5B1D",
+                borderRadius: "8px",
+                color: "#000",
+                minWidth: "180px",
+                padding: "14px 20px",
+                fontSize: "12px",
+                lineHeight: "1.33",
+              }}
+              onClick={onBackdropClose}
+            >
+              {intl.formatMessage({ id: "cancelBtn" })}
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSendMessage}
+              sx={{
+                padding: "14px 20px",
+                borderRadius: "8px",
+                minWidth: "180px",
+                fontSize: "12px",
+                lineHeight: "1.33",
+              }}
+            >
+              {intl.formatMessage({ id: "sendBtn" })}
+            </Button>
+          </Box>
         </>
       ) : (
         <>
@@ -119,4 +194,8 @@ export const SendMessageWrapper = ({ id }) => {
       </Snackbar>
     </Box>
   );
+};
+SendMessageWrapper.propTypes = {
+  id: PropTypes.number.isRequired,
+  onBackdropClose: PropTypes.func.isRequired,
 };

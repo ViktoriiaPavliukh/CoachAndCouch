@@ -56,7 +56,7 @@ export function SignUp() {
           display: "flex",
           flexDirection: "column",
           alignItems: "left",
-          backgroundColor: (theme) => theme.palette.background,
+          backgroundColor: (theme) => theme.palette.background.paper,
           backgroundSize: "cover",
           maxWidth: "440px",
           padding: "40px 56px",

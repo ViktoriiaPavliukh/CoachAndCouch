@@ -23,8 +23,12 @@ export function TeacherFilterResult() {
 
   useEffect(() => {
     Object.keys(filters).length > 0 && dispatch(filterAdverts(filters));
-    Object.keys(filters).length === 0 && dispatch(getAdverts(page));
-  }, [dispatch, filters, page]);
+    // Object.keys(filters).length === 0 && dispatch(getAdverts(page));
+  }, [dispatch, filters]);
+
+  useEffect(() => {
+    dispatch(getAdverts(page));
+  }, [dispatch, page]);
 
   const onFiltersChange = (newFilters) => {
     setFilters((prevFilters) => ({
@@ -33,15 +37,9 @@ export function TeacherFilterResult() {
     }));
   };
 
-  // const onResetFilter = () => {
-  //   setFilters(initialState);
-  // };
   return (
     <>
-      <FilterTeacherPanel
-        onFiltersChange={onFiltersChange}
-        // onResetFilters={onResetFilter}
-      />
+      <FilterTeacherPanel onFiltersChange={onFiltersChange} />
       {isLoading ? (
         <Loader />
       ) : (

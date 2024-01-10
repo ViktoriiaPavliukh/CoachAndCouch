@@ -3,21 +3,26 @@ import { createPortal } from "react-dom";
 import { TrialLessonWrapper } from "./TrialLessonWrapper/TrialLessonWrapper";
 import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
+import { useEffect } from "react";
 
 export const Modal = ({ onBackdropClose, contentType, id }) => {
-  // console.log(id);
-  document.body.classList.add("openModal");
+  useEffect(() => {
+    document.body.classList.add("openModal");
+    return () => {
+      document.body.classList.remove("openModal");
+    };
+  }, []);
+
   const onBackdrop = (e) => {
     if (e.target === e.currentTarget) {
       onBackdropClose();
-      document.body.classList.remove("openModal");
     }
   };
 
   const renderContent = () => {
     switch (contentType) {
       case "sendMessage":
-        return <SendMessageWrapper id={id} />;
+        return <SendMessageWrapper id={id} onBackdropClose={onBackdropClose} />;
       case "trialLesson":
         return <TrialLessonWrapper />;
       default:
@@ -47,5 +52,4 @@ export const Modal = ({ onBackdropClose, contentType, id }) => {
 
 Modal.propTypes = {
   onBackdropClose: PropTypes.func.isRequired,
-
 };

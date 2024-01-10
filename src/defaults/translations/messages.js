@@ -3,7 +3,6 @@ const messages = {
     "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
-    // "header.profile": "Profile",
     "header.login": "Login",
     "header.logout": "Logout",
     "header.registration": "Registration",
@@ -40,6 +39,7 @@ const messages = {
     reviewMark: "Rate this type 1 to 5:",
     reviewMessage: "Your comment:",
     deleteAccount: "Delete account",
+    filterAdverts: "There are no adverts in the selected categories",
 
     dashboard: "Dashboard",
     "personalAccount.profile": "Profile",
@@ -87,6 +87,7 @@ const messages = {
     message: "Send message",
     publishBtn: "Publish",
     editBtn: "Edit",
+    cancelBtn: "Cancel",
 
     //Status
     online: "Online",
@@ -119,13 +120,18 @@ const messages = {
     //validation
     priceValidation: "Price is required",
     descriptionValidation: "Description is required",
+
+    //modal
+    sendMessageTitle: "Write a message to the teacher",
+    messageSubject: "Message subject",
+    messageEnterBody: "Enter the message",
+    messageBody: "The message",
   },
 
   uk: {
     "header.teachers": "Головна",
     "header.becomeTeacher": "Стати викладачем",
     "header.aboutUs": "Про нас",
-    // "header.profile": "Особистий кабінет",
     "header.login": "Вхід",
     "header.logout": "Вихід",
     "header.registration": "Реєстрація",
@@ -176,6 +182,7 @@ const messages = {
     reviewMark: "Оцініть від 1 до 5:",
     reviewMessage: "Ваш відгук:",
     deleteAccount: "Видалити аккаунт",
+    filterAdverts: "Немає оголошень за обраними категоріями",
 
     dashboard: "Дашборд",
     "personalAccount.profile": "Профіль",
@@ -209,6 +216,7 @@ const messages = {
     homepageBtn: "Перейти на головну",
     publishBtn: "Опублікувати",
     editBtn: "Редагувати",
+    cancelBtn: "Скасувати",
 
     //Status
     online: "Онлайн",
@@ -241,6 +249,12 @@ const messages = {
     //validation
     priceValidation: "Вкажіть ціну",
     descriptionValidation: "Введіть опис",
+
+    //modal
+    sendMessageTitle: "Напишіть повідомлення до викладача",
+    messageSubject: "Тема повідомлення",
+    messageEnterBody: "Введіть текст",
+    messageBody: "Текст повідомлення",
   },
 };
 

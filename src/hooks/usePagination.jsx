@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function usePagination(data, itemsPerPage) {
   const [currentPage, setCurrentPage] = useState(data.currentPage);
-  const maxPage = data.totalPages;
+  const maxPage = data.totalPages || 1;
   function currentData(adverts) {
     const begin = (currentPage - 1) * itemsPerPage;
     const end = begin + itemsPerPage;
