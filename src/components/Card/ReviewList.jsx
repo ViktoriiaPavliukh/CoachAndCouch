@@ -1,13 +1,5 @@
 import { PropTypes } from "prop-types";
-import {
-  Box,
-  Button,
-  List,
-  ListItem,
-  Input,
-  Typography,
-  InputLabel,
-} from "@mui/material";
+import { Box, Button, List, ListItem, Input, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeedback } from "@/redux/users/operations";
 
@@ -28,7 +20,6 @@ export function ReviewList({ id, userImage, advertId }) {
   const totalStars = 5;
 
   const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
-  // console.log(reviews);
 
   const [showAll, setShowAll] = useState(false);
   const defaultShow = 3;
@@ -242,7 +233,6 @@ export function ReviewList({ id, userImage, advertId }) {
               display: "flex",
               flexDirection: "row",
               alignItems: "center",
-              // gap: "10px",
               height: "40px",
             }}
           >
@@ -293,13 +283,13 @@ export function ReviewList({ id, userImage, advertId }) {
             gap: 5,
           }}
         >
-          <InputLabel>{intl.formatMessage({ id: "reviewMessage" })}</InputLabel>
+          <label>{intl.formatMessage({ id: "reviewMessage" })}</label>
           <Input
-            multiline
+            disableUnderline
             sx={{
               height: "200px",
               borderRadius: "4px",
-              padding: "12px",
+              padding: "12px 16px",
               border: "1px solid #D1D5DB",
               color: (theme) => theme.palette.textColor.fontColor,
               backgroundColor: (theme) => theme.palette.background,

@@ -3,7 +3,6 @@ const messages = {
     "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
-    // "header.profile": "Profile",
     "header.login": "Login",
     "header.logout": "Logout",
     "header.registration": "Registration",
@@ -88,6 +87,7 @@ const messages = {
     message: "Send message",
     publishBtn: "Publish",
     editBtn: "Edit",
+    cancelBtn: "Cancel",
 
     //Status
     online: "Online",
@@ -120,13 +120,18 @@ const messages = {
     //validation
     priceValidation: "Price is required",
     descriptionValidation: "Description is required",
+
+    //modal
+    sendMessageTitle: "Write a message to the teacher",
+    messageSubject: "Message subject",
+    messageEnterBody: "Enter the message",
+    messageBody: "The message",
   },
 
   uk: {
     "header.teachers": "Головна",
     "header.becomeTeacher": "Стати викладачем",
     "header.aboutUs": "Про нас",
-    // "header.profile": "Особистий кабінет",
     "header.login": "Вхід",
     "header.logout": "Вихід",
     "header.registration": "Реєстрація",
@@ -211,6 +216,7 @@ const messages = {
     homepageBtn: "Перейти на головну",
     publishBtn: "Опублікувати",
     editBtn: "Редагувати",
+    cancelBtn: "Скасувати",
 
     //Status
     online: "Онлайн",
@@ -243,6 +249,12 @@ const messages = {
     //validation
     priceValidation: "Вкажіть ціну",
     descriptionValidation: "Введіть опис",
+
+    //modal
+    sendMessageTitle: "Напишіть повідомлення до викладача",
+    messageSubject: "Тема повідомлення",
+    messageEnterBody: "Введіть текст",
+    messageBody: "Текст повідомлення",
   },
 };
 
