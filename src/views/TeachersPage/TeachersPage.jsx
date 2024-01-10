@@ -40,10 +40,10 @@ export function TeachersPage() {
 
   const listItemStyles = {
     color: (theme) => theme.palette.textColor.fontColor,
-    fontSize: "20px",
+    fontSize: "24px",
     fontStyle: "normal",
     fontWeight: "400",
-    lineHeight: "16px",
+    lineHeight: "32px",
   };
 
   return (
@@ -62,17 +62,16 @@ export function TeachersPage() {
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            mt: { lg: "80px", md: "64px", xs: "36px" },
-            mb: { lg: "95px", md: "61px", xs: "36px" },
-            gap: { md: "18px", lg: "63px" },
+            mb: { lg: "60px", md: "60px", xs: "36px" },
+            gap: "5%",
           }}
         >
           <Box
             sx={{
               display: "flex",
-              mt: { lg: "80px", xs: "0px" },
+              mt: { lg: "72px", xs: "36px" },
               flexDirection: "column",
-              gap: { xs: "28px", md: "50px", lg: "60px" },
+              gap: { xs: "28px", md: "50px", lg: "40px" },
               width: "100%",
             }}
           >
@@ -96,33 +95,18 @@ export function TeachersPage() {
               }}
             >
               <ListItem sx={{ padding: "0" }}>
-                {/* <ListItemIcon sx={{ minWidth: "35px", padding: "0" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.primary.accent }}
-                  />
-                </ListItemIcon> */}
                 <ListItemText
                   primary={intl.formatMessage({ id: "list1" })}
                   sx={listItemStyles}
                 />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
-                {/* <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.primary.accent }}
-                  />
-                </ListItemIcon> */}
                 <ListItemText
                   primary={intl.formatMessage({ id: "list2" })}
                   sx={listItemStyles}
                 />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
-                {/* <ListItemIcon sx={{ minWidth: "35px" }}>
-                  <FiberManualRecordIcon
-                    sx={{ color: (theme) => theme.palette.primary.accent }}
-                  />
-                </ListItemIcon> */}
                 <ListItemText
                   primary={intl.formatMessage({ id: "list3" })}
                   sx={listItemStyles}
@@ -157,6 +141,7 @@ export function TeachersPage() {
             sx={{
               display: { xs: "none", md: "flex" },
               width: { md: "376px", lg: "fit-content" },
+              marginRight: "-200px",
             }}
           >
             <DescriptionImage />
