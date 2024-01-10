@@ -30,7 +30,7 @@ export function TeacherListBox({ page, setPage }) {
             justifyContent: "center",
           }}
         >
-          {adverts.adverts.length ? (
+          {adverts.adverts?.length ? (
             adverts.adverts?.map((teacher) => {
               return (
                 <Grid item key={teacher.id}>
