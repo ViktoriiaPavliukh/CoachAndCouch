@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "@/redux/auth/selectors";
-import { getUserById } from "@/redux/users/operations";
-import { selectUserById } from "@/redux/users/selectors";
+import { getCurrentUser } from "@/redux/users/operations";
+import { selectCurrentUser } from "@/redux/users/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
 import {
@@ -15,7 +14,6 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-// import { TextareaAutosize } from "@mui/base/TextareaAutosize";
 import { format } from "date-fns";
 import { PersonalImage } from "./PersonalImage";
 import countries from "../../defaults/countries/countries.json";
@@ -32,18 +30,15 @@ export const Profile = () => {
       aboutMe: e.target.aboutMe.value,
     };
   };
-  const user = useSelector(selectUserById);
-  const userId = useSelector(selectUser).id;
+  const currentUser = useSelector(selectCurrentUser);
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
-
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!userId) {
-      return;
-    }
-    dispatch(getUserById(userId));
-  }, [dispatch, userId]);
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
   return (
     <form onSubmit={handleUserProfileSubmit}>
       <Stack sx={{ display: "flex", flexDirection: "column" }}>
@@ -56,7 +51,7 @@ export const Profile = () => {
             alignItems: { xs: "center", lg: "flex-start" },
           }}
         >
-          <PersonalImage advertImagePath={user.advert?.imagePath} />
+          <PersonalImage advertImagePath={currentUser.advert?.imagePath} />
           <Stack
             fullWidth
             style={{
@@ -69,7 +64,7 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "name" })}
               name="updateUser.firstName"
-              defaultValue={user?.firstName}
+              defaultValue={currentUser?.firstName}
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
               disabled
@@ -77,7 +72,7 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "lastName" })}
               name="updateUser.lastName"
-              defaultValue={user?.lastName || ""}
+              defaultValue={currentUser?.lastName || ""}
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
               disabled
@@ -85,7 +80,7 @@ export const Profile = () => {
             <TextField
               label="Email"
               name="email"
-              defaultValue={user?.email}
+              defaultValue={currentUser?.email}
               sx={{ width: { xs: "100%", lg: "48%" } }}
               variant="outlined"
               disabled
@@ -95,8 +90,8 @@ export const Profile = () => {
               name="birthday"
               disabled
               defaultValue={
-                user.birthday
-                  ? format(new Date(user.birthday), "dd.MM.yyyy")
+                currentUser.birthday
+                  ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
                   : ""
               }
               sx={{ width: { xs: "100%", lg: "48%" } }}
@@ -113,7 +108,7 @@ export const Profile = () => {
                 label={intl.formatMessage({ id: "sex" })}
                 disabled
                 name="sex"
-                value={user.sex}
+                value={currentUser.sex}
                 onChange={(e) => console.log(e.target.value)}
               >
                 <MenuItem value="male">
@@ -135,14 +130,14 @@ export const Profile = () => {
               label={intl.formatMessage({ id: "country" })}
               disabled
               defaultValue={
-                user?.country?.alpha2
+                currentUser?.country?.alpha2
                   ? countriesCase(
                       en === "en"
                         ? countries.find(
-                            (el) => el.alpha2 === user?.country?.alpha2
+                            (el) => el.alpha2 === currentUser?.country?.alpha2
                           )?.nameEng || ""
                         : countries.find(
-                            (el) => el.alpha2 === user?.country?.alpha2
+                            (el) => el.alpha2 === currentUser?.country?.alpha2
                           )?.nameShort || ""
                     )
                   : ""
@@ -154,8 +149,11 @@ export const Profile = () => {
               label={intl.formatMessage({ id: "registrationDate" })}
               name="registeredAt"
               defaultValue={
-                user.registeredAt
-                  ? format(new Date(user.registeredAt), "dd.MM.yyyy HH:mm")
+                currentUser.registeredAt
+                  ? format(
+                      new Date(currentUser.registeredAt),
+                      "dd.MM.yyyy HH:mm"
+                    )
                   : ""
               }
               variant="outlined"
@@ -174,11 +172,13 @@ export const Profile = () => {
         >
           <TextField
             fullWidth
-            defaultValue={user?.description}
+            defaultValue={currentUser?.advert?.description}
             name="description"
             label={intl.formatMessage({ id: "description" })}
             id="description"
             placeholder={intl.formatMessage({ id: "description" })}
+            sx={{ width: { xs: "100%" } }}
+            multiline
             disabled
           />
           <Button
@@ -199,94 +199,3 @@ export const Profile = () => {
     </form>
   );
 };
-
-{
-  /* <FormControl
-          // fullWidth
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            style={{
-              width: "275px",
-              height: "214px",
-              border: "1px solid rgba(193, 193, 193, 1)",
-              borderRadius: "8px",
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {image && (
-              <img
-                src={image ? image : null}
-                alt="user's profile"
-                style={{
-                  minHeidth: "100%",
-                  objectFit: "cover",
-                  display: "flex",
-                  width: "275px",
-                  height: "214px",
-
-                  alignSelf: "stretch",
-                }}
-              />
-            )}
-
-            <label
-              htmlFor="image"
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "block",
-                cursor: "pointer",
-                position: "absolute",
-              }}
-            >
-              <TextField
-                style={{
-                  display: "none",
-                }}
-                fullWidth
-                type="file"
-                id="image"
-                name="image"
-                variant="outlined"
-                accept="image/*"
-                placeholder=""
-                onChange={(event) => {
-                  // formik.setFieldValue("image", event.target.files[0]);
-                  setImage(URL.createObjectURL(event.target.files[0]));
-                }}
-                // onBlur={formik.handleBlur}
-                // error={formik.touched.image && Boolean(formik.errors.image)}
-                // helperText={formik.touched.image && formik.errors.image}
-              />
-            </label>
-            {Boolean(!image) && (
-              <p
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%,-50%)",
-                  pointerEvents: "none",
-                  cursor: "pointer",
-                }}
-              >
-                + Додати фото
-              </p>
-            )}
-          </Box>
-        </FormControl>
-        <Typography
-          gutterBottom
-          variant="fontTitle"
-          sx={{ display: "flex", paddingTop: "32px" }}
-        >
-          {user.firstName} {user.lastName}
-        </Typography> */
-}
