@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser } from "@/redux/users/operations";
 import { selectCurrentUser } from "@/redux/users/selectors";
@@ -20,20 +20,57 @@ import countries from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 
 export const Profile = () => {
-  const handleUserProfileSubmit = (e) => {
-    e.preventDefault();
-    const userProfile = {
-      firstName: e.target.firstName.value,
-      country: e.target.country.value,
-      lastName: e.target.lastName.value,
-      sex: e.target.sex.value,
-      aboutMe: e.target.aboutMe.value,
-    };
-  };
+  const [editMode, setEditMode] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    birthday: "",
+    sex: "",
+    country: "",
+    registeredAt: "",
+    description: "",
+  });
+
   const currentUser = useSelector(selectCurrentUser);
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (currentUser) {
+      // Update the form data when the currentUser changes
+      setFormData({
+        firstName: currentUser?.firstName || "",
+        lastName: currentUser?.lastName || "",
+        email: currentUser?.email || "",
+        birthday: currentUser?.birthday
+          ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
+          : "",
+        sex: currentUser?.sex || "",
+        country: currentUser?.country?.alpha2
+          ? countriesCase(
+              en === "en"
+                ? countries.find(
+                    (el) => el.alpha2 === currentUser?.country?.alpha2
+                  )?.nameEng || ""
+                : countries.find(
+                    (el) => el.alpha2 === currentUser?.country?.alpha2
+                  )?.nameShort || ""
+            )
+          : "",
+        registeredAt: currentUser?.registeredAt
+          ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
+          : "",
+        description: currentUser?.advert?.description || "",
+      });
+    }
+  }, [currentUser, en]);
+
+  const handleUserProfileSubmit = (e) => {
+    e.preventDefault();
+    setEditMode(false);
+  };
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -67,7 +104,7 @@ export const Profile = () => {
               defaultValue={currentUser?.firstName}
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
-              disabled
+              disabled={!editMode}
             />
             <TextField
               label={intl.formatMessage({ id: "lastName" })}
@@ -75,7 +112,7 @@ export const Profile = () => {
               defaultValue={currentUser?.lastName || ""}
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
-              disabled
+              disabled={!editMode}
             />
             <TextField
               label="Email"
@@ -83,12 +120,12 @@ export const Profile = () => {
               defaultValue={currentUser?.email}
               sx={{ width: { xs: "100%", lg: "48%" } }}
               variant="outlined"
-              disabled
+              disabled={!editMode}
             />
             <TextField
               label={intl.formatMessage({ id: "birthday" })}
               name="birthday"
-              disabled
+              disabled={!editMode}
               defaultValue={
                 currentUser.birthday
                   ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
@@ -106,7 +143,7 @@ export const Profile = () => {
               </InputLabel>
               <Select
                 label={intl.formatMessage({ id: "sex" })}
-                disabled
+                disabled={!editMode}
                 name="sex"
                 value={currentUser.sex}
                 onChange={(e) => console.log(e.target.value)}
@@ -128,7 +165,7 @@ export const Profile = () => {
               id="country"
               name="updateUser.country"
               label={intl.formatMessage({ id: "country" })}
-              disabled
+              disabled={!editMode}
               defaultValue={
                 currentUser?.country?.alpha2
                   ? countriesCase(
@@ -158,7 +195,7 @@ export const Profile = () => {
               }
               variant="outlined"
               sx={{ width: "100%" }}
-              disabled
+              disabled={!editMode}
             />
           </Stack>
         </Box>
@@ -179,12 +216,13 @@ export const Profile = () => {
             placeholder={intl.formatMessage({ id: "description" })}
             sx={{ width: { xs: "100%" } }}
             multiline
-            disabled
+            disabled={!editMode}
           />
           <Button
-            type="submit"
+            type="button"
             variant="contained"
             color="primary"
+            onClick={() => setEditMode(!editMode)}
             sx={{
               display: "flex",
               justifyItems: "end",
@@ -192,7 +230,9 @@ export const Profile = () => {
               width: { xs: "100%", md: "220px" },
             }}
           >
-            {intl.formatMessage({ id: "editBtn" })}
+            {editMode
+              ? intl.formatMessage({ id: "saveBtn" })
+              : intl.formatMessage({ id: "editBtn" })}
           </Button>
         </Stack>
       </Stack>

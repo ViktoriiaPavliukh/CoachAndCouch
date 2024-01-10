@@ -88,6 +88,7 @@ const messages = {
     publishBtn: "Publish",
     editBtn: "Edit",
     cancelBtn: "Cancel",
+    saveBtn: "Save",
 
     //Status
     online: "Online",
@@ -217,6 +218,7 @@ const messages = {
     publishBtn: "Опублікувати",
     editBtn: "Редагувати",
     cancelBtn: "Скасувати",
+    saveBtn: "Зберегти",
 
     //Status
     online: "Онлайн",
