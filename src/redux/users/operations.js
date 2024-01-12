@@ -31,7 +31,6 @@ export const getCurrentUser = createAsyncThunk(
       const { data } = await privateAPI.get(`/users`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-
       return data;
     } catch (error) {
       console.log(error.message);
@@ -124,6 +123,28 @@ export const getUserMessages = createAsyncThunk(
       });
       const messages = response.data;
       return messages;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const editUser = createAsyncThunk(
+  "users/editUser",
+  async (editedData, thunkAPI) => {
+    try {
+      const userToken = thunkAPI.getState().auth.accessToken;
+      token.set(userToken);
+      console.log(userToken);
+      const userId = thunkAPI.getState().auth.user.id;
+      console.log(userId);
+      console.log(editedData);
+
+      const { data } = await privateAPI.patch(`/users/${userId}`, editedData, {
+        headers: { Authorization: `Bearer ${userToken}` },
+      });
+
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
