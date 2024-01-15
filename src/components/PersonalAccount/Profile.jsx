@@ -96,8 +96,48 @@ export const Profile = () => {
 
   const handleSaveButtonClick = async () => {
     try {
-      console.log(formik);
-      await dispatch(editUser(formik.values));
+      // Map form data to the expected structure
+      // const mappedData = {
+      //   id: currentUser.id,
+      //   email: formik.values.email,
+      //   firstName: formik.values.firstName,
+      //   lastName: formik.values.lastName,
+      //   role: currentUser.role, // Assuming 'role' should not be updated
+      //   isDeleted: currentUser.isDeleted, // Assuming 'isDeleted' should not be updated
+      //   lastVisit: currentUser.lastVisit, // Assuming 'lastVisit' should not be updated
+      //   registeredAt: currentUser.registeredAt, // Assuming 'registeredAt' should not be updated
+      //   rating: currentUser.rating, // Assuming 'rating' should not be updated
+      //   birthday: formik.values.birthday,
+      //   sex: formik.values.sex,
+      //   photoPath: currentUser.photoPath, // Assuming 'photoPath' should not be updated
+      //   aboutMe: currentUser.aboutMe, // Assuming 'aboutMe' should not be updated
+      //   advert: {
+      //     id: currentUser.advert.id,
+      //     price: currentUser.advert.price, // Assuming 'price' should not be updated
+      //     description: formik.values.description,
+      //     imagePath: currentUser.advert.imagePath, // Assuming 'imagePath' should not be updated
+      //     createdAt: currentUser.advert.createdAt, // Assuming 'createdAt' should not be updated
+      //     isDeleted: currentUser.advert.isDeleted, // Assuming 'isDeleted' should not be updated
+      //   },
+      //   feedbacksToMe: currentUser.feedbacksToMe, // Assuming 'feedbacksToMe' should not be updated
+      //   feedbacksFromMe: currentUser.feedbacksFromMe, // Assuming 'feedbacksFromMe' should not be updated
+      //   // country: {
+      //   //   id: currentUser.country.id, // Assuming 'id' of 'country' should not be updated
+      //   //   alpha2: currentUser.country.alpha2, // Assuming 'alpha2' of 'country' should not be updated
+      //   // },
+      // };
+      const mappedData = {
+        firstName: formik.values.firstName,
+        lastName: formik.values.lastName,
+        sex: formik.values.sex,
+        aboutMe: formik.values.description,
+      };
+      console.log(JSON.stringify(mappedData, null, 2));
+      console.log(mappedData);
+
+      // Dispatch the editUser action with the mapped data
+      await dispatch(editUser(mappedData));
+
       setEditMode(false);
     } catch (error) {
       // Handle error (e.g., show an error message)
@@ -107,10 +147,7 @@ export const Profile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+    formik.setFieldValue(name, value);
   };
 
   useEffect(() => {
@@ -217,18 +254,16 @@ export const Profile = () => {
                 label={intl.formatMessage({ id: "sex" })}
                 disabled={!editMode}
                 name="sex"
-                value={currentUser.sex || ""}
-                onChange={(e) => console.log(e.target.value)}
+                value={formik.values.sex || ""} // Use formik values here
+                onChange={(e) => formik.handleChange(e)} // Update formik state on change
               >
                 <MenuItem value="male">
                   {intl.formatMessage({ id: "male" })}
                 </MenuItem>
                 <MenuItem value="female">
-                  {" "}
                   {intl.formatMessage({ id: "female" })}
                 </MenuItem>
                 <MenuItem value="other">
-                  {" "}
                   {intl.formatMessage({ id: "other" })}
                 </MenuItem>
               </Select>

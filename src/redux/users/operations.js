@@ -140,7 +140,7 @@ export const editUser = createAsyncThunk(
       console.log(userId);
       console.log(editedData);
 
-      const { data } = await privateAPI.patch(`/users/${userId}`, editedData, {
+      const { data } = await privateAPI.patch(`/users`, editedData, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
 
