@@ -47,7 +47,7 @@ export const Profile = () => {
     registeredAt: currentUser?.registeredAt
       ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
       : "",
-    description: currentUser?.advert?.description || "",
+    aboutMe: currentUser?.aboutMe || currentUser?.advert?.description,
   });
 
   const intl = useIntl();
@@ -78,7 +78,7 @@ export const Profile = () => {
         registeredAt: currentUser?.registeredAt
           ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
           : "",
-        description: currentUser?.advert?.description || "",
+        aboutMe: currentUser.aboutMe || currentUser?.advert?.description,
       }));
     }
   }, [currentUser, en]);
@@ -130,7 +130,7 @@ export const Profile = () => {
         firstName: formik.values.firstName,
         lastName: formik.values.lastName,
         sex: formik.values.sex,
-        aboutMe: formik.values.description,
+        aboutMe: formik.values.aboutMe,
       };
       console.log(JSON.stringify(mappedData, null, 2));
       console.log(mappedData);
@@ -315,10 +315,13 @@ export const Profile = () => {
           }}
         >
           <TextField
-            defaultValue={currentUser?.advert?.description}
-            name="description"
+            defaultValue={
+              currentUser?.aboutMe || currentUser?.advert?.description
+            }
+            onChange={handleInputChange}
+            name="aboutMe"
             label={intl.formatMessage({ id: "description" })}
-            id="description"
+            id="aboutMe"
             placeholder={intl.formatMessage({ id: "description" })}
             sx={{ width: { xs: "100%" } }}
             multiline
