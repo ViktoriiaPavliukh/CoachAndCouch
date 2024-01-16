@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, editUser } from "@/redux/users/operations";
 import { selectCurrentUser } from "@/redux/users/selectors";
@@ -47,7 +46,7 @@ export const Profile = () => {
     registeredAt: currentUser?.registeredAt
       ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
       : "",
-    description: currentUser?.advert?.description || "",
+    aboutMe: currentUser?.aboutMe || currentUser?.advert?.description,
   });
 
   const intl = useIntl();
@@ -78,7 +77,7 @@ export const Profile = () => {
         registeredAt: currentUser?.registeredAt
           ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
           : "",
-        description: currentUser?.advert?.description || "",
+        aboutMe: currentUser.aboutMe || currentUser?.advert?.description,
       }));
     }
   }, [currentUser, en]);
@@ -96,6 +95,14 @@ export const Profile = () => {
 
   const handleSaveButtonClick = async () => {
     try {
+      await formik.validateForm();
+
+      // Check if there are any errors
+      if (Object.keys(formik.errors).length > 0) {
+        // There are validation errors, handle them as needed
+        console.error("Validation errors:", formik.errors);
+        return;
+      }
       // Map form data to the expected structure
       // const mappedData = {
       //   id: currentUser.id,
@@ -130,7 +137,7 @@ export const Profile = () => {
         firstName: formik.values.firstName,
         lastName: formik.values.lastName,
         sex: formik.values.sex,
-        aboutMe: formik.values.description,
+        aboutMe: formik.values.aboutMe,
       };
       console.log(JSON.stringify(mappedData, null, 2));
       console.log(mappedData);
@@ -211,6 +218,8 @@ export const Profile = () => {
               sx={{ width: { xs: "100%", lg: "48%" } }}
               disabled={!editMode}
               onChange={handleInputChange}
+              error={Boolean(formik.errors.firstName)}
+              helperText={formik.errors.firstName}
             />
             <TextField
               label={intl.formatMessage({ id: "lastName" })}
@@ -220,6 +229,8 @@ export const Profile = () => {
               sx={{ width: { xs: "100%", lg: "48%" } }}
               disabled={!editMode}
               onChange={handleInputChange}
+              error={Boolean(formik.errors.lastName)}
+              helperText={formik.errors.lastName}
             />
             <TextField
               label="Email"
@@ -229,6 +240,8 @@ export const Profile = () => {
               variant="outlined"
               disabled={!editMode}
               onChange={handleInputChange}
+              error={Boolean(formik.errors.email)}
+              helperText={formik.errors.email}
             />
             <TextField
               label={intl.formatMessage({ id: "birthday" })}
@@ -254,8 +267,9 @@ export const Profile = () => {
                 label={intl.formatMessage({ id: "sex" })}
                 disabled={!editMode}
                 name="sex"
-                value={formik.values.sex || ""} // Use formik values here
-                onChange={(e) => formik.handleChange(e)} // Update formik state on change
+                value={formik.values.sex || ""}
+                onChange={(e) => formik.handleChange(e)}
+                error={formik.touched.sex && Boolean(formik.errors.sex)}
               >
                 <MenuItem value="male">
                   {intl.formatMessage({ id: "male" })}
@@ -267,6 +281,9 @@ export const Profile = () => {
                   {intl.formatMessage({ id: "other" })}
                 </MenuItem>
               </Select>
+              {formik.touched.sex && formik.errors.sex && (
+                <div style={{ color: "red" }}>{formik.errors.sex}</div>
+              )}
             </FormControl>
             <TextField
               id="country"
@@ -302,7 +319,7 @@ export const Profile = () => {
               }
               variant="outlined"
               sx={{ width: "100%" }}
-              disabled={!editMode}
+              disabled={true}
             />
           </Stack>
         </Box>
@@ -315,14 +332,17 @@ export const Profile = () => {
           }}
         >
           <TextField
-            defaultValue={currentUser?.advert?.description}
-            name="description"
+            defaultValue={currentUser?.aboutMe}
+            onChange={handleInputChange}
+            name="aboutMe"
             label={intl.formatMessage({ id: "description" })}
-            id="description"
+            id="aboutMe"
             placeholder={intl.formatMessage({ id: "description" })}
             sx={{ width: { xs: "100%" } }}
             multiline
             disabled={!editMode}
+            error={Boolean(formik.errors.aboutMe)}
+            helperText={formik.errors.aboutMe}
           />
           {editMode ? (
             <Button
