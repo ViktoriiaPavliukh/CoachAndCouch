@@ -54,5 +54,5 @@ export const userValidationSchema = Yup.object().shape({
     .email("Invalid email address")
     .required("Email is required"),
   birthday: Yup.string().required("Birthday is required"),
-  // Add other fields and validations as needed
+  aboutMe: Yup.string().required("Description is required"),
 });
