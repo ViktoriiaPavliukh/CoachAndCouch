@@ -14,12 +14,14 @@ import {
   Stack,
   FormControl,
   InputLabel,
+  Typography,
 } from "@mui/material";
 import { format } from "date-fns";
 import { PersonalImage } from "./PersonalImage";
 import countries from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 import { userValidationSchema } from "../../defaults/validationScheme";
+import IconPlus from "../../assets/icons/IconPlus.jsx";
 
 export const Profile = () => {
   const en = useSelector(selectCurrentLanguage);
@@ -47,6 +49,7 @@ export const Profile = () => {
       ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
       : "",
     aboutMe: currentUser?.aboutMe || currentUser?.advert?.description,
+    photoPath: currentUser?.photoPath || "",
   });
 
   const intl = useIntl();
@@ -138,6 +141,7 @@ export const Profile = () => {
         lastName: formik.values.lastName,
         sex: formik.values.sex,
         aboutMe: formik.values.aboutMe,
+        photoPath: formik.values.photoPath,
       };
       console.log(JSON.stringify(mappedData, null, 2));
       console.log(mappedData);
@@ -155,6 +159,14 @@ export const Profile = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     formik.setFieldValue(name, value);
+    // if (name === "photoPath") {
+    //   setFormData((prevFormData) => ({
+    //     ...prevFormData,
+    //     photoPath: value,
+    //   }));
+    // } else {
+    //   formik.setFieldValue(name, value);
+    // }
   };
 
   useEffect(() => {
@@ -178,28 +190,66 @@ export const Profile = () => {
               minWidth: "150px",
               display: "flex",
               flexDirection: { xs: "column" },
-              gap: "24px",
+              gap: "16px",
               justifyContent: { xs: "center" },
-              alignItems: { xs: "center", lg: "flex-start" },
+              alignItems: { xs: "center", lg: "center" },
             }}
           >
-            <PersonalImage advertImagePath={currentUser.advert?.imagePath} />
+            <PersonalImage userImage={currentUser.photoPath} />
             {editMode ? (
-              <TextField
-                type="file"
-                id="image"
-                name="image"
-                variant="outlined"
-                accept="image/*"
-                placeholder=""
-                onChange={(event) => {
-                  formik.setFieldValue("image", event.target.files[0]);
-                  setImage(URL.createObjectURL(event.target.files[0]));
+              <Stack
+                direction="column"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "24px",
                 }}
-                onBlur={formik.handleBlur}
-                error={formik.touched.image && Boolean(formik.errors.image)}
-                helperText={formik.touched.image && formik.errors.image}
-              />
+              >
+                <input
+                  type="file"
+                  id="photoPath"
+                  name="photoPath"
+                  style={{ display: "none" }}
+                  onChange={(event) => {
+                    formik.setFieldValue("photoPath", event.target.files[0]);
+                    setImage(URL.createObjectURL(event.target.files[0]));
+                  }}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.image && Boolean(formik.errors.image)}
+                  helperText={formik.touched.image && formik.errors.image}
+                />
+                <label
+                  htmlFor="photoPath"
+                  style={{
+                    cursor: "pointer",
+                    padding: "8px 12px",
+                    border: "1px solid #D1D5DB",
+                    borderRadius: "6px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    gap: "12px",
+                  }}
+                >
+                  <IconPlus />
+                  {intl.formatMessage({ id: "newPhoto" })}
+                </label>
+                {image && (
+                  <img
+                    src={image}
+                    alt="Preview"
+                    style={{
+                      display: "flex",
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                      borderRadius: "50px",
+                    }}
+                  />
+                )}
+              </Stack>
             ) : null}
           </Box>
           <Stack
@@ -311,10 +361,7 @@ export const Profile = () => {
               name="registeredAt"
               defaultValue={
                 currentUser.registeredAt
-                  ? format(
-                      new Date(currentUser.registeredAt),
-                      "dd.MM.yyyy HH:mm"
-                    )
+                  ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
                   : ""
               }
               variant="outlined"
@@ -329,6 +376,8 @@ export const Profile = () => {
             flexDirection: "column",
             paddingTop: "20px",
             gap: "40px",
+            borderTop: "1px solid #1F2937",
+            marginTop: { xs: "24px", md: "20px", lg: "30px" },
           }}
         >
           <TextField
@@ -348,31 +397,51 @@ export const Profile = () => {
             <Button
               type="button"
               variant="contained"
-              color="primary"
               onClick={handleSaveButtonClick}
               sx={{
                 display: "flex",
                 justifyItems: "end",
                 alignSelf: "end",
                 width: { xs: "100%", md: "220px" },
+                borderRadius: "6px",
+                transition: "background-color 0.3s",
+                backgroundColor: (theme) => theme.palette.buttonColor.main,
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                },
               }}
             >
-              {intl.formatMessage({ id: "saveBtn" })}
+              <Typography
+                variant="posterButton"
+                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+              >
+                {intl.formatMessage({ id: "saveBtn" })}
+              </Typography>
             </Button>
           ) : (
             <Button
               type="button"
               variant="contained"
-              color="primary"
               onClick={() => setEditMode(!editMode)}
               sx={{
                 display: "flex",
                 justifyItems: "end",
                 alignSelf: "end",
                 width: { xs: "100%", md: "220px" },
+                borderRadius: "6px",
+                transition: "background-color 0.3s",
+                backgroundColor: (theme) => theme.palette.buttonColor.main,
+                "&:hover": {
+                  backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                },
               }}
             >
-              {intl.formatMessage({ id: "editBtn" })}
+              <Typography
+                variant="posterButton"
+                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+              >
+                {intl.formatMessage({ id: "editBtn" })}
+              </Typography>
             </Button>
           )}
         </Stack>
