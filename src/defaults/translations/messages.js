@@ -117,6 +117,7 @@ const messages = {
     other: "Other",
     uploadPhoto: "Upload your photo",
     addPhoto: "+ Add photo",
+    newPhoto: "New photo",
 
     //validation
     priceValidation: "Price is required",
@@ -247,6 +248,7 @@ const messages = {
     other: "Інша",
     uploadPhoto: "Завантажте свою фотографію",
     addPhoto: "+ Додати фото",
+    newPhoto: "Нове фото",
 
     //validation
     priceValidation: "Вкажіть ціну",
