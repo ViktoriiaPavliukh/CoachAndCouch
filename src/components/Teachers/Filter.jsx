@@ -48,7 +48,10 @@ export const Filter = ({
         return option[typeoption];
       }}
       filterOptions={filterOptions}
-      sx={{ minWidth: { md: 274, xs: 180 }, fontSize: "10px" }}
+      sx={{
+        minWidth: { xs: 180, sm: 343, md: 304, lg: 300, xl: 420 },
+        fontSize: "10px",
+      }}
       renderInput={(params) => <TextField {...params} label={label} />}
       renderOption={(props, option) => {
         return (

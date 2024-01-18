@@ -25,8 +25,8 @@ export function TeacherListBox({ page, setPage }) {
           container
           sx={{
             flexDirection: { sm: "column", md: "row" },
-            columnGap: { md: "14px", lg: "59px" },
-            rowGap: { xs: "32px", md: "48px" },
+            columnGap: { md: "28px", lg: "3%" },
+            rowGap: { xs: "28px", lg: "40px" },
             justifyContent: "center",
           }}
         >

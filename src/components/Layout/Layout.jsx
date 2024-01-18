@@ -25,6 +25,7 @@ export default function Layout() {
           minHeight: "100vh",
         }}
         component="div"
+        maxWidth="xl"
       >
         <Outlet />
       </Container>

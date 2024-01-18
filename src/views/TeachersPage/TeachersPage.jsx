@@ -186,7 +186,7 @@ export function TeachersPage() {
             sx={{
               display: { xs: "none", lg: "flex" },
               width: { lg: "100%" },
-              marginRight: "-280px",
+              marginRight: { lg: "-203px", xl: "-61px" },
             }}
           >
             <DescriptionImage />
