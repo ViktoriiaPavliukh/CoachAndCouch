@@ -5,7 +5,7 @@ export function DescriptionImage() {
       src={descriptionImage}
       alt="student"
       style={{
-        width: "800px",
+        width: "100vw",
       }}
     />
   );
