@@ -15,13 +15,13 @@ export default function Layout() {
       <Header />
       <Container
         sx={{
-          padding: { xs: "0 16px", md: "0 23px" },
-          border: "1px solid red",
+          padding: { xs: "0 16px", md: "0 60px" },
           backgroundColor: "background",
           display: "flex",
           justifyContent: "center",
-          maxWidth: "100vw",
-          minWidth: "320px",
+          border: "1px solid green",
+          // maxWidth: "100vw",
+          // minWidth: "320px",
           minHeight: "100vh",
         }}
         component="div"

@@ -38,20 +38,12 @@ export function TeachersPage() {
     dispatch(getCountries());
   }, [dispatch]);
 
-  const listItemStyles = {
-    color: (theme) => theme.palette.textColor.fontColor,
-    fontSize: "24px",
-    fontStyle: "normal",
-    fontWeight: "400",
-    lineHeight: "32px",
-  };
-
   return (
     <>
       <Box
-        maxWidth="1168px"
         width="100%"
         sx={{
+          maxWidth: { lg: "1320px", xl: "1800px", md: "648px", sm: "343px" },
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -73,22 +65,21 @@ export function TeachersPage() {
               flexDirection: "column",
               gap: { xs: "28px", md: "50px", lg: "40px" },
               width: "100%",
+              justifyContent: { lg: "center" },
+              // alignItems: "center",
             }}
           >
             <Typography
               variant="fontHeading"
               sx={{
                 color: (theme) => theme.palette.textColor.title,
-                fontSize: { lg: "50px", md: "36px", xs: "32px" },
-                lineHeight: { xs: "40px", md: "44px", lg: "60px" },
+                fontSize: { xl: "70px", lg: "50px", md: "36px", xs: "32px" },
+                lineHeight: { xs: "40px", md: "44px", lg: "60px", xl: "72px" },
                 display: "inline-block",
               }}
             >
               {intl.formatMessage({ id: "findTeacher" })}
             </Typography>
-            <Box sx={{ display: { md: "none" }, pb: "8px" }}>
-              <DescriptionImage />
-            </Box>
             <List
               sx={{
                 padding: "0",
@@ -97,19 +88,70 @@ export function TeachersPage() {
               <ListItem sx={{ padding: "0" }}>
                 <ListItemText
                   primary={intl.formatMessage({ id: "list1" })}
-                  sx={listItemStyles}
+                  primaryTypographyProps={{
+                    sx: {
+                      color: (theme) => theme.palette.textColor.fontColor,
+                      fontSize: {
+                        xl: "30px",
+                        lg: "24px",
+                        md: "20px",
+                        xs: "18px",
+                      },
+                      lineHeight: {
+                        xs: "28px",
+                        lg: "32px",
+                        xl: "36px",
+                      },
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                    },
+                  }}
                 />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemText
                   primary={intl.formatMessage({ id: "list2" })}
-                  sx={listItemStyles}
+                  primaryTypographyProps={{
+                    sx: {
+                      color: (theme) => theme.palette.textColor.fontColor,
+                      fontSize: {
+                        xl: "30px",
+                        lg: "24px",
+                        md: "20px",
+                        xs: "18px",
+                      },
+                      lineHeight: {
+                        xs: "28px",
+                        lg: "32px",
+                        xl: "36px",
+                      },
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                    },
+                  }}
                 />
               </ListItem>
               <ListItem sx={{ padding: "0" }}>
                 <ListItemText
                   primary={intl.formatMessage({ id: "list3" })}
-                  sx={listItemStyles}
+                  primaryTypographyProps={{
+                    sx: {
+                      color: (theme) => theme.palette.textColor.fontColor,
+                      fontSize: {
+                        xl: "30px",
+                        lg: "24px",
+                        md: "20px",
+                        xs: "18px",
+                      },
+                      lineHeight: {
+                        xs: "28px",
+                        lg: "32px",
+                        xl: "36px",
+                      },
+                      fontStyle: "normal",
+                      fontWeight: "400",
+                    },
+                  }}
                 />
               </ListItem>
             </List>
@@ -118,20 +160,23 @@ export function TeachersPage() {
               variant="contained"
               onClick={handleClick}
               sx={{
-                p: "12px 53px",
+                p: "12px 32px",
                 maxWidth: { xs: "100%", sm: "375px", md: "328px" },
-                borderRadius: "8px",
+                borderRadius: "6px",
                 transition: "background-color 0.3s",
-                backgroundColor: (theme) => theme.palette.buttonColor.main,
+                backgroundColor: (theme) => theme.palette.buttonColor.secondary,
                 "&:hover": {
                   backgroundColor: (theme) =>
-                    theme.palette.buttonColor.darkHover,
+                    theme.palette.buttonColor.secondaryHover,
                 },
               }}
             >
               <Typography
                 variant="posterButton"
-                sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+                sx={{
+                  color: (theme) =>
+                    theme.palette.buttonColor.fontColorSecondary,
+                }}
               >
                 {intl.formatMessage({ id: "learnMore" })}
               </Typography>
@@ -139,9 +184,9 @@ export function TeachersPage() {
           </Box>
           <Box
             sx={{
-              display: { xs: "none", md: "flex" },
-              width: { md: "376px", lg: "fit-content" },
-              marginRight: "-200px",
+              display: { xs: "none", lg: "flex" },
+              width: { lg: "100%" },
+              marginRight: "-280px",
             }}
           >
             <DescriptionImage />

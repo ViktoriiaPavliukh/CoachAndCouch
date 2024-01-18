@@ -17,6 +17,7 @@ const createThemeTemplate = (themeColor) => ({
       sm: 375,
       md: 768,
       lg: 1440,
+      xl: 1920,
     },
   },
   palette:
@@ -38,10 +39,12 @@ const createThemeTemplate = (themeColor) => ({
           buttonColor: {
             header: "#7AB02E",
             main: "#0E5B1D",
-            secondary: "#0E5B1D",
+            secondary: "#87B924",
+            secondaryHover: "#6B9E00",
             hover: "#1D570A",
             darkHover: "#7ab02e",
             fontColor: "#FFF",
+            fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
           },
           textColor: {
@@ -77,10 +80,12 @@ const createThemeTemplate = (themeColor) => ({
           buttonColor: {
             header: "#EEC700",
             main: "#87B924",
-            secondary: "#EEC700",
+            secondary: "#387024",
+            secondaryHover: "#1D570A",
             hover: "#6B9E00",
             darkHover: "#ffea9e",
             fontColor: "#000",
+            fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
           },
           textColor: {
