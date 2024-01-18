@@ -10,10 +10,10 @@ export function TeacherImage({ src }) {
       sx={{
         display: "flex",
         position: "relative",
-        width: "373px",
         height: "264px",
-        borderRadius: "0px",
+        borderRadius: "20px",
         alignSelf: "stretch",
+        padding: "12px",
       }}
     />
   );
