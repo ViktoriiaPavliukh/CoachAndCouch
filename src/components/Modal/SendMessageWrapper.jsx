@@ -32,7 +32,7 @@ const textInputStyle = {
   color: "#1F2937",
   fontSize: "18px",
   lineHeight: "1.56",
-  "& ::placeholder": {
+  "& textarea::placeholder": {
     opacity: "1",
   },
 };
@@ -75,7 +75,7 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "20px 40px",
+        p: "20px 40px",
         color: "#D1D5DB",
       }}
     >
@@ -88,7 +88,7 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
               fontWeight: "400",
               lineHeight: "1.4",
               color: "#000",
-              marginRight: "auto",
+              mr: "auto",
             }}
           >
             {intl.formatMessage({ id: "sendMessageTitle" })}
@@ -117,17 +117,18 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
             sx={{
               display: "flex",
               gap: "16px",
-              marginLeft: "auto",
-              marginTop: "29px",
+              ml: "auto",
+              mt: "29px",
             }}
           >
             <Button
+              variant="outlined"
               sx={{
-                border: "1px solid #0E5B1D",
+                // border: "1px solid #0E5B1D",
                 borderRadius: "8px",
                 color: "#000",
                 minWidth: "180px",
-                padding: "14px 20px",
+                p: "14px 20px",
                 fontSize: "12px",
                 lineHeight: "1.33",
               }}
@@ -137,10 +138,10 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
             </Button>
             <Button
               variant="contained"
-              color="primary"
+              // color="primary"
               onClick={handleSendMessage}
               sx={{
-                padding: "14px 20px",
+                p: "14px 20px",
                 borderRadius: "8px",
                 minWidth: "180px",
                 fontSize: "12px",
