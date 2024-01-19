@@ -120,7 +120,7 @@ export function Header() {
         padding: { sm: "0 16px", md: "0 60px", lg: "21px 60px" },
       }}
     >
-      <Container maxWidth="xl" sx={{ padding: 0 }}>
+      <Container maxWidth="xl">
         <Toolbar
           disableGutters
           sx={{

@@ -137,6 +137,7 @@ export const TeacherFormPage = () => {
     <SignUp />
   ) : (
     <Box
+      maxWidth="xl"
       sx={{
         backgroundImage: `url(${mainBg})`,
         backgroundSize: "cover",
@@ -145,17 +146,13 @@ export const TeacherFormPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        paddingLeft: "235px",
-        paddingRight: "235px",
-        paddingBottom: "235px",
-        paddingTop: "235px",
+        paddingY: { sm: "47px", lg: "57px", xl: "47px" },
       }}
     >
       <Box
         sx={{
-          backgroundColor: "white",
-          p: "40px",
-          borderRadius: "12px",
+          backgroundColor: (theme) => theme.palette.background.paper,
+          p: { md: "40px", xs: "40px 20px" },
         }}
       >
         <form onSubmit={formik.handleSubmit}>
@@ -165,11 +162,12 @@ export const TeacherFormPage = () => {
             {intl.formatMessage({ id: "teacherForm" })}
           </Typography>
           <Stack
-            fullWidth
-            style={{
-              flexDirection: "row",
-              gap: "27px",
-              marginBottom: "20px",
+            // fullWidth
+            sx={{
+              display: "flex",
+              flexDirection: { md: "row" },
+              gap: "24px",
+              marginBottom: "24px",
             }}
           >
             <TextField
@@ -207,17 +205,18 @@ export const TeacherFormPage = () => {
           </Stack>
 
           <Stack
-            style={{
-              flexDirection: "row",
-              gap: "27px",
-              marginBottom: "20px",
+            sx={{
+              display: "flex",
+              flexDirection: { md: "row" },
+              gap: "24px",
+              marginBottom: "24px",
             }}
           >
             <FormControl variant="outlined">
               <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
               <Select
                 style={{
-                  width: "274px",
+                  minWidth: "274px",
                 }}
                 id="country"
                 name="updateUser.country"
@@ -246,7 +245,7 @@ export const TeacherFormPage = () => {
             <TextField
               label={intl.formatMessage({ id: "birthday" })}
               style={{
-                width: "274px",
+                minWidth: "274px",
               }}
             />
 
@@ -255,7 +254,7 @@ export const TeacherFormPage = () => {
                 "&::placeholder": {
                   color: "red",
                 },
-                width: "274px",
+                minWidth: "274px",
               }}
               id="price"
               name="price"
@@ -271,9 +270,10 @@ export const TeacherFormPage = () => {
           </Stack>
           <Stack
             fullWidth
-            style={{
-              gap: "27px",
-              marginBottom: "20px",
+            sx={{
+              display: "flex",
+              gap: "24px",
+              marginBottom: "24px",
             }}
           >
             <FormControl fullWidth variant="outlined">
@@ -374,8 +374,9 @@ export const TeacherFormPage = () => {
           </Stack>
           <Stack
             style={{
-              flexDirection: "column",
-              marginBottom: "20px",
+              display: "flex",
+              gap: "24px",
+              marginBottom: "24px",
             }}
           >
             <TextField
@@ -482,9 +483,9 @@ export const TeacherFormPage = () => {
               {intl.formatMessage({ id: "uploadPhoto" })}
             </Typography>
             <Box
-              style={{
-                width: "670px",
-                height: "560px",
+              sx={{
+                width: "100%",
+                height: { xs: "162px", md: "445px" },
                 border: "1px solid rgba(193, 193, 193, 1)",
                 borderRadius: "8px",
                 position: "relative",
