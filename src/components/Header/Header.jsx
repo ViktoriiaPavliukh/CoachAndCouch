@@ -115,15 +115,18 @@ export function Header() {
   return (
     <AppBar
       position="static"
-      sx={{ backgroundColor: (theme) => theme.palette.primary.main }}
+      sx={{
+        backgroundColor: (theme) => theme.palette.primary.main,
+        padding: { sm: "0 16px", md: "0 60px", lg: "21px 60px" },
+      }}
     >
-      <Container sx={{ padding: { sm: "0 16px", md: "0 23px" } }}>
+      <Container maxWidth="xl" sx={{ padding: 0 }}>
         <Toolbar
           disableGutters
           sx={{
             display: "flex",
             justifyContent: "space-between",
-            gap: "5%",
+            alignItems: "center",
             color: (theme) => theme.palette.textColor.header,
           }}
         >
@@ -134,13 +137,14 @@ export function Header() {
             aria-haspopup="true"
             color="inherit"
             onClick={handleOpenNavMenu}
+            sx={{ display: { xs: "flex", lg: "none" } }}
           >
-            <MenuIcon sx={{ display: { xs: "flex", lg: "none" } }} />
+            <MenuIcon />
           </IconButton>
           <Logo width="130px" />
           <Box
             sx={{
-              flexGrow: 1,
+              // flexGrow: 1,
               display: { xs: "none", lg: "flex" },
               gap: "56px",
             }}
@@ -225,7 +229,7 @@ export function Header() {
             />
             <LanguageSwitcher />
             {isLoggedIn ? (
-              <Box display="flex" direction="row">
+              <Box display="flex" direction="row" sx={{ gap: "24px" }}>
                 <MenuItem
                   onClick={() => {
                     handleCloseNavMenu(`/user/${user.id}/profile`);
@@ -278,7 +282,7 @@ export function Header() {
                     "&:hover": {
                       color: (theme) => theme.palette.primary.accent,
                     },
-                    marginRight: "12px",
+                    marginRight: "24px",
                     textTransform: "uppercase",
                   }}
                   key={title}
@@ -332,12 +336,12 @@ export function Header() {
               alignItems: "center",
             }}
           >
-            <LanguageSwitcher />
             <GreenSwitch
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
             />
+            <LanguageSwitcher />
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}

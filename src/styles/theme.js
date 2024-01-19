@@ -10,6 +10,17 @@ const createThemeTemplate = (themeColor) => ({
         },
       },
     },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          [`@media (min-width: 375px)`]: {
+            paddingLeft: "0",
+            paddingRight: "0",
+          },
+        },
+      },
+    },
   },
   breakpoints: {
     values: {
@@ -65,7 +76,7 @@ const createThemeTemplate = (themeColor) => ({
       : {
           mode: "dark",
           primary: {
-            main: "#51A134",
+            main: "#387024",
             accent: "#EEC700",
             switch: "#000",
           },
