@@ -17,6 +17,7 @@ const LanguageSwitcher = () => {
     <Box
       sx={{
         display: "flex",
+        mr: { lg: "48px", xs: "0" },
         gap: "0",
         "&:hover": {
           color: (theme) => theme.palette.primary.accent,

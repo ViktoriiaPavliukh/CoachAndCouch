@@ -89,6 +89,7 @@ const messages = {
     publishBtn: "Publish",
     editBtn: "Edit",
     cancelBtn: "Cancel",
+    saveBtn: "Save",
 
     //Status
     online: "Online",
@@ -118,6 +119,8 @@ const messages = {
     uploadPhoto: "Upload your photo",
     addPhoto: "+ Add photo",
     or: "or",
+    newPhoto: "New photo",
+
 
     //validation
     priceValidation: "Price is required",
@@ -222,6 +225,7 @@ const messages = {
     publishBtn: "Опублікувати",
     editBtn: "Редагувати",
     cancelBtn: "Скасувати",
+    saveBtn: "Зберегти",
 
     //Status
     online: "Онлайн",
@@ -251,6 +255,7 @@ const messages = {
     uploadPhoto: "Завантажте свою фотографію",
     addPhoto: "+ Додати фото",
     or: "або",
+    newPhoto: "Нове фото",
 
     //validation
     priceValidation: "Вкажіть ціну",
@@ -266,5 +271,4 @@ const messages = {
       "Щоб мати можливість написати викладачу, зареєструйтеся або увійдіть у особистий кабінет",
   },
 };
-
 export default messages;

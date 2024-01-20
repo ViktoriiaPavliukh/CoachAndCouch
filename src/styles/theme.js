@@ -10,6 +10,17 @@ const createThemeTemplate = (themeColor) => ({
         },
       },
     },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          [`@media (min-width: 375px)`]: {
+            paddingLeft: "0",
+            paddingRight: "0",
+          },
+        },
+      },
+    },
   },
   breakpoints: {
     values: {
@@ -17,6 +28,7 @@ const createThemeTemplate = (themeColor) => ({
       sm: 375,
       md: 768,
       lg: 1440,
+      xl: 1920,
     },
   },
   palette:
@@ -37,11 +49,13 @@ const createThemeTemplate = (themeColor) => ({
           },
           buttonColor: {
             header: "#7AB02E",
-            main: "#7AB02E",
-            secondary: "#0E5B1D",
-            hover: "#ADCF7D",
+            main: "#0E5B1D",
+            secondary: "#87B924",
+            secondaryHover: "#6B9E00",
+            hover: "#1D570A",
             darkHover: "#7ab02e",
             fontColor: "#FFF",
+            fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
           },
           textColor: {
@@ -62,7 +76,7 @@ const createThemeTemplate = (themeColor) => ({
       : {
           mode: "dark",
           primary: {
-            main: "#51A134",
+            main: "#387024",
             accent: "#EEC700",
             switch: "#000",
           },
@@ -76,11 +90,13 @@ const createThemeTemplate = (themeColor) => ({
           },
           buttonColor: {
             header: "#EEC700",
-            main: "#EEC700",
-            secondary: "#EEC700",
-            hover: "#ffea9e",
+            main: "#87B924",
+            secondary: "#387024",
+            secondaryHover: "#1D570A",
+            hover: "#6B9E00",
             darkHover: "#ffea9e",
             fontColor: "#000",
+            fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
           },
           textColor: {
