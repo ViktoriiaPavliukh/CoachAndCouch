@@ -77,6 +77,7 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
           ml: "auto",
           mb: "29px",
           p: "4px",
+          "&:hover": { backgroundColor: "#9CA3AF" },
         }}
         onClick={onBackdropClose}
       >
