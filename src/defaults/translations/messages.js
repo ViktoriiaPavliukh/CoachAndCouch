@@ -53,6 +53,7 @@ const messages = {
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
     rate: "Rating",
+
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
     "signup.email": "Enter your email",
@@ -117,7 +118,9 @@ const messages = {
     other: "Other",
     uploadPhoto: "Upload your photo",
     addPhoto: "+ Add photo",
+    or: "or",
     newPhoto: "New photo",
+
 
     //validation
     priceValidation: "Price is required",
@@ -128,6 +131,9 @@ const messages = {
     messageSubject: "Message subject",
     messageEnterBody: "Enter the message",
     messageBody: "The message",
+    loginSendMessageTitle: "Register to write to the teacher",
+    loginSendMessageSubject:
+      "To be able to write to the teacher, register or log in to your personal account",
   },
 
   uk: {
@@ -248,6 +254,7 @@ const messages = {
     other: "Інша",
     uploadPhoto: "Завантажте свою фотографію",
     addPhoto: "+ Додати фото",
+    or: "або",
     newPhoto: "Нове фото",
 
     //validation
@@ -259,7 +266,9 @@ const messages = {
     messageSubject: "Тема повідомлення",
     messageEnterBody: "Введіть текст",
     messageBody: "Текст повідомлення",
+    loginSendMessageTitle: "Зареєструйтеся щоб написати викладачу",
+    loginSendMessageSubject:
+      "Щоб мати можливість написати викладачу, зареєструйтеся або увійдіть у особистий кабінет",
   },
 };
-
 export default messages;

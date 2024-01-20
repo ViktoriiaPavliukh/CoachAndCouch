@@ -1,38 +1,28 @@
 import { useState } from "react";
 import { PropTypes } from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { Link as ReactLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { selectUser } from "../../redux/auth/selectors";
 import { sendMessageFromUser } from "../../redux/users/operations";
-import {
-  Box,
-  Button,
-  Snackbar,
-  Alert,
-  Link,
-  Typography,
-  InputLabel,
-  Input,
-} from "@mui/material";
+import { Box, Button, Snackbar, Alert, Typography, Input } from "@mui/material";
 import { useIntl } from "react-intl";
+import { X } from "react-feather";
 
 const labelStyle = {
   marginRight: "auto",
   marginBottom: "8px",
-  fontSize: "14px",
-  color: "#1F2937",
-  lineHeight: "1.43",
+  color: (theme) => theme.palette.textColor.fontColor,
   marginTop: "16px",
+  textTransform: "none",
 };
 const textInputStyle = {
   width: "100%",
   borderRadius: "8px",
   padding: "8px 16px",
   border: "1px solid #D1D5DB",
-  color: "#1F2937",
-  fontSize: "18px",
-  lineHeight: "1.56",
-  "& ::placeholder": {
+  color: (theme) => theme.palette.textColor.fontColor,
+
+  "& textarea::placeholder": {
     opacity: "1",
   },
 };
@@ -64,48 +54,66 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
   return (
     <Box
       sx={{
-        width: "670px",
-        // height: "500px",
+        width: { sm: "335px", md: "615px", lg: "750px" },
         position: "absolute",
         top: "50%",
         left: "50%",
-        background: "white",
+        background: (theme) => theme.palette.background.paper,
         transform: "translate(-50%,-50%)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "20px 40px",
-        color: "#D1D5DB",
+        p: "20px 40px",
       }}
     >
+      <Button
+        sx={{
+          border: "none",
+          backgroundColor: "#E5E7EB",
+          minWidth: "24px",
+          height: "24px",
+          borderRadius: "50%",
+          ml: "auto",
+          mb: "29px",
+          p: "4px",
+        }}
+        onClick={onBackdropClose}
+      >
+        <X
+          style={{
+            color: "#000",
+            width: "16px",
+            height: "16px",
+          }}
+        />
+      </Button>
       {user.id ? (
         <>
           <Typography
+            variant="posterPopupTitle"
             sx={{
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: "400",
-              lineHeight: "1.4",
-              color: "#000",
-              marginRight: "auto",
+              color: (theme) => theme.palette.textColor.fontColor,
+              mr: "auto",
             }}
           >
             {intl.formatMessage({ id: "sendMessageTitle" })}
           </Typography>
-          <InputLabel sx={labelStyle}>
+          <Typography variant="posterButton" sx={labelStyle}>
             {intl.formatMessage({ id: "messageSubject" })}
-          </InputLabel>
+          </Typography>
           <Input
+            variant="text"
             placeholder={intl.formatMessage({ id: "messageSubject" })}
             multiline
             disableUnderline
             sx={textInputStyle}
           />
-          <InputLabel sx={labelStyle}>
+          <Typography variant="posterButton" sx={labelStyle}>
             {intl.formatMessage({ id: "messageEnterBody" })}
-          </InputLabel>
+          </Typography>
           <Input
+            variant="text"
             placeholder={intl.formatMessage({ id: "messageBody" })}
             multiline
             disableUnderline
@@ -116,65 +124,93 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
           <Box
             sx={{
               display: "flex",
+              flexDirection: { xs: "column", md: "row" },
               gap: "16px",
-              marginLeft: "auto",
-              marginTop: "29px",
+              ml: "auto",
+              mr: { xs: "auto", md: "0" },
+              mt: "29px",
             }}
           >
             <Button
-              sx={{
-                border: "1px solid #0E5B1D",
-                borderRadius: "8px",
-                color: "#000",
-                minWidth: "180px",
-                padding: "14px 20px",
-                fontSize: "12px",
-                lineHeight: "1.33",
-              }}
+              variant="outlined"
+              sx={(theme) => theme.button.buttonPopup}
               onClick={onBackdropClose}
             >
-              {intl.formatMessage({ id: "cancelBtn" })}
+              <Typography
+                variant="posterButton"
+                sx={{
+                  color: (theme) => theme.palette.textColor.fontColor,
+                }}
+              >
+                {intl.formatMessage({ id: "cancelBtn" })}
+              </Typography>
             </Button>
             <Button
               variant="contained"
-              color="primary"
               onClick={handleSendMessage}
-              sx={{
-                padding: "14px 20px",
-                borderRadius: "8px",
-                minWidth: "180px",
-                fontSize: "12px",
-                lineHeight: "1.33",
-              }}
+              sx={(theme) => theme.button.buttonPopup}
             >
-              {intl.formatMessage({ id: "sendBtn" })}
+              <Typography variant="posterButton">
+                {intl.formatMessage({ id: "sendBtn" })}
+              </Typography>
             </Button>
           </Box>
         </>
       ) : (
         <>
-          <Typography color="primary">
-            To send a message, please
-            <Link
-              component={ReactLink}
-              to="/login"
-              variant="body2"
-              align="center"
-              sx={{ textAlign: "center", mt: 2, display: "block" }}
-            >
-              log in
-            </Link>
-            or
-            <Link
-              component={ReactLink}
-              to="/registration"
-              variant="body2"
-              align="center"
-              sx={{ textAlign: "center", mt: 2, display: "block" }}
-            >
-              register
-            </Link>
+          <Typography
+            variant="posterPopupTitle"
+            sx={{
+              color: (theme) => theme.palette.textColor.fontColor,
+              mr: "auto",
+            }}
+          >
+            {intl.formatMessage({ id: "loginSendMessageTitle" })}
           </Typography>
+          <Typography
+            variant="posterDescription"
+            sx={{
+              color: (theme) => theme.palette.textColor.fontColor,
+              mr: "auto",
+              mt: "29px",
+            }}
+          >
+            {intl.formatMessage({ id: "loginSendMessageSubject" })}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: "center",
+              gap: "16px",
+              m: "29px auto 0px",
+            }}
+          >
+            <Button
+              variant="contained"
+              onClick={() => navigate("/registration")}
+              sx={(theme) => theme.button.buttonPopup}
+            >
+              <Typography variant="posterButton">
+                {intl.formatMessage({ id: "header.registration" })}
+              </Typography>
+            </Button>
+            <Typography> {intl.formatMessage({ id: "or" })}</Typography>
+            <Button
+              variant="outlined"
+              onClick={() => navigate("/login")}
+              sx={(theme) => theme.button.buttonPopup}
+            >
+              <Typography
+                variant="posterButton"
+                sx={{
+                  color: (theme) => theme.palette.textColor.fontColor,
+                }}
+              >
+                {intl.formatMessage({ id: "header.login" })}
+              </Typography>
+            </Button>
+          </Box>
         </>
       )}
 
