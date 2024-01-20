@@ -214,6 +214,15 @@ const createThemeTemplate = (themeColor) => ({
       fontWeight: 500,
       lineHeight: "23.4px",
     },
+    posterPopupTitle: {
+      fontFamily: "Mulish, sans-serif",
+      fontSize: "20px",
+      fontWeight: "400",
+      lineHeight: "28px",
+    },
+  },
+  button: {
+    buttonPopup: { minWidth: "200px", p: "12px 32px", borderRadius: "6px" },
   },
 });
 
