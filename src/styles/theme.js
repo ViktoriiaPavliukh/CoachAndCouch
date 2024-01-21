@@ -47,6 +47,7 @@ const createThemeTemplate = (themeColor) => ({
             paper: "#FFF",
             default: "#FFF",
             sidebar: "#FAFAFA",
+            messages: "#ffffff",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -58,6 +59,7 @@ const createThemeTemplate = (themeColor) => ({
             fontColor: "#FFF",
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
+            send: "#1F2937",
           },
           textColor: {
             fontColor: "#000000",
@@ -90,6 +92,7 @@ const createThemeTemplate = (themeColor) => ({
             paper: "#292A2A",
             default: "#292A2A",
             sidebar: "#3C3D3D",
+            messages: "#4B5563",
           },
           buttonColor: {
             header: "#EEC700",
@@ -101,6 +104,7 @@ const createThemeTemplate = (themeColor) => ({
             fontColor: "#000",
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
+            send: "#9CA3AF",
           },
           textColor: {
             fontColor: "#FBFDF6",

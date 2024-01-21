@@ -55,7 +55,7 @@ export const Sidebar = () => {
         gap: "16px",
         justifyContent: "space-between",
         width: "316px",
-        height: "980px",
+        height: "100vh",
         background: (theme) => theme.palette.background.sidebar,
         pt: "40px",
         pb: "40px",
