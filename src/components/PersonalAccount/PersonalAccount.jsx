@@ -40,10 +40,10 @@ export function PersonalAccount() {
         justifyContent: "flex-start",
         flexDirection: { xs: "column", lg: "row" },
         width: "100%",
-        paddingTop: { xs: "32px", md: "40px" },
-        paddingY: "40px",
-        paddingX: { xs: "0", md: "37px" },
-        gap: "40px",
+        // paddingTop: { xs: "32px", md: "40px" },
+        // paddingY: "40px",
+        // paddingX: { xs: "0", md: "37px" },
+        // gap: "40px",
         height: "100%",
       }}
     >

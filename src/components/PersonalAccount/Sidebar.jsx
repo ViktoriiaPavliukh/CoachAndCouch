@@ -1,4 +1,4 @@
-import { LogOut } from "react-feather";
+import { LogOut, Settings } from "react-feather";
 import * as FeatherIcons from "react-feather";
 import { useIntl } from "react-intl";
 import { logoutUser } from "../../redux/auth/operations";
@@ -11,22 +11,19 @@ import { pages } from "@/defaults";
 const linkStyles = {
   display: "flex",
   gap: "16px",
-  padding: "12px",
+  padding: "8px 12px",
   textDecoration: "none",
 };
 const titleStyles = {
-  color: "#384C5E",
-  fontSize: "22px",
-  fontWeight: "300",
-  lineHeight: "24px",
+  color: (theme) => theme.palette.textColor.sidebar,
 };
 
 const IconStyles = {
-  color: "#384C5E",
+  color: (theme) => theme.palette.textColor.sidebar,
   size: 24,
 };
 const activeLinks = {
-  color: "#24BF2A",
+  color: (theme) => theme.palette.primary.main,
 };
 
 const activeTitleStyles = {
@@ -55,42 +52,73 @@ export const Sidebar = () => {
       sx={{
         display: { xs: "none", lg: "flex" },
         flexDirection: "column",
-        gap: "32px",
-        paddingX: "16px",
+        gap: "16px",
+        justifyContent: "space-between",
+        width: "316px",
+        height: "980px",
+        background: (theme) => theme.palette.background.sidebar,
+        pt: "40px",
+        pb: "40px",
+
+        pl: "60px",
       }}
     >
-      {pages.slice(0, 9).map((item, index) => {
-        const IconComponent = FeatherIcons[item.iconFeatherName];
-        return (
-          <Box component={Link} to={item.link} sx={linkStyles} key={index}>
-            {IconComponent && (
-              <IconComponent
-                style={
+      <Box>
+        {pages.slice(0, 8).map((item, index) => {
+          const IconComponent = FeatherIcons[item.iconFeatherName];
+          return (
+            <Box component={Link} to={item.link} sx={linkStyles} key={index}>
+              {IconComponent && (
+                <IconComponent
+                  style={
+                    location.pathname === `/user/${user.id}/${item.link}`
+                      ? activeIconStyles
+                      : IconStyles
+                  }
+                />
+              )}
+              <Typography
+                variant="posterSubtitle"
+                noWrap
+                sx={
                   location.pathname === `/user/${user.id}/${item.link}`
-                    ? activeIconStyles
-                    : IconStyles
+                    ? activeTitleStyles
+                    : titleStyles
                 }
-              />
-            )}
-            <Typography
-              variant="fontLink"
-              noWrap
-              sx={
-                location.pathname === `/user/${user.id}/${item.link}`
-                  ? activeTitleStyles
-                  : titleStyles
-              }
-            >
-              {item.title}
-            </Typography>
-          </Box>
-        );
-      })}
-      <Box component={Link} to="/" sx={linkStyles} onClick={handleLogout}>
-        <LogOut style={IconStyles} />
-        <Typography variant="fontLink" noWrap sx={titleStyles}>
-          {intl.formatMessage({ id: "personalAccount.logout" })}
-        </Typography>
+              >
+                {item.title}
+              </Typography>
+            </Box>
+          );
+        })}
+      </Box>
+      <Box sx={{ mb: "0px" }}>
+        <Box component={Link} to="settings" sx={linkStyles}>
+          <Settings
+            style={
+              location.pathname === `/user/${user.id}/settings`
+                ? activeIconStyles
+                : IconStyles
+            }
+          />
+          <Typography
+            variant="posterSubtitle"
+            noWrap
+            sx={
+              location.pathname === `/user/${user.id}/settings`
+                ? activeTitleStyles
+                : titleStyles
+            }
+          >
+            {intl.formatMessage({ id: "personalAccount.settings" })}
+          </Typography>
+        </Box>
+        <Box component={Link} to="/" sx={linkStyles} onClick={handleLogout}>
+          <LogOut style={IconStyles} />
+          <Typography variant="posterSubtitle" noWrap sx={titleStyles}>
+            {intl.formatMessage({ id: "personalAccount.logout" })}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );
