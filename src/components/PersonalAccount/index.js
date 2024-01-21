@@ -8,3 +8,4 @@ export * from "./Advertisements";
 export * from "./LikesPages";
 export * from "./Feedback";
 export * from "./PersonalAccount";
+export * from "./Messages";

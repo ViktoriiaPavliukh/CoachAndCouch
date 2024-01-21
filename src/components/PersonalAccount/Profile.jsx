@@ -175,7 +175,14 @@ export const Profile = () => {
 
   return (
     <form onSubmit={handleUserProfileSubmit}>
-      <Stack sx={{ display: "flex", flexDirection: "column" }}>
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          pt: { xs: "32px", md: "40px" },
+          pl: { xs: "16px", md: "60px", lg: "12px" },
+        }}
+      >
         <Box
           sx={{
             display: "flex",

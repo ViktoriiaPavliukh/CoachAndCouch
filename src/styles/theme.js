@@ -46,6 +46,7 @@ const createThemeTemplate = (themeColor) => ({
           background: {
             paper: "#FFF",
             default: "#FFF",
+            sidebar: "#FAFAFA",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -71,6 +72,7 @@ const createThemeTemplate = (themeColor) => ({
             menuHover: "#A4E941",
             black: "#FFF",
             fontError: "#000",
+            sidebar: "#4B5563",
           },
         }
       : {
@@ -87,6 +89,7 @@ const createThemeTemplate = (themeColor) => ({
           background: {
             paper: "#292A2A",
             default: "#292A2A",
+            sidebar: "#3C3D3D",
           },
           buttonColor: {
             header: "#EEC700",
@@ -112,6 +115,7 @@ const createThemeTemplate = (themeColor) => ({
             menuHover: "#030904",
             black: "#000",
             fontError: "#FBFDF6",
+            sidebar: "#FBFDF6",
           },
         },
   typography: {
