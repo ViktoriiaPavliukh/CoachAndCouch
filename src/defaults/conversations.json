@@ -1,61 +1,64 @@
 [
 {"userCorrespondenceId": {
     "id": 1,
-    "name":"Milka"
+    "name":"Milka",
+    "country":"Ukraine"
 },
 "messages":    
     [{"id":60,
-"userSender":"1",
+"userSender":1,
 "message":"lol",
 "writtedAt":"2024-01-20T22:48:15.931Z",
 "isReaded":false},
 {"id":61,
-"userSender":"5",
+"userSender":5,
 "message":"hi",
 "writtedAt":"2024-01-20T22:48:15.931Z",
 "isReaded":false},
 {"id":62,
-"userSender":"1",
+"userSender":1,
 "message":"hello",
 "writtedAt":"2024-01-20T22:49:35.931Z",
 "isReaded":false}]},
 {"userCorrespondenceId": {
     "id": 3,
-    "name":"Malvina"
+    "name":"Malvina",
+    "country":"Portugal"
 },
 "messages":    
     [{"id":64,
-"userSender":"3",
+"userSender":3,
 "message":"good",
 "writtedAt":"2024-01-20T22:48:15.931Z",
 "isReaded":false},
 {"id":65,
-"userSender":"5",
+"userSender":5,
 "message":"go",
 "writtedAt":"2024-01-20T22:48:15.931Z",
 "isReaded":false},
 {"id":66,
-"userSender":"3",
+"userSender":3,
 "message":"night",
 "writtedAt":"2024-01-20T22:49:35.931Z",
 "isReaded":false}]},
 {"userCorrespondenceId": {
     "id": 5,
-    "name":"Antony"
+    "name":"Antony",
+    "country":"Poland"
 },
 "messages":    
     [{"id":70,
-"userSender":"1",
+"userSender":1,
 "message":"bro",
 "writtedAt":"2024-01-20T22:48:15.931Z",
 "isReaded":false},
 {"id":71,
-"userSender":"5",
+"userSender":5,
 "message":"star",
 "writtedAt":"2024-01-20T22:48:15.931Z",
 "isReaded":false},
 {"id":72,
-"userSender":"1",
+"userSender":1,
 "message":"fire",
 "writtedAt":"2024-01-20T22:49:35.931Z",
 "isReaded":false}]}

@@ -16,12 +16,15 @@ import {
 } from "@mui/material";
 import { Aperture } from "react-feather";
 import { OneUserChat } from "./OneUserChat";
+import { useState } from "react";
 
 export const Messages = () => {
   // const dispatch = useDispatch();
   // const messages = useSelector(selectMessages);
   // console.log(messages);
   // const intl = useIntl();
+  const [userChat, setUserChat] = useState("");
+  console.log(userChat);
 
   // useEffect(() => {
   //   dispatch(getUserMessages());
@@ -37,6 +40,7 @@ export const Messages = () => {
           <Box
             sx={{
               width: "320px",
+              height: "100vh",
               p: "40px 24px",
               boxShadow: "0px 1px 4px 0px rgba(0, 0, 0, 0.10)",
             }}
@@ -48,7 +52,12 @@ export const Messages = () => {
                 });
                 const lastMessage = sortedMessages[0];
                 return (
-                  <ListItem key={chat.userCorrespondenceId.id}>
+                  <ListItem
+                    key={chat.userCorrespondenceId.id}
+                    onClick={() => {
+                      setUserChat(chat);
+                    }}
+                  >
                     <ListItemAvatar>
                       <Avatar>
                         <Aperture />
@@ -64,7 +73,7 @@ export const Messages = () => {
               })}
             </List>
           </Box>
-          <OneUserChat />
+          {userChat && <OneUserChat user={userChat} />}
         </Stack>
       ) : (
         <p> у вас ще немає повідомлень</p>
