@@ -62,7 +62,11 @@ const validationSchema = Yup.object({
   ),
   specializations: Yup.array().required("Specialization is required"),
   image: Yup.mixed().required("Select image for your advert"),
-  updateUser: Yup.object().required("All fields is required"),
+  updateUser: Yup.object()
+    .shape({
+      birthday: Yup.date().required("Birthday is required").nullable(),
+    })
+    .required("All fields are required"),
 });
 
 export const TeacherFormPage = () => {
@@ -106,7 +110,7 @@ export const TeacherFormPage = () => {
       const transformedData = new FormData();
       const updateUser = {
         country: values.updateUser.country.id,
-        birthday: "1995-04-23T18:02:22.126Z",
+        birthday: values.updateUser.birthday,
         sex: values.updateUser.sex,
         firstName: values.updateUser.firstName,
         lastName: values.updateUser.lastName,
@@ -242,11 +246,48 @@ export const TeacherFormPage = () => {
               </Select>
             </FormControl>
 
-            <TextField
+            {/* <TextField
+              type="date"
               label={intl.formatMessage({ id: "birthday" })}
-              style={{
+              sx={{
                 minWidth: "274px",
               }}
+              name="updateUser.birthday"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ placeholder: "" }}
+              // variant="outlined"
+              // value={formik.values.updateUser.birthday}
+              // onChange={formik.handleChange}
+              // onBlur={formik.handleBlur}
+              // error={
+              //   formik.touched.updateUser?.birthday &&
+              //   Boolean(formik.errors.updateUser?.birthday)
+              // }
+              // helperText={
+              //   formik.touched.updateUser?.birthday &&
+              //   formik.errors.updateUser?.birthday
+              // }
+            /> */}
+            <TextField
+              type="date"
+              label={intl.formatMessage({ id: "birthday" })}
+              sx={{
+                minWidth: "274px",
+              }}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ placeholder: "" }}
+              name="updateUser.birthday"
+              value={formik.values.updateUser.birthday}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.updateUser?.birthday &&
+                Boolean(formik.errors.updateUser?.birthday)
+              }
+              helperText={
+                formik.touched.updateUser?.birthday &&
+                formik.errors.updateUser?.birthday
+              }
             />
 
             <TextField
