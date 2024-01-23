@@ -62,9 +62,7 @@ export const Profile = () => {
         firstName: currentUser?.firstName || "",
         lastName: currentUser?.lastName || "",
         email: currentUser?.email || "",
-        birthday: currentUser?.birthday
-          ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
-          : "",
+        birthday: currentUser?.birthday ? new Date(currentUser.birthday) : "",
         sex: currentUser?.sex || "",
         country: currentUser?.country?.alpha2
           ? countriesCase(
@@ -99,46 +97,15 @@ export const Profile = () => {
   const handleSaveButtonClick = async () => {
     try {
       await formik.validateForm();
-
-      // Check if there are any errors
       if (Object.keys(formik.errors).length > 0) {
-        // There are validation errors, handle them as needed
         console.error("Validation errors:", formik.errors);
         return;
       }
-      // Map form data to the expected structure
-      // const mappedData = {
-      //   id: currentUser.id,
-      //   email: formik.values.email,
-      //   firstName: formik.values.firstName,
-      //   lastName: formik.values.lastName,
-      //   role: currentUser.role, // Assuming 'role' should not be updated
-      //   isDeleted: currentUser.isDeleted, // Assuming 'isDeleted' should not be updated
-      //   lastVisit: currentUser.lastVisit, // Assuming 'lastVisit' should not be updated
-      //   registeredAt: currentUser.registeredAt, // Assuming 'registeredAt' should not be updated
-      //   rating: currentUser.rating, // Assuming 'rating' should not be updated
-      //   birthday: formik.values.birthday,
-      //   sex: formik.values.sex,
-      //   photoPath: currentUser.photoPath, // Assuming 'photoPath' should not be updated
-      //   aboutMe: currentUser.aboutMe, // Assuming 'aboutMe' should not be updated
-      //   advert: {
-      //     id: currentUser.advert.id,
-      //     price: currentUser.advert.price, // Assuming 'price' should not be updated
-      //     description: formik.values.description,
-      //     imagePath: currentUser.advert.imagePath, // Assuming 'imagePath' should not be updated
-      //     createdAt: currentUser.advert.createdAt, // Assuming 'createdAt' should not be updated
-      //     isDeleted: currentUser.advert.isDeleted, // Assuming 'isDeleted' should not be updated
-      //   },
-      //   feedbacksToMe: currentUser.feedbacksToMe, // Assuming 'feedbacksToMe' should not be updated
-      //   feedbacksFromMe: currentUser.feedbacksFromMe, // Assuming 'feedbacksFromMe' should not be updated
-      //   // country: {
-      //   //   id: currentUser.country.id, // Assuming 'id' of 'country' should not be updated
-      //   //   alpha2: currentUser.country.alpha2, // Assuming 'alpha2' of 'country' should not be updated
-      //   // },
-      // };
+
       const mappedData = {
         firstName: formik.values.firstName,
         lastName: formik.values.lastName,
+        // birthday: formik.values.birthday,
         sex: formik.values.sex,
         aboutMe: formik.values.aboutMe,
         photoPath: formik.values.photoPath,
@@ -156,17 +123,33 @@ export const Profile = () => {
     }
   };
 
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   formik.setFieldValue(name, value);
+
+  //   // if (name === "photoPath") {
+  //   //   setFormData((prevFormData) => ({
+  //   //     ...prevFormData,
+  //   //     photoPath: value,
+  //   //   }));
+  //   // } else {
+  //   //   formik.setFieldValue(name, value);
+  //   // }
+  // };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    formik.setFieldValue(name, value);
-    // if (name === "photoPath") {
-    //   setFormData((prevFormData) => ({
-    //     ...prevFormData,
-    //     photoPath: value,
-    //   }));
-    // } else {
-    //   formik.setFieldValue(name, value);
-    // }
+
+    if (name === "birthday") {
+      const dateValue = new Date(value);
+      if (!isNaN(dateValue.getTime())) {
+        formik.setFieldValue(name, dateValue);
+      } else {
+        console.error("Invalid date format");
+      }
+    } else {
+      formik.setFieldValue(name, value);
+    }
   };
 
   useEffect(() => {
@@ -310,10 +293,14 @@ export const Profile = () => {
                   : ""
               }
               sx={{ width: { xs: "100%", lg: "48%" } }}
+              InputLabelProps={{ shrink: true }}
+              InputProps={{ placeholder: "" }}
               variant="outlined"
               onChange={handleInputChange}
+              error={formik.touched.birthday && Boolean(formik.errors.birthday)}
+              helperText={formik.touched.birthday && formik.errors.birthday}
             />
-            <FormControl
+            {/* <FormControl
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
             >
@@ -340,6 +327,35 @@ export const Profile = () => {
               </Select>
               {formik.touched.sex && formik.errors.sex && (
                 <div style={{ color: "red" }}>{formik.errors.sex}</div>
+              )}
+            </FormControl> */}
+            <FormControl
+              variant="outlined"
+              sx={{ width: { xs: "100%", lg: "48%" } }}
+            >
+              <InputLabel htmlFor="sex-label">
+                {intl.formatMessage({ id: "sex" })}
+              </InputLabel>
+              <Select
+                label={intl.formatMessage({ id: "sex" })}
+                disabled={!editMode}
+                name="sex"
+                value={formik.values.sex || ""}
+                onChange={(e) => formik.handleChange(e)}
+                error={formik.touched.sex && Boolean(formik.errors.sex)}
+              >
+                <MenuItem value="male">
+                  {intl.formatMessage({ id: "male" })}
+                </MenuItem>
+                <MenuItem value="female">
+                  {intl.formatMessage({ id: "female" })}
+                </MenuItem>
+                <MenuItem value="other">
+                  {intl.formatMessage({ id: "other" })}
+                </MenuItem>
+              </Select>
+              {formik.touched.sex && formik.errors.sex && (
+                <Box sx={{ color: "red" }}>{formik.errors.sex}</Box>
               )}
             </FormControl>
             <TextField
@@ -393,6 +409,8 @@ export const Profile = () => {
             name="aboutMe"
             label={intl.formatMessage({ id: "description" })}
             id="aboutMe"
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ placeholder: "" }}
             placeholder={intl.formatMessage({ id: "description" })}
             sx={{ width: { xs: "100%" } }}
             multiline
