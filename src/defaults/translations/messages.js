@@ -121,7 +121,6 @@ const messages = {
     or: "or",
     newPhoto: "New photo",
 
-
     //validation
     priceValidation: "Price is required",
     descriptionValidation: "Description is required",
@@ -134,6 +133,11 @@ const messages = {
     loginSendMessageTitle: "Register to write to the teacher",
     loginSendMessageSubject:
       "To be able to write to the teacher, register or log in to your personal account",
+
+    //img
+    imgAdvise:
+      "The photo size should be a minimum of 200x200 pixels and a maximum of 5 MB. Image format: JPG, PNG.",
+    saveAdvise: "After uploading, click 'Save'",
   },
 
   uk: {
@@ -269,6 +273,12 @@ const messages = {
     loginSendMessageTitle: "Зареєструйтеся щоб написати викладачу",
     loginSendMessageSubject:
       "Щоб мати можливість написати викладачу, зареєструйтеся або увійдіть у особистий кабінет",
+
+    //img
+    imgAdvise:
+      "Розмір фотографії повинен бути не менше 200x200 пікселів і не більше 5 МБ. Формат зображення JPG, PNG",
+    saveAdvise: 'Після завантаження натисніть "Зберегти"',
   },
 };
+
 export default messages;
