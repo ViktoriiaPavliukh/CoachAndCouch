@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { parse } from "date-fns";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, editUser } from "@/redux/users/operations";
@@ -91,37 +92,9 @@ export const Profile = () => {
   const formik = useFormik({
     initialValues: formData,
     validationSchema: userValidationSchema,
-    onSubmit: handleUserProfileSubmit, // Assuming you still want to handle submit separately
+    onSubmit: handleUserProfileSubmit,
   });
 
-  // const handleSaveButtonClick = async () => {
-  //   try {
-  //     await formik.validateForm();
-  //     if (Object.keys(formik.errors).length > 0) {
-  //       console.error("Validation errors:", formik.errors);
-  //       return;
-  //     }
-
-  //     const mappedData = {
-  //       firstName: formik.values.firstName,
-  //       lastName: formik.values.lastName,
-  //       // birthday: formik.values.birthday,
-  //       sex: formik.values.sex,
-  //       aboutMe: formik.values.aboutMe,
-  //       photo: formik.values.photoPath,
-  //     };
-  //     console.log(JSON.stringify(mappedData, null, 2));
-  //     console.log(mappedData);
-
-  //     // Dispatch the editUser action with the mapped data
-  //     await dispatch(editUser(mappedData));
-
-  //     setEditMode(false);
-  //   } catch (error) {
-  //     // Handle error (e.g., show an error message)
-  //     console.error("Error editing user:", error);
-  //   }
-  // };
   const handleSaveButtonClick = async () => {
     try {
       await formik.validateForm();
@@ -131,21 +104,28 @@ export const Profile = () => {
       }
 
       const formData = new FormData();
-      // formData.append("email", formik.values.email);
       formData.append("firstName", formik.values.firstName);
       formData.append("lastName", formik.values.lastName);
-      // formData.append("country", formik.values.country);
-      // formData.append("birthday", formik.values.birthday);
+
+      let formattedBirthday = "";
+      if (formik.values.birthday) {
+        let [year, month, day] = formik.values.birthday.split("-");
+        if (!year || !month || !day) {
+          [day, month, year] = formik.values.birthday.split(".");
+        }
+        const parsedBirthday = new Date(year, month - 1, day);
+        formattedBirthday = format(parsedBirthday, "yyyy-MM-dd");
+      }
+
+      formData.append("birthday", formattedBirthday);
       formData.append("sex", formik.values.sex);
       formData.append("aboutMe", formik.values.aboutMe);
       formData.append("photo", formik.values.photo);
 
-      // Dispatch the editUser action with the FormData object
       await dispatch(editUser(formData));
-      console.log(formData);
+
       setEditMode(false);
     } catch (error) {
-      // Handle error (e.g., show an error message)
       console.error("Error editing user:", error);
     }
   };
@@ -156,7 +136,8 @@ export const Profile = () => {
     if (name === "birthday") {
       const dateValue = new Date(value);
       if (!isNaN(dateValue.getTime())) {
-        formik.setFieldValue(name, dateValue);
+        const formattedDate = format(dateValue, "yyyy-MM-dd");
+        formik.setFieldValue(name, formattedDate);
       } else {
         console.error("Invalid date format");
       }
@@ -297,12 +278,13 @@ export const Profile = () => {
               helperText={formik.errors.email}
             />
             <TextField
+              type="date"
               label={intl.formatMessage({ id: "birthday" })}
               name="birthday"
               disabled={!editMode}
               defaultValue={
                 currentUser.birthday
-                  ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
+                  ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
                   : ""
               }
               sx={{ width: { xs: "100%", lg: "48%" } }}
@@ -313,35 +295,6 @@ export const Profile = () => {
               error={formik.touched.birthday && Boolean(formik.errors.birthday)}
               helperText={formik.touched.birthday && formik.errors.birthday}
             />
-            {/* <FormControl
-              variant="outlined"
-              sx={{ width: { xs: "100%", lg: "48%" } }}
-            >
-              <InputLabel htmlFor="sex-label">
-                {intl.formatMessage({ id: "sex" })}
-              </InputLabel>
-              <Select
-                label={intl.formatMessage({ id: "sex" })}
-                disabled={!editMode}
-                name="sex"
-                value={formik.values.sex || ""}
-                onChange={(e) => formik.handleChange(e)}
-                error={formik.touched.sex && Boolean(formik.errors.sex)}
-              >
-                <MenuItem value="male">
-                  {intl.formatMessage({ id: "male" })}
-                </MenuItem>
-                <MenuItem value="female">
-                  {intl.formatMessage({ id: "female" })}
-                </MenuItem>
-                <MenuItem value="other">
-                  {intl.formatMessage({ id: "other" })}
-                </MenuItem>
-              </Select>
-              {formik.touched.sex && formik.errors.sex && (
-                <div style={{ color: "red" }}>{formik.errors.sex}</div>
-              )}
-            </FormControl> */}
             <FormControl
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
