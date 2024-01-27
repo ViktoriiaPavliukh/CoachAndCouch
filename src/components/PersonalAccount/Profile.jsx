@@ -94,6 +94,34 @@ export const Profile = () => {
     onSubmit: handleUserProfileSubmit, // Assuming you still want to handle submit separately
   });
 
+  // const handleSaveButtonClick = async () => {
+  //   try {
+  //     await formik.validateForm();
+  //     if (Object.keys(formik.errors).length > 0) {
+  //       console.error("Validation errors:", formik.errors);
+  //       return;
+  //     }
+
+  //     const mappedData = {
+  //       firstName: formik.values.firstName,
+  //       lastName: formik.values.lastName,
+  //       // birthday: formik.values.birthday,
+  //       sex: formik.values.sex,
+  //       aboutMe: formik.values.aboutMe,
+  //       photo: formik.values.photoPath,
+  //     };
+  //     console.log(JSON.stringify(mappedData, null, 2));
+  //     console.log(mappedData);
+
+  //     // Dispatch the editUser action with the mapped data
+  //     await dispatch(editUser(mappedData));
+
+  //     setEditMode(false);
+  //   } catch (error) {
+  //     // Handle error (e.g., show an error message)
+  //     console.error("Error editing user:", error);
+  //   }
+  // };
   const handleSaveButtonClick = async () => {
     try {
       await formik.validateForm();
@@ -102,40 +130,25 @@ export const Profile = () => {
         return;
       }
 
-      const mappedData = {
-        firstName: formik.values.firstName,
-        lastName: formik.values.lastName,
-        // birthday: formik.values.birthday,
-        sex: formik.values.sex,
-        aboutMe: formik.values.aboutMe,
-        photoPath: formik.values.photoPath,
-      };
-      console.log(JSON.stringify(mappedData, null, 2));
-      console.log(mappedData);
+      const formData = new FormData();
+      // formData.append("email", formik.values.email);
+      formData.append("firstName", formik.values.firstName);
+      formData.append("lastName", formik.values.lastName);
+      // formData.append("country", formik.values.country);
+      // formData.append("birthday", formik.values.birthday);
+      formData.append("sex", formik.values.sex);
+      formData.append("aboutMe", formik.values.aboutMe);
+      formData.append("photo", formik.values.photo);
 
-      // Dispatch the editUser action with the mapped data
-      await dispatch(editUser(mappedData));
-
+      // Dispatch the editUser action with the FormData object
+      await dispatch(editUser(formData));
+      console.log(formData);
       setEditMode(false);
     } catch (error) {
       // Handle error (e.g., show an error message)
       console.error("Error editing user:", error);
     }
   };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   formik.setFieldValue(name, value);
-
-  //   // if (name === "photoPath") {
-  //   //   setFormData((prevFormData) => ({
-  //   //     ...prevFormData,
-  //   //     photoPath: value,
-  //   //   }));
-  //   // } else {
-  //   //   formik.setFieldValue(name, value);
-  //   // }
-  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -199,10 +212,10 @@ export const Profile = () => {
                 <input
                   type="file"
                   id="photoPath"
-                  name="photoPath"
+                  name="photo"
                   style={{ display: "none" }}
                   onChange={(event) => {
-                    formik.setFieldValue("photoPath", event.target.files[0]);
+                    formik.setFieldValue("photo", event.target.files[0]);
                     setImage(URL.createObjectURL(event.target.files[0]));
                   }}
                   onBlur={formik.handleBlur}
