@@ -63,9 +63,8 @@ export const PersonalAdvertForm = ({
   languages,
   specializations,
   advertId,
+  teacher,
 }) => {
-  // console.log(currentUser);
-  console.log(advertId, "id");
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
   const [image, setImage] = useState(currentUser.advert.imagePath);
@@ -99,14 +98,7 @@ export const PersonalAdvertForm = ({
     spokenLanguages: currentUser?.advert?.spokenLanguages || [],
     teachingLanguages: currentUser?.advert?.teachingLanguages || [],
   });
-   const dispatch = useDispatch();
-
-  //  useEffect(() => {
-  //    dispatch(getAdvertById(advertId));
-  //  }, [dispatch, advertId]);
-
-    // const teacher = useSelector(advertByIdSelector);
-    // console.log(teacher);
+  const dispatch = useDispatch();
 
   const handleTeacherProfileSubmit = (e) => {
     e.preventDefault();
@@ -147,8 +139,6 @@ export const PersonalAdvertForm = ({
     //   console.log(transformedData);
     // },
   });
-
-  
 
   const handleSaveButtonClick = async () => {
     try {
@@ -281,6 +271,7 @@ export const PersonalAdvertForm = ({
           {Boolean(!image) && (
             <>
               <p
+                disabled={!editMode}
                 style={{
                   position: "absolute",
                   top: "50%",
@@ -428,6 +419,7 @@ export const PersonalAdvertForm = ({
               width: { xs: "50%", md: "49%", lg: "33%", xl: "32%" },
             }}
             id="price"
+            disabled={!editMode}
             name="price"
             label={intl.formatMessage({ id: "pricePerHour" })}
             variant="outlined"
@@ -440,102 +432,174 @@ export const PersonalAdvertForm = ({
           />
         </Stack>
         <FormControl variant="outlined" sx={{ width: "100%" }}>
-          <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
-          <Select
-            // style={{
-            //   width: "100%",
-            // }}
-            id="country"
-            name="country"
-            label={intl.formatMessage({ id: "country" })}
-            value={currentUser?.country?.alpha2}
-            onChange={(event) => {
-              formik.setFieldValue("country", event.target.value);
-              console.log(event.target.value);
-            }}
-            onBlur={formik.handleBlur}
-            error={formik.touched.country && Boolean(formik.errors.country)}
-            renderValue={(selected) => selected.alpha2}
-          >
-            {countriesList &&
-              countriesList.map((country) => (
-                <MenuItem key={country.alpha2} value={country}>
-                  {country.alpha2}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>
-            {intl.formatMessage({ id: "languagesSpoken" })}
-          </InputLabel>
-          <Select
-            id="spokenLanguages"
-            name="spokenLanguages"
-            multiple
-            label="languagesSpoken"
-            value={formik.values.spokenLanguages}
-            onChange={(event) => {
-              formik.setFieldValue("spokenLanguages", event.target.value);
-            }}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.spokenLanguages &&
-              Boolean(formik.errors.spokenLanguages)
-            }
-            renderValue={(selected) =>
-              selected.map((language) => language.languageUa).join(", ")
-            }
-          >
-            {languages &&
-              languages.map((language) => (
-                <MenuItem key={uuidv4()} value={language}>
-                  {language.languageUa}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>
-            {intl.formatMessage({ id: "languagesTeaching" })}
-          </InputLabel>
-
-          <Select
-            id="teachingLanguages"
-            name="teachingLanguages"
-            disabled={!editMode}
-            multiple
-            label="languagesTeaching"
-            defaultValue={
-              currentUser.advert.teachingLanguages
-                ? currentUser.advert.teachingLanguages.map((el) =>
-                    en === "en" ? el.languageEn : el.languageUa
-                  )
-                : []
-            }
-            // defaultValue={console.log(currentUser.advert.teachingLanguages)}
-            onChange={(event) => {
-              formik.setFieldValue("teachingLanguages", event.target.value);
-            }}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.teachingLanguages &&
-              Boolean(formik.errors.teachingLanguages)
-            }
-            renderValue={(selected) =>
-              selected.map((language) => language.languageUa).join(", ")
-            }
-          >
-            {languages &&
-              languages.map((language) => (
-                <MenuItem key={uuidv4()} value={language}>
-                  {language.languageUa}
-                </MenuItem>
-              ))}
-          </Select>
+          {!editMode ? (
+            <TextField
+              fullWidth
+              id="country"
+              name="country"
+              label={intl.formatMessage({ id: "country" })}
+              variant="outlined"
+              disabled={!editMode}
+              value={
+                currentUser?.country && en === "en"
+                  ? countriesCase(
+                      countries.find(
+                        (el) => el.alpha2 === currentUser.country?.alpha2
+                      ).nameEng
+                    ).split(",")
+                  : countriesCase(
+                      countries.find(
+                        (el) => el.alpha2 === currentUser.country?.alpha2
+                      ).nameShort
+                    ).split(",")
+              }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.country && Boolean(formik.errors.country)}
+              helperText={formik.touched.country && formik.errors.country}
+            />
+          ) : (
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
+              <Select
+                id="country"
+                name="country"
+                label={intl.formatMessage({ id: "country" })}
+                value={formik.values.country}
+                onChange={(event) => {
+                  formik.setFieldValue("country", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={formik.touched.country && Boolean(formik.errors.country)}
+                renderValue={(selected) => selected.alpha2}
+              >
+                {countriesList &&
+                  countriesList.map((country) => (
+                    <MenuItem key={country.alpha2} value={country}>
+                      {country.alpha2}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          )}
         </FormControl>
 
         <FormControl fullWidth variant="outlined">
+          {!editMode ? (
+            <TextField
+              fullWidth
+              id="spokenLanguages"
+              name="spokenLanguages"
+              label={intl.formatMessage({ id: "languagesSpoken" })}
+              variant="outlined"
+              disabled={!editMode}
+              value={(teacher?.spokenLanguages || [])
+                .map((language) =>
+                  en == "en" ? language.languageEn : language.languageUa
+                )
+                .join(", ")}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.spokenLanguages &&
+                Boolean(formik.errors.spokenLanguages)
+              }
+              helperText={
+                formik.touched.spokenLanguages && formik.errors.spokenLanguages
+              }
+            />
+          ) : (
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>
+                {intl.formatMessage({ id: "languagesSpoken" })}
+              </InputLabel>
+              <Select
+                id="spokenLanguages"
+                name="spokenLanguages"
+                multiple
+                label="languagesSpoken"
+                value={formik.values.spokenLanguages}
+                onChange={(event) => {
+                  formik.setFieldValue("spokenLanguages", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.spokenLanguages &&
+                  Boolean(formik.errors.spokenLanguages)
+                }
+                renderValue={(selected) =>
+                  selected.map((language) => language.languageUa).join(", ")
+                }
+              >
+                {languages &&
+                  languages.map((language) => (
+                    <MenuItem key={language.id} value={language}>
+                      {language.languageUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          )}
+        </FormControl>
+        <FormControl fullWidth variant="outlined">
+          {!editMode ? (
+            <TextField
+              fullWidth
+              id="teachingLanguages"
+              name="teachingLanguages"
+              label={intl.formatMessage({ id: "languagesTeaching" })}
+              variant="outlined"
+              disabled={!editMode}
+              value={(teacher?.teachingLanguages || [])
+                .map((language) =>
+                  en == "en" ? language.languageEn : language.languageUa
+                )
+                .join(", ")}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.teachingLanguages &&
+                Boolean(formik.errors.teachingLanguages)
+              }
+              helperText={
+                formik.touched.teachingLanguages &&
+                formik.errors.teachingLanguages
+              }
+            />
+          ) : (
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>
+                {intl.formatMessage({ id: "languagesTeaching" })}
+              </InputLabel>
+              <Select
+                id="teachingLanguages"
+                name="teachingLanguages"
+                multiple
+                label="languagesTeaching"
+                value={formik.values.teachingLanguages}
+                onChange={(event) => {
+                  formik.setFieldValue("teachingLanguages", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.teachingLanguages &&
+                  Boolean(formik.errors.teachingLanguages)
+                }
+                renderValue={(selected) =>
+                  selected.map((language) => language.languageUa).join(", ")
+                }
+              >
+                {languages &&
+                  languages.map((language) => (
+                    <MenuItem key={language.id} value={language}>
+                      {language.languageUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          )}
+        </FormControl>
+        {/* <FormControl fullWidth variant="outlined">
           <InputLabel>
             {" "}
             {intl.formatMessage({ id: "specialization" })}
@@ -567,6 +631,67 @@ export const PersonalAdvertForm = ({
                 </MenuItem>
               ))}
           </Select>
+        </FormControl> */}
+        <FormControl fullWidth variant="outlined">
+          {!editMode ? (
+            <TextField
+              fullWidth
+              id="specializations"
+              name="specializations"
+              label={intl.formatMessage({ id: "specialization" })}
+              variant="outlined"
+              disabled={!editMode}
+              value={(teacher?.specializations || [])
+                .map((specialization) =>
+                  en === "en"
+                    ? specialization.specializationEn
+                    : specialization.specializationUa
+                )
+                .join(", ")}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.specializations &&
+                Boolean(formik.errors.specializations)
+              }
+              helperText={
+                formik.touched.specializations && formik.errors.specializations
+              }
+            />
+          ) : (
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>
+                {intl.formatMessage({ id: "specialization" })}
+              </InputLabel>
+              <Select
+                id="specializations"
+                name="specializations"
+                multiple
+                label={intl.formatMessage({ id: "specialization" })}
+                value={formik.values.specializations}
+                onChange={(event) => {
+                  formik.setFieldValue("specializations", event.target.value);
+                }}
+                onBlur={formik.handleBlur}
+                error={
+                  formik.touched.specializations &&
+                  Boolean(formik.errors.specializations)
+                }
+                renderValue={(selected) =>
+                  selected
+                    .map((specialization) => specialization.specializationUa)
+                    .join(", ")
+                }
+              >
+                {specializations &&
+                  specializations.map((specialization) => (
+                    <MenuItem key={specialization.id} value={specialization}>
+                      {specialization.specializationUa}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          )}
         </FormControl>
         <TextField
           fullWidth
@@ -602,9 +727,61 @@ export const PersonalAdvertForm = ({
           }
           // value={format(new Date(currentUser.advert.createdAt), "dd.MM.yyyy")}
         />
-        <Button variant="contained" type="submit">
+
+        {editMode ? (
+          <Button
+            type="button"
+            variant="contained"
+            onClick={handleSaveButtonClick}
+            sx={{
+              display: "flex",
+              justifyItems: "end",
+              alignSelf: "end",
+              width: { xs: "100%", md: "220px" },
+              borderRadius: "6px",
+              transition: "background-color 0.3s",
+              backgroundColor: (theme) => theme.palette.buttonColor.main,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+              },
+            }}
+          >
+            <Typography
+              variant="posterButton"
+              sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+            >
+              {intl.formatMessage({ id: "publishBtn" })}
+            </Typography>
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            variant="contained"
+            onClick={() => setEditMode(!editMode)}
+            sx={{
+              display: "flex",
+              justifyItems: "end",
+              alignSelf: "end",
+              width: { xs: "100%", md: "220px" },
+              borderRadius: "6px",
+              transition: "background-color 0.3s",
+              backgroundColor: (theme) => theme.palette.buttonColor.main,
+              "&:hover": {
+                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+              },
+            }}
+          >
+            <Typography
+              variant="posterButton"
+              sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
+            >
+              {intl.formatMessage({ id: "editBtn" })}
+            </Typography>
+          </Button>
+        )}
+        {/* <Button variant="contained" type="submit">
           {intl.formatMessage({ id: "publishBtn" })}
-        </Button>
+        </Button> */}
       </Box>
     </form>
   );
