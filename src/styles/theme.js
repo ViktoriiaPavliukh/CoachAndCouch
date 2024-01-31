@@ -75,6 +75,9 @@ const createThemeTemplate = (themeColor) => ({
             black: "#FFF",
             fontError: "#000",
             sidebar: "#4B5563",
+            links: "#0E5B1D",
+
+            linkHover: "#004305",
           },
         }
       : {
@@ -120,6 +123,9 @@ const createThemeTemplate = (themeColor) => ({
             black: "#000",
             fontError: "#FBFDF6",
             sidebar: "#FBFDF6",
+            links: "#EEC700",
+
+            linkHover: "#CFAC00",
           },
         },
   typography: {

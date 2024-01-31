@@ -13,9 +13,10 @@ import {
   ListItemAvatar,
   Avatar,
   Stack,
+  Divider,
 } from "@mui/material";
 import { Aperture } from "react-feather";
-import { OneUserChat } from "./OneUserChat";
+import { ChatWithUser } from "./ChatWithUser";
 import { useState } from "react";
 
 export const Messages = () => {
@@ -32,9 +33,6 @@ export const Messages = () => {
 
   return (
     <Box sx={{ ml: "20px" }}>
-      {/* <Typography variant="h5">
-        {intl.formatMessage({ id: "personalAccount.messages" })}
-      </Typography> */}
       {messages.length !== 0 ? (
         <Stack sx={{ display: "flex", flexDirection: "row" }}>
           <Box
@@ -52,28 +50,33 @@ export const Messages = () => {
                 });
                 const lastMessage = sortedMessages[0];
                 return (
-                  <ListItem
-                    key={chat.userCorrespondenceId.id}
-                    onClick={() => {
-                      setUserChat(chat);
-                    }}
-                  >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <Aperture />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={chat.userCorrespondenceId.name}
-                      secondary={lastMessage.message}
-                    />
-                  </ListItem>
-                  // <Divider />
+                  <>
+                    <ListItem
+                      key={chat.userCorrespondenceId.id}
+                      onClick={() => {
+                        setUserChat(chat);
+                      }}
+                      sx={{
+                        "&:hover": { background: "#F3F4F6" },
+                      }}
+                    >
+                      <ListItemAvatar>
+                        <Avatar>
+                          <Aperture />
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={chat.userCorrespondenceId.name}
+                        secondary={lastMessage.message}
+                      />
+                    </ListItem>
+                    <Divider />
+                  </>
                 );
               })}
             </List>
           </Box>
-          {userChat && <OneUserChat user={userChat} />}
+          {userChat && <ChatWithUser user={userChat} />}
         </Stack>
       ) : (
         <p> у вас ще немає повідомлень</p>

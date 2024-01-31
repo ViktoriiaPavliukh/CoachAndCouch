@@ -13,25 +13,16 @@ const linkStyles = {
   gap: "16px",
   padding: "8px 12px",
   textDecoration: "none",
-};
-const titleStyles = {
   color: (theme) => theme.palette.textColor.sidebar,
+  "&:hover": { color: (theme) => theme.palette.textColor.linkHover },
 };
 
-const IconStyles = {
-  color: (theme) => theme.palette.textColor.sidebar,
-  size: 24,
-};
 const activeLinks = {
-  color: (theme) => theme.palette.primary.main,
+  color: (theme) => theme.palette.textColor.links,
 };
 
-const activeTitleStyles = {
-  ...titleStyles,
-  ...activeLinks,
-};
-const activeIconStyles = {
-  ...IconStyles,
+const activeLinkStyles = {
+  ...linkStyles,
   ...activeLinks,
 };
 
@@ -59,7 +50,7 @@ export const Sidebar = () => {
         background: (theme) => theme.palette.background.sidebar,
         pt: "40px",
         pb: "40px",
-
+        pr: "40px",
         pl: "60px",
       }}
     >
@@ -67,25 +58,19 @@ export const Sidebar = () => {
         {pages.slice(0, 8).map((item, index) => {
           const IconComponent = FeatherIcons[item.iconFeatherName];
           return (
-            <Box component={Link} to={item.link} sx={linkStyles} key={index}>
-              {IconComponent && (
-                <IconComponent
-                  style={
-                    location.pathname === `/user/${user.id}/${item.link}`
-                      ? activeIconStyles
-                      : IconStyles
-                  }
-                />
-              )}
-              <Typography
-                variant="posterSubtitle"
-                noWrap
-                sx={
-                  location.pathname === `/user/${user.id}/${item.link}`
-                    ? activeTitleStyles
-                    : titleStyles
-                }
-              >
+            <Box
+              component={Link}
+              to={item.link}
+              // sx={linkStyles}
+              sx={
+                location.pathname === `/user/${user.id}/${item.link}`
+                  ? activeLinkStyles
+                  : linkStyles
+              }
+              key={index}
+            >
+              {IconComponent && <IconComponent />}
+              <Typography variant="posterSubtitle" noWrap>
                 {item.title}
               </Typography>
             </Box>
@@ -93,29 +78,23 @@ export const Sidebar = () => {
         })}
       </Box>
       <Box sx={{ mb: "0px" }}>
-        <Box component={Link} to="settings" sx={linkStyles}>
-          <Settings
-            style={
-              location.pathname === `/user/${user.id}/settings`
-                ? activeIconStyles
-                : IconStyles
-            }
-          />
-          <Typography
-            variant="posterSubtitle"
-            noWrap
-            sx={
-              location.pathname === `/user/${user.id}/settings`
-                ? activeTitleStyles
-                : titleStyles
-            }
-          >
+        <Box
+          component={Link}
+          to="settings"
+          sx={
+            location.pathname === `/user/${user.id}/settings`
+              ? activeLinkStyles
+              : linkStyles
+          }
+        >
+          <Settings />
+          <Typography variant="posterSubtitle" noWrap>
             {intl.formatMessage({ id: "personalAccount.settings" })}
           </Typography>
         </Box>
         <Box component={Link} to="/" sx={linkStyles} onClick={handleLogout}>
-          <LogOut style={IconStyles} />
-          <Typography variant="posterSubtitle" noWrap sx={titleStyles}>
+          <LogOut />
+          <Typography variant="posterSubtitle" noWrap>
             {intl.formatMessage({ id: "personalAccount.logout" })}
           </Typography>
         </Box>
