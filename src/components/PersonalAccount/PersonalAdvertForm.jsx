@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { useIntl } from "react-intl";
 import * as Yup from "yup";
@@ -13,25 +15,34 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-import { useState } from "react";
+import { PersonalImage } from "./PersonalImage";
+import countriesCase from "@/helpers/countriesCase";
+import {
+  advertByIdSelector,
+  selectAdvertsIsLoading,
+} from "@/redux/marketplace/adverts/advertsSelector";
+import { selectCurrentUser } from "@/redux/users/selectors";
+import { getAdvertById } from "@/redux/marketplace/adverts/operations";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import countries from "../../defaults/countries/countries.json";
 import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
 
-const initialValues = {
-  price: 0,
-  description: "",
-  spokenLanguages: [],
-  teachingLanguages: [],
-  specializations: [],
-  image: null,
-  updateUser: {
-    country: "",
-    birthday: "",
-    firstName: "",
-    lastName: "",
-    sex: "",
-  },
-};
+// const initialValues = {
+//   price: 0,
+//   description: "",
+//   spokenLanguages: [],
+//   teachingLanguages: [],
+//   specializations: [],
+//   image: null,
+//   updateUser: {
+//     country: "",
+//     birthday: "",
+//     firstName: "",
+//     lastName: "",
+//     sex: "",
+//   },
+// };
 
 const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
@@ -51,55 +62,144 @@ export const PersonalAdvertForm = ({
   countriesList,
   languages,
   specializations,
+  advertId,
 }) => {
+  // console.log(currentUser);
+  console.log(advertId, "id");
   const intl = useIntl();
+  const en = useSelector(selectCurrentLanguage);
   const [image, setImage] = useState(currentUser.advert.imagePath);
 
-  initialValues.price = currentUser.advert.price;
-  initialValues.description = currentUser.advert.description;
-  // initialValues.specializations = currentUser.advert.specialization;
-  // initialValues.spokenLanguages = currentUser.advert.spokenLanguages((el) => languages.find((lang) => lang.id === el));
-  initialValues.updateUser.firstName = currentUser.firstName;
-  initialValues.updateUser.lastName = currentUser.lastName;
-  initialValues.updateUser.country = currentUser.country;
-  initialValues.updateUser.birthday = currentUser.birthday;
-  initialValues.updateUser.sex = currentUser.sex;
-
-  console.log(initialValues);
-
-  // initialValues.specializations = currentUser.advert.specializations.map((spec) => spec);
-  const formik = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: async (values) => {
-      const transformedData = new FormData();
-      const updateUser = {
-        country: values.updateUser.country.id,
-        birthday: values.updateUser.birthday,
-        sex: values.updateUser.sex,
-        firstName: values.updateUser.firstName,
-        lastName: values.updateUser.lastName,
-      };
-      transformedData.append("description", values.description);
-      transformedData.append("price", values.price);
-      transformedData.append(
-        "spokenLanguages",
-        JSON.stringify(values.spokenLanguages.map((el) => el.id))
-      );
-      transformedData.append(
-        "teachingLanguages",
-        JSON.stringify(values.teachingLanguages.map((el) => el.id))
-      );
-      transformedData.append(
-        "specializations",
-        JSON.stringify(values.specializations.map((el) => el.id))
-      );
-      transformedData.append("updateUser", JSON.stringify(updateUser));
-      transformedData.append("image", values.image);
-      // dispatch(postAdvert(transformedData));
-      console.log(transformedData);
-    },
+  const [editMode, setEditMode] = useState(false);
+  // const [image, setImage] = useState("");
+  const [formData, setFormData] = useState({
+    // image: currentUser?.advert?.imagePath || "",
+    firstName: currentUser?.firstName || "",
+    lastName: currentUser?.lastName || "",
+    email: currentUser?.email || "",
+    birthday: currentUser?.birthday
+      ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
+      : "",
+    sex: currentUser?.sex || "",
+    country: currentUser?.country?.alpha2
+      ? countriesCase(
+          en === "en"
+            ? countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
+                ?.nameEng || ""
+            : countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
+                ?.nameShort || ""
+        )
+      : "",
+    registeredAt: currentUser?.registeredAt
+      ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
+      : "",
+    aboutMe: currentUser?.aboutMe || currentUser?.advert?.description,
+    price: currentUser?.advert?.price || "",
+    specializations: currentUser?.advert?.specializations || [],
+    spokenLanguages: currentUser?.advert?.spokenLanguages || [],
+    teachingLanguages: currentUser?.advert?.teachingLanguages || [],
   });
+   const dispatch = useDispatch();
+
+  //  useEffect(() => {
+  //    dispatch(getAdvertById(advertId));
+  //  }, [dispatch, advertId]);
+
+    // const teacher = useSelector(advertByIdSelector);
+    // console.log(teacher);
+
+  const handleTeacherProfileSubmit = (e) => {
+    e.preventDefault();
+    setEditMode(false);
+  };
+
+  const formik = useFormik({
+    // initialValues,
+    initialValues: formData,
+    validationSchema,
+    onSubmit: handleTeacherProfileSubmit,
+    // onSubmit: async (values) => {
+    //   const transformedData = new FormData();
+    //   const updateUser = {
+    //     country: values.updateUser.country.id,
+    //     birthday: values.updateUser.birthday,
+    //     sex: values.updateUser.sex,
+    //     firstName: values.updateUser.firstName,
+    //     lastName: values.updateUser.lastName,
+    //   };
+    //   transformedData.append("description", values.description);
+    //   transformedData.append("price", values.price);
+    //   transformedData.append(
+    //     "spokenLanguages",
+    //     JSON.stringify(values.spokenLanguages.map((el) => el.id))
+    //   );
+    //   transformedData.append(
+    //     "teachingLanguages",
+    //     JSON.stringify(values.teachingLanguages.map((el) => el.id))
+    //   );
+    //   transformedData.append(
+    //     "specializations",
+    //     JSON.stringify(values.specializations.map((el) => el.id))
+    //   );
+    //   transformedData.append("updateUser", JSON.stringify(updateUser));
+    //   transformedData.append("image", values.image);
+    //   // dispatch(postAdvert(transformedData));
+    //   console.log(transformedData);
+    // },
+  });
+
+  
+
+  const handleSaveButtonClick = async () => {
+    try {
+      await formik.validateForm();
+      if (Object.keys(formik.errors).length > 0) {
+        console.error("Validation errors:", formik.errors);
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("firstName", formik.values.firstName);
+      formData.append("lastName", formik.values.lastName);
+
+      let formattedBirthday = "";
+      if (formik.values.birthday) {
+        let [year, month, day] = formik.values.birthday.split("-");
+        if (!year || !month || !day) {
+          [day, month, year] = formik.values.birthday.split(".");
+        }
+        const parsedBirthday = new Date(year, month - 1, day);
+        formattedBirthday = format(parsedBirthday, "yyyy-MM-dd");
+      }
+
+      formData.append("birthday", formattedBirthday);
+      formData.append("sex", formik.values.sex);
+      formData.append("aboutMe", formik.values.aboutMe);
+      formData.append("photo", formik.values.photo);
+
+      await dispatch(editUser(formData));
+
+      setEditMode(false);
+    } catch (error) {
+      console.error("Error editing user:", error);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "birthday") {
+      const dateValue = new Date(value);
+      if (!isNaN(dateValue.getTime())) {
+        const formattedDate = format(dateValue, "yyyy-MM-dd");
+        formik.setFieldValue(name, formattedDate);
+      } else {
+        console.error("Invalid date format");
+      }
+    } else {
+      formik.setFieldValue(name, value);
+    }
+  };
 
   return (
     <form
@@ -213,18 +313,19 @@ export const PersonalAdvertForm = ({
         >
           {intl.formatMessage({ id: "saveAdvise" })}
         </Typography>
-
         <TextField
           fullWidth
           // focused
           id="firstName"
-          name="updateUser.firstName"
+          name="firstName"
           type="text"
           label={intl.formatMessage({ id: "name" })}
-          hiddenLabel
-          InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
+          // hiddenLabel
+          disabled={!editMode}
+          defaultValue={currentUser?.firstName}
+          // InputLabelProps={{ shrink: !!formik.values.firstName }}
           variant="outlined"
-          value={formik.values.updateUser.firstName}
+          // value={formik.values.firstName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.firstName && Boolean(formik.errors.firstName)}
@@ -233,12 +334,13 @@ export const PersonalAdvertForm = ({
         <TextField
           fullWidth
           id="lastName"
-          name="updateUser.lastName"
+          name="lastName"
           type="text"
           label={intl.formatMessage({ id: "lastName" })}
-          InputLabelProps={{ shrink: !!formik.values.updateUser.lastName }}
+          defaultValue={currentUser?.lastName || ""}
+          // InputLabelProps={{ shrink: !!formik.values.updateUser.lastName }}
           variant="outlined"
-          value={formik.values.updateUser.lastName}
+          disabled={!editMode}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.lastName && Boolean(formik.errors.lastName)}
@@ -250,6 +352,7 @@ export const PersonalAdvertForm = ({
           defaultValue={currentUser?.email}
           sx={{ width: { xs: "100%" } }}
           variant="outlined"
+          disabled={!editMode}
           onChange={formik.handleChange}
           error={Boolean(formik.errors.email)}
           helperText={formik.errors.email}
@@ -264,22 +367,25 @@ export const PersonalAdvertForm = ({
           }}
         >
           <TextField
-            label={intl.formatMessage({ id: "birthday" })}
+            type="date"
             sx={{
               width: { xs: "100%", lg: "32%", xl: "33%" },
             }}
-            id="userBirthday"
-            name="updateUser.birthday"
-            InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
-            value={format(
-              new Date(formik.values.updateUser.birthday),
-              "dd.MM.yyyy"
-            )}
+            // id="userBirthday"
+            name="birthday"
+            disabled={!editMode}
+            // InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
+            defaultValue={
+              currentUser.birthday
+                ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
+                : ""
+            }
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.birthday && Boolean(formik.errors.birthday)}
             helperText={formik.touched.birthday && formik.errors.birthday}
           />
+
           <FormControl
             variant="outlined"
             sx={{
@@ -289,12 +395,14 @@ export const PersonalAdvertForm = ({
             <InputLabel> {intl.formatMessage({ id: "sex" })}</InputLabel>
             <Select
               id="sex"
-              name="updateUser.sex"
+              name="sex"
+              disabled={!editMode}
               label={intl.formatMessage({ id: "sex" })}
-              value={formik.values.updateUser.sex}
+              defaultValue={currentUser.sex}
+              // value={formik.values.sex}
               onChange={(event) => {
-                formik.setFieldValue("updateUser.sex", event.target.value);
-                console.log(event.target.value);
+                formik.setFieldValue("sex", event.target.value);
+                // console.log(event.target.value);
               }}
               onBlur={formik.handleBlur}
               error={formik.touched.sex && Boolean(formik.errors.sex)}
@@ -338,12 +446,11 @@ export const PersonalAdvertForm = ({
             //   width: "100%",
             // }}
             id="country"
-            name="updateUser.country"
+            name="country"
             label={intl.formatMessage({ id: "country" })}
-            inputlabelprops={{ shrink: !!formik.values.updateUser.country }}
-            value={formik.values.updateUser.country}
+            value={currentUser?.country?.alpha2}
             onChange={(event) => {
-              formik.setFieldValue("updateUser.country", event.target.value);
+              formik.setFieldValue("country", event.target.value);
               console.log(event.target.value);
             }}
             onBlur={formik.handleBlur}
@@ -392,12 +499,21 @@ export const PersonalAdvertForm = ({
           <InputLabel>
             {intl.formatMessage({ id: "languagesTeaching" })}
           </InputLabel>
+
           <Select
             id="teachingLanguages"
             name="teachingLanguages"
+            disabled={!editMode}
             multiple
             label="languagesTeaching"
-            value={formik.values.teachingLanguages}
+            defaultValue={
+              currentUser.advert.teachingLanguages
+                ? currentUser.advert.teachingLanguages.map((el) =>
+                    en === "en" ? el.languageEn : el.languageUa
+                  )
+                : []
+            }
+            // defaultValue={console.log(currentUser.advert.teachingLanguages)}
             onChange={(event) => {
               formik.setFieldValue("teachingLanguages", event.target.value);
             }}
@@ -458,9 +574,12 @@ export const PersonalAdvertForm = ({
           name="description"
           label={intl.formatMessage({ id: "description" })}
           variant="outlined"
+          disabled={!editMode}
           multiline
           rows={4}
-          value={formik.values.description}
+          defaultValue={currentUser?.advert?.description}
+          InputLabelProps={{ shrink: true }}
+          InputProps={{ placeholder: "" }}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -469,13 +588,19 @@ export const PersonalAdvertForm = ({
           helperText={formik.touched.description && formik.errors.description}
         />
         <TextField
-          InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
-          disabled
-          label="Дата реєстрації"
+          label={intl.formatMessage({ id: "registrationDate" })}
+          variant="outlined"
+          name="registeredAt"
           style={{
             width: "100%",
           }}
-          value={format(new Date(currentUser.advert.createdAt), "dd.MM.yyyy")}
+          disabled={true}
+          defaultValue={
+            currentUser.registeredAt
+              ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
+              : ""
+          }
+          // value={format(new Date(currentUser.advert.createdAt), "dd.MM.yyyy")}
         />
         <Button variant="contained" type="submit">
           {intl.formatMessage({ id: "publishBtn" })}

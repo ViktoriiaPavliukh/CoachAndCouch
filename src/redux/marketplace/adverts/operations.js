@@ -108,3 +108,19 @@ export const filterAdverts = createAsyncThunk(
     }
   }
 );
+
+export const editAdvert = createAsyncThunk(
+  "adverts/editAdvert",
+  async ({ id, advertData }, thunkAPI) => {
+    try {
+      const userToken = thunkAPI.getState().auth.accessToken;
+      privateAPI.setToken(userToken);
+
+      const { data } = await privateAPI.patch(`/adverts/${id}`, advertData);
+      return data;
+    } catch (error) {
+      toast.error("Failed to edit advertisement");
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

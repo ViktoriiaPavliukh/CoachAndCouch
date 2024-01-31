@@ -33,6 +33,7 @@ export function Advertisements() {
   ) : advertId && currentUser ? (
     <PersonalAdvertForm
       currentUser={currentUser}
+      advertId={advertId}
       countriesList={countriesList}
       languages={languages}
       specializations={specializations}
