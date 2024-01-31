@@ -16,10 +16,13 @@ import { Aperture, MapPin, Paperclip, Send } from "react-feather";
 import { useDispatch } from "react-redux";
 
 const messageItem = {
-  width: "629px",
+  maxWidth: "629px",
   borderRadius: "10px",
   mb: "40px",
   p: "8px 12px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
 };
 const correspondenceMessageItem = {
   border: "1px solid #498E4C",
@@ -40,7 +43,7 @@ const userMessages = {
   ...messageItem,
   ...userMessageItem,
 };
-export const OneUserChat = (userChat) => {
+export const ChatWithUser = (userChat) => {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState(null);
   const dispatch = useDispatch;
@@ -61,9 +64,9 @@ export const OneUserChat = (userChat) => {
     <Box
       sx={{
         pt: "32px",
-        pl: "18px",
-        pb: "12px",
-        pr: "55px",
+        pl: "32px",
+        pb: "32px",
+        pr: "90px",
 
         height: "100vh",
       }}
@@ -73,7 +76,7 @@ export const OneUserChat = (userChat) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          minWidth: "855px",
+          width: "1142px",
           minHeight: "100%",
           p: "8px",
           boxShadow:
@@ -103,6 +106,10 @@ export const OneUserChat = (userChat) => {
         </Box>
         <List>
           {messages.map((message) => {
+            const date = new Date(message.writtedAt);
+            const hours = date.getUTCHours();
+            const minutes = date.getUTCMinutes();
+            const messageTime = `${hours}:${minutes}`;
             return (
               <ListItem
                 key={message.id}
@@ -112,7 +119,8 @@ export const OneUserChat = (userChat) => {
                     : userMessages
                 }
               >
-                <ListItemText primary={message.message} />
+                <ListItemText primary={message.message} sx={{ mr: "auto" }} />
+                <ListItemText primary={messageTime} sx={{ ml: "auto" }} />
               </ListItem>
             );
           })}
