@@ -299,7 +299,7 @@ export const Profile = () => {
               variant="outlined"
               sx={{ width: { xs: "100%", lg: "48%" } }}
             >
-              <InputLabel htmlFor="sex-label">
+              <InputLabel htmlFor="sex">
                 {intl.formatMessage({ id: "sex" })}
               </InputLabel>
               <Select
@@ -326,7 +326,7 @@ export const Profile = () => {
             </FormControl>
             <TextField
               id="country"
-              name="updateUser.country"
+              name="country"
               label={intl.formatMessage({ id: "country" })}
               disabled={!editMode}
               defaultValue={
