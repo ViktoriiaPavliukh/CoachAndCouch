@@ -16,6 +16,7 @@ const linkStyles = {
 };
 const titleStyles = {
   color: (theme) => theme.palette.textColor.sidebar,
+  "&:hover": { color: "#004305" },
 };
 
 const IconStyles = {

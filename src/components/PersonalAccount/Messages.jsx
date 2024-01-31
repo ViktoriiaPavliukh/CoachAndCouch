@@ -15,7 +15,7 @@ import {
   Stack,
 } from "@mui/material";
 import { Aperture } from "react-feather";
-import { OneUserChat } from "./OneUserChat";
+import { ChatWithUser } from "./ChatWithUser";
 import { useState } from "react";
 
 export const Messages = () => {
@@ -73,7 +73,7 @@ export const Messages = () => {
               })}
             </List>
           </Box>
-          {userChat && <OneUserChat user={userChat} />}
+          {userChat && <ChatWithUser user={userChat} />}
         </Stack>
       ) : (
         <p> у вас ще немає повідомлень</p>
