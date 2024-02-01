@@ -23,38 +23,22 @@ import {
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { selectCurrentUser } from "@/redux/users/selectors";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
+import { editAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
 import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
 
-// const initialValues = {
-//   price: 0,
-//   description: "",
-//   spokenLanguages: [],
-//   teachingLanguages: [],
-//   specializations: [],
-//   image: null,
-//   updateUser: {
-//     country: "",
-//     birthday: "",
-//     firstName: "",
-//     lastName: "",
-//     sex: "",
-//   },
-// };
-
 const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
-  description: Yup.string().required("Description is required"),
-  spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(
-    1,
-    "Select at least one teaching language"
-  ),
-  specializations: Yup.array().required("Specialization is required"),
-  image: Yup.mixed().required("Select image for your advert"),
-  updateUser: Yup.object().required("All fields is required"),
+  // description: Yup.string().required("Description is required"),
+  // spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
+  // teachingLanguages: Yup.array().min(
+  //   1,
+  //   "Select at least one teaching language"
+  // ),
+  // specializations: Yup.array().required("Specialization is required"),
+  // image: Yup.mixed().required("Select image for your advert"),
 });
 
 export const PersonalAdvertForm = ({
@@ -106,72 +90,41 @@ export const PersonalAdvertForm = ({
   };
 
   const formik = useFormik({
-    // initialValues,
     initialValues: formData,
     validationSchema,
     onSubmit: handleTeacherProfileSubmit,
-    // onSubmit: async (values) => {
-    //   const transformedData = new FormData();
-    //   const updateUser = {
-    //     country: values.updateUser.country.id,
-    //     birthday: values.updateUser.birthday,
-    //     sex: values.updateUser.sex,
-    //     firstName: values.updateUser.firstName,
-    //     lastName: values.updateUser.lastName,
-    //   };
-    //   transformedData.append("description", values.description);
-    //   transformedData.append("price", values.price);
-    //   transformedData.append(
-    //     "spokenLanguages",
-    //     JSON.stringify(values.spokenLanguages.map((el) => el.id))
-    //   );
-    //   transformedData.append(
-    //     "teachingLanguages",
-    //     JSON.stringify(values.teachingLanguages.map((el) => el.id))
-    //   );
-    //   transformedData.append(
-    //     "specializations",
-    //     JSON.stringify(values.specializations.map((el) => el.id))
-    //   );
-    //   transformedData.append("updateUser", JSON.stringify(updateUser));
-    //   transformedData.append("image", values.image);
-    //   // dispatch(postAdvert(transformedData));
-    //   console.log(transformedData);
-    // },
   });
 
   const handleSaveButtonClick = async () => {
     try {
+      // Validate the form using Formik
       await formik.validateForm();
+
+      // Check if there are any validation errors
       if (Object.keys(formik.errors).length > 0) {
         console.error("Validation errors:", formik.errors);
         return;
       }
 
-      const formData = new FormData();
-      formData.append("firstName", formik.values.firstName);
-      formData.append("lastName", formik.values.lastName);
+      // Construct advertData object
+      const advertData = {
+        price: formik.values.price,
+        specializations: formik.values.specializations.map((spec) => spec.id),
+        spokenLanguages: formik.values.spokenLanguages.map((lang) => lang.id),
+        teachingLanguages: formik.values.teachingLanguages.map(
+          (lang) => lang.id
+        ),
+        // Add any other fields you want to update
+      };
 
-      let formattedBirthday = "";
-      if (formik.values.birthday) {
-        let [year, month, day] = formik.values.birthday.split("-");
-        if (!year || !month || !day) {
-          [day, month, year] = formik.values.birthday.split(".");
-        }
-        const parsedBirthday = new Date(year, month - 1, day);
-        formattedBirthday = format(parsedBirthday, "yyyy-MM-dd");
-      }
+      // Dispatch the editAdvert action
+      await dispatch(editAdvert({ id: advertId, advertData }));
 
-      formData.append("birthday", formattedBirthday);
-      formData.append("sex", formik.values.sex);
-      formData.append("aboutMe", formik.values.aboutMe);
-      formData.append("photo", formik.values.photo);
-
-      await dispatch(editUser(formData));
-
+      // If successful, set edit mode to false
       setEditMode(false);
     } catch (error) {
-      console.error("Error editing user:", error);
+      console.error("Error editing advert:", error);
+      // Handle error
     }
   };
 
@@ -200,7 +153,7 @@ export const PersonalAdvertForm = ({
     >
       <Box
         sx={{
-          width: "100%",
+          width: { xs: "100%", lg: "69%", xl: "76%" },
           display: "flex",
           flexDirection: "column",
           flexWrap: "nowrap",
@@ -311,13 +264,10 @@ export const PersonalAdvertForm = ({
           name="firstName"
           type="text"
           label={intl.formatMessage({ id: "name" })}
-          // hiddenLabel
-          disabled={!editMode}
+          disabled={true}
           defaultValue={currentUser?.firstName}
-          // InputLabelProps={{ shrink: !!formik.values.firstName }}
           variant="outlined"
-          // value={formik.values.firstName}
-          onChange={formik.handleChange}
+          onChange={handleInputChange}
           onBlur={formik.handleBlur}
           error={formik.touched.firstName && Boolean(formik.errors.firstName)}
           helperText={formik.touched.firstName && formik.errors.firstName}
@@ -331,8 +281,8 @@ export const PersonalAdvertForm = ({
           defaultValue={currentUser?.lastName || ""}
           // InputLabelProps={{ shrink: !!formik.values.updateUser.lastName }}
           variant="outlined"
-          disabled={!editMode}
-          onChange={formik.handleChange}
+          disabled={true}
+          onChange={handleInputChange}
           onBlur={formik.handleBlur}
           error={formik.touched.lastName && Boolean(formik.errors.lastName)}
           helperText={formik.touched.lastName && formik.errors.lastName}
@@ -343,8 +293,8 @@ export const PersonalAdvertForm = ({
           defaultValue={currentUser?.email}
           sx={{ width: { xs: "100%" } }}
           variant="outlined"
-          disabled={!editMode}
-          onChange={formik.handleChange}
+          disabled={true}
+          onChange={handleInputChange}
           error={Boolean(formik.errors.email)}
           helperText={formik.errors.email}
         />
@@ -354,24 +304,25 @@ export const PersonalAdvertForm = ({
             width: "100%",
             flexDirection: "row",
             flexWrap: "wrap",
-            gap: "20px",
+            gap: "3% 24px",
           }}
         >
           <TextField
             type="date"
+            label={intl.formatMessage({ id: "birthday" })}
             sx={{
-              width: { xs: "100%", lg: "32%", xl: "33%" },
+              width: { xs: "100%", lg: "31%", xl: "32%" },
+              marginBottom: { xs: "24px", lg: "0" },
             }}
-            // id="userBirthday"
+            id="userBirthday"
             name="birthday"
-            disabled={!editMode}
-            // InputLabelProps={{ shrink: !!formik.values.updateUser.firstName }}
+            disabled={true}
             defaultValue={
               currentUser.birthday
                 ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
                 : ""
             }
-            onChange={formik.handleChange}
+            onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={formik.touched.birthday && Boolean(formik.errors.birthday)}
             helperText={formik.touched.birthday && formik.errors.birthday}
@@ -379,22 +330,25 @@ export const PersonalAdvertForm = ({
 
           <FormControl
             variant="outlined"
-            sx={{
-              width: { xs: "100%", md: "49%", lg: "32%", xl: "32%" },
-            }}
+            sx={{ width: { xs: "100%", md: "49%", lg: "31%", xl: "32%" } }}
           >
             <InputLabel> {intl.formatMessage({ id: "sex" })}</InputLabel>
             <Select
               id="sex"
               name="sex"
-              disabled={!editMode}
               label={intl.formatMessage({ id: "sex" })}
-              defaultValue={currentUser.sex}
-              // value={formik.values.sex}
-              onChange={(event) => {
-                formik.setFieldValue("sex", event.target.value);
-                // console.log(event.target.value);
-              }}
+              disabled={true}
+              defaultValue={
+                currentUser.sex === "male"
+                  ? "male"
+                  : currentUser.sex === "female"
+                  ? "female"
+                  : "other"
+              }
+              // onChange={(event) => {
+              //   formik.setFieldValue("sex", event.target.value);
+              // }}
+              onChange={handleInputChange}
               onBlur={formik.handleBlur}
               error={formik.touched.sex && Boolean(formik.errors.sex)}
             >
@@ -402,11 +356,9 @@ export const PersonalAdvertForm = ({
                 {intl.formatMessage({ id: "male" })}
               </MenuItem>
               <MenuItem value="female">
-                {" "}
                 {intl.formatMessage({ id: "female" })}
               </MenuItem>
               <MenuItem value="other">
-                {" "}
                 {intl.formatMessage({ id: "other" })}
               </MenuItem>
             </Select>
@@ -416,7 +368,7 @@ export const PersonalAdvertForm = ({
               "&::placeholder": {
                 color: "red",
               },
-              width: { xs: "50%", md: "49%", lg: "33%", xl: "32%" },
+              width: { xs: "50%", md: "49%", lg: "32%", xl: "32%" },
             }}
             id="price"
             disabled={!editMode}
@@ -425,123 +377,107 @@ export const PersonalAdvertForm = ({
             variant="outlined"
             type="number"
             value={formik.values.price}
-            onChange={formik.handleChange}
+            onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={formik.touched.price && Boolean(formik.errors.price)}
             helperText={formik.touched.price && formik.errors.price}
           />
         </Stack>
-        <FormControl variant="outlined" sx={{ width: "100%" }}>
-          {!editMode ? (
-            <TextField
-              fullWidth
-              id="country"
-              name="country"
-              label={intl.formatMessage({ id: "country" })}
-              variant="outlined"
-              disabled={!editMode}
-              value={
-                currentUser?.country && en === "en"
-                  ? countriesCase(
-                      countries.find(
-                        (el) => el.alpha2 === currentUser.country?.alpha2
-                      ).nameEng
-                    ).split(",")
-                  : countriesCase(
-                      countries.find(
-                        (el) => el.alpha2 === currentUser.country?.alpha2
-                      ).nameShort
-                    ).split(",")
-              }
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.country && Boolean(formik.errors.country)}
-              helperText={formik.touched.country && formik.errors.country}
-            />
-          ) : (
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
-              <Select
-                id="country"
-                name="country"
-                label={intl.formatMessage({ id: "country" })}
-                value={formik.values.country}
-                onChange={(event) => {
-                  formik.setFieldValue("country", event.target.value);
-                }}
-                onBlur={formik.handleBlur}
-                error={formik.touched.country && Boolean(formik.errors.country)}
-                renderValue={(selected) => selected.alpha2}
-              >
-                {countriesList &&
-                  countriesList.map((country) => (
-                    <MenuItem key={country.alpha2} value={country}>
-                      {country.alpha2}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          )}
-        </FormControl>
-
+        <TextField
+          fullWidth
+          id="country"
+          name="country"
+          label={intl.formatMessage({ id: "country" })}
+          variant="outlined"
+          disabled={true}
+          value={
+            currentUser?.country && en === "en"
+              ? countriesCase(
+                  countries.find(
+                    (el) => el.alpha2 === currentUser.country?.alpha2
+                  ).nameEng
+                ).split(",")
+              : countriesCase(
+                  countries.find(
+                    (el) => el.alpha2 === currentUser.country?.alpha2
+                  ).nameShort
+                ).split(",")
+          }
+          onChange={handleInputChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.country && Boolean(formik.errors.country)}
+          helperText={formik.touched.country && formik.errors.country}
+        />
         <FormControl fullWidth variant="outlined">
-          {!editMode ? (
-            <TextField
-              fullWidth
-              id="spokenLanguages"
-              name="spokenLanguages"
-              label={intl.formatMessage({ id: "languagesSpoken" })}
-              variant="outlined"
-              disabled={!editMode}
-              value={(teacher?.spokenLanguages || [])
+          <InputLabel>
+            {intl.formatMessage({ id: "languagesSpoken" })}
+          </InputLabel>
+          <Select
+            id="spokenLanguages"
+            name="spokenLanguages"
+            disabled={!editMode}
+            multiple
+            label="languagesSpoken"
+            value={teacher?.spokenLanguages || []}
+            // onChange={(event) => {
+            //   formik.setFieldValue("spokenLanguages", event.target.value);
+            // }}
+            onChange={handleInputChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.spokenLanguages &&
+              Boolean(formik.errors.spokenLanguages)
+            }
+            renderValue={(selected) =>
+              selected
                 .map((language) =>
-                  en == "en" ? language.languageEn : language.languageUa
+                  en === "en" ? language.languageEn : language.languageUa
                 )
-                .join(", ")}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.spokenLanguages &&
-                Boolean(formik.errors.spokenLanguages)
-              }
-              helperText={
-                formik.touched.spokenLanguages && formik.errors.spokenLanguages
-              }
-            />
-          ) : (
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>
-                {intl.formatMessage({ id: "languagesSpoken" })}
-              </InputLabel>
-              <Select
-                id="spokenLanguages"
-                name="spokenLanguages"
-                multiple
-                label="languagesSpoken"
-                value={formik.values.spokenLanguages}
-                onChange={(event) => {
-                  formik.setFieldValue("spokenLanguages", event.target.value);
-                }}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.spokenLanguages &&
-                  Boolean(formik.errors.spokenLanguages)
-                }
-                renderValue={(selected) =>
-                  selected.map((language) => language.languageUa).join(", ")
-                }
-              >
-                {languages &&
-                  languages.map((language) => (
-                    <MenuItem key={language.id} value={language}>
-                      {language.languageUa}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          )}
+                .join(", ")
+            }
+          >
+            {languages &&
+              languages.map((language) => (
+                <MenuItem key={language.id} value={language}>
+                  {language.languageUa}
+                </MenuItem>
+              ))}
+          </Select>
         </FormControl>
         <FormControl fullWidth variant="outlined">
+          <InputLabel>
+            {intl.formatMessage({ id: "languagesTeaching" })}
+          </InputLabel>
+          <Select
+            id="teachingLanguages"
+            name="teachingLanguages"
+            multiple
+            label={intl.formatMessage({ id: "languagesTeaching" })}
+            disabled={!editMode}
+            value={teacher?.teachingLanguages || []}
+            onChange={handleInputChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.teachingLanguages &&
+              Boolean(formik.errors.teachingLanguages)
+            }
+            renderValue={(selected) =>
+              selected
+                .map((language) =>
+                  en === "en" ? language.languageEn : language.languageUa
+                )
+                .join(", ")
+            }
+          >
+            {languages &&
+              languages.map((language) => (
+                <MenuItem key={language.id} value={language}>
+                  {language.languageUa}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+        {/* <FormControl fullWidth variant="outlined">
           {!editMode ? (
             <TextField
               fullWidth
@@ -598,7 +534,7 @@ export const PersonalAdvertForm = ({
               </Select>
             </FormControl>
           )}
-        </FormControl>
+        </FormControl> */}
         {/* <FormControl fullWidth variant="outlined">
           <InputLabel>
             {" "}
@@ -633,6 +569,44 @@ export const PersonalAdvertForm = ({
           </Select>
         </FormControl> */}
         <FormControl fullWidth variant="outlined">
+          <InputLabel>
+            {intl.formatMessage({ id: "specialization" })}
+          </InputLabel>
+          <Select
+            id="specializations"
+            name="specializations"
+            disabled={!editMode}
+            multiple
+            label={intl.formatMessage({ id: "specialization" })}
+            value={teacher?.specializations || []}
+            // onChange={(event) => {
+            //   formik.setFieldValue("specializations", event.target.value);
+            // }}
+            onChange={handleInputChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.specializations &&
+              Boolean(formik.errors.specializations)
+            }
+            renderValue={(selected) =>
+              selected
+                .map((specialization) =>
+                  en === "en"
+                    ? specialization.specializationEn
+                    : specialization.specializationUa
+                )
+                .join(", ")
+            }
+          >
+            {specializations &&
+              specializations.map((specialization) => (
+                <MenuItem key={specialization.id} value={specialization}>
+                  {specialization.specializationUa}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+        {/* <FormControl fullWidth variant="outlined">
           {!editMode ? (
             <TextField
               fullWidth
@@ -692,7 +666,7 @@ export const PersonalAdvertForm = ({
               </Select>
             </FormControl>
           )}
-        </FormControl>
+        </FormControl> */}
         <TextField
           fullWidth
           id="description"
@@ -701,11 +675,10 @@ export const PersonalAdvertForm = ({
           variant="outlined"
           disabled={!editMode}
           multiline
-          rows={4}
           defaultValue={currentUser?.advert?.description}
           InputLabelProps={{ shrink: true }}
           InputProps={{ placeholder: "" }}
-          onChange={formik.handleChange}
+          onChange={handleInputChange}
           onBlur={formik.handleBlur}
           error={
             formik.touched.description && Boolean(formik.errors.description)
@@ -725,9 +698,7 @@ export const PersonalAdvertForm = ({
               ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
               : ""
           }
-          // value={format(new Date(currentUser.advert.createdAt), "dd.MM.yyyy")}
         />
-
         {editMode ? (
           <Button
             type="button"
@@ -779,17 +750,14 @@ export const PersonalAdvertForm = ({
             </Typography>
           </Button>
         )}
-        {/* <Button variant="contained" type="submit">
-          {intl.formatMessage({ id: "publishBtn" })}
-        </Button> */}
       </Box>
     </form>
   );
 };
 
-PersonalAdvertForm.propTypes = {
-  currentUser: PropTypes.object.isRequired,
-  countriesList: PropTypes.array.isRequired,
-  languages: PropTypes.array.isRequired,
-  specializations: PropTypes.array.isRequired,
-};
+// PersonalAdvertForm.propTypes = {
+//   currentUser: PropTypes.object.isRequired,
+//   countriesList: PropTypes.array.isRequired,
+//   languages: PropTypes.array.isRequired,
+//   specializations: PropTypes.array.isRequired,
+// };
