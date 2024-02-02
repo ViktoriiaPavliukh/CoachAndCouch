@@ -114,7 +114,7 @@ export function Header() {
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
       sx={{
         backgroundColor: (theme) => theme.palette.primary.main,
         padding: { sm: "0 16px", md: "0 60px", lg: "21px 60px" },
