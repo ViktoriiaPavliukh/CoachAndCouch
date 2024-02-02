@@ -16,6 +16,7 @@ import {
   Stack,
 } from "@mui/material";
 import { PersonalImage } from "./PersonalImage";
+import IconPlus from "../../assets/icons/IconPlus.jsx";
 import countriesCase from "@/helpers/countriesCase";
 import {
   advertByIdSelector,
@@ -48,15 +49,15 @@ export const PersonalAdvertForm = ({
   specializations,
   advertId,
   teacher,
+  dataChanged,
 }) => {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
   const [image, setImage] = useState(currentUser.advert.imagePath);
-
   const [editMode, setEditMode] = useState(false);
-  // const [image, setImage] = useState("");
+  const [teacherData, setTeacherData] = useState(teacher);
   const [formData, setFormData] = useState({
-    // image: currentUser?.advert?.imagePath || "",
+    image: currentUser?.advert?.imagePath || "",
     firstName: currentUser?.firstName || "",
     lastName: currentUser?.lastName || "",
     email: currentUser?.email || "",
@@ -76,7 +77,7 @@ export const PersonalAdvertForm = ({
     registeredAt: currentUser?.registeredAt
       ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
       : "",
-    aboutMe: currentUser?.aboutMe || currentUser?.advert?.description,
+    description: currentUser?.advert?.description || "",
     price: currentUser?.advert?.price || "",
     specializations: currentUser?.advert?.specializations || [],
     spokenLanguages: currentUser?.advert?.spokenLanguages || [],
@@ -96,32 +97,47 @@ export const PersonalAdvertForm = ({
   });
 
   const handleSaveButtonClick = async () => {
+    let formData;
     try {
-      // Validate the form using Formik
       await formik.validateForm();
 
-      // Check if there are any validation errors
       if (Object.keys(formik.errors).length > 0) {
         console.error("Validation errors:", formik.errors);
         return;
       }
 
-      // Construct advertData object
-      const advertData = {
-        price: formik.values.price,
-        specializations: formik.values.specializations.map((spec) => spec.id),
-        spokenLanguages: formik.values.spokenLanguages.map((lang) => lang.id),
-        teachingLanguages: formik.values.teachingLanguages.map(
-          (lang) => lang.id
-        ),
-        // Add any other fields you want to update
-      };
+      formData = new FormData();
+
+      formData.append("image", formik.values.image);
+      setFormData((prevData) => ({
+        ...prevData,
+        image: formik.values.image,
+      }));
+
+      // // Specializations
+      // formik.values.specializations.forEach((spec) => {
+      //   formData.append("specializations[]", spec.id);
+      // });
+
+      // // Spoken Languages
+      // formik.values.spokenLanguages.forEach((lang) => {
+      //   formData.append("spokenLanguages[]", lang.id);
+      // });
+
+      // // Teaching Languages
+      // formik.values.teachingLanguages.forEach((lang) => {
+      //   formData.append("teachingLanguages[]", lang.id);
+      // });
+
+      // formData.append("description", formik.values.description);
 
       // Dispatch the editAdvert action
-      await dispatch(editAdvert({ id: advertId, advertData }));
+      await dispatch(editAdvert({ advertId, formData }));
 
       // If successful, set edit mode to false
       setEditMode(false);
+
+      console.log("FormData:", formData);
     } catch (error) {
       console.error("Error editing advert:", error);
       // Handle error
@@ -130,19 +146,25 @@ export const PersonalAdvertForm = ({
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    if (name === "birthday") {
-      const dateValue = new Date(value);
-      if (!isNaN(dateValue.getTime())) {
-        const formattedDate = format(dateValue, "yyyy-MM-dd");
-        formik.setFieldValue(name, formattedDate);
-      } else {
-        console.error("Invalid date format");
-      }
-    } else {
-      formik.setFieldValue(name, value);
-    }
+    console.log("Input changed:", name, value);
+    formik.setFieldValue(name, value);
+    console.log("Price value after change:", formik.values.price);
   };
+
+  // Effect to refetch advert data when dataChanged state changes
+  // useEffect(() => {
+  //   if (dataChanged) {
+  //     // Dispatch getAdvertById to fetch the updated advert data
+  //     dispatch(getAdvertById(advertId))
+  //       .then((data) => {
+  //         // Update the teacher state with the fetched data
+  //         setTeacherData(data.payload);
+  //       })
+  //       .catch((error) =>
+  //         console.error("Error fetching updated advert data: ", error)
+  //       );
+  //   }
+  // }, [dispatch, advertId, dataChanged]);
 
   return (
     <form
@@ -202,6 +224,7 @@ export const PersonalAdvertForm = ({
             }}
           >
             <TextField
+              disabled={!editMode}
               style={{
                 display: "none",
               }}
@@ -223,19 +246,24 @@ export const PersonalAdvertForm = ({
           </label>
           {Boolean(!image) && (
             <>
-              <p
+              <label
                 disabled={!editMode}
+                htmlFor="photoPath"
                 style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%,-50%)",
-                  pointerEvents: "none",
                   cursor: "pointer",
+                  padding: "8px 12px",
+                  border: "1px solid #D1D5DB",
+                  borderRadius: "6px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  gap: "12px",
                 }}
               >
-                + Додати фото
-              </p>
+                <IconPlus />
+                {intl.formatMessage({ id: "newPhoto" })}
+              </label>
             </>
           )}
         </Box>
@@ -330,7 +358,10 @@ export const PersonalAdvertForm = ({
 
           <FormControl
             variant="outlined"
-            sx={{ width: { xs: "100%", md: "49%", lg: "31%", xl: "32%" } }}
+            sx={{
+              width: { xs: "100%", md: "49%", lg: "31%", xl: "32%" },
+              marginBottom: { xs: "24px", md: "0" },
+            }}
           >
             <InputLabel> {intl.formatMessage({ id: "sex" })}</InputLabel>
             <Select
@@ -376,11 +407,13 @@ export const PersonalAdvertForm = ({
             label={intl.formatMessage({ id: "pricePerHour" })}
             variant="outlined"
             type="number"
-            value={formik.values.price}
+            defaultValue={formData.price}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={formik.touched.price && Boolean(formik.errors.price)}
             helperText={formik.touched.price && formik.errors.price}
+            InputLabelProps={{ shrink: true }}
+            InputProps={{ placeholder: "" }}
           />
         </Stack>
         <TextField
@@ -754,10 +787,3 @@ export const PersonalAdvertForm = ({
     </form>
   );
 };
-
-// PersonalAdvertForm.propTypes = {
-//   currentUser: PropTypes.object.isRequired,
-//   countriesList: PropTypes.array.isRequired,
-//   languages: PropTypes.array.isRequired,
-//   specializations: PropTypes.array.isRequired,
-// };

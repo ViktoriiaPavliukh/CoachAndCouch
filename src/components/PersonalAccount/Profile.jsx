@@ -56,33 +56,33 @@ export const Profile = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (currentUser) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        firstName: currentUser?.firstName || "",
-        lastName: currentUser?.lastName || "",
-        email: currentUser?.email || "",
-        birthday: currentUser?.birthday ? new Date(currentUser.birthday) : "",
-        sex: currentUser?.sex || "",
-        country: currentUser?.country?.alpha2
-          ? countriesCase(
-              en === "en"
-                ? countries.find(
-                    (el) => el.alpha2 === currentUser?.country?.alpha2
-                  )?.nameEng || ""
-                : countries.find(
-                    (el) => el.alpha2 === currentUser?.country?.alpha2
-                  )?.nameShort || ""
-            )
-          : "",
-        registeredAt: currentUser?.registeredAt
-          ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
-          : "",
-        aboutMe: currentUser.aboutMe || currentUser?.advert?.description,
-      }));
-    }
-  }, [currentUser, en]);
+  // useEffect(() => {
+  //   if (currentUser) {
+  //     setFormData((prevFormData) => ({
+  //       ...prevFormData,
+  //       firstName: currentUser?.firstName || "",
+  //       lastName: currentUser?.lastName || "",
+  //       email: currentUser?.email || "",
+  //       birthday: currentUser?.birthday ? new Date(currentUser.birthday) : "",
+  //       sex: currentUser?.sex || "",
+  //       country: currentUser?.country?.alpha2
+  //         ? countriesCase(
+  //             en === "en"
+  //               ? countries.find(
+  //                   (el) => el.alpha2 === currentUser?.country?.alpha2
+  //                 )?.nameEng || ""
+  //               : countries.find(
+  //                   (el) => el.alpha2 === currentUser?.country?.alpha2
+  //                 )?.nameShort || ""
+  //           )
+  //         : "",
+  //       registeredAt: currentUser?.registeredAt
+  //         ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
+  //         : "",
+  //       aboutMe: currentUser.aboutMe || currentUser?.advert?.description,
+  //     }));
+  //   }
+  // }, [currentUser, en]);
 
   const handleUserProfileSubmit = (e) => {
     e.preventDefault();
