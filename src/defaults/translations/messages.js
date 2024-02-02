@@ -93,6 +93,7 @@ const messages = {
 
     //Status
     online: "Online",
+    noAdvertisement: "You don't have any advertisements yet",
 
     //Repeating
     lessons: "Lessons",
@@ -233,6 +234,7 @@ const messages = {
 
     //Status
     online: "Онлайн",
+    noAdvertisement: "Ви ще не маєте оголошення",
 
     //Repeating
     lessons: "Уроки",

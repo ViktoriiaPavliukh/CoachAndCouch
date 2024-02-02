@@ -2,9 +2,8 @@ import {
   selectCurrentUser,
   selectuserIsLoading,
 } from "@/redux/users/selectors";
-
 import { useEffect, useState } from "react";
-
+import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader/Loader";
 import { getCurrentUser } from "@/redux/users/operations";
@@ -20,18 +19,19 @@ import {
   languagesSelector,
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
+import { Typography } from "@mui/material";
 
 export function Advertisements() {
   const dispatch = useDispatch();
+  const intl = useIntl();
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
   const isLoading = useSelector(selectuserIsLoading);
   const advertId = currentUser.advert ? currentUser.advert.id : null;
   const countriesList = useSelector(countriesSelector);
-  console.log(countriesList);
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const [teacher, setTeacher] = useState(null);
+  const [dataChanged, setDataChanged] = useState(false);
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -43,7 +43,9 @@ export function Advertisements() {
   useEffect(() => {
     if (advertId) {
       dispatch(getAdvertById(advertId))
-        .then((data) => setTeacher(data.payload))
+        .then((data) => {
+          setTeacher(data.payload);
+        })
         .catch((error) =>
           console.error("Error fetching teacher data: ", error)
         );
@@ -60,8 +62,9 @@ export function Advertisements() {
       countriesList={countriesList}
       languages={languages}
       specializations={specializations}
+      dataChanged={dataChanged}
     />
   ) : (
-    <div>Ви ще не маєте оголошення</div>
+    <Typography>{intl.formatMessage({ id: "noAdvertisement" })}</Typography>
   );
 }
