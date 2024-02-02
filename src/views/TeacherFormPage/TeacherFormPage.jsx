@@ -88,7 +88,6 @@ export const TeacherFormPage = () => {
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
-  console.log(countriesList);
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);

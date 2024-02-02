@@ -1,6 +1,15 @@
 import { useIntl } from "react-intl";
 import { PropTypes } from "prop-types";
-import { Box, Card, CardContent, Typography, Button, CardActionArea, CardActions, Stack } from "@mui/material/";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  CardActionArea,
+  CardActions,
+  Stack,
+} from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -14,7 +23,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countriesCase from "@/helpers/countriesCase";
 import { roundRating } from "@/helpers/roundRating";
-import { favoriteAdvert, getAdverts } from "@/redux/marketplace/adverts/operations";
+import {
+  favoriteAdvert,
+  getAdverts,
+} from "@/redux/marketplace/adverts/operations";
 // import { selectUser } from "@/redux/auth/selectors";
 
 export function TeacherCard({ teacher }) {
@@ -62,7 +74,7 @@ export function TeacherCard({ teacher }) {
         teacher={teacher}
         sx={{
           // height: "500px",
-          width: { xs: "343px", md: "310px", lg: "400px" },
+          maxWidth: "350px",
           minWidth: "100wv",
           borderRadius: "8px",
           boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
@@ -82,8 +94,8 @@ export function TeacherCard({ teacher }) {
               height: "36px",
               marginLeft: "4px",
               position: "absolute",
-              top: "20px",
-              right: "20px",
+              top: "10px",
+              right: "10px",
             }}
           />
         </CardActionArea>
@@ -263,11 +275,12 @@ export function TeacherCard({ teacher }) {
               borderRadius: "8px",
               color: (theme) => theme.palette.buttonColor.fontColor,
               fontSize: "14px",
-              fontWeight: "700",
+              fontWeight: "400",
               transition: "background-color 0.3s",
-              backgroundColor: (theme) => theme.palette.buttonColor.main,
+              backgroundColor: (theme) => theme.palette.buttonColor.lightYellow,
               "&:hover": {
-                backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.lightYellowHover,
               },
             }}
           >

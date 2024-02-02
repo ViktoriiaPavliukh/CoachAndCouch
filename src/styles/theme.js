@@ -54,6 +54,10 @@ const createThemeTemplate = (themeColor) => ({
             main: "#0E5B1D",
             secondary: "#87B924",
             secondaryHover: "#6B9E00",
+            lightYellow: "#87B924",
+            lightYellowHover: "#6B9E00",
+            greenYellow: "#0E5B1D",
+            greenYellowHover: "#004305",
             hover: "#1D570A",
             darkHover: "#7ab02e",
             fontColor: "#FFF",
@@ -76,7 +80,7 @@ const createThemeTemplate = (themeColor) => ({
             fontError: "#000",
             sidebar: "#4B5563",
             links: "#0E5B1D",
-
+            remarks: "#4B5563",
             linkHover: "#004305",
           },
         }
@@ -99,9 +103,14 @@ const createThemeTemplate = (themeColor) => ({
           },
           buttonColor: {
             header: "#EEC700",
+            headerHover: "#CFAC00",
             main: "#87B924",
             secondary: "#387024",
             secondaryHover: "#1D570A",
+            lightYellow: "#EEC700",
+            lightYellowHover: "#CFAC00",
+            greenYellow: "#EEC700",
+            greenYellowHover: "#CFAC00",
             hover: "#6B9E00",
             darkHover: "#ffea9e",
             fontColor: "#000",
@@ -124,7 +133,7 @@ const createThemeTemplate = (themeColor) => ({
             fontError: "#FBFDF6",
             sidebar: "#FBFDF6",
             links: "#EEC700",
-
+            remarks: "#D1D5DB",
             linkHover: "#CFAC00",
           },
         },
@@ -180,7 +189,7 @@ const createThemeTemplate = (themeColor) => ({
       fontSize: "12px",
       fontStyle: "normal",
       fontWeight: "400",
-      lineHeight: "calc(16 / 12)",
+      lineHeight: "16px",
     },
     posterTitle: {
       fontFamily: "Mulish, sans-serif",

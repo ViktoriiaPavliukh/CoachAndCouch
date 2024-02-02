@@ -113,9 +113,10 @@ export default function PageError() {
 
             borderRadius: "8px",
             transition: "background-color 0.3s",
-            backgroundColor: (theme) => theme.palette.buttonColor.main,
+            backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
             "&:hover": {
-              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+              backgroundColor: (theme) =>
+                theme.palette.buttonColor.greenYellowHover,
             },
           }}
         >

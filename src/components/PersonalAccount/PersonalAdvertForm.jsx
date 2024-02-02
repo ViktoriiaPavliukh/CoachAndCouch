@@ -124,10 +124,13 @@ export const PersonalAdvertForm = ({
       //   formData.append("spokenLanguages[]", lang.id);
       // });
 
-      // // Teaching Languages
-      // formik.values.teachingLanguages.forEach((lang) => {
-      //   formData.append("teachingLanguages[]", lang.id);
-      // });
+      const teachingLanguagesIds = formik.values.teachingLanguages.map(
+        (lang) => lang.id
+      );
+      formData.append(
+        "teachingLanguages",
+        JSON.stringify(teachingLanguagesIds)
+      );
 
       // formData.append("description", formik.values.description);
 
@@ -268,20 +271,14 @@ export const PersonalAdvertForm = ({
           )}
         </Box>
         <Typography
-          sx={{
-            fontSize: "12px",
-            lineHeight: "16px",
-            color: "#4B5563",
-          }}
+          variant="posterItem"
+          sx={{ color: (theme) => theme.palette.textColor.remarks }}
         >
           {intl.formatMessage({ id: "imgAdvise" })}
         </Typography>
         <Typography
-          sx={{
-            fontSize: "12px",
-            lineHeight: "16px",
-            color: "#4B5563",
-          }}
+          variant="posterItem"
+          sx={{ color: (theme) => theme.palette.textColor.remarks }}
         >
           {intl.formatMessage({ id: "saveAdvise" })}
         </Typography>
@@ -376,9 +373,6 @@ export const PersonalAdvertForm = ({
                   ? "female"
                   : "other"
               }
-              // onChange={(event) => {
-              //   formik.setFieldValue("sex", event.target.value);
-              // }}
               onChange={handleInputChange}
               onBlur={formik.handleBlur}
               error={formik.touched.sex && Boolean(formik.errors.sex)}
@@ -487,7 +481,7 @@ export const PersonalAdvertForm = ({
             multiple
             label={intl.formatMessage({ id: "languagesTeaching" })}
             disabled={!editMode}
-            value={teacher?.teachingLanguages || []}
+            defaultValue={teacher?.teachingLanguages || []}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={
@@ -744,9 +738,10 @@ export const PersonalAdvertForm = ({
               width: { xs: "100%", md: "220px" },
               borderRadius: "6px",
               transition: "background-color 0.3s",
-              backgroundColor: (theme) => theme.palette.buttonColor.main,
+              backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
               "&:hover": {
-                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.greenYellowHover,
               },
             }}
           >
@@ -754,7 +749,7 @@ export const PersonalAdvertForm = ({
               variant="posterButton"
               sx={{ color: (theme) => theme.palette.buttonColor.fontColor }}
             >
-              {intl.formatMessage({ id: "publishBtn" })}
+              {intl.formatMessage({ id: "saveBtn" })}
             </Typography>
           </Button>
         ) : (
@@ -769,9 +764,10 @@ export const PersonalAdvertForm = ({
               width: { xs: "100%", md: "220px" },
               borderRadius: "6px",
               transition: "background-color 0.3s",
-              backgroundColor: (theme) => theme.palette.buttonColor.main,
+              backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
               "&:hover": {
-                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.greenYellowHover,
               },
             }}
           >
