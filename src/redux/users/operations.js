@@ -133,8 +133,10 @@ export const editUser = createAsyncThunk(
   "users/editUser",
   async (editedData, thunkAPI) => {
     try {
+      console.log(editedData);
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
+      console.log(userToken);
       const userId = thunkAPI.getState().auth.user.id;
       const { data } = await privateAPI.patch(`/users`, editedData, {
         headers: { Authorization: `Bearer ${userToken}` },
