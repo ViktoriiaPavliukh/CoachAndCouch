@@ -94,8 +94,8 @@ export function TeacherCard({ teacher }) {
               height: "36px",
               marginLeft: "4px",
               position: "absolute",
-              top: "10px",
-              right: "10px",
+              top: "20px",
+              right: "20px",
             }}
           />
         </CardActionArea>

@@ -16,6 +16,8 @@ import {
   FormControl,
   InputLabel,
   Typography,
+  Input,
+  Avatar,
 } from "@mui/material";
 import { format } from "date-fns";
 import { PersonalImage } from "./PersonalImage";
@@ -27,6 +29,7 @@ import IconPlus from "../../assets/icons/IconPlus.jsx";
 export const Profile = () => {
   const en = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
+  console.log(currentUser);
   const [editMode, setEditMode] = useState(false);
   const [image, setImage] = useState("");
   const [formData, setFormData] = useState({
@@ -34,55 +37,19 @@ export const Profile = () => {
     lastName: currentUser?.lastName || "",
     email: currentUser?.email || "",
     birthday: currentUser?.birthday
-      ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
+      ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
       : "",
     sex: currentUser?.sex || "",
-    country: currentUser?.country?.alpha2
-      ? countriesCase(
-          en === "en"
-            ? countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
-                ?.nameEng || ""
-            : countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
-                ?.nameShort || ""
-        )
-      : "",
+    country: currentUser?.country?.alpha2 || "",
     registeredAt: currentUser?.registeredAt
-      ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
+      ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
       : "",
-    aboutMe: currentUser?.aboutMe || currentUser?.advert?.description,
+    aboutMe: currentUser?.aboutMe || "",
     photoPath: currentUser?.photoPath || "",
   });
 
   const intl = useIntl();
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (currentUser) {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        firstName: currentUser?.firstName || "",
-        lastName: currentUser?.lastName || "",
-        email: currentUser?.email || "",
-        birthday: currentUser?.birthday ? new Date(currentUser.birthday) : "",
-        sex: currentUser?.sex || "",
-        country: currentUser?.country?.alpha2
-          ? countriesCase(
-              en === "en"
-                ? countries.find(
-                    (el) => el.alpha2 === currentUser?.country?.alpha2
-                  )?.nameEng || ""
-                : countries.find(
-                    (el) => el.alpha2 === currentUser?.country?.alpha2
-                  )?.nameShort || ""
-            )
-          : "",
-        registeredAt: currentUser?.registeredAt
-          ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
-          : "",
-        aboutMe: currentUser.aboutMe || currentUser?.advert?.description,
-      }));
-    }
-  }, [currentUser, en]);
 
   const handleUserProfileSubmit = (e) => {
     e.preventDefault();
@@ -119,6 +86,15 @@ export const Profile = () => {
 
       formData.append("birthday", formattedBirthday);
       formData.append("sex", formik.values.sex);
+
+      const selectedCountry = countries.find(
+        (country) => country.alpha2 === formik.values.country
+      );
+      const countryId = selectedCountry ? selectedCountry.id : null;
+      console.log("Selected Country:", selectedCountry);
+      console.log("Country ID:", countryId);
+      // formData.append("country", countryId);
+
       formData.append("aboutMe", formik.values.aboutMe);
       formData.append("photo", formik.values.photo);
 
@@ -132,6 +108,7 @@ export const Profile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
 
     if (name === "birthday") {
       const dateValue = new Date(value);
@@ -179,7 +156,7 @@ export const Profile = () => {
               alignItems: { xs: "center", lg: "center" },
             }}
           >
-            <PersonalImage userImage={currentUser.photoPath} />
+            <PersonalImage userImage={formData.photoPath} />
             {editMode ? (
               <Stack
                 direction="column"
@@ -190,7 +167,7 @@ export const Profile = () => {
                   gap: "24px",
                 }}
               >
-                <input
+                <Input
                   type="file"
                   id="photoPath"
                   name="photo"
@@ -201,9 +178,9 @@ export const Profile = () => {
                   }}
                   onBlur={formik.handleBlur}
                   error={formik.touched.image && Boolean(formik.errors.image)}
-                  helperText={formik.touched.image && formik.errors.image}
+                  // helperText={formik.touched.image && formik.errors.image}
                 />
-                <label
+                <InputLabel
                   htmlFor="photoPath"
                   style={{
                     cursor: "pointer",
@@ -219,9 +196,9 @@ export const Profile = () => {
                 >
                   <IconPlus />
                   {intl.formatMessage({ id: "newPhoto" })}
-                </label>
+                </InputLabel>
                 {image && (
-                  <img
+                  <Avatar
                     src={image}
                     alt="Preview"
                     style={{
@@ -247,9 +224,9 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "name" })}
               name="firstName"
-              defaultValue={currentUser?.firstName}
+              defaultValue={formData.firstName}
               variant="outlined"
-              sx={{ width: { xs: "100%", lg: "48%" } }}
+              sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
               disabled={!editMode}
               onChange={handleInputChange}
               error={Boolean(formik.errors.firstName)}
@@ -258,9 +235,9 @@ export const Profile = () => {
             <TextField
               label={intl.formatMessage({ id: "lastName" })}
               name="lastName"
-              defaultValue={currentUser?.lastName || ""}
+              defaultValue={formData.lastName}
               variant="outlined"
-              sx={{ width: { xs: "100%", lg: "48%" } }}
+              sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
               disabled={!editMode}
               onChange={handleInputChange}
               error={Boolean(formik.errors.lastName)}
@@ -269,8 +246,8 @@ export const Profile = () => {
             <TextField
               label="Email"
               name="email"
-              defaultValue={currentUser?.email}
-              sx={{ width: { xs: "100%", lg: "48%" } }}
+              defaultValue={formData.email}
+              sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
               variant="outlined"
               disabled={!editMode}
               onChange={handleInputChange}
@@ -282,12 +259,8 @@ export const Profile = () => {
               label={intl.formatMessage({ id: "birthday" })}
               name="birthday"
               disabled={!editMode}
-              defaultValue={
-                currentUser.birthday
-                  ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
-                  : ""
-              }
-              sx={{ width: { xs: "100%", lg: "48%" } }}
+              defaultValue={formData.birthday}
+              sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
               InputLabelProps={{ shrink: true }}
               InputProps={{ placeholder: "" }}
               variant="outlined"
@@ -297,7 +270,7 @@ export const Profile = () => {
             />
             <FormControl
               variant="outlined"
-              sx={{ width: { xs: "100%", lg: "48%" } }}
+              sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
             >
               <InputLabel htmlFor="sex">
                 {intl.formatMessage({ id: "sex" })}
@@ -306,7 +279,7 @@ export const Profile = () => {
                 label={intl.formatMessage({ id: "sex" })}
                 disabled={!editMode}
                 name="sex"
-                value={formik.values.sex || ""}
+                defaultValue={formData.sex}
                 onChange={(e) => formik.handleChange(e)}
                 error={formik.touched.sex && Boolean(formik.errors.sex)}
               >
@@ -321,38 +294,38 @@ export const Profile = () => {
                 </MenuItem>
               </Select>
               {formik.touched.sex && formik.errors.sex && (
-                <Box sx={{ color: "red" }}>{formik.errors.sex}</Box>
+                <Typography color="error">{formik.errors.sex}</Typography>
+              )}
+            </FormControl>
+            <FormControl
+              variant="outlined"
+              sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
+            >
+              <InputLabel htmlFor="country">
+                {intl.formatMessage({ id: "country" })}
+              </InputLabel>
+              <Select
+                label={intl.formatMessage({ id: "country" })}
+                disabled={!editMode}
+                name="country"
+                defaultValue={formData.country}
+                onChange={(e) => formik.handleChange(e)}
+                error={formik.touched.country && Boolean(formik.errors.country)}
+              >
+                {countries.map((country) => (
+                  <MenuItem key={country.alpha2} value={country.alpha2}>
+                    {en === "en" ? country.nameEng : country.nameShort}
+                  </MenuItem>
+                ))}
+              </Select>
+              {formik.touched.country && formik.errors.country && (
+                <Box sx={{ color: "red" }}>{formik.errors.country}</Box>
               )}
             </FormControl>
             <TextField
-              id="country"
-              name="country"
-              label={intl.formatMessage({ id: "country" })}
-              disabled={!editMode}
-              defaultValue={
-                currentUser?.country?.alpha2
-                  ? countriesCase(
-                      en === "en"
-                        ? countries.find(
-                            (el) => el.alpha2 === currentUser?.country?.alpha2
-                          )?.nameEng || ""
-                        : countries.find(
-                            (el) => el.alpha2 === currentUser?.country?.alpha2
-                          )?.nameShort || ""
-                    )
-                  : ""
-              }
-              variant="outlined"
-              sx={{ width: { xs: "100%", lg: "48%" } }}
-            />
-            <TextField
               label={intl.formatMessage({ id: "registrationDate" })}
               name="registeredAt"
-              defaultValue={
-                currentUser.registeredAt
-                  ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
-                  : ""
-              }
+              defaultValue={formData.registeredAt}
               variant="outlined"
               sx={{ width: "100%" }}
               disabled={true}
@@ -370,7 +343,7 @@ export const Profile = () => {
           }}
         >
           <TextField
-            defaultValue={currentUser?.aboutMe}
+            defaultValue={formData.aboutMe}
             onChange={handleInputChange}
             name="aboutMe"
             label={intl.formatMessage({ id: "description" })}

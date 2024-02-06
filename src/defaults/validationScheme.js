@@ -56,4 +56,5 @@ export const userValidationSchema = Yup.object().shape({
   birthday: Yup.string().required("Birthday is required").nullable(),
   aboutMe: Yup.string().required("Description is required"),
   photoPath: Yup.mixed(),
+  country: Yup.string().required("Country is required"),
 });
