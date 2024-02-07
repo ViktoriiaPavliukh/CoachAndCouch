@@ -144,43 +144,28 @@ export const ChatWithUser = (userChat) => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <Box>
-            <InputLabel
-              htmlFor="file-input"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                width: "25px",
-                height: "25px",
-              }}
-            >
-              <Paperclip
-                style={{
-                  transform: "rotate(-45deg)",
-                  color: (theme) => theme.palette.buttonColor.send,
-                }}
-              />
-            </InputLabel>
             <Input type="file" id="file-input" style={{ display: "none" }} />
           </Box>
           <IconButton
             sx={{
               borderRadius: "6px",
-              border: "1px solid #498E4C",
+              border: "2px solid",
+              borderColor: (theme) =>
+                theme.palette.buttonColorComponentFigma.defaultGreen,
               minWidth: "37px",
               height: "34px",
               p: "8px",
-              ml: "18px",
               display: "flex",
               alignItems: "center",
+              "&:hover": {
+                borderColor: (theme) =>
+                  theme.palette.buttonColorComponentFigma.hoverGreen,
+                background: "transparent",
+              },
             }}
             onClick={handleSendMessage}
           >
-            <Send
-              style={{
-                transform: "rotate(45deg)",
-                color: (theme) => theme.palette.buttonColor.send,
-              }}
-            />
+            <Send strokeColor={(theme) => theme.palette.buttonColor.send} />
           </IconButton>
         </Box>
       </Box>

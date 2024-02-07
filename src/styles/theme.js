@@ -65,6 +65,10 @@ const createThemeTemplate = (themeColor) => ({
             themeSwitch: "#ffffff",
             send: "#1F2937",
           },
+          buttonColorComponentFigma: {
+            defaultGreen: "#0E5B1D",
+            hoverGreen: "#004305",
+          },
           textColor: {
             fontColor: "#000000",
             header: "#FFF",
@@ -117,6 +121,10 @@ const createThemeTemplate = (themeColor) => ({
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
             send: "#9CA3AF",
+          },
+          buttonColorComponentFigma: {
+            defaultGreen: "#387024",
+            hoverGreen: "#1D570A",
           },
           textColor: {
             fontColor: "#FBFDF6",
