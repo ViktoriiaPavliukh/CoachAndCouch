@@ -20,11 +20,14 @@ import {
   Avatar,
 } from "@mui/material";
 import { format } from "date-fns";
+import { getCountries } from "@/redux/admin/operations";
 import { PersonalImage } from "./PersonalImage";
+import { countriesSelector } from "@/redux/admin/adminSelector";
 import countries from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 import { userValidationSchema } from "../../defaults/validationScheme";
 import IconPlus from "../../assets/icons/IconPlus.jsx";
+import { v4 as uuidv4 } from "uuid";
 
 export const Profile = () => {
   const en = useSelector(selectCurrentLanguage);
@@ -50,6 +53,13 @@ export const Profile = () => {
 
   const intl = useIntl();
   const dispatch = useDispatch();
+  const countriesList = useSelector(countriesSelector);
+  console.log(countriesList);
+
+  useEffect(() => {
+    dispatch(getCurrentUser());
+    dispatch(getCountries());
+  }, [dispatch]);
 
   const handleUserProfileSubmit = (e) => {
     e.preventDefault();
@@ -87,13 +97,11 @@ export const Profile = () => {
       formData.append("birthday", formattedBirthday);
       formData.append("sex", formik.values.sex);
 
-      const selectedCountry = countries.find(
+      const selectedCountry = countriesList.find(
         (country) => country.alpha2 === formik.values.country
       );
-      const countryId = selectedCountry ? selectedCountry.id : null;
-      console.log("Selected Country:", selectedCountry);
-      console.log("Country ID:", countryId);
-      // formData.append("country", countryId);
+
+      formData.append("country", JSON.stringify(selectedCountry));
 
       formData.append("aboutMe", formik.values.aboutMe);
       formData.append("photo", formik.values.photo);
@@ -122,10 +130,6 @@ export const Profile = () => {
       formik.setFieldValue(name, value);
     }
   };
-
-  useEffect(() => {
-    dispatch(getCurrentUser());
-  }, [dispatch]);
 
   return (
     <form onSubmit={handleUserProfileSubmit}>
@@ -304,6 +308,26 @@ export const Profile = () => {
               <InputLabel htmlFor="country">
                 {intl.formatMessage({ id: "country" })}
               </InputLabel>
+              {/* <Select
+                label={intl.formatMessage({ id: "country" })}
+                disabled={!editMode}
+                name="country"
+                defaultValue={formData.country}
+                onChange={(e) => formik.handleChange(e)}
+                error={formik.touched.country && Boolean(formik.errors.country)}
+              >
+                {countriesList &&
+                  countriesList.map((country) => (
+                    <MenuItem key={uuidv4()} value={country.alpha2}>
+                      {country.alpha2}
+                    </MenuItem>
+                  ))}
+                {/* {countries.map((country) => (
+                  <MenuItem key={country.alpha2} value={country.alpha2}>
+                    {en === "en" ? country.nameEng : country.nameShort}
+                  </MenuItem>
+                ))} */}
+              {/* </Select> */}
               <Select
                 label={intl.formatMessage({ id: "country" })}
                 disabled={!editMode}
@@ -312,11 +336,12 @@ export const Profile = () => {
                 onChange={(e) => formik.handleChange(e)}
                 error={formik.touched.country && Boolean(formik.errors.country)}
               >
-                {countries.map((country) => (
-                  <MenuItem key={country.alpha2} value={country.alpha2}>
-                    {en === "en" ? country.nameEng : country.nameShort}
-                  </MenuItem>
-                ))}
+                {countriesList &&
+                  countriesList.map((country) => (
+                    <MenuItem key={uuidv4()} value={country.alpha2}>
+                      {country.alpha2}
+                    </MenuItem>
+                  ))}
               </Select>
               {formik.touched.country && formik.errors.country && (
                 <Box sx={{ color: "red" }}>{formik.errors.country}</Box>
