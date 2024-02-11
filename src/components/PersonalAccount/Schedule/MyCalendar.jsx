@@ -3,13 +3,14 @@ import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Children, cloneElement } from "react";
+import { CustomToolbar } from "./MyToolbar";
 const localizer = momentLocalizer(moment);
 const eventsList = [
   {
     title: "All Day Event very long title",
     allDay: true,
-    start: new Date(2023, 12, 0),
-    end: new Date(2023, 12, 1),
+    start: new Date(2024, 2, 11),
+    end: new Date(2024, 2, 11),
   },
   {
     title: "Long Event",
@@ -19,8 +20,8 @@ const eventsList = [
 
   {
     title: "DTS STARTS",
-    start: new Date(2023, 12, 13, 0, 0, 0),
-    end: new Date(2023, 12, 20, 0, 0, 0),
+    start: new Date(2024, 2, 11, 0, 0, 0),
+    end: new Date(2024, 2, 11, 0, 0, 0),
   },
 
   {
@@ -111,6 +112,7 @@ export const MyCalendar = () => (
       localizer={localizer}
       components={{
         dateCellWrapper: DateCellWrapper,
+        toolbar: CustomToolbar,
       }}
       defaultView={Views.WEEK}
       events={eventsList}
@@ -125,6 +127,7 @@ export const MyCalendar = () => (
       timeslots={2}
       selectable={true}
       popup
+      // toolbar={MyToolbar}
       onSelectSlot={handleSlotSelection}
       slotPropGetter={slotPropGetter}
     />
@@ -147,7 +150,6 @@ const slotPropGetter = (date) => {
   };
 };
 const DateCellWrapper = ({ children }) => {
-  console.log("DateCellWrapper");
   const style = {
     backgroundColor: "#000",
   };

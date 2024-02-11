@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { MyCalendar } from "../MyCalendar/MyCalendar";
+import { MyCalendar } from "./MyCalendar";
 
 export const Schedule = () => {
   return (
@@ -9,7 +9,7 @@ export const Schedule = () => {
         flexDirection: "column",
       }}
     >
-      <Typography>My Schedule</Typography>
+      {/* <Typography>My Schedule</Typography> */}
       <MyCalendar />
     </Box>
   );
