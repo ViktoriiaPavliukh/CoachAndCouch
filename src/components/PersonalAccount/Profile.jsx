@@ -101,7 +101,9 @@ export const Profile = () => {
         (country) => country.alpha2 === formik.values.country
       );
 
-      formData.append("country", JSON.stringify(selectedCountry));
+      const countryId = selectedCountry ? selectedCountry.id : null;
+
+      formData.append("country", JSON.stringify(countryId));
 
       formData.append("aboutMe", formik.values.aboutMe);
       formData.append("photo", formik.values.photo);
@@ -308,26 +310,6 @@ export const Profile = () => {
               <InputLabel htmlFor="country">
                 {intl.formatMessage({ id: "country" })}
               </InputLabel>
-              {/* <Select
-                label={intl.formatMessage({ id: "country" })}
-                disabled={!editMode}
-                name="country"
-                defaultValue={formData.country}
-                onChange={(e) => formik.handleChange(e)}
-                error={formik.touched.country && Boolean(formik.errors.country)}
-              >
-                {countriesList &&
-                  countriesList.map((country) => (
-                    <MenuItem key={uuidv4()} value={country.alpha2}>
-                      {country.alpha2}
-                    </MenuItem>
-                  ))}
-                {/* {countries.map((country) => (
-                  <MenuItem key={country.alpha2} value={country.alpha2}>
-                    {en === "en" ? country.nameEng : country.nameShort}
-                  </MenuItem>
-                ))} */}
-              {/* </Select> */}
               <Select
                 label={intl.formatMessage({ id: "country" })}
                 disabled={!editMode}
@@ -337,12 +319,24 @@ export const Profile = () => {
                 error={formik.touched.country && Boolean(formik.errors.country)}
               >
                 {countriesList &&
-                  countriesList.map((country) => (
-                    <MenuItem key={uuidv4()} value={country.alpha2}>
-                      {country.alpha2}
-                    </MenuItem>
-                  ))}
+                  countriesList.map((country) => {
+                    const fullCountry = countries.find(
+                      (el) => el.alpha2 === country.alpha2
+                    );
+                    if (fullCountry) {
+                      return (
+                        <MenuItem key={country.alpha2} value={country.alpha2}>
+                          {en === "en"
+                            ? fullCountry.nameEng
+                            : fullCountry.nameShort}
+                        </MenuItem>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
               </Select>
+
               {formik.touched.country && formik.errors.country && (
                 <Box sx={{ color: "red" }}>{formik.errors.country}</Box>
               )}
