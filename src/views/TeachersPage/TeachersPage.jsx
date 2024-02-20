@@ -43,7 +43,7 @@ export function TeachersPage() {
       <Box
         width="100%"
         sx={{
-          maxWidth: { lg: "1320px", xl: "1800px", md: "648px", sm: "343px" },
+          // maxWidth: { lg: "1320px", xl: "1800px", md: "648px", sm: "343px" },
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -54,27 +54,30 @@ export function TeachersPage() {
           sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
-            mb: { lg: "60px", md: "60px", xs: "36px" },
+            pb: { lg: "60px", xs: "40px" },
+            mb: {xs: "20px", lg: "40px"},
             gap: "5%",
+            width: "100%",
+            backgroundColor: (theme) => theme.palette.background.mainPage,
           }}
         >
           <Box
             sx={{
               display: "flex",
-              mt: { lg: "72px", xs: "36px" },
+              mt: { lg: "0", xs: "40px" },
               flexDirection: "column",
-              gap: { xs: "28px", md: "50px", lg: "40px" },
+              gap: { xs: "40px" },
               width: "100%",
               justifyContent: { lg: "center" },
-              // alignItems: "center",
+              paddingX: { md: "60px", xs: "16px" },
             }}
           >
             <Typography
               variant="fontHeading"
               sx={{
                 color: (theme) => theme.palette.textColor.title,
-                fontSize: { xl: "70px", lg: "50px", md: "36px", xs: "32px" },
-                lineHeight: { xs: "40px", md: "44px", lg: "60px", xl: "72px" },
+                fontSize: { xl: "72px", lg: "50px", md: "36px", xs: "30px" },
+                lineHeight: { xs: "120%", md: "44px", lg: "60px", xl: "72px" },
                 display: "inline-block",
               }}
             >
@@ -186,7 +189,7 @@ export function TeachersPage() {
             sx={{
               display: { xs: "none", lg: "flex" },
               width: { lg: "100%" },
-              marginRight: { lg: "-203px", xl: "-61px" },
+              marginRight: { lg: "0", xl: "0" },
             }}
           >
             <DescriptionImage />
