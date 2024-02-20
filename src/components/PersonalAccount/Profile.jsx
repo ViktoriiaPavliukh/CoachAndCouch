@@ -139,8 +139,9 @@ export const Profile = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          pt: { xs: "32px", md: "40px" },
-          pl: { xs: "16px", md: "60px", lg: "12px" },
+          py: { xs: "32px", md: "40px" },
+          pl: { xs: "16px", md: "60px", lg: "20px" },
+          pr: { xs: "16px", md: "60px", lg: "150px", xl: "40px" },
         }}
       >
         <Box
@@ -328,7 +329,7 @@ export const Profile = () => {
                         <MenuItem key={country.alpha2} value={country.alpha2}>
                           {en === "en"
                             ? fullCountry.nameEng
-                            : fullCountry.nameShort}
+                            : fullCountry.nameLong}
                         </MenuItem>
                       );
                     } else {
@@ -346,7 +347,7 @@ export const Profile = () => {
               name="registeredAt"
               defaultValue={formData.registeredAt}
               variant="outlined"
-              sx={{ width: "100%" }}
+              sx={{ width: { xs: "100%", lg: "98%", xl: "100%" } }}
               disabled={true}
             />
           </Stack>
