@@ -47,6 +47,7 @@ const createThemeTemplate = (themeColor) => ({
             paper: "#FFF",
             default: "#FFF",
             sidebar: "#FAFAFA",
+            mainPage: "#FAFAFA",
             messages: "#ffffff",
           },
           buttonColor: {
@@ -94,11 +95,11 @@ const createThemeTemplate = (themeColor) => ({
           secondary: {
             main: "#e4eadd",
           },
-          // background: "#292A2A",
           background: {
             paper: "#292A2A",
             default: "#292A2A",
             sidebar: "#3C3D3D",
+            mainPage: "#262626",
             messages: "#4B5563",
           },
           buttonColor: {
@@ -141,9 +142,7 @@ const createThemeTemplate = (themeColor) => ({
     fontFamily: "Mulish, sans-serif",
     fontHeading: {
       fontFamily: "Mulish, sans-serif",
-      fontSize: "50px",
       fontWeight: "700",
-      lineHeight: "60px",
       fontStyle: "normal",
     },
     fontTitle: {
