@@ -1,6 +1,6 @@
 import {
   selectCurrentUser,
-  selectuserIsLoading,
+  selectUserIsLoading,
 } from "@/redux/users/selectors";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
@@ -25,7 +25,7 @@ export function Advertisements() {
   const dispatch = useDispatch();
   const intl = useIntl();
   const currentUser = useSelector(selectCurrentUser);
-  const isLoading = useSelector(selectuserIsLoading);
+  const isLoading = useSelector(selectUserIsLoading);
   const advertId = currentUser.advert ? currentUser.advert.id : null;
   const countriesList = useSelector(countriesSelector);
   const languages = useSelector(languagesSelector);
