@@ -204,7 +204,7 @@ const messages = {
     "personalAccount.messages": "Повідомлення",
     "personalAccount.likes": "Обрані",
     "personalAccount.feedback": "Відгуки",
-    "personalAccount.advertisements": "Мої оголошення(для викладача)",
+    "personalAccount.advertisements": "Мої оголошення",
     "personalAccount.dashboard": "Дашборд",
     "personalAccount.settings": "Налаштування",
     "personalAccount.logout": "Вихід",

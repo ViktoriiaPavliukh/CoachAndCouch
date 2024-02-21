@@ -3,7 +3,10 @@ import { parse } from "date-fns";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, editUser } from "@/redux/users/operations";
-import { selectCurrentUser } from "@/redux/users/selectors";
+import {
+  selectCurrentUser,
+  selectUserIsLoading,
+} from "@/redux/users/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
 import {
@@ -22,19 +25,27 @@ import {
 import { format } from "date-fns";
 import { getCountries } from "@/redux/admin/operations";
 import { PersonalImage } from "./PersonalImage";
+import Loader from "../Loader/Loader";
 import { countriesSelector } from "@/redux/admin/adminSelector";
 import countries from "../../defaults/countries/countries.json";
-import countriesCase from "@/helpers/countriesCase";
 import { userValidationSchema } from "../../defaults/validationScheme";
 import IconPlus from "../../assets/icons/IconPlus.jsx";
-import { v4 as uuidv4 } from "uuid";
 
 export const Profile = () => {
   const en = useSelector(selectCurrentLanguage);
+  const intl = useIntl();
+  const dispatch = useDispatch();
+  const countriesList = useSelector(countriesSelector);
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
+  const isLoading = useSelector(selectUserIsLoading);
   const [editMode, setEditMode] = useState(false);
   const [image, setImage] = useState("");
+
+  useEffect(() => {
+    dispatch(getCurrentUser());
+    dispatch(getCountries());
+  }, [dispatch]);
+
   const [formData, setFormData] = useState({
     firstName: currentUser?.firstName || "",
     lastName: currentUser?.lastName || "",
@@ -50,16 +61,6 @@ export const Profile = () => {
     aboutMe: currentUser?.aboutMe || "",
     photoPath: currentUser?.photoPath || "",
   });
-
-  const intl = useIntl();
-  const dispatch = useDispatch();
-  const countriesList = useSelector(countriesSelector);
-  console.log(countriesList);
-
-  useEffect(() => {
-    dispatch(getCurrentUser());
-    dispatch(getCountries());
-  }, [dispatch]);
 
   const handleUserProfileSubmit = (e) => {
     e.preventDefault();
@@ -83,6 +84,7 @@ export const Profile = () => {
       const formData = new FormData();
       formData.append("firstName", formik.values.firstName);
       formData.append("lastName", formik.values.lastName);
+      formData.append("email", formik.values.email);
 
       let formattedBirthday = "";
       if (formik.values.birthday) {
@@ -118,7 +120,6 @@ export const Profile = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
 
     if (name === "birthday") {
       const dateValue = new Date(value);
@@ -256,10 +257,11 @@ export const Profile = () => {
               defaultValue={formData.email}
               sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
               variant="outlined"
-              disabled={!editMode}
-              onChange={handleInputChange}
-              error={Boolean(formik.errors.email)}
-              helperText={formik.errors.email}
+              disabled={true}
+              // disabled={!editMode}
+              // onChange={handleInputChange}
+              // error={Boolean(formik.errors.email)}
+              // helperText={formik.errors.email}
             />
             <TextField
               type="date"
