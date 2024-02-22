@@ -80,6 +80,10 @@ const messages = {
     errorTitle: "Oops! Page not found.",
     errorSubtitle: "Check the URL or return to the main page.",
 
+    // Setings
+
+    theme: "Theme",
+
     // Buttons
     sendBtn: "Send",
     trialLessonBtn: "Trial lesson",
@@ -220,6 +224,10 @@ const messages = {
     //404
     errorTitle: "Oops! Сторінку не знайдено",
     errorSubtitle: "Перевірте URL адресу сторінки або поверніться на головну",
+
+    // Setings
+
+    theme: "Тема",
 
     // Buttons
     sendBtn: "Відправити",
