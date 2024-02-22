@@ -10,7 +10,6 @@ import {
   Container,
   Button,
   Stack,
-  Switch,
   MenuItem,
   Paper,
 } from "@mui/material";
@@ -26,28 +25,10 @@ import { pages } from "@/defaults";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
+import { GreenSwitch } from "../GreenSwitch/GreenSwitch";
 import { styled } from "@mui/material/styles";
 import LanguageSwitcher from "./LanguageSwitcher";
 import Logo from "./../Logo";
-
-const GreenSwitch = styled(Switch)(({ theme }) => ({
-  "& .MuiSwitch-switchBase.Mui-checked": {
-    color: (theme) => theme.palette.buttonColor.themeSwitch,
-  },
-  "& .MuiSwitch-switchBase": {
-    color: theme.palette.buttonColor.themeSwitch,
-  },
-  "& .MuiSwitch-thumb": {
-    color: theme.palette.buttonColor.themeSwitch,
-  },
-  "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
-    backgroundColor: theme.palette.buttonColor.themeSwitch,
-    color: theme.palette.buttonColor.themeSwitch,
-  },
-  "& .MuiSwitch-track": {
-    backgroundColor: theme.palette.primary.accent,
-  },
-}));
 
 const MenuMobItem = styled(MenuItem)(() => ({
   "& :hover": {
@@ -79,6 +60,7 @@ const ExternalLink = ({ to, children, ...rest }) => {
 export function Header() {
   const user = useSelector(selectUser);
   const [pathname, setPathname] = useState("");
+  const [checked, setChecked] = useState(true);
   const path = useLocation().pathname;
   const intl = useIntl();
   useEffect(() => {
@@ -106,7 +88,6 @@ export function Header() {
     navigate("/");
   };
 
-  const [checked, setChecked] = useState(true);
   const handleChange = (event) => {
     setChecked(event.target.checked);
     dispatch(changeTheme());
@@ -222,11 +203,11 @@ export function Header() {
             </ExternalLink>
           </Stack> */}
           <Stack direction="row" sx={{ display: { xs: "none", lg: "flex" } }}>
-            <GreenSwitch
+            {/* <GreenSwitch
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
-            />
+            /> */}
             <LanguageSwitcher />
             {isLoggedIn ? (
               <Box display="flex" direction="row" sx={{ gap: "24px" }}>
@@ -336,11 +317,11 @@ export function Header() {
               alignItems: "center",
             }}
           >
-            <GreenSwitch
+            {/* <GreenSwitch
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
-            />
+            /> */}
             <LanguageSwitcher />
             <Menu
               id="menu-appbar"
