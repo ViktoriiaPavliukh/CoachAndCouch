@@ -15,13 +15,19 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { useIntl } from "react-intl";
+import { useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
+import { deleteUserAsUser } from "../../redux/users/operations";
+import { selectUser } from "../../redux/auth/selectors";
+import { logoutUser } from "../../redux/auth/operations";
 import { passwordSchema } from "@/defaults";
 import * as Yup from "yup";
 
 export const Settings = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const navigate = useNavigate();
   const isDarkTheme = useSelector((state) => state.theme.value);
 
   const formik = useFormik({
@@ -39,6 +45,16 @@ export const Settings = () => {
 
   const handleChange = (event) => {
     dispatch(changeTheme());
+  };
+
+  const handleDeleteAccount = () => {
+    try {
+      dispatch(deleteUserAsUser(user.id));
+      dispatch(logoutUser());
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.error("Error deleting user account:", error);
+    }
   };
 
   return (
@@ -185,6 +201,8 @@ export const Settings = () => {
           width: "100%",
           justifyContent: "center",
           alignItems: { xs: "center", md: "flex-end" },
+          paddingBottom: "26px",
+          borderBottom: "1px solid #9da3af",
         }}
       >
         <Button
@@ -195,7 +213,7 @@ export const Settings = () => {
             display: "flex",
             mt: "26px",
             p: "12px 32px",
-            width: { xs: "295px", md: "185px" },
+            width: { xs: "100%", md: "185px" },
             borderRadius: "6px",
             transition: "background-color 0.3s",
             backgroundColor: (theme) => theme.palette.buttonColor.greenDark,
@@ -210,6 +228,30 @@ export const Settings = () => {
             sx={{ color: (theme) => theme.palette.textColor.header }}
           >
             {intl.formatMessage({ id: "saveChanges" })}
+          </Typography>
+        </Button>
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          width: "100%",
+          pt: "26px",
+          justifyContent: "center",
+          alignItems: { xs: "center", md: "flex-start" },
+        }}
+      >
+        <Button
+          onClick={handleDeleteAccount}
+          sx={{
+            p: "10px 18px",
+          }}
+        >
+          <Typography
+            variant="posterSubtitle"
+            noWrap
+            sx={{ color: (theme) => theme.palette.textColor.red }}
+          >
+            {intl.formatMessage({ id: "deleteAccount" })}
           </Typography>
         </Button>
       </Stack>
