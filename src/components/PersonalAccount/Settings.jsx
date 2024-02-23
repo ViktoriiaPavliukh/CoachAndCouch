@@ -1,20 +1,43 @@
 import * as React from "react";
-import { useState } from "react";
+import { useFormik } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { Box, Typography, FormControlLabel } from "@mui/material";
+import {
+  Box,
+  Typography,
+  FormControl,
+  MenuItem,
+  Select,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Button,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Stack } from "@mui/system";
 import { useIntl } from "react-intl";
 import { changeTheme } from "@/redux/theme/slice";
-import { GreenSwitch } from "../GreenSwitch/GreenSwitch";
+import { passwordSchema } from "@/defaults";
+import * as Yup from "yup";
 
 export const Settings = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const [checked, setChecked] = useState(true);
   const isDarkTheme = useSelector((state) => state.theme.value);
 
-  const handleChange = () => {
-    setChecked(event.target.checked);
+  const formik = useFormik({
+    initialValues: {
+      password: "",
+      passwordConfirm: "",
+      showPassword: false,
+    },
+    validationSchema: passwordSchema,
+    onSubmit: ({ password }) => {
+      // dispatch(registerUser({ firstName, email, password }));
+      console.log("Entered password:", password);
+    },
+  });
+
+  const handleChange = (event) => {
     dispatch(changeTheme());
   };
 
@@ -22,40 +45,173 @@ export const Settings = () => {
     <Box
       sx={{
         display: "flex",
+        flexDirection: "column",
         width: { xs: "91%", md: "84%", lg: "61%", xl: "46%" },
+        maxWidth: { md: "648px", lg: "880px" },
         margin: "0 auto",
         mt: { xs: "45px", md: "105px", lg: "158px", xl: "186px" },
-        padding: { xs: "96px" },
+        paddingY: { xs: "96px" },
+        paddingX: { xs: "24px" },
         backgroundColor: (theme) => theme.palette.background.sidebar,
         boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
       }}
     >
       <Stack
         sx={{
+          width: "100%",
           display: "flex",
-          flexDirection: "row",
+          flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: { xs: "left", md: "center" },
           gap: {
-            xs: "20px",
-            sm: "20px",
-            md: "300px",
-            lg: "600px",
-            xl: "300px",
+            xs: "32px",
+            md: "0",
           },
+          paddingBottom: "26px",
+          borderBottom: "1px solid #9da3af",
         }}
       >
-        <Typography> {intl.formatMessage({ id: "theme" })}</Typography>
-        <FormControlLabel
-          control={
-            <GreenSwitch
-              checked={checked}
-              onChange={handleChange}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-          }
-          label={checked ? "Dark" : "Light"}
+        <Typography variant="posterPopupTitle">
+          {intl.formatMessage({ id: "theme" })}
+        </Typography>
+        <FormControl sx={{ width: { md: "375px" } }}>
+          <Select
+            value={isDarkTheme ? "dark" : "light"}
+            onChange={handleChange}
+            displayEmpty
+            inputProps={{ "aria-label": "theme-selector" }}
+          >
+            <MenuItem value="light">
+              <Typography variant="posterSubtitle">
+                {intl.formatMessage({ id: "lightTheme" })}
+              </Typography>
+            </MenuItem>
+            <MenuItem value="dark">
+              <Typography variant="posterSubtitle">
+                {intl.formatMessage({ id: "darkTheme" })}
+              </Typography>
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Stack>
+      <Typography variant="posterTitleBold" sx={{ paddingTop: "26px" }}>
+        {intl.formatMessage({ id: "changePassword" })}
+      </Typography>
+      <Stack
+        sx={{
+          display: "flex",
+          paddingTop: "26px",
+          flexDirection: { xs: "column", lg: "row" },
+          gap: { xs: "20px 0", lg: "0 36px" },
+        }}
+      >
+        <TextField
+          fullWidth
+          size="small"
+          name="password"
+          label={intl.formatMessage({ id: "newPassword" })}
+          type={formik.values.showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() =>
+                    formik.setFieldValue(
+                      "showPassword",
+                      !formik.values.showPassword
+                    )
+                  }
+                  edge="end"
+                >
+                  {formik.values.showPassword ? (
+                    <VisibilityOff />
+                  ) : (
+                    <Visibility />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+          autoComplete="new-password"
         />
+        <TextField
+          fullWidth
+          size="small"
+          name="passwordConfirm"
+          label={intl.formatMessage({ id: "repeatPassword" })}
+          type={formik.values.showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle confirm visibility"
+                  onClick={() =>
+                    formik.setFieldValue(
+                      "showPassword",
+                      !formik.values.showPassword
+                    )
+                  }
+                  edge="end"
+                >
+                  {formik.values.showPassword ? (
+                    <VisibilityOff />
+                  ) : (
+                    <Visibility />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          value={formik.values.passwordConfirm}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.passwordConfirm &&
+            Boolean(formik.errors.passwordConfirm)
+          }
+          helperText={
+            formik.touched.passwordConfirm && formik.errors.passwordConfirm
+          }
+          autoComplete="new-password"
+        />
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: { xs: "center", md: "flex-end" },
+        }}
+      >
+        <Button
+          type="submit"
+          variant="button"
+          onClick={formik.handleSubmit}
+          sx={{
+            display: "flex",
+            mt: "26px",
+            p: "12px 32px",
+            width: { xs: "295px", md: "185px" },
+            borderRadius: "6px",
+            transition: "background-color 0.3s",
+            backgroundColor: (theme) => theme.palette.buttonColor.greenDark,
+            "&:hover": {
+              backgroundColor: (theme) =>
+                theme.palette.buttonColor.greenDarkHover,
+            },
+          }}
+        >
+          <Typography
+            variant="posterButton"
+            sx={{ color: (theme) => theme.palette.textColor.header }}
+          >
+            {intl.formatMessage({ id: "saveChanges" })}
+          </Typography>
+        </Button>
       </Stack>
     </Box>
   );

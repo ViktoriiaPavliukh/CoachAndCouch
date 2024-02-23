@@ -34,6 +34,16 @@ export const registrationSchema = Yup.object().shape({
     .required("Password confirmation is required"),
 });
 
+export const passwordSchema = Yup.object().shape({
+  password: Yup.string()
+    .matches(/^(?=.*[A-Z])(?=.*\d).{6,20}$/, "Please enter a valid password")
+    .max(20, "Password must be at most 20 characters")
+    .required("Password is required"),
+  passwordConfirm: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Password confirmation is required"),
+});
+
 export const teacherFormSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),

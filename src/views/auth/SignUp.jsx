@@ -33,7 +33,6 @@ export function SignUp() {
     validationSchema,
     onSubmit: ({ firstName, email, password }) => {
       dispatch(registerUser({ firstName, email, password }));
-      console.log(firstName, email, password);
     },
   });
   return (
