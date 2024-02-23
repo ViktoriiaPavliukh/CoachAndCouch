@@ -85,6 +85,9 @@ const messages = {
     theme: "Theme",
     darkTheme: "Dark Mode",
     lightTheme: "Light Mode",
+    changePassword: "Change password",
+    newPassword: "New password",
+    repeatPassword: "Repeat password",
 
     // Buttons
     sendBtn: "Send",
@@ -96,6 +99,7 @@ const messages = {
     editBtn: "Edit",
     cancelBtn: "Cancel",
     saveBtn: "Save",
+    saveChanges: "Save changes",
 
     //Status
     online: "Online",
@@ -232,6 +236,9 @@ const messages = {
     theme: "Тема",
     darkTheme: "Темна тема",
     lightTheme: "Світла тема",
+    changePassword: "Змінити пароль",
+    newPassword: "Новий пароль",
+    repeatPassword: "Повторіть пароль",
 
     // Buttons
     sendBtn: "Відправити",
@@ -243,6 +250,7 @@ const messages = {
     editBtn: "Редагувати",
     cancelBtn: "Скасувати",
     saveBtn: "Зберегти",
+    saveChanges: "Зберегти зміни",
 
     //Status
     online: "Онлайн",
