@@ -83,6 +83,8 @@ const messages = {
     // Setings
 
     theme: "Theme",
+    darkTheme: "Dark Mode",
+    lightTheme: "Light Mode",
 
     // Buttons
     sendBtn: "Send",
@@ -228,6 +230,8 @@ const messages = {
     // Setings
 
     theme: "Тема",
+    darkTheme: "Темна тема",
+    lightTheme: "Світла тема",
 
     // Buttons
     sendBtn: "Відправити",
