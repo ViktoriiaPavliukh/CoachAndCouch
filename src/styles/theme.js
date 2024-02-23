@@ -85,6 +85,7 @@ const createThemeTemplate = (themeColor) => ({
             links: "#0E5B1D",
             remarks: "#4B5563",
             linkHover: "#004305",
+            red: "#b91c1b",
           },
         }
       : {
@@ -140,6 +141,7 @@ const createThemeTemplate = (themeColor) => ({
             links: "#EEC700",
             remarks: "#D1D5DB",
             linkHover: "#CFAC00",
+            red: "#b91c1b",
           },
         },
   typography: {
@@ -212,6 +214,7 @@ const createThemeTemplate = (themeColor) => ({
       fontSize: "18px",
       fontWeight: 400,
       lineHeight: "28px",
+      textTransform: "capitalize",
     },
     posterDescription: {
       fontFamily: "Mulish, sans-serif",
