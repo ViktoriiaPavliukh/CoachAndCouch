@@ -11,7 +11,7 @@ import {
 import { Link as ReactLink } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { useFormik } from "formik";
-import { loginSchema as validationSchema } from "@/defaults";
+import { loginSchema } from "@/defaults";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +22,7 @@ export function SignIn() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const intl = useIntl();
+  const validationSchema = loginSchema(intl);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -135,6 +136,7 @@ export function SignIn() {
                   formik.touched.password && Boolean(formik.errors.password)
                 }
                 autoComplete="new-password"
+                variant="outlined"
               />
             </Grid>
           </Grid>
