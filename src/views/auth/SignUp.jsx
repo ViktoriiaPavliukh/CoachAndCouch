@@ -12,7 +12,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Link as ReactLink } from "react-router-dom";
 import { useFormik } from "formik";
-import { registrationSchema as validationSchema } from "@/defaults";
+import { registrationSchema } from "@/defaults";
 import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "@/redux/auth/operations";
@@ -20,6 +20,7 @@ import { selectIsLoggedIn } from "@/redux/auth/selectors";
 
 export function SignUp() {
   const intl = useIntl();
+  const validationSchema = registrationSchema(intl);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const formik = useFormik({
