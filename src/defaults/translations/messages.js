@@ -8,6 +8,13 @@ const messages = {
     passwordMaxCharacters: "Password must be at most 20 characters",
     passwordRequired: "Password is required",
 
+    // registrationSchema
+    firstNameValidation: "Please enter a valid name",
+    firstNameRequired: "Name is required",
+    firstNameMaxCharacters: "Name must be at most 20 characters",
+    passwordMatch: "Passwords must match",
+    passwordConfirmRequired: "Password confirmation is required",
+
     "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
@@ -167,6 +174,13 @@ const messages = {
     emailRequired: "Email є обов'язковим",
     passwordMaxCharacters: "Пароль повинен бути не більше 20 символів",
     passwordRequired: "Пароль є обов'язковим",
+
+    // registrationSchema
+    firstNameValidation: "Будь ласка, введіть правильне ім'я",
+    firstNameRequired: "Ім'я обов'язкове",
+    firstNameMaxCharacters: "Ім'я повинно містити не більше 20 символів",
+    passwordMatch: "Паролі повинні співпадати",
+    passwordConfirmRequired: "Підтвердження пароля обов'язкове",
 
     "header.teachers": "Головна",
     "header.becomeTeacher": "Стати викладачем",

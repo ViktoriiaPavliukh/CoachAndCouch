@@ -19,26 +19,34 @@ export const loginSchema = (intl) => {
   });
 };
 
-export const registrationSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .matches(/^.{2,20}$/, "Please enter a valid name")
-    .required("Name is required")
-    .max(20, "name must be at most 20 characters"),
-  email: Yup.string()
-    .matches(
-      /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
-      "Please enter a valid email"
-    )
-    .max(50, "Email must be at most 50 characters")
-    .required("Email is required"),
-  password: Yup.string()
-    .matches(/^(?=.*[A-Z])(?=.*\d).{6,20}$/, "Please enter a valid password")
-    .max(20, "Password must be at most 20 characters")
-    .required("Password is required"),
-  passwordConfirm: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Password confirmation is required"),
-});
+export const registrationSchema = (intl) => {
+  return Yup.object().shape({
+    firstName: Yup.string()
+      .matches(/^.{2,20}$/, intl.formatMessage({ id: "firstNameValidation" }))
+      .required(intl.formatMessage({ id: "firstNameRequired" }))
+      .max(20, intl.formatMessage({ id: "firstNameMaxCharacters" })),
+    email: Yup.string()
+      .matches(
+        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i,
+        intl.formatMessage({ id: "emailValidation" })
+      )
+      .max(50, intl.formatMessage({ id: "emailMaxCharacters" }))
+      .required(intl.formatMessage({ id: "emailRequired" })),
+    password: Yup.string()
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d).{6,20}$/,
+        intl.formatMessage({ id: "passwordValidation" })
+      )
+      .max(20, intl.formatMessage({ id: "passwordMaxCharacters" }))
+      .required(intl.formatMessage({ id: "passwordRequired" })),
+    passwordConfirm: Yup.string()
+      .oneOf(
+        [Yup.ref("password"), null],
+        intl.formatMessage({ id: "passwordMatch" })
+      )
+      .required(intl.formatMessage({ id: "passwordConfirmRequired" })),
+  });
+};
 
 export const passwordSchema = Yup.object().shape({
   password: Yup.string()
