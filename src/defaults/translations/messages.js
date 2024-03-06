@@ -1,5 +1,13 @@
 const messages = {
   en: {
+    //signIn
+    emailValidation: "Please enter a valid email",
+    passwordValidation: "Please enter a valid password",
+    emailMaxCharacters: "Email must be at most 50 characters",
+    emailRequired: "Email is required",
+    passwordMaxCharacters: "Password must be at most 20 characters",
+    passwordRequired: "Password is required",
+
     "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
@@ -152,6 +160,14 @@ const messages = {
   },
 
   uk: {
+    //SignIn
+    emailValidation: "Будь ласка, введіть дійсний email",
+    passwordValidation: "Будь ласка, введіть дійсний пароль",
+    emailMaxCharacters: "Email повинен бути не більше 50 символів",
+    emailRequired: "Email є обов'язковим",
+    passwordMaxCharacters: "Пароль повинен бути не більше 20 символів",
+    passwordRequired: "Пароль є обов'язковим",
+
     "header.teachers": "Головна",
     "header.becomeTeacher": "Стати викладачем",
     "header.aboutUs": "Про нас",
