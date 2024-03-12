@@ -3,6 +3,8 @@ const messages = {
     //signIn
     emailValidation: "Please enter a valid email",
     passwordValidation: "Please enter a valid password",
+    passwordRequirements:
+      "Password must be between 6 and 16 characters long, contain at least one digit and one uppercase letter, and consist of Latin characters only",
     emailMaxCharacters: "Email must be at most 50 characters",
     emailRequired: "Email is required",
     passwordMaxCharacters: "Password must be at most 20 characters",
@@ -170,6 +172,8 @@ const messages = {
     //SignIn
     emailValidation: "Будь ласка, введіть дійсний email",
     passwordValidation: "Будь ласка, введіть дійсний пароль",
+    passwordRequirements:
+      "Пароль повинен бути від 6 до 16 символів у довжину, містити принаймні одну цифру та одну велику літеру, і складатися лише з латинських символів",
     emailMaxCharacters: "Email повинен бути не більше 50 символів",
     emailRequired: "Email є обов'язковим",
     passwordMaxCharacters: "Пароль повинен бути не більше 20 символів",

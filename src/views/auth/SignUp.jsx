@@ -146,6 +146,7 @@ export function SignUp() {
                 }
                 helperText={formik.touched.password && formik.errors.password}
                 autoComplete="new-password"
+                variant="outlined"
               />
             </Grid>
             <Grid item xs={12}>
