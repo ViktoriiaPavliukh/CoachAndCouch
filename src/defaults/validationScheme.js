@@ -11,10 +11,10 @@ export const loginSchema = (intl) => {
       .required(intl.formatMessage({ id: "emailRequired" })),
     password: Yup.string()
       .matches(
-        /^(?=.*[A-Z])(?=.*\d).{6,20}$/,
+        /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
         intl.formatMessage({ id: "passwordValidation" })
       )
-      .max(20, intl.formatMessage({ id: "passwordMaxCharacters" }))
+      .max(16, intl.formatMessage({ id: "passwordMaxCharacters" }))
       .required(intl.formatMessage({ id: "passwordRequired" })),
   });
 };
@@ -34,10 +34,10 @@ export const registrationSchema = (intl) => {
       .required(intl.formatMessage({ id: "emailRequired" })),
     password: Yup.string()
       .matches(
-        /^(?=.*[A-Z])(?=.*\d).{6,20}$/,
-        intl.formatMessage({ id: "passwordValidation" })
+        /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
+        intl.formatMessage({ id: "passwordRequirements" })
       )
-      .max(20, intl.formatMessage({ id: "passwordMaxCharacters" }))
+      .max(16, intl.formatMessage({ id: "passwordMaxCharacters" }))
       .required(intl.formatMessage({ id: "passwordRequired" })),
     passwordConfirm: Yup.string()
       .oneOf(
@@ -48,15 +48,20 @@ export const registrationSchema = (intl) => {
   });
 };
 
-export const passwordSchema = Yup.object().shape({
+export const passwordSchema = (intl) => {
+Yup.object().shape({
   password: Yup.string()
-    .matches(/^(?=.*[A-Z])(?=.*\d).{6,20}$/, "Please enter a valid password")
-    .max(20, "Password must be at most 20 characters")
+    .matches(
+      /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
+      intl.formatMessage({ id: "passwordRequirements" })
+    )
+    .max(16, "Password must be at most 16 characters")
     .required("Password is required"),
   passwordConfirm: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Password confirmation is required"),
-});
+})
+};
 
 export const teacherFormSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),

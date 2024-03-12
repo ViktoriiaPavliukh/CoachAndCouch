@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Button,
   TextField,
@@ -23,6 +24,7 @@ export function SignIn() {
   const dispatch = useDispatch();
   const intl = useIntl();
   const validationSchema = loginSchema(intl);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -42,7 +44,7 @@ export function SignIn() {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         width: "100%",
-        height: "calc(100vh - 70px)",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -86,7 +88,14 @@ export function SignIn() {
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
+                helperText={
+                  formik.touched.email && formik.errors.email ? (
+                    <Typography variant="body2" color="error">
+                      {formik.errors.email}
+                    </Typography>
+                  ) : null
+                }
+                // helperText={formik.touched.email && formik.errors.email}
                 name="email"
                 autoComplete="email"
                 variant="outlined"
@@ -132,9 +141,7 @@ export function SignIn() {
                 error={
                   formik.touched.password && Boolean(formik.errors.password)
                 }
-                helperText={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
+                helperText={formik.touched.password && formik.errors.password}
                 autoComplete="new-password"
                 variant="outlined"
               />

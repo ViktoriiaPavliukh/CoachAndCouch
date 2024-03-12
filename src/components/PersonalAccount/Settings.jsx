@@ -27,6 +27,7 @@ export const Settings = () => {
   const intl = useIntl();
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const validationSchema = passwordSchema(intl);
   const navigate = useNavigate();
   const isDarkTheme = useSelector((state) => state.theme.value);
 
@@ -36,7 +37,7 @@ export const Settings = () => {
       passwordConfirm: "",
       showPassword: false,
     },
-    validationSchema: passwordSchema,
+    validationSchema: validationSchema,
     onSubmit: ({ password }) => {
       // dispatch(registerUser({ firstName, email, password }));
       console.log("Entered password:", password);
