@@ -203,11 +203,11 @@ export function Header() {
             </ExternalLink>
           </Stack> */}
           <Stack direction="row" sx={{ display: { xs: "none", lg: "flex" } }}>
-            {/* <GreenSwitch
+            <GreenSwitch
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
-            /> */}
+            />
             <LanguageSwitcher />
             {isLoggedIn ? (
               <Box display="flex" direction="row" sx={{ gap: "24px" }}>

@@ -73,14 +73,11 @@ export function SignIn() {
             mt: 3,
           }}
         >
-          <Grid container spacing={2}>
+          <Grid container>
             <Grid item xs={12}>
               <TextField
                 sx={{
-                  mb: 2.5,
-                  "& input:-webkit-autofill": {
-                    WebkitBoxShadow: "0 0 0 1px rgba(255, 255, 255, 0) inset",
-                  },
+                  mb: "40px",
                 }}
                 size="small"
                 fullWidth
@@ -95,7 +92,6 @@ export function SignIn() {
                     </Typography>
                   ) : null
                 }
-                // helperText={formik.touched.email && formik.errors.email}
                 name="email"
                 autoComplete="email"
                 variant="outlined"
@@ -104,10 +100,7 @@ export function SignIn() {
             <Grid item xs={12}>
               <TextField
                 sx={{
-                  mb: 2.5,
-                  "& input:-webkit-autofill": {
-                    WebkitBoxShadow: "0 0 0 1px rgba(255, 255, 255, 0) inset",
-                  },
+                  mb: "28px",
                 }}
                 fullWidth
                 size="small"
@@ -148,11 +141,26 @@ export function SignIn() {
             </Grid>
           </Grid>
           <Link
-            href="#"
-            variant="posterItem"
-            sx={{ display: "flex", justifyContent: "center" }}
+            href="."
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              textDecoration: "none",
+            }}
           >
-            {intl.formatMessage({ id: "forgotPassword" })}
+            <Typography
+              variant="posterItem"
+              sx={{
+                color: (theme) => theme.palette.textColor.greyWhite,
+                textDecoration: "underline",
+                // paddingBottom: "1px",
+                // borderBottom:
+                //   "1px solid"
+              }}
+            >
+              {" "}
+              {intl.formatMessage({ id: "forgotPassword" })}
+            </Typography>
           </Link>
           <Button
             type="submit"
@@ -160,22 +168,22 @@ export function SignIn() {
             variant="contained"
             disabled={isLoggedIn}
             sx={{
-              mt: 3,
-              mb: 2,
+              mt: "28px",
+              mb: "44px",
               textTransform: "upperCase",
               backgroundColor: (theme) => theme.palette.buttonColor.secondary,
               "&:hover": {
                 backgroundColor: (theme) => theme.palette.buttonColor.hover,
               },
-              color: (theme) => theme.palette.textColor.black,
+              color: (theme) => theme.palette.textColor.header,
             }}
           >
             {isLoggedIn
               ? intl.formatMessage({ id: "loading" })
               : intl.formatMessage({ id: "signInButton" })}
           </Button>
-          <Box justifyContent="center" sx={{ marginTop: "20px" }}>
-            <Typography sx={{ textAlign: "center", mt: 2, display: "block" }}>
+          <Box justifyContent="center">
+            <Typography sx={{ textAlign: "center", display: "block" }}>
               {intl.formatMessage({ id: "newUser" })}
             </Typography>
             <Link
