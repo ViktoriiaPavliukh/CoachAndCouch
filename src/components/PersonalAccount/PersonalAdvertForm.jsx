@@ -14,9 +14,11 @@ import {
   TextField,
   Typography,
   Stack,
+  Input,
+  Avatar,
 } from "@mui/material";
 import { PersonalImage } from "./PersonalImage";
-import IconPlus from "../../assets/icons/IconPlus.jsx";
+import IconPlus from "../../assets/icons/IconPlus";
 import countriesCase from "@/helpers/countriesCase";
 import {
   advertByIdSelector,
@@ -53,7 +55,8 @@ export const PersonalAdvertForm = ({
 }) => {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
-  const [image, setImage] = useState(currentUser.advert.imagePath);
+  // const [image, setImage] = useState(currentUser.advert.imagePath);
+  const [avatar, setAvatar] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [teacherData, setTeacherData] = useState(teacher);
   const [formData, setFormData] = useState({
@@ -201,87 +204,88 @@ export const PersonalAdvertForm = ({
             overflow: "hidden",
           }}
         >
-          {image && (
-            <img
-              src={image ? image : currentUser.advert.imagePath}
-              alt="user's advert"
-              style={{
-                minHeidth: "100%",
-                objectFit: "cover",
-                display: "flex",
-                width: "263px",
-                height: "205px",
-                alignSelf: "stretch",
-              }}
-            />
-          )}
-
-          <label
-            htmlFor="image"
-            style={{
-              width: "100%",
-              height: "100%",
-              display: "block",
-              cursor: "pointer",
-              position: "absolute",
-            }}
-          >
-            <TextField
-              disabled={!editMode}
-              style={{
-                display: "none",
-              }}
-              fullWidth
-              type="file"
-              id="image"
-              name="image"
-              variant="outlined"
-              accept="image/*"
-              placeholder=""
-              onChange={(event) => {
-                formik.setFieldValue("image", event.target.files[0]);
-                setImage(URL.createObjectURL(event.target.files[0]));
-              }}
-              onBlur={formik.handleBlur}
-              error={formik.touched.image && Boolean(formik.errors.image)}
-              helperText={formik.touched.image && formik.errors.image}
-            />
-          </label>
-          {Boolean(!image) && (
-            <>
-              <label
-                disabled={!editMode}
-                htmlFor="photoPath"
-                style={{
-                  cursor: "pointer",
-                  padding: "8px 12px",
-                  border: "1px solid #D1D5DB",
-                  borderRadius: "6px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  gap: "12px",
-                }}
-              >
-                <IconPlus />
-                {intl.formatMessage({ id: "newPhoto" })}
-              </label>
-            </>
-          )}
+          <PersonalImage
+            userImage={formData.image}
+            width={"263px"}
+            height={"205px"}
+            borderRadius={"0"}
+          />
         </Box>
-        <Typography
-          variant="posterItem"
-          sx={{ color: (theme) => theme.palette.textColor.remarks }}
-        >
-          {intl.formatMessage({ id: "imgAdvise" })}
-        </Typography>
-        <Typography
-          variant="posterItem"
-          sx={{ color: (theme) => theme.palette.textColor.remarks }}
-        >
-          {intl.formatMessage({ id: "saveAdvise" })}
-        </Typography>
+        <Box>
+          {editMode ? (
+            <Stack
+              direction="column"
+              sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "flex-start" },
+                alignItems: { xs: "center", md: "flex-start" },
+                gap: "24px",
+              }}
+            >
+              <Box sx={{ display: "flex", gap: "20px" }}>
+                <Input
+                  type="file"
+                  id="image"
+                  name="image"
+                  style={{ display: "none" }}
+                  onChange={(event) => {
+                    formik.setFieldValue("image", event.target.files[0]);
+                    setAvatar(URL.createObjectURL(event.target.files[0]));
+                  }}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.image && Boolean(formik.errors.image)}
+                  // helperText={formik.touched.image && formik.errors.image}
+                />
+                <InputLabel
+                  htmlFor="image"
+                  style={{
+                    cursor: "pointer",
+                    padding: "8px 12px",
+                    border: "1px solid #D1D5DB",
+                    borderRadius: "6px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textAlign: "center",
+                    gap: "12px",
+                    width: "263px",
+                  }}
+                >
+                  <IconPlus />
+                  {intl.formatMessage({ id: "newPhoto" })}
+                </InputLabel>
+                {avatar && (
+                  <Avatar
+                    src={avatar}
+                    alt="Preview"
+                    style={{
+                      display: "flex",
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                      borderRadius: "50px",
+                      justifySelf: "center",
+                      alignSelf: "center",
+                      maxWidth: "263px",
+                    }}
+                  />
+                )}
+              </Box>
+              <Typography
+                variant="posterItem"
+                sx={{ color: (theme) => theme.palette.textColor.remarks }}
+              >
+                {intl.formatMessage({ id: "imgAdvise" })}
+              </Typography>
+              <Typography
+                variant="posterItem"
+                sx={{ color: (theme) => theme.palette.textColor.remarks }}
+              >
+                {intl.formatMessage({ id: "saveAdvise" })}
+              </Typography>
+            </Stack>
+          ) : null}
+        </Box>
         <TextField
           fullWidth
           // focused
