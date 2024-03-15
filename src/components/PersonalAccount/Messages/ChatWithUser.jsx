@@ -5,17 +5,17 @@ import {
   Divider,
   IconButton,
   Input,
-  InputLabel,
   List,
   ListItem,
   ListItemText,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Aperture, MapPin, Paperclip, Send } from "react-feather";
+import { Aperture, MapPin, Send } from "react-feather";
 import { useDispatch } from "react-redux";
 
 const messageItem = {
+  width: { xs: "300px", md: "350px", lg: "466px" },
   maxWidth: "629px",
   borderRadius: "10px",
   mb: "40px",
@@ -63,11 +63,9 @@ export const ChatWithUser = (userChat) => {
   return (
     <Box
       sx={{
-        pt: "32px",
-        pl: "32px",
-        pb: "32px",
-        pr: "90px",
-
+        display: "block",
+        p: { lg: "32px 55px 0 2px" },
+        width: { xs: "100%", md: "446px", lg: "855px" },
         height: "100vh",
       }}
     >
@@ -76,11 +74,10 @@ export const ChatWithUser = (userChat) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          width: "1142px",
           minHeight: "100%",
-          p: "8px",
+          p: { xs: "32px 16px", md: "32px 8px", lg: "8px" },
           boxShadow:
-            "0px 8px 16px 0px rgba(0, 0, 0, 0.08), 0px 0px 4px 0px rgba(0, 0, 0, 0.04)",
+            "0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.04)",
         }}
       >
         <Box>
@@ -119,8 +116,32 @@ export const ChatWithUser = (userChat) => {
                     : userMessages
                 }
               >
-                <ListItemText primary={message.message} sx={{ mr: "auto" }} />
-                <ListItemText primary={messageTime} sx={{ ml: "auto" }} />
+                <ListItemText
+                  primary={message.message}
+                  sx={{
+                    mr: "auto",
+                    mt: "0",
+                    mb: "0",
+                  }}
+                  primaryTypographyProps={{
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    lineHeight: "1.42857",
+                  }}
+                />
+                <ListItemText
+                  primary={messageTime}
+                  sx={{
+                    ml: "auto",
+                    mt: "0",
+                    mb: "0",
+                  }}
+                  primaryTypographyProps={{
+                    fontWeight: "400",
+                    fontSize: "14px",
+                    lineHeight: "1.42857",
+                  }}
+                />
               </ListItem>
             );
           })}
@@ -144,43 +165,29 @@ export const ChatWithUser = (userChat) => {
             onChange={(e) => setMessage(e.target.value)}
           />
           <Box>
-            <InputLabel
-              htmlFor="file-input"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                width: "25px",
-                height: "25px",
-              }}
-            >
-              <Paperclip
-                style={{
-                  transform: "rotate(-45deg)",
-                  color: (theme) => theme.palette.buttonColor.send,
-                }}
-              />
-            </InputLabel>
             <Input type="file" id="file-input" style={{ display: "none" }} />
           </Box>
           <IconButton
             sx={{
               borderRadius: "6px",
-              border: "1px solid #498E4C",
+              border: "2px solid",
+              borderColor: (theme) =>
+                theme.palette.buttonColorComponentFigma.defaultGreen,
+              color: "inherit",
               minWidth: "37px",
               height: "34px",
               p: "8px",
-              ml: "18px",
               display: "flex",
               alignItems: "center",
+              "&:hover": {
+                borderColor: (theme) =>
+                  theme.palette.buttonColorComponentFigma.hoverGreen,
+                background: "transparent",
+              },
             }}
             onClick={handleSendMessage}
           >
-            <Send
-              style={{
-                transform: "rotate(45deg)",
-                color: (theme) => theme.palette.buttonColor.send,
-              }}
-            />
+            <Send strokeColor={(theme) => theme.palette.buttonColor.send} />
           </IconButton>
         </Box>
       </Box>
