@@ -49,18 +49,18 @@ export const registrationSchema = (intl) => {
 };
 
 export const passwordSchema = (intl) => {
-Yup.object().shape({
-  password: Yup.string()
-    .matches(
-      /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
-      intl.formatMessage({ id: "passwordRequirements" })
-    )
-    .max(16, "Password must be at most 16 characters")
-    .required("Password is required"),
-  passwordConfirm: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Password confirmation is required"),
-})
+  Yup.object().shape({
+    password: Yup.string()
+      .matches(
+        /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
+        intl.formatMessage({ id: "passwordRequirements" })
+      )
+      .max(16, "Password must be at most 16 characters")
+      .required("Password is required"),
+    passwordConfirm: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Password confirmation is required"),
+  });
 };
 
 export const teacherFormSchema = Yup.object({
@@ -85,5 +85,5 @@ export const userValidationSchema = Yup.object().shape({
   birthday: Yup.string().required("Birthday is required").nullable(),
   aboutMe: Yup.string().required("Description is required"),
   photoPath: Yup.mixed(),
-  // country: Yup.string().required("Country is required"),
+  country: Yup.string().required("Country is required"),
 });
