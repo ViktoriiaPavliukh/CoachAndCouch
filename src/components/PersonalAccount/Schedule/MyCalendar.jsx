@@ -110,9 +110,18 @@ const dayFormat = (date) => {
     .format("ddd")
     .toUpperCase()}`;
 };
+
+const eventFormat = ({ start, end }, culture, localizer) =>
+  `${localizer.format(start, "hh:mm", culture)} - ${localizer.format(
+    end,
+    "hh:mm",
+    culture
+  )}`;
+
 let formats = {
-  timeGutterFormat: "HH:mm",
+  timeGutterFormat: "hh:mm",
   dayFormat: dayFormat,
+  eventTimeRangeFormat: eventFormat,
 };
 
 const handleSlotSelection = () => {
@@ -152,11 +161,12 @@ export const MyCalendar = () => {
   );
 };
 
-const eventPropGetter = (date) => {
+const eventPropGetter = () => {
   const eventStyle = {
     backgroundColor: "#60a6fa",
     border: "none",
     outline: "none",
+    padding: "8px",
   };
 
   return {
@@ -213,20 +223,22 @@ const TimeGutterHeader = () => {
   );
 };
 
-const CustomEventComponent = (date) => {
-  console.log(date);
-
-  console.log(date.events);
+const CustomEventComponent = ({ event }) => {
+  console.log(event);
+  const { start, end, title } = event;
   return (
     <div>
-      <div>{date.title}</div>
-      <div>
+      <div>{title}</div>
+      <div style={{ display: "flex", gap: "7px", marginTop: "7px" }}>
         <Clock />
+        <div>
+          {`${moment(start).format("hh:mm")} - ${moment(end).format("hh:mm")}`}
+        </div>
       </div>
     </div>
   );
 };
 
-// DateCellWrapper.propTypes = {
-//   children: PropTypes.any.isRequired,
-// };
+CustomEventComponent.propTypes = {
+  event: PropTypes.object.isRequired,
+};

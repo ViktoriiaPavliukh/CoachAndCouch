@@ -87,8 +87,25 @@ img {
 .rbc-event-label {
   display: none !important;
 }
-.rbc-time-view {
+.rbc-time-view, .rbc-time-header-cell 
+/* .rbc-allday-cell,
+.rbc-time-header-content  */ {
   border: none !important;
+}
+.rbc-time-header.rbc-overflowing {
+  border-right: none !important;
+}
+.rbc-header {
+  border-bottom: none !important;
+  border-left: none !important;
+}
+/* .rbc-header  */
+/* .rbc-allday-cell, */
+.rbc-time-header-content {
+  border-left: none !important;
+}
+.rbc-row-content {
+  border-left: 1px solid #ddd !important;
 }
 .rbc-time-header-gutter,
 .rbc-time-gutter {
@@ -101,8 +118,3 @@ img {
 .rbc-day-slot .rbc-time-slot {
   border: none !important;
 }
-
-/* .rbc-event {
-  background-color: #60a6fa !important;
-  border: none !important;
-} */

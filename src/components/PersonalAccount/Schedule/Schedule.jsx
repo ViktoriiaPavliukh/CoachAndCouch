@@ -13,7 +13,6 @@ export const Schedule = () => {
         flexDirection: "column",
       }}
     >
-      {/* <Typography>My Schedule</Typography> */}
       <MyCalendar />
     </Box>
   );
