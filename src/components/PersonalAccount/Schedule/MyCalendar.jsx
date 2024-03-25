@@ -1,21 +1,24 @@
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
+
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Children, cloneElement } from "react";
-import { CustomToolbar } from "./MyToolbar";
+import { CustomToolbar } from "./CustomToolbar";
+import { Typography } from "@mui/material";
+import { Clock } from "react-feather";
 const localizer = momentLocalizer(moment);
 const eventsList = [
   {
     title: "All Day Event very long title",
     allDay: true,
-    start: new Date(2024, 2, 11),
-    end: new Date(2024, 2, 11),
+    start: new Date(2024, 2, 23),
+    end: new Date(2024, 2, 23),
   },
   {
     title: "Long Event",
-    start: new Date(2023, 12, 7),
-    end: new Date(2023, 12, 10),
+    start: new Date(2024, 2, 26),
+    end: new Date(2024, 2, 36),
   },
 
   {
@@ -26,68 +29,68 @@ const eventsList = [
 
   {
     title: "DTS ENDS",
-    start: new Date(2016, 10, 6, 0, 0, 0),
-    end: new Date(2016, 10, 13, 0, 0, 0),
+    start: new Date(2024, 2, 25, 0, 0, 0),
+    end: new Date(2024, 2, 30, 0, 0, 0),
   },
 
   {
     title: "Some Event",
-    start: new Date(2015, 3, 9, 0, 0, 0),
-    end: new Date(2015, 3, 9, 0, 0, 0),
+    start: new Date(2024, 2, 20, 0, 0, 0),
+    end: new Date(2024, 2, 20, 0, 0, 0),
   },
   {
     title: "Conference",
-    start: new Date(2015, 3, 11),
-    end: new Date(2015, 3, 13),
+    start: new Date(2024, 2, 11),
+    end: new Date(2024, 2, 13),
     desc: "Big conference for important people",
   },
   {
     title: "Meeting",
-    start: new Date(2015, 3, 12, 10, 30, 0, 0),
-    end: new Date(2015, 3, 12, 12, 30, 0, 0),
+    start: new Date(2024, 2, 20, 10, 30, 0, 0),
+    end: new Date(2024, 2, 20, 12, 30, 0, 0),
     desc: "Pre-meeting meeting, to prepare for the meeting",
   },
   {
     title: "Lunch",
-    start: new Date(2015, 3, 12, 12, 0, 0, 0),
-    end: new Date(2015, 3, 12, 13, 0, 0, 0),
+    start: new Date(2024, 3, 12, 12, 0, 0, 0),
+    end: new Date(2024, 3, 12, 13, 0, 0, 0),
     desc: "Power lunch",
   },
   {
     title: "Meeting",
-    start: new Date(2015, 3, 12, 14, 0, 0, 0),
-    end: new Date(2015, 3, 12, 15, 0, 0, 0),
+    start: new Date(2024, 3, 12, 14, 0, 0, 0),
+    end: new Date(2024, 3, 12, 15, 0, 0, 0),
   },
   {
     title: "Happy Hour",
-    start: new Date(2015, 3, 12, 17, 0, 0, 0),
-    end: new Date(2015, 3, 12, 17, 30, 0, 0),
+    start: new Date(2024, 3, 12, 17, 0, 0, 0),
+    end: new Date(2024, 3, 12, 17, 30, 0, 0),
     desc: "Most important meal of the day",
   },
   {
     title: "Dinner",
-    start: new Date(2015, 3, 12, 20, 0, 0, 0),
-    end: new Date(2015, 3, 12, 21, 0, 0, 0),
+    start: new Date(2024, 3, 12, 20, 0, 0, 0),
+    end: new Date(2024, 3, 12, 21, 0, 0, 0),
   },
   {
     title: "Birthday Party",
-    start: new Date(2015, 3, 13, 7, 0, 0),
-    end: new Date(2015, 3, 13, 10, 30, 0),
+    start: new Date(2024, 3, 13, 7, 0, 0),
+    end: new Date(2024, 3, 13, 10, 30, 0),
   },
   {
     title: "Birthday Party 2",
-    start: new Date(2015, 3, 13, 7, 0, 0),
-    end: new Date(2015, 3, 13, 10, 30, 0),
+    start: new Date(2024, 3, 13, 7, 0, 0),
+    end: new Date(2024, 3, 13, 10, 30, 0),
   },
   {
     title: "Birthday Party 3",
-    start: new Date(2015, 3, 13, 7, 0, 0),
-    end: new Date(2015, 3, 13, 10, 30, 0),
+    start: new Date(2024, 3, 13, 7, 0, 0),
+    end: new Date(2024, 3, 13, 10, 30, 0),
   },
   {
     title: "Late Night Event",
-    start: new Date(2015, 3, 17, 19, 30, 0),
-    end: new Date(2015, 3, 18, 2, 0, 0),
+    start: new Date(2024, 3, 17, 19, 30, 0),
+    end: new Date(2024, 3, 18, 2, 0, 0),
   },
   {
     title: "Multi-day Event",
@@ -102,44 +105,88 @@ moment.locale("ua", {
     doy: 1,
   },
 });
+const dayFormat = (date) => {
+  return `${moment(date).format("DD")}\n${moment(date)
+    .format("ddd")
+    .toUpperCase()}`;
+};
+let formats = {
+  timeGutterFormat: "HH:mm",
+  dayFormat: dayFormat,
+};
 
-const handleSlotSelection = ({ start, end, action }) => {
+const handleSlotSelection = () => {
   return { style: { backgroundColor: "red" } };
 };
-export const MyCalendar = () => (
-  <div>
-    <Calendar
-      localizer={localizer}
-      components={{
-        dateCellWrapper: DateCellWrapper,
-        toolbar: CustomToolbar,
-      }}
-      defaultView={Views.WEEK}
-      events={eventsList}
-      startAccessor="start"
-      endAccessor="end"
-      style={{
-        width: "100%",
-        display: "flex",
-        paddingTop: "20px",
-        height: "75vh",
-      }}
-      timeslots={2}
-      selectable={true}
-      popup
-      // toolbar={MyToolbar}
-      onSelectSlot={handleSlotSelection}
-      slotPropGetter={slotPropGetter}
-    />
-  </div>
-);
+export const MyCalendar = () => {
+  return (
+    <div>
+      <Calendar
+        localizer={localizer}
+        formats={formats}
+        components={{
+          // dateCellWrapper: DateCellWrapper,
+          toolbar: (props) => <CustomToolbar {...props} />,
+          timeGutterHeader: TimeGutterHeader,
+          event: CustomEventComponent,
+        }}
+        defaultView={Views.WEEK}
+        events={eventsList}
+        startAccessor="start"
+        endAccessor="end"
+        style={{
+          width: "100%",
+          display: "flex",
+          paddingTop: "20px",
+          height: "90vh",
+        }}
+        timeslots={2}
+        selectable={true}
+        popup
+        onSelectSlot={handleSlotSelection}
+        slotPropGetter={slotPropGetter}
+        eventPropGetter={eventPropGetter}
+        dayPropGetter={dayPropGetter}
+      />
+    </div>
+  );
+};
+
+const eventPropGetter = (date) => {
+  const eventStyle = {
+    backgroundColor: "#60a6fa",
+    border: "none",
+    outline: "none",
+  };
+
+  return {
+    style: eventStyle,
+  };
+};
+const dayPropGetter = (date) => {
+  const today = moment().startOf("day");
+  const isToday = moment(date).isSame(today, "day");
+
+  let color = "inherit";
+
+  if (isToday) {
+    color = "#0e5b1d";
+    // color = (theme) => theme.palette.buttonColor.greenDark;
+  }
+  return {
+    style: {
+      backgroundColor: "transparent",
+      color: color,
+    },
+  };
+};
 
 const slotPropGetter = (date) => {
   const CURRENT_DATE = moment().toDate();
   let backgroundColor;
 
   if (moment(date).isBefore(CURRENT_DATE, "month")) {
-    backgroundColor = "#f7f8f9";
+    backgroundColor = "#fff";
   }
 
   var style = {
@@ -149,14 +196,37 @@ const slotPropGetter = (date) => {
     style: style,
   };
 };
-const DateCellWrapper = ({ children }) => {
-  const style = {
-    backgroundColor: "#000",
-  };
+// const DateCellWrapper = ({ children }) => {
+//   const style = {
+//     backgroundColor: "red",
+//   };
 
-  return <div style={style}>{children}</div>;
+//   return <div style={style}>{children}</div>;
+// };
+
+const TimeGutterHeader = () => {
+  const intl = useIntl();
+  return (
+    <Typography sx={(theme) => ({ ...theme.typography.text })}>
+      {intl.formatMessage({ id: "schedule.week" })}
+    </Typography>
+  );
 };
 
-DateCellWrapper.propTypes = {
-  children: PropTypes.any.isRequired,
+const CustomEventComponent = (date) => {
+  console.log(date);
+
+  console.log(date.events);
+  return (
+    <div>
+      <div>{date.title}</div>
+      <div>
+        <Clock />
+      </div>
+    </div>
+  );
 };
+
+// DateCellWrapper.propTypes = {
+//   children: PropTypes.any.isRequired,
+// };

@@ -57,3 +57,52 @@ img {
   font-size: 2rem;
   margin: 5px;
 }
+
+.rbc-toolbar {
+  justify-content: space-between !important;
+  margin-bottom: 16px !important;
+}
+
+@media screen and (min-width: 1440px) {
+  .rbc-toolbar {
+    margin-bottom: 40px !important;
+  }
+}
+.rbc-btn-group-arrows {
+  width: 68px;
+  display: flex;
+  justify-content: space-between;
+}
+.rbc-btn-group-flex {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+}
+.rbc-btn-group-flex button:focus,
+.rbc-btn-group-flex button:hover,
+.rbc-btn-group-flex button:active {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.rbc-event-label {
+  display: none !important;
+}
+.rbc-time-view {
+  border: none !important;
+}
+.rbc-time-header-gutter,
+.rbc-time-gutter {
+  width: 143px !important;
+}
+
+.rbc-time-gutter .rbc-timeslot-group {
+  align-items: flex-start;
+}
+.rbc-day-slot .rbc-time-slot {
+  border: none !important;
+}
+
+/* .rbc-event {
+  background-color: #60a6fa !important;
+  border: none !important;
+} */

@@ -166,6 +166,10 @@ const messages = {
     imgAdvise:
       "The photo size should be a minimum of 200x200 pixels and a maximum of 5 MB. Image format: JPG, PNG.",
     saveAdvise: "After uploading, click 'Save'",
+
+    //schedule
+    "schedule.today": "Today",
+    "schedule.week": "Week",
   },
 
   uk: {
@@ -334,6 +338,10 @@ const messages = {
     imgAdvise:
       "Розмір фотографії повинен бути не менше 200x200 пікселів і не більше 5 МБ. Формат зображення JPG, PNG",
     saveAdvise: 'Після завантаження натисніть "Зберегти"',
+
+    //schedule
+    "schedule.today": "Сьогодні",
+    "schedule.week": "Тиждень",
   },
 };
 
