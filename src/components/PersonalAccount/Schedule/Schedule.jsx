@@ -5,10 +5,10 @@ export const Schedule = () => {
   return (
     <Box
       sx={{
+        width: { xs: "100%", md: "708px", lg: "1032px" },
         paddingTop: { xs: "32px", md: "24px", lg: "46px" },
         paddingLeft: { md: "60px", lg: "41px" },
 
-        width: { xs: "100%", md: "648px", lg: "991px" },
         display: "flex",
         flexDirection: "column",
       }}

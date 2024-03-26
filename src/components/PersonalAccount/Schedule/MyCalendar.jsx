@@ -7,47 +7,32 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
 import { Typography } from "@mui/material";
 import { Clock } from "react-feather";
+import { useState } from "react";
 const localizer = momentLocalizer(moment);
 const eventsList = [
   {
-    title: "All Day Event very long title",
-    allDay: true,
-    start: new Date(2024, 2, 23),
-    end: new Date(2024, 2, 23),
-  },
-  {
-    title: "Long Event",
-    start: new Date(2024, 2, 26),
-    end: new Date(2024, 2, 36),
-  },
-
-  {
     title: "DTS STARTS",
-    start: new Date(2024, 2, 11, 0, 0, 0),
-    end: new Date(2024, 2, 11, 0, 0, 0),
+    start: new Date(2024, 2, 28, 15, 0, 0),
+    end: new Date(2024, 2, 28, 16, 30, 0),
   },
 
   {
     title: "DTS ENDS",
-    start: new Date(2024, 2, 25, 0, 0, 0),
-    end: new Date(2024, 2, 30, 0, 0, 0),
+    start: new Date(2024, 2, 30, 12, 0, 0),
+    end: new Date(2024, 2, 30, 13, 0, 0),
   },
 
   {
     title: "Some Event",
-    start: new Date(2024, 2, 20, 0, 0, 0),
-    end: new Date(2024, 2, 20, 0, 0, 0),
+    start: new Date(2024, 2, 27, 11, 0, 0),
+    end: new Date(2024, 2, 27, 12, 0, 0),
+    desc: "Most important meal of the day",
   },
-  {
-    title: "Conference",
-    start: new Date(2024, 2, 11),
-    end: new Date(2024, 2, 13),
-    desc: "Big conference for important people",
-  },
+
   {
     title: "Meeting",
-    start: new Date(2024, 2, 20, 10, 30, 0, 0),
-    end: new Date(2024, 2, 20, 12, 30, 0, 0),
+    start: new Date(2024, 3, 6, 10, 30, 0, 0),
+    end: new Date(2024, 3, 3, 12, 30, 0, 0),
     desc: "Pre-meeting meeting, to prepare for the meeting",
   },
   {
@@ -89,13 +74,13 @@ const eventsList = [
   },
   {
     title: "Late Night Event",
-    start: new Date(2024, 3, 17, 19, 30, 0),
-    end: new Date(2024, 3, 18, 2, 0, 0),
+    start: new Date(2024, 2, 27, 19, 30, 0),
+    end: new Date(2024, 2, 2, 2, 0, 0),
   },
   {
     title: "Multi-day Event",
-    start: new Date(2015, 3, 20, 19, 30, 0),
-    end: new Date(2015, 3, 22, 2, 0, 0),
+    start: new Date(2015, 2, 20, 19, 30, 0),
+    end: new Date(2015, 2, 22, 2, 0, 0),
   },
 ];
 
@@ -106,57 +91,93 @@ moment.locale("ua", {
   },
 });
 const dayFormat = (date) => {
-  return `${moment(date).format("DD")}\n${moment(date)
-    .format("ddd")
-    .toUpperCase()}`;
+  // const day = moment(date).format("DD");
+  // const weekDay = moment(date).format("ddd").toUpperCase();
+  // return `${day} ${weekDay}`;
+  return moment(date).format("DD[\n]ddd").toUpperCase();
 };
 
-const eventFormat = ({ start, end }, culture, localizer) =>
-  `${localizer.format(start, "hh:mm", culture)} - ${localizer.format(
-    end,
-    "hh:mm",
-    culture
-  )}`;
-
 let formats = {
-  timeGutterFormat: "hh:mm",
+  timeGutterFormat: "HH:mm",
   dayFormat: dayFormat,
-  eventTimeRangeFormat: eventFormat,
 };
 
 const handleSlotSelection = () => {
   return { style: { backgroundColor: "red" } };
 };
+// const handleSelectedEvent = () => {
+//   <div className="modal">{console.log("hello")}</div>;
+// };
+
 export const MyCalendar = () => {
+  const defaultDate = new Date();
+  defaultDate.setHours(7, 0, 0);
+
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
+
+  const handleSelectEvent = (event, e) => {
+    const boundingBox = e.target.getBoundingClientRect();
+    const x = boundingBox.left + boundingBox.width;
+    const y = boundingBox.top + boundingBox.height;
+
+    setSelectedEvent(event);
+    setPopupPosition({ x, y });
+  };
+
+  const handleClosePopup = (e) => {
+    setSelectedEvent(null);
+  };
+
   return (
     <div>
       <Calendar
         localizer={localizer}
         formats={formats}
         components={{
-          // dateCellWrapper: DateCellWrapper,
           toolbar: (props) => <CustomToolbar {...props} />,
           timeGutterHeader: TimeGutterHeader,
           event: CustomEventComponent,
         }}
         defaultView={Views.WEEK}
+        scrollToTime={defaultDate}
         events={eventsList}
         startAccessor="start"
         endAccessor="end"
         style={{
           width: "100%",
           display: "flex",
-          paddingTop: "20px",
           height: "90vh",
         }}
         timeslots={2}
         selectable={true}
-        popup
+        popup={true}
         onSelectSlot={handleSlotSelection}
+        onSelectEvent={handleSelectEvent}
         slotPropGetter={slotPropGetter}
         eventPropGetter={eventPropGetter}
         dayPropGetter={dayPropGetter}
       />
+      {selectedEvent && (
+        <div
+          className="popup"
+          style={{
+            position: "absolute",
+            top: popupPosition.y,
+            left: popupPosition.x,
+            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+            backgroundColor: "#fff",
+            borderRadius: "6px",
+            padding: "12px",
+            // backgroundColor: (theme) => theme.palette.background.mainPage,
+          }}
+          onClick={handleClosePopup}
+        >
+          <h3>{selectedEvent.title}</h3>
+          <p>{selectedEvent.desc}</p>
+          <button onClick={handleClosePopup}>Close</button>
+        </div>
+      )}
     </div>
   );
 };
@@ -206,13 +227,6 @@ const slotPropGetter = (date) => {
     style: style,
   };
 };
-// const DateCellWrapper = ({ children }) => {
-//   const style = {
-//     backgroundColor: "red",
-//   };
-
-//   return <div style={style}>{children}</div>;
-// };
 
 const TimeGutterHeader = () => {
   const intl = useIntl();
@@ -224,13 +238,22 @@ const TimeGutterHeader = () => {
 };
 
 const CustomEventComponent = ({ event }) => {
-  console.log(event);
   const { start, end, title } = event;
+
   return (
     <div>
       <div>{title}</div>
-      <div style={{ display: "flex", gap: "7px", marginTop: "7px" }}>
-        <Clock />
+      <div
+        style={{
+          display: "flex",
+          gap: "7px",
+          marginTop: "7px",
+          color: "#e5e7eb",
+          fontSize: "14px",
+          lineHeight: "1.42857",
+        }}
+      >
+        <Clock color="#e5e7eb" />
         <div>
           {`${moment(start).format("hh:mm")} - ${moment(end).format("hh:mm")}`}
         </div>
