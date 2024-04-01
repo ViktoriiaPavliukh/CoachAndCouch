@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
-
+import { lightTheme, darkTheme } from "../../../styles/theme";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -8,6 +8,10 @@ import { CustomToolbar } from "./CustomToolbar";
 import { Typography } from "@mui/material";
 import { Clock } from "react-feather";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectTheme } from "@/redux/theme/selectors";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+
 const localizer = momentLocalizer(moment);
 const eventsList = [
   {
@@ -89,44 +93,98 @@ moment.locale("ua", {
     dow: 1,
     doy: 1,
   },
+  weekdays: [
+    "Неділя",
+    "Понеділок",
+    "Вівторок",
+    "Середа",
+    "Четвер",
+    "П'ятниця",
+    "Субота",
+  ],
+  weekdaysShort: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
+  months: [
+    "Січень",
+    "Лютий",
+    "Березень",
+    "Квітень",
+    "Травень",
+    "Червень",
+    "Липень",
+    "Серпень",
+    "Вересень",
+    "Жовтень",
+    "Листопад",
+    "Грудень",
+  ],
+  monthsShort: [
+    "Січ",
+    "Лют",
+    "Бер",
+    "Кві",
+    "Тра",
+    "Чер",
+    "Лип",
+    "Сер",
+    "Вер",
+    "Жов",
+    "Лис",
+    "Гру",
+  ],
 });
-const dayFormat = (date) => {
-  // const day = moment(date).format("DD");
-  // const weekDay = moment(date).format("ddd").toUpperCase();
-  // return `${day} ${weekDay}`;
-  return moment(date).format("DD[\n]ddd").toUpperCase();
-};
 
 let formats = {
   timeGutterFormat: "HH:mm",
-  dayFormat: dayFormat,
 };
 
 const handleSlotSelection = () => {
   return { style: { backgroundColor: "red" } };
 };
-// const handleSelectedEvent = () => {
-//   <div className="modal">{console.log("hello")}</div>;
-// };
-
 export const MyCalendar = () => {
+  const theme = useSelector(selectTheme);
+  const language = useSelector(selectCurrentLanguage);
+  const culture = language === "en" ? "en" : "ua";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
 
+  const handleNoScroll = () => {
+    document.body.style.overflow = selectedEvent ? "hidden" : "auto";
+  };
   const handleSelectEvent = (event, e) => {
-    const boundingBox = e.target.getBoundingClientRect();
-    const x = boundingBox.left + boundingBox.width;
-    const y = boundingBox.top + boundingBox.height;
-
+    const { left, top } = e.currentTarget.getBoundingClientRect();
     setSelectedEvent(event);
-    setPopupPosition({ x, y });
+    setPopupPosition({ x: left + 100, y: top - 100 });
+    handleNoScroll();
   };
 
-  const handleClosePopup = (e) => {
+  const handleClosePopup = () => {
     setSelectedEvent(null);
+  };
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      setSelectedEvent(null);
+    }
+  };
+  const dayPropGetter = (date) => {
+    const today = moment().startOf("day");
+    const isToday = moment(date).isSame(today, "day");
+
+    let color = "inherit";
+
+    if (isToday) {
+      color = !theme
+        ? lightTheme.palette.primary.main
+        : darkTheme.palette.primary.main;
+    }
+    return {
+      style: {
+        backgroundColor: "transparent",
+        color: color,
+      },
+    };
   };
 
   return (
@@ -134,10 +192,14 @@ export const MyCalendar = () => {
       <Calendar
         localizer={localizer}
         formats={formats}
+        culture={culture}
         components={{
           toolbar: (props) => <CustomToolbar {...props} />,
           timeGutterHeader: TimeGutterHeader,
           event: CustomEventComponent,
+          week: {
+            header: CustomDayComponent,
+          },
         }}
         defaultView={Views.WEEK}
         scrollToTime={defaultDate}
@@ -148,6 +210,7 @@ export const MyCalendar = () => {
           width: "100%",
           display: "flex",
           height: "90vh",
+          color: !theme ? "#6b7280" : "#9ca3af",
         }}
         timeslots={2}
         selectable={true}
@@ -160,22 +223,65 @@ export const MyCalendar = () => {
       />
       {selectedEvent && (
         <div
-          className="popup"
+          onClick={handleOverlayClick}
           style={{
-            position: "absolute",
-            top: popupPosition.y,
-            left: popupPosition.x,
-            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-            backgroundColor: "#fff",
-            borderRadius: "6px",
-            padding: "12px",
-            // backgroundColor: (theme) => theme.palette.background.mainPage,
+            background: "transparent",
+            position: "fixed",
+            width: "100%",
+            height: "100%",
+            zIndex: "100",
+            top: 0,
+            left: 0,
           }}
-          onClick={handleClosePopup}
         >
-          <h3>{selectedEvent.title}</h3>
-          <p>{selectedEvent.desc}</p>
-          <button onClick={handleClosePopup}>Close</button>
+          <div
+            className="popup"
+            style={{
+              position: "absolute",
+              top: popupPosition.y,
+              left: popupPosition.x,
+              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+              borderRadius: "6px",
+              padding: "12px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "24px",
+              backgroundColor: !theme
+                ? lightTheme.palette.background.mainPage
+                : darkTheme.palette.background.mainPage,
+            }}
+            onClick={handleClosePopup}
+          >
+            <h3
+              style={{
+                fontWeight: "500",
+                fontSize: "24px",
+                lineHeight: "1.17",
+              }}
+            >
+              {selectedEvent.title}
+            </h3>
+            <p
+              style={{
+                fontWeight: "400",
+                fontSize: "18px",
+                lineHeight: "1.56",
+              }}
+            >{`${moment(selectedEvent.start).format("hh:mm")}-${moment(
+              selectedEvent.end
+            ).format("hh:mm")}`}</p>
+            {selectedEvent.desc && (
+              <p
+                style={{
+                  fontWeight: "400",
+                  fontSize: "18px",
+                  lineHeight: "1.55556",
+                }}
+              >
+                {selectedEvent.desc}
+              </p>
+            )}
+          </div>
         </div>
       )}
     </div>
@@ -192,23 +298,6 @@ const eventPropGetter = () => {
 
   return {
     style: eventStyle,
-  };
-};
-const dayPropGetter = (date) => {
-  const today = moment().startOf("day");
-  const isToday = moment(date).isSame(today, "day");
-
-  let color = "inherit";
-
-  if (isToday) {
-    color = "#0e5b1d";
-    // color = (theme) => theme.palette.buttonColor.greenDark;
-  }
-  return {
-    style: {
-      backgroundColor: "transparent",
-      color: color,
-    },
   };
 };
 
@@ -236,10 +325,24 @@ const TimeGutterHeader = () => {
     </Typography>
   );
 };
-
+const CustomDayComponent = ({ date }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "34px",
+        gap: "3px",
+        marginBottom: "12px",
+      }}
+    >
+      <div>{moment(date).format("DD")}</div>
+      <div>{moment(date).format("ddd").toUpperCase()}</div>
+    </div>
+  );
+};
 const CustomEventComponent = ({ event }) => {
   const { start, end, title } = event;
-
   return (
     <div>
       <div>{title}</div>
@@ -255,7 +358,7 @@ const CustomEventComponent = ({ event }) => {
       >
         <Clock color="#e5e7eb" />
         <div>
-          {`${moment(start).format("hh:mm")} - ${moment(end).format("hh:mm")}`}
+          {`${moment(start).format("hh:mm")}-${moment(end).format("hh:mm")}`}
         </div>
       </div>
     </div>
@@ -264,4 +367,7 @@ const CustomEventComponent = ({ event }) => {
 
 CustomEventComponent.propTypes = {
   event: PropTypes.object.isRequired,
+};
+CustomDayComponent.propTypes = {
+  date: PropTypes.object.isRequired,
 };

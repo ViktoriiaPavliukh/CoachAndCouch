@@ -86,10 +86,12 @@ img {
   background-color: transparent !important;
   box-shadow: none !important;
 }
-
-.rbc-header {
+.rbc-row .rbc-time-header-cell .rbc-header {
   overflow: inherit !important;
   white-space: inherit !important;
+}
+.rbc-time-view .rbc-allday-cell {
+  display: none !important;
 }
 .rbc-day-slot .rbc-events-container {
   margin-right: 0px !important;
@@ -103,6 +105,7 @@ img {
 }
 .rbc-time-header.rbc-overflowing {
   border-right: none !important;
+  margin-right: 0 !important;
 }
 .rbc-header {
   border-bottom: none !important;
@@ -117,14 +120,24 @@ img {
 }
 .rbc-time-header-gutter,
 .rbc-time-gutter {
-  width: 143px !important;
+  min-width: 100px !important;
+  padding: 0 !important;
+}
+.rbc-row-segment {
+  padding: 0 !important;
 }
 
 .rbc-time-gutter .rbc-timeslot-group {
   align-items: flex-start;
 }
+
 .rbc-day-slot .rbc-time-slot {
-  border: none !important;
+  border-top: none !important;
+}
+.rbc-time-content {
+  border-top: none !important;
+
+  /* border-top: 1px solid #ddd !important; */
 }
 .rbc-timeslot-group {
   min-height: 71px !important;
