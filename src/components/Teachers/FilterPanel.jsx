@@ -29,7 +29,7 @@ export function FilterTeacherPanel({ onFiltersChange }) {
   const countries = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
   const en = useSelector(selectCurrentLanguage);
-
+  console.log(languages);
   useEffect(() => {
     onFiltersChange(selectedFilters);
   }, [selectedFilters]);

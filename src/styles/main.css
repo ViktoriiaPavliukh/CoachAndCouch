@@ -57,3 +57,95 @@ img {
   font-size: 2rem;
   margin: 5px;
 }
+
+.rbc-toolbar {
+  justify-content: space-between !important;
+  margin-bottom: 16px !important;
+}
+@media screen and (min-width: 1440px) {
+  .rbc-toolbar {
+    margin-bottom: 40px !important;
+  }
+}
+.rbc-toolbar-label {
+  padding: 0 0 !important;
+}
+.rbc-btn-group-arrows {
+  width: 68px;
+  display: flex;
+  justify-content: space-between;
+}
+.rbc-btn-group-flex {
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+}
+.rbc-btn-group-flex button:focus,
+.rbc-btn-group-flex button:hover,
+.rbc-btn-group-flex button:active {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.rbc-row .rbc-time-header-cell .rbc-header {
+  overflow: inherit !important;
+  white-space: inherit !important;
+}
+.rbc-time-view .rbc-allday-cell {
+  display: none !important;
+}
+.rbc-day-slot .rbc-events-container {
+  margin-right: 0px !important;
+}
+.rbc-event-label {
+  display: none !important;
+}
+.rbc-time-view,
+.rbc-time-header-cell {
+  border: none !important;
+}
+.rbc-time-header.rbc-overflowing {
+  border-right: none !important;
+  margin-right: 0 !important;
+}
+.rbc-header {
+  border-bottom: none !important;
+  border-left: none !important;
+}
+
+.rbc-time-header-content {
+  border-left: none !important;
+}
+.rbc-row-content {
+  border-left: 1px solid #ddd !important;
+}
+.rbc-time-header-gutter,
+.rbc-time-gutter {
+  min-width: 100px !important;
+  padding: 0 !important;
+}
+.rbc-row-segment {
+  padding: 0 !important;
+}
+
+.rbc-time-gutter .rbc-timeslot-group {
+  align-items: flex-start;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-top: none !important;
+}
+.rbc-time-content {
+  border-top: none !important;
+
+  /* border-top: 1px solid #ddd !important; */
+}
+.rbc-timeslot-group {
+  min-height: 71px !important;
+}
+.modal-show {
+  display: block;
+}
+
+.modal-hide {
+  display: none;
+}
