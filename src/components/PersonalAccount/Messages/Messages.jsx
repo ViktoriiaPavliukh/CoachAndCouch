@@ -14,14 +14,16 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
-import { Aperture } from "react-feather";
+import { useIntl } from "react-intl";
+
+import { Aperture, ChevronLeft } from "react-feather";
 import { ChatWithUser } from "./ChatWithUser";
 import { useState } from "react";
 
 export const Messages = () => {
   // const dispatch = useDispatch();
   // const messages = useSelector(selectMessages);
-  // const intl = useIntl();
+  const intl = useIntl();
   const [userChat, setUserChat] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -42,7 +44,6 @@ export const Messages = () => {
   });
   useEffect(() => {
     setUserChat(sortedChats[0]);
-    // dispatch(getUserMessages());
   }, []);
   const handleSidebarChatClick = (chat) => {
     setUserChat(chat);
@@ -59,7 +60,26 @@ export const Messages = () => {
           }}
         >
           {isChatOpen && userChat ? (
-            <ChatWithUser user={userChat} />
+            <div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsChatOpen(false);
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  background: "transparent",
+                  border: "none",
+                  color: "#000",
+                }}
+              >
+                <ChevronLeft />
+                <p> {intl.formatMessage({ id: "goBack" })}</p>
+              </button>
+              <ChatWithUser user={userChat} />
+            </div>
           ) : (
             <Box
               sx={{
@@ -154,7 +174,6 @@ export const Messages = () => {
           >
             <List>
               {messages.map((chat) => {
-                console.log(chat);
                 const sortedMessages = [...chat.messages].sort((a, b) => {
                   return new Date(b.writtedAt) - new Date(a.writtedAt);
                 });
