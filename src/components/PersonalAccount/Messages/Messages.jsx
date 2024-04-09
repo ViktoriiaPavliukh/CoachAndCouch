@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { useIntl } from "react-intl";
 // import { useDispatch, useSelector } from "react-redux";
 // import { getUserMessages } from "@/redux/users/operations";
 import messages from "../../../defaults/conversations.json";
@@ -19,6 +18,7 @@ import { useIntl } from "react-intl";
 import { Aperture, ChevronLeft } from "react-feather";
 import { ChatWithUser } from "./ChatWithUser";
 import { useState } from "react";
+import { lightTheme, darkTheme } from "../../../styles/theme";
 
 export const Messages = () => {
   // const dispatch = useDispatch();
@@ -73,6 +73,9 @@ export const Messages = () => {
                   background: "transparent",
                   border: "none",
                   color: "#000",
+                  marginTop: "32px",
+                  marginBottom: "16px",
+                  // color: (theme) => theme.palette.buttonColor.send,
                 }}
               >
                 <ChevronLeft />
@@ -95,7 +98,6 @@ export const Messages = () => {
             >
               <List>
                 {messages.map((chat) => {
-                  console.log(chat);
                   const sortedMessages = [...chat.messages].sort((a, b) => {
                     return new Date(b.writtedAt) - new Date(a.writtedAt);
                   });

@@ -47,6 +47,7 @@ export const ChatWithUser = (userChat) => {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState(null);
   const dispatch = useDispatch;
+
   const correspondenceName = userChat.user.userCorrespondenceId.name;
   const correspondenceId = userChat.user.userCorrespondenceId.id;
   const correspondenceCountry = userChat.user.userCorrespondenceId.country;
@@ -60,6 +61,15 @@ export const ChatWithUser = (userChat) => {
       console.error("Error sending message:", error);
     }
   };
+  const groupedMessages = messages.reduce((acc, curr) => {
+    const messageDate = new Date(curr.writtedAt).toLocaleDateString();
+    if (!acc[messageDate]) {
+      acc[messageDate] = [];
+    }
+    acc[messageDate].push(curr);
+    return acc;
+  }, {});
+
   return (
     <Box
       sx={{
@@ -101,51 +111,77 @@ export const ChatWithUser = (userChat) => {
           </Box>
           <Divider />
         </Box>
-        <List>
-          {messages.map((message) => {
-            const date = new Date(message.writtedAt);
-            const hours = date.getUTCHours();
-            const minutes = date.getUTCMinutes();
-            const messageTime = `${hours}:${minutes}`;
-            return (
-              <ListItem
-                key={message.id}
-                sx={
-                  message.userSender === correspondenceId
-                    ? correspondenceMessages
-                    : userMessages
-                }
+        {Object.entries(groupedMessages).map(([date, messages]) => (
+          <Box key={date}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            >
+              <Typography
+                sx={{
+                  display: "inline",
+                  fontSize: "14px",
+                  lineHeight: "1.43",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  background: "#f3f4f6",
+                }}
               >
-                <ListItemText
-                  primary={message.message}
-                  sx={{
-                    mr: "auto",
-                    mt: "0",
-                    mb: "0",
-                  }}
-                  primaryTypographyProps={{
-                    fontWeight: "400",
-                    fontSize: "14px",
-                    lineHeight: "1.42857",
-                  }}
-                />
-                <ListItemText
-                  primary={messageTime}
-                  sx={{
-                    ml: "auto",
-                    mt: "0",
-                    mb: "0",
-                  }}
-                  primaryTypographyProps={{
-                    fontWeight: "400",
-                    fontSize: "14px",
-                    lineHeight: "1.42857",
-                  }}
-                />
-              </ListItem>
-            );
-          })}
-        </List>
+                {date}
+              </Typography>
+            </Box>
+            <List>
+              {messages.map((message) => {
+                const date = new Date(message.writtedAt);
+                console.log(date);
+                const hours = date.getUTCHours();
+                const minutes = date.getUTCMinutes();
+                const messageTime = `${hours}:${minutes}`;
+                return (
+                  <ListItem
+                    key={message.id}
+                    sx={
+                      message.userSender === correspondenceId
+                        ? correspondenceMessages
+                        : userMessages
+                    }
+                  >
+                    <ListItemText
+                      primary={message.message}
+                      sx={{
+                        mr: "auto",
+                        mt: "0",
+                        mb: "0",
+                      }}
+                      primaryTypographyProps={{
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        lineHeight: "1.42857",
+                      }}
+                    />
+                    <ListItemText
+                      primary={messageTime}
+                      sx={{
+                        ml: "auto",
+                        mt: "0",
+                        mb: "0",
+                      }}
+                      primaryTypographyProps={{
+                        fontWeight: "400",
+                        fontSize: "14px",
+                        lineHeight: "1.42857",
+                      }}
+                    />
+                  </ListItem>
+                );
+              })}
+            </List>
+          </Box>
+        ))}
         <Box
           sx={{
             display: "flex",
@@ -187,7 +223,7 @@ export const ChatWithUser = (userChat) => {
             }}
             onClick={handleSendMessage}
           >
-            <Send strokeColor={(theme) => theme.palette.buttonColor.send} />
+            <Send sx={{ stroke: (theme) => theme.palette.buttonColor.send }} />
           </IconButton>
         </Box>
       </Box>
