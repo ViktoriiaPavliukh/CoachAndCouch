@@ -117,6 +117,7 @@ const messages = {
     cancelBtn: "Cancel",
     saveBtn: "Save",
     saveChanges: "Save changes",
+    goBack: "Go back",
 
     //Status
     online: "Online",
@@ -289,6 +290,7 @@ const messages = {
     cancelBtn: "Скасувати",
     saveBtn: "Зберегти",
     saveChanges: "Зберегти зміни",
+    goBack: "Повернутись назад",
 
     //Status
     online: "Онлайн",

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-// import { useIntl } from "react-intl";
 // import { useDispatch, useSelector } from "react-redux";
 // import { getUserMessages } from "@/redux/users/operations";
 import messages from "../../../defaults/conversations.json";
@@ -14,14 +13,17 @@ import {
   Avatar,
   Stack,
 } from "@mui/material";
-import { Aperture } from "react-feather";
+import { useIntl } from "react-intl";
+
+import { Aperture, ChevronLeft } from "react-feather";
 import { ChatWithUser } from "./ChatWithUser";
 import { useState } from "react";
+import { lightTheme, darkTheme } from "../../../styles/theme";
 
 export const Messages = () => {
   // const dispatch = useDispatch();
   // const messages = useSelector(selectMessages);
-  // const intl = useIntl();
+  const intl = useIntl();
   const [userChat, setUserChat] = useState("");
   const [isChatOpen, setIsChatOpen] = useState(false);
 
@@ -42,7 +44,6 @@ export const Messages = () => {
   });
   useEffect(() => {
     setUserChat(sortedChats[0]);
-    // dispatch(getUserMessages());
   }, []);
   const handleSidebarChatClick = (chat) => {
     setUserChat(chat);
@@ -59,7 +60,29 @@ export const Messages = () => {
           }}
         >
           {isChatOpen && userChat ? (
-            <ChatWithUser user={userChat} />
+            <div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsChatOpen(false);
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  background: "transparent",
+                  border: "none",
+                  color: "#000",
+                  marginTop: "32px",
+                  marginBottom: "16px",
+                  // color: (theme) => theme.palette.buttonColor.send,
+                }}
+              >
+                <ChevronLeft />
+                <p> {intl.formatMessage({ id: "goBack" })}</p>
+              </button>
+              <ChatWithUser user={userChat} />
+            </div>
           ) : (
             <Box
               sx={{
@@ -75,7 +98,6 @@ export const Messages = () => {
             >
               <List>
                 {messages.map((chat) => {
-                  console.log(chat);
                   const sortedMessages = [...chat.messages].sort((a, b) => {
                     return new Date(b.writtedAt) - new Date(a.writtedAt);
                   });
@@ -142,8 +164,7 @@ export const Messages = () => {
         >
           <Box
             sx={{
-              width: { xs: "100%", md: "260px", lg: "212px" },
-              height: "100vh",
+              width: { xs: "100%", md: "260px", lg: "212px", xl: "320px" },
               p: {
                 sm: "32px 16px",
                 md: "32px 12px 32px 60px",
@@ -154,7 +175,6 @@ export const Messages = () => {
           >
             <List>
               {messages.map((chat) => {
-                console.log(chat);
                 const sortedMessages = [...chat.messages].sort((a, b) => {
                   return new Date(b.writtedAt) - new Date(a.writtedAt);
                 });

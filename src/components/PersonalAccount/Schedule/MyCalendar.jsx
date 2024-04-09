@@ -7,7 +7,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
 import { Typography } from "@mui/material";
 import { Clock } from "react-feather";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -149,17 +149,16 @@ export const MyCalendar = () => {
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
+  // const [yearFilter, setYearFilter] = useState("");
 
-  const handleNoScroll = () => {
-    document.body.style.overflow = selectedEvent ? "hidden" : "auto";
-  };
   const handleSelectEvent = (event, e) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
     setSelectedEvent(event);
     setPopupPosition({ x: left + 100, y: top - 100 });
-    handleNoScroll();
   };
-
+  useEffect(() => {
+    document.body.style.overflow = selectedEvent ? "hidden" : "auto";
+  }, [selectedEvent]);
   const handleClosePopup = () => {
     setSelectedEvent(null);
   };
@@ -168,6 +167,16 @@ export const MyCalendar = () => {
       setSelectedEvent(null);
     }
   };
+  // const handleYearFilterChange = (year) => {
+  //   console.log("Selected year:", year);
+  //   setYearFilter(year);
+  // };
+  // const filteredEvents = yearFilter
+  //   ? eventsList.filter(
+  //       (event) => new Date(event.start).getFullYear() === parseInt(yearFilter)
+  //     )
+  //   : eventsList;
+
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
     const isToday = moment(date).isSame(today, "day");
@@ -194,7 +203,12 @@ export const MyCalendar = () => {
         formats={formats}
         culture={culture}
         components={{
-          toolbar: (props) => <CustomToolbar {...props} />,
+          toolbar: (props) => (
+            <CustomToolbar
+              {...props}
+              // handleYearFilterChange={handleYearFilterChange}
+            />
+          ),
           timeGutterHeader: TimeGutterHeader,
           event: CustomEventComponent,
           week: {
@@ -349,7 +363,7 @@ const CustomEventComponent = ({ event }) => {
       <div
         style={{
           display: "flex",
-          gap: "7px",
+          gap: "5px",
           marginTop: "7px",
           color: "#e5e7eb",
           fontSize: "14px",

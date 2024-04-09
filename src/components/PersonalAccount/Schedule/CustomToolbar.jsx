@@ -35,7 +35,7 @@ export const CustomToolbar = ({
     const newYearFilter = event.target.value;
     console.log(newYearFilter);
     setYearFilter(newYearFilter);
-    handleYearFilterChange(newYearFilter);
+    handleYearFilterChange(newYearFilter); // Викликаємо обробник подій
   };
   useEffect(() => {
     setYearFilter(yearCurrent);
