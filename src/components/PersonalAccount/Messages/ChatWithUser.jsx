@@ -74,9 +74,10 @@ export const ChatWithUser = (userChat) => {
     <Box
       sx={{
         display: "block",
-        p: { lg: "32px 55px 0 2px" },
-        width: { xs: "100%", md: "446px", lg: "855px" },
+        m: { lg: "32px 55px 0 2px", xl: "26px 90px 32px 32px" },
+        width: { xs: "100%", md: "446px", lg: "855px", xl: "1142px" },
         height: "100vh",
+        boxSizing: "border-box",
       }}
     >
       <Box

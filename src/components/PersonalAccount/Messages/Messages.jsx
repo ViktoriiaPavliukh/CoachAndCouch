@@ -164,8 +164,7 @@ export const Messages = () => {
         >
           <Box
             sx={{
-              width: { xs: "100%", md: "260px", lg: "212px" },
-              height: "100vh",
+              width: { xs: "100%", md: "260px", lg: "212px", xl: "320px" },
               p: {
                 sm: "32px 16px",
                 md: "32px 12px 32px 60px",

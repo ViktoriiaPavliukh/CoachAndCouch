@@ -44,14 +44,13 @@ export const Sidebar = () => {
         display: { xs: "none", lg: "flex" },
         flexDirection: "column",
         gap: "16px",
+
         justifyContent: "space-between",
         width: "316px",
         height: "100vh",
         background: (theme) => theme.palette.background.sidebar,
-        pt: "40px",
-        pb: "40px",
-        pr: "40px",
-        pl: "60px",
+        p: "40px 40px 40px 60px",
+        mb: "0",
       }}
     >
       <Box>
