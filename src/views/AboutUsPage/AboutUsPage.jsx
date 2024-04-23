@@ -3,7 +3,18 @@ import { useIntl } from "react-intl";
 import { useSelector, useDispatch } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { Link, useLocation } from "react-router-dom";
-import { Container, Typography, Stack, Button, Box } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Stack,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { AboutUsImage } from "./AboutUsImage";
 
 export function AboutUsPage() {
   const intl = useIntl();
@@ -15,8 +26,61 @@ export function AboutUsPage() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <Container>
-      <Box
+    <Container
+      sx={{ display: "flex", flexDirection: "row", flexWrap: "nowrap" }}
+    >
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            width: "49%",
+            gap: "40px",
+          }}
+        >
+          <Typography variant="title">Coach&Couch -</Typography>
+          <Typography variant="text">
+            {intl.formatMessage({ id: "aboutText1" })}
+          </Typography>
+          <Box>
+            <Typography variant="text">
+              {intl.formatMessage({ id: "aboutText2" })}
+            </Typography>
+            <List>
+              <ListItem sx={{ display: "flex", gap: "12px" }}>
+                <CheckCircleIcon fontSize="large" sx={{ color: "green" }} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "aboutList1" })}
+                />
+              </ListItem>
+              <ListItem sx={{ display: "flex", gap: "12px" }}>
+                <CheckCircleIcon fontSize="large" sx={{ color: "green" }} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "aboutList2" })}
+                />
+              </ListItem>
+              <ListItem sx={{ display: "flex", gap: "12px" }}>
+                <CheckCircleIcon fontSize="large" sx={{ color: "green" }} />
+                <ListItemText
+                  primary={intl.formatMessage({ id: "aboutList3" })}
+                />
+              </ListItem>
+            </List>
+          </Box>
+          <Typography variant="text">
+            {intl.formatMessage({ id: "aboutText3" })}
+          </Typography>
+        </Box>
+        <AboutUsImage />
+      </Stack>
+      {/* <Box
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -124,7 +188,7 @@ export function AboutUsPage() {
           gap: "45px",
           paddingTop: "187px",
         }}
-      ></Box>
+      ></Box> */}
     </Container>
   );
 }

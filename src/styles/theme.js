@@ -250,6 +250,12 @@ const createThemeTemplate = (themeColor) => ({
       fontWeight: "700",
       lineHeight: "calc(28 /36)",
     },
+    title: {
+      fontFamily: "Mulish, sans-serif",
+      fontSize: "72px",
+      fontWeight: "500",
+      lineHeight: "72px",
+    },
     bigTitle: {
       fontFamily: "Mulish, sans-serif",
       fontSize: "98px",
