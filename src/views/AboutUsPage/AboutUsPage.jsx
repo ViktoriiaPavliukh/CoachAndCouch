@@ -3,7 +3,19 @@ import { useIntl } from "react-intl";
 import { useSelector, useDispatch } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { Link, useLocation } from "react-router-dom";
-import { Container, Typography, Stack, Button, Box } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Stack,
+  Button,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { AboutUsImage } from "./AboutUsImage";
+import { themeReducer } from "@/redux/theme/slice";
 
 export function AboutUsPage() {
   const intl = useIntl();
@@ -15,116 +27,132 @@ export function AboutUsPage() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
-    <Container>
-      <Box
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "nowrap",
+        paddingX: { md: "60px", xs: "16px" },
+        paddingY: { xs: "50px", lg: "90px", xl: "110px" },
+      }}
+    >
+      <Stack
         sx={{
           display: "flex",
-          flexDirection: "column",
-          gap: "45px",
-          paddingTop: "187px",
+          flexDirection: { xs: "column", lg: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+          gap: { xs: "0", lg: "129px" },
         }}
       >
-        <Typography variant="bigTitle">
-          {intl.formatMessage({ id: "header.aboutUs" })}
-        </Typography>
-        <Stack
+        <Box
           sx={{
             display: "flex",
-            gap: "58px",
             flexDirection: "column",
-            alignSelf: "end",
-            maxWidth: "771px",
+            gap: "24px",
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography
-              variant="text"
-              sx={{ paddingBottom: "9px", borderBottom: "3px solid #146817" }}
-            >
-              Coach&Couch{" "}
-            </Typography>
+          <Typography
+            variant="title"
+            sx={{
+              fontSize: { xl: "72px", lg: "60px", md: "48px", xs: "40px" },
+              lineHeight: { xs: "120%", md: "48px", lg: "60px", xl: "72px" },
+            }}
+          >
+            Coach&Couch -
+          </Typography>
+          <Typography
+            variant="text"
+            sx={{
+              fontSize: { xs: "14px", md: "16px", xl: "20px" },
+              lineHeight: { xs: "16px", md: "24px", xl: "28px" },
+            }}
+          >
+            {intl.formatMessage({ id: "aboutText1" })}
+          </Typography>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              pt: "16px",
+              fontSize: "40px",
+            }}
+          >
             <Typography
               variant="text"
               sx={{
-                display: "flex",
-                alignSelf: "end",
-                textAlign: "right",
-                maxWidth: "413px",
+                fontSize: { xs: "18px", xl: "24px" },
+                lineHeight: { xs: "24px", xl: "34px" },
               }}
             >
-              {intl.formatMessage({ id: "aboutSubtitle" })}
-            </Typography>
-          </Box>
-          <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Typography variant="text">
-              {intl.formatMessage({ id: "aboutText1" })}
-            </Typography>
-            <Typography variant="text">
               {intl.formatMessage({ id: "aboutText2" })}
             </Typography>
-            <Typography variant="text">
-              {intl.formatMessage({ id: "aboutText3" })}
-            </Typography>
+            <List
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                p: "0",
+              }}
+            >
+              <ListItem sx={{ display: "flex", gap: "12px", p: "0" }}>
+                <CheckCircleIcon
+                  fontSize="large"
+                  sx={{ color: (theme) => theme.palette.buttonColor.listItem }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "20px", md: "24px", xl: "28px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "aboutList1" })}{" "}
+                </Typography>
+              </ListItem>
+              <ListItem sx={{ display: "flex", gap: "12px", p: "0" }}>
+                <CheckCircleIcon
+                  fontSize="large"
+                  sx={{ color: (theme) => theme.palette.buttonColor.listItem }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "20px", md: "24px", xl: "28px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "aboutList2" })}
+                </Typography>
+              </ListItem>
+              <ListItem sx={{ display: "flex", gap: "12px", p: "0" }}>
+                <CheckCircleIcon
+                  fontSize="large"
+                  sx={{ color: (theme) => theme.palette.buttonColor.listItem }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "20px", md: "24px", xl: "28px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "aboutList3" })}
+                </Typography>
+              </ListItem>
+            </List>
           </Box>
-          <Typography variant="textUppercase" sx={{ maxWidth: "473px" }}>
-            {intl.formatMessage({ id: "aboutUpper" })}
+          <Typography
+            sx={{
+              pt: "16px",
+              fontSize: { xs: "18px", xl: "24px" },
+              lineHeight: { xs: "24px", xl: "34px" },
+            }}
+            variant="text"
+          >
+            {intl.formatMessage({ id: "aboutText3" })}
           </Typography>
-          {!isLoggedIn && (
-            <Box>
-              <Button
-                component={Link}
-                to="/login"
-                sx={{
-                  px: "12px",
-                  transition: "color 0.3s",
-                  borderRadius: "6px",
-                  backgroundColor: (theme) =>
-                    pathname === "/login" ? theme.palette.primary.accent : null,
-                  "&:hover": {
-                    backgroundColor: (theme) => theme.palette.primary.accent,
-                    color: "white",
-                  },
-                }}
-              >
-                {" "}
-                <Typography>
-                  {intl.formatMessage({ id: "header.login" })}
-                </Typography>
-              </Button>
-              <Button
-                component={Link}
-                to="/registration"
-                sx={{
-                  px: "12px",
-                  transition: "color 0.3s",
-                  borderRadius: "6px",
-                  backgroundColor: (theme) =>
-                    pathname === "/registration"
-                      ? theme.palette.primary.accent
-                      : null,
-                  "&:hover": {
-                    backgroundColor: (theme) => theme.palette.primary.accent,
-                    color: "white",
-                  },
-                }}
-              >
-                {" "}
-                <Typography>
-                  {intl.formatMessage({ id: "header.registration" })}
-                </Typography>
-              </Button>
-            </Box>
-          )}
-        </Stack>
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "45px",
-          paddingTop: "187px",
-        }}
-      ></Box>
-    </Container>
+        </Box>
+        <AboutUsImage />
+      </Stack>
+    </Box>
   );
 }

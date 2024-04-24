@@ -56,6 +56,7 @@ const createThemeTemplate = (themeColor) => ({
             secondary: "#87B924",
             secondaryHover: "#6B9E00",
             greenDark: "#0d5b1c",
+            listItem: "#0d5b1c",
             greenDarkHover: "#004305",
             lightYellow: "#87B924",
             lightYellowHover: "#6B9E00",
@@ -117,6 +118,7 @@ const createThemeTemplate = (themeColor) => ({
             secondary: "#387024",
             secondaryHover: "#1D570A",
             greenDark: "#387024",
+            listItem: "#EEC700",
             greenDarkHover: "#1D570A",
             lightYellow: "#EEC700",
             lightYellowHover: "#CFAC00",
@@ -250,6 +252,12 @@ const createThemeTemplate = (themeColor) => ({
       fontWeight: "700",
       lineHeight: "calc(28 /36)",
     },
+    title: {
+      fontFamily: "Mulish, sans-serif",
+      fontSize: "72px",
+      fontWeight: "500",
+      lineHeight: "72px",
+    },
     bigTitle: {
       fontFamily: "Mulish, sans-serif",
       fontSize: "98px",
@@ -261,6 +269,13 @@ const createThemeTemplate = (themeColor) => ({
       fontSize: "18px",
       fontWeight: "400",
       lineHeight: "28px",
+    },
+    textBase: {
+      fontFamily: "Mulish, sans-serif",
+      textTransform: "uppercase",
+      fontSize: "16px",
+      fontWeight: "400",
+      lineHeight: "20px",
     },
     textUppercase: {
       fontFamily: "Mulish, sans-serif",

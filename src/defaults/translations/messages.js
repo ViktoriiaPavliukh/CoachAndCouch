@@ -40,17 +40,19 @@ const messages = {
     list3: "Professional teachers and native speakers",
 
     //about
-    aboutSubtitle:
-      "Our platform is here to be your reliable companion on the journey to mastering a new language.",
-    aboutText1:
-      "We offer a wide range of languages for learning, including popular and less common ones. You can choose the one that interests you the most. Our lessons are designed with modern teaching methods in mind, incorporating audio and video materials, interactive exercises, and the opportunity for free conversation.",
-    aboutText2:
-      "Learning on our platform takes place in a 24/7 mode, allowing you to study at any time and from any place that is convenient for you. You can choose the level of difficulty and topics that interest you and work on them at your own pace.",
-    aboutText3:
-      "We provide the opportunity to communicate with native speakers, allowing you to enhance your skills and improve pronunciation.",
-    aboutUpper:
-      "Join our vibrant student community, where you can share successes and receive support from like-minded peers.",
 
+    aboutSubtitle:
+      "Our platform is your reliable partner on the journey to mastering a new language.",
+    aboutText1:
+      "It is a unique interactive platform that makes the process of online language learning as personalized and effective as possible. Each user has the opportunity to choose the perfect teacher for themselves and at the same time start teaching others - all in an online format, with the ability to choose a convenient schedule and flexible payment system.",
+    aboutText2: "The platform also offers:",
+    aboutList1: "a wide selection of languages for learning and teaching;",
+    aboutList2: "modern teaching methods;",
+    aboutList3:
+      "the ability to ask the teacher questions through the messaging chat.",
+    aboutText3: "Start your unique educational journey today with us!",
+
+    
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
     reviewMark: "Rate this type 1 to 5:",
@@ -224,13 +226,14 @@ const messages = {
     aboutSubtitle:
       "Наша платформа - це ваш надійний партнер у подорожі до опанування нової мови.",
     aboutText1:
-      "Ми пропонуємо широкий вибір мов для вивчення, включаючи популярні та менш поширені мови. Ви можете вибрати ту, яка вас цікавить найбільше. Наші уроки розроблені з урахуванням сучасних методів навчання, і вони включають в себе аудіо та відео матеріали, інтерактивні вправи та можливість вільного спілкування.",
-    aboutText2:
-      "Навчання на нашій платформі відбувається в режимі 24/7, дозволяючи вам вчитися в будь-який час та в будь-якому місці, що для вас зручно. Ви можете вибрати рівень складності та теми, які вас цікавлять, і працювати над ними на власному темпі.",
+      "це унікальна інтерактивна платформа, що робить процес онлайн-вивчення іноземних мов максимально персоналізованим та ефективним. Кожен користувач має змогу обрати ідеального для себе викладача та водночас почати викладати іншим - і все це в онлайн-форматі, з можливістю вибору зручного розкладу та гнучкої системи оплати.",
+    aboutText2: "Платформа додатково пропонує:",
+    aboutList1: "широкий вибір мов для вивчення та викладання;",
+    aboutList2: "сучасні методи навчання;",
+    aboutList3:
+      "можливість поставити запитання викладачеві через службовий чат.",
     aboutText3:
-      "Ми надаємо можливість спілкуватися з носіями мови, щоб ви могли вдосконалити свої навички та покращити вимову.",
-    aboutUpper:
-      "Приєднуйтесь до нашої активної спільноти студентів, де ви можете ділитися успіхами та отримувати підтримку від однодумців.",
+      "Розпочніть свою унікальну освітню подорож вже сьогодні разом з нами!",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
