@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
-import { parse } from "date-fns";
+import { useState } from "react";
+import { format } from "date-fns";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUser, editUser } from "@/redux/users/operations";
-import {
-  selectCurrentUser,
-  selectUserIsLoading,
-} from "@/redux/users/selectors";
+import { editUser, updateUserPhoto } from "@/redux/users/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
 import {
@@ -22,31 +18,17 @@ import {
   Input,
   Avatar,
 } from "@mui/material";
-import { format } from "date-fns";
-import { getCountries } from "@/redux/admin/operations";
-import { PersonalImage } from "./PersonalImage";
-import Loader from "../Loader/Loader";
-import { countriesSelector } from "@/redux/admin/adminSelector";
 import countries from "../../defaults/countries/countries.json";
-import { userValidationSchema } from "../../defaults/validationScheme";
+import { userEditSchema } from "../../defaults/validationScheme";
+import { PersonalImage } from "./PersonalImage";
 import IconPlus from "../../assets/icons/IconPlus.jsx";
 
-export const Profile = () => {
+export const Profile = ({ currentUser, countriesList }) => {
   const en = useSelector(selectCurrentLanguage);
   const intl = useIntl();
   const dispatch = useDispatch();
-  const countriesList = useSelector(countriesSelector);
-  const currentUser = useSelector(selectCurrentUser);
-  const isLoading = useSelector(selectUserIsLoading);
   const [editMode, setEditMode] = useState(false);
   const [image, setImage] = useState("");
-  // const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-
-  useEffect(() => {
-    dispatch(getCurrentUser());
-    dispatch(getCountries());
-  }, [dispatch]);
-
   const [formData, setFormData] = useState({
     firstName: currentUser?.firstName || "",
     lastName: currentUser?.lastName || "",
@@ -60,110 +42,74 @@ export const Profile = () => {
       ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
       : "",
     aboutMe: currentUser?.aboutMe || "",
-    photoPath: currentUser?.photoPath || "",
+    photo: null,
   });
 
-  const handleUserProfileSubmit = (e) => {
-    e.preventDefault();
-    setEditMode(false);
-  };
-
-  const formik = useFormik({
-    initialValues: formData,
-    validationSchema: userValidationSchema,
-    onSubmit: handleUserProfileSubmit,
-  });
-
-  console.log(formik);
-  console.log(formData);
-
-  const handleSaveButtonClick = async (e) => {
-    e.preventDefault();
+  const handleUserProfileSubmit = async (values) => {
     try {
       await formik.validateForm();
       if (Object.keys(formik.errors).length > 0) {
         console.error("Validation errors:", formik.errors);
         return;
       }
-
-      const formData = new FormData();
-      formData.append("firstName", formik.values.firstName);
-      formData.append("lastName", formik.values.lastName);
-      formData.append("email", formik.values.email);
-
       let formattedBirthday = "";
-      if (formik.values.birthday) {
-        let [year, month, day] = formik.values.birthday.split("-");
+      if (values.birthday) {
+        let [year, month, day] = values.birthday.split("-");
         if (!year || !month || !day) {
-          [day, month, year] = formik.values.birthday.split(".");
+          [day, month, year] = values.birthday.split(".");
         }
         const parsedBirthday = new Date(year, month - 1, day);
         formattedBirthday = format(parsedBirthday, "yyyy-MM-dd");
       }
 
-      formData.append("birthday", formattedBirthday);
-      formData.append("sex", formik.values.sex);
-
       const selectedCountry = countriesList.find(
-        (country) => country.alpha2 === formik.values.country
+        (country) => country.alpha2 === values.country
       );
-
       const countryId = selectedCountry ? selectedCountry.id : null;
 
-      formData.append("country", JSON.stringify(countryId));
+      const editedData = {
+        firstName: formik.values.firstName,
+        lastName: formik.values.lastName,
+        birthday: formattedBirthday,
+        sex: formik.values.sex,
+        country: countryId,
+        aboutMe: formik.values?.aboutMe,
+      };
 
-      formData.append("aboutMe", formik.values.aboutMe);
-      formData.append("photo", formik.values.photo);
+      await dispatch(editUser(editedData));
 
-      await dispatch(editUser(formData));
-
+      if (values.photo) {
+        const photoFormData = new FormData();
+        photoFormData.append("photo", values.photo);
+        await dispatch(updateUserPhoto(photoFormData));
+      }
       setEditMode(false);
-      // setShowSuccessMessage(true);
-      // setTimeout(() => {
-      //   setShowSuccessMessage(false);
-      // }, 3000);
     } catch (error) {
       console.error("Error editing user:", error);
     }
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      setFormData({
-        firstName: currentUser?.firstName || "",
-        lastName: currentUser?.lastName || "",
-        email: currentUser?.email || "",
-        birthday: currentUser?.birthday
-          ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
-          : "",
-        sex: currentUser?.sex || "",
-        country: currentUser?.country?.alpha2 || "",
-        registeredAt: currentUser?.registeredAt
-          ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
-          : "",
-        aboutMe: currentUser?.aboutMe || "",
-        photoPath: currentUser?.photoPath || "",
-      });
-    }
-  }, [currentUser]);
+  const formik = useFormik({
+    initialValues: formData,
+    validationSchema: userEditSchema,
+    onSubmit: handleUserProfileSubmit,
+  });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    // Update formik values
     formik.setFieldValue(name, value);
-
-    // Update formData state
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    formik.setValues((prevValues) => ({
+      ...prevValues,
       [name]: value,
     }));
   };
 
-  return isLoading ? (
-    <Loader /> // Render a loader while data is being fetched
-  ) : (
-    <form onSubmit={handleUserProfileSubmit}>
+  const handleSaveButtonClick = () => {
+    formik.handleSubmit();
+  };
+
+  return (
+    <form onSubmit={formik.handleSubmit}>
       {currentUser && (
         <Stack
           sx={{
@@ -193,7 +139,8 @@ export const Profile = () => {
                 alignItems: { xs: "center", lg: "center" },
               }}
             >
-              <PersonalImage userImage={formData.photoPath} />
+              <PersonalImage userImage={currentUser.photoPath} />
+
               {editMode ? (
                 <Stack
                   direction="column"
@@ -215,7 +162,6 @@ export const Profile = () => {
                     }}
                     onBlur={formik.handleBlur}
                     error={formik.touched.image && Boolean(formik.errors.image)}
-                    // helperText={formik.touched.image && formik.errors.image}
                   />
                   <InputLabel
                     htmlFor="photoPath"
@@ -261,7 +207,7 @@ export const Profile = () => {
               <TextField
                 label={intl.formatMessage({ id: "name" })}
                 name="firstName"
-                defaultValue={formData.firstName}
+                defaultValue={currentUser.firstName}
                 multiline
                 variant="outlined"
                 sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
@@ -273,7 +219,7 @@ export const Profile = () => {
               <TextField
                 label={intl.formatMessage({ id: "lastName" })}
                 name="lastName"
-                defaultValue={formData.lastName}
+                defaultValue={formik.values.lastName}
                 multiline
                 variant="outlined"
                 sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
@@ -285,7 +231,7 @@ export const Profile = () => {
               <TextField
                 label="Email"
                 name="email"
-                defaultValue={formData.email}
+                defaultValue={formik.values.email}
                 multiline
                 sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
                 variant="outlined"
@@ -301,7 +247,7 @@ export const Profile = () => {
                 name="birthday"
                 disabled={!editMode}
                 multiline
-                defaultValue={formData.birthday}
+                defaultValue={formik.values.birthday}
                 sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
                 InputLabelProps={{ shrink: true }}
                 InputProps={{ placeholder: "" }}
@@ -385,7 +331,7 @@ export const Profile = () => {
                 label={intl.formatMessage({ id: "registrationDate" })}
                 name="registeredAt"
                 multiline
-                defaultValue={formData.registeredAt}
+                defaultValue={formik.values.registeredAt}
                 variant="outlined"
                 sx={{ width: { xs: "100%", lg: "98%", xl: "100%" } }}
                 disabled={true}
@@ -403,7 +349,7 @@ export const Profile = () => {
             }}
           >
             <TextField
-              defaultValue={formData.aboutMe}
+              defaultValue={formik.values.aboutMe}
               onChange={handleInputChange}
               name="aboutMe"
               label={intl.formatMessage({ id: "description" })}

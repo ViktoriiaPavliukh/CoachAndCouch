@@ -52,7 +52,6 @@ const messages = {
       "the ability to ask the teacher questions through the messaging chat.",
     aboutText3: "Start your unique educational journey today with us!",
 
-    
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
     reviewMark: "Rate this type 1 to 5:",
@@ -151,6 +150,7 @@ const messages = {
     addPhoto: "+ Add photo",
     or: "or",
     newPhoto: "New photo",
+    sussessUpd: "Your data has been updated successfully",
 
     //validation
     priceValidation: "Price is required",
@@ -325,6 +325,7 @@ const messages = {
     addPhoto: "+ Додати фото",
     or: "або",
     newPhoto: "Нове фото",
+    sussessUpd: "Ваші дані було успішно оновлено",
 
     //validation
     priceValidation: "Вкажіть ціну",
