@@ -11,7 +11,8 @@ import {
   Box,
   List,
   ListItem,
-  ListItemText,
+  Card,
+  CardContent,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { AboutUsImage } from "./AboutUsImage";
@@ -30,7 +31,7 @@ export function AboutUsPage() {
     <Box
       sx={{
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         flexWrap: "nowrap",
         paddingX: { md: "60px", xs: "16px" },
         paddingY: { xs: "50px", lg: "90px", xl: "110px" },
@@ -152,6 +153,186 @@ export function AboutUsPage() {
           </Typography>
         </Box>
         <AboutUsImage />
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+          gap: { xs: "35px", md: "77px", lg: "60px", xl: "90px" },
+          // maxWidth: { md: "60%", lg: "100%" },
+          flexWrap: "wrap",
+        }}
+      >
+        <Card
+          sx={{
+            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            py: { xs: "32px", xl: "44px" },
+            px: "30px",
+            maxHeight: { xs: "152px", md: "158px", xl: "218px" },
+            borderRadius: "8px",
+          }}
+        >
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "36px",
+                  lg: "48",
+                  xl: "60px",
+                },
+                lineHeight: "111%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+              }}
+            >
+              100%
+            </Typography>
+            <Typography
+              variant="posterPopupTitle"
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+              }}
+            >
+              викладачів мають міжнародні сертифікати
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            py: { xs: "32px", xl: "44px" },
+            px: "30px",
+            maxHeight: { xs: "152px", md: "158px", xl: "218px" },
+            borderRadius: "8px",
+          }}
+        >
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "36px",
+                  lg: "48",
+                  xl: "60px",
+                },
+                lineHeight: "111%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+              }}
+            >
+              8+
+            </Typography>
+            <Typography
+              variant="posterPopupTitle"
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+              }}
+            >
+              уроків проводиться щогодини
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            py: { xs: "32px", xl: "44px" },
+            px: "30px",
+            maxHeight: { xs: "152px", md: "158px", xl: "218px" },
+            borderRadius: "8px",
+          }}
+        >
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "36px",
+                  lg: "48",
+                  xl: "60px",
+                },
+                lineHeight: "111%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+              }}
+            >
+              250+
+            </Typography>
+            <Typography
+              variant="posterPopupTitle"
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+              }}
+            >
+              реєстрацій на пробний урок щотижня
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            py: { xs: "32px", xl: "44px" },
+            px: "30px",
+            maxHeight: { xs: "152px", md: "158px", xl: "218px" },
+            borderRadius: "8px",
+          }}
+        >
+          <CardContent
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "36px",
+                  lg: "48",
+                  xl: "60px",
+                },
+                lineHeight: "111%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+              }}
+            >
+              1500+
+            </Typography>
+            <Typography
+              variant="posterPopupTitle"
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+              }}
+            >
+              задоволених учнів за 5 років
+            </Typography>
+          </CardContent>
+        </Card>
       </Stack>
     </Box>
   );
