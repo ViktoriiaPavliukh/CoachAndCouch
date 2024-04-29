@@ -170,3 +170,34 @@ export const editAdvert = createAsyncThunk(
 //     }
 //   }
 // );
+
+export const editAdvertImage = createAsyncThunk(
+  "adverts/editAdvertImage",
+  async ({ advertId, imageFile }, thunkAPI) => {
+    try {
+      console.log("Editing advertisement image...");
+      console.log("Advert ID:", advertId);
+      console.log("Image File:", imageFile);
+
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const userToken = thunkAPI.getState().auth.accessToken;
+      console.log("User Token:", userToken);
+
+      const headers = { Authorization: `Bearer ${userToken}` };
+      const { data } = await privateAPI.patch(
+        `/adverts/${advertId}/image`,
+        formData,
+        { headers }
+      );
+
+      console.log("Advertisement image edited successfully:", data);
+      return data;
+    } catch (error) {
+      console.error("Failed to edit advertisement image:", error);
+      toast.error("Failed to edit advertisement image");
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

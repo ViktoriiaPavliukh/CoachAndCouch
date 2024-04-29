@@ -26,7 +26,10 @@ import {
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { selectCurrentUser } from "@/redux/users/selectors";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
-import { editAdvert } from "@/redux/marketplace/adverts/operations";
+import {
+  editAdvert,
+  editAdvertImage,
+} from "@/redux/marketplace/adverts/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
 import { v4 as uuidv4 } from "uuid";
@@ -34,14 +37,14 @@ import { format } from "date-fns";
 
 const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
-  // description: Yup.string().required("Description is required"),
-  // spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  // teachingLanguages: Yup.array().min(
-  //   1,
-  //   "Select at least one teaching language"
-  // ),
-  // specializations: Yup.array().required("Specialization is required"),
-  // image: Yup.mixed().required("Select image for your advert"),
+  description: Yup.string().required("Description is required"),
+  spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
+  specializations: Yup.array().required("Specialization is required"),
+  image: Yup.mixed().required("Select image for your advert"),
 });
 
 export const PersonalAdvertForm = ({
@@ -55,6 +58,7 @@ export const PersonalAdvertForm = ({
 }) => {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
+  const dispatch = useDispatch();
   // const [image, setImage] = useState(currentUser.advert.imagePath);
   const [avatar, setAvatar] = useState("");
   const [editMode, setEditMode] = useState(false);
@@ -86,7 +90,6 @@ export const PersonalAdvertForm = ({
     spokenLanguages: currentUser?.advert?.spokenLanguages || [],
     teachingLanguages: currentUser?.advert?.teachingLanguages || [],
   });
-  const dispatch = useDispatch();
 
   const handleTeacherProfileSubmit = (e) => {
     e.preventDefault();
@@ -111,21 +114,22 @@ export const PersonalAdvertForm = ({
 
       formData = new FormData();
 
-      formData.append("image", formik.values.image);
-      setFormData((prevData) => ({
-        ...prevData,
-        image: formik.values.image,
-      }));
+      if (formik.values.image !== currentUser?.advert?.imagePath) {
+        // Dispatch editAdvertImage action if image has changed
+        await dispatch(
+          editAdvertImage({ advertId, imageFile: formik.values.image })
+        );
+      }
 
-      // // Specializations
-      // formik.values.specializations.forEach((spec) => {
-      //   formData.append("specializations[]", spec.id);
-      // });
+      // Specializations
+      formik.values.specializations.forEach((spec) => {
+        formData.append("specializations[]", spec.id);
+      });
 
-      // // Spoken Languages
-      // formik.values.spokenLanguages.forEach((lang) => {
-      //   formData.append("spokenLanguages[]", lang.id);
-      // });
+      // Spoken Languages
+      formik.values.spokenLanguages.forEach((lang) => {
+        formData.append("spokenLanguages[]", lang.id);
+      });
 
       const teachingLanguagesIds = formik.values.teachingLanguages.map(
         (lang) => lang.id
@@ -135,7 +139,7 @@ export const PersonalAdvertForm = ({
         JSON.stringify(teachingLanguagesIds)
       );
 
-      // formData.append("description", formik.values.description);
+      formData.append("description", formik.values.description);
 
       // Dispatch the editAdvert action
       await dispatch(editAdvert({ advertId, formData }));
@@ -157,20 +161,19 @@ export const PersonalAdvertForm = ({
     console.log("Price value after change:", formik.values.price);
   };
 
-  // Effect to refetch advert data when dataChanged state changes
-  // useEffect(() => {
-  //   if (dataChanged) {
-  //     // Dispatch getAdvertById to fetch the updated advert data
-  //     dispatch(getAdvertById(advertId))
-  //       .then((data) => {
-  //         // Update the teacher state with the fetched data
-  //         setTeacherData(data.payload);
-  //       })
-  //       .catch((error) =>
-  //         console.error("Error fetching updated advert data: ", error)
-  //       );
-  //   }
-  // }, [dispatch, advertId, dataChanged]);
+  useEffect(() => {
+    if (dataChanged) {
+      // Dispatch getAdvertById to fetch the updated advert data
+      dispatch(getAdvertById(advertId))
+        .then((data) => {
+          // Update the teacher state with the fetched data
+          setTeacherData(data.payload);
+        })
+        .catch((error) =>
+          console.error("Error fetching updated advert data: ", error)
+        );
+    }
+  }, [dispatch, advertId, dataChanged]);
 
   return (
     <form
