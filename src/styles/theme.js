@@ -49,6 +49,7 @@ const createThemeTemplate = (themeColor) => ({
             sidebar: "#FAFAFA",
             mainPage: "#FAFAFA",
             messages: "#ffffff",
+            card: "#FFF",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -110,6 +111,7 @@ const createThemeTemplate = (themeColor) => ({
             sidebar: "#3C3D3D",
             mainPage: "#262626",
             messages: "#4B5563",
+            card: "#262626",
           },
           buttonColor: {
             header: "#EEC700",

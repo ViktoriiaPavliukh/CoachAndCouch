@@ -16,7 +16,6 @@ const messages = {
     firstNameMaxCharacters: "Name must be at most 20 characters",
     passwordMatch: "Passwords must match",
     passwordConfirmRequired: "Password confirmation is required",
-
     "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
@@ -51,6 +50,21 @@ const messages = {
     aboutList3:
       "the ability to ask the teacher questions through the messaging chat.",
     aboutText3: "Start your unique educational journey today with us!",
+    aboutCard1: "of the teachers have international certificates",
+    aboutCard2: "lessons are held every hour",
+    aboutCard3: "registrations for trial lessons are received every week",
+    aboutCard4: "satisfied students over 5 years",
+    aboutTitle1: "Functionality of the platform",
+    aboutText4:
+      "The platform for language learning offers users a personal profile, a chat for communication, a questionnaire for teachers, and a page with a list of all available teachers",
+    userProfileDetails:
+      "In the user profile, each platform user can change personal information, view their classes, schedule, posted and liked announcements, and more",
+    chatDetails:
+      "The ability to maintain communication between students and teachers is extremely important. Arranging a meeting, receiving feedback on completed homework can be easily done without even leaving the platform",
+    teacherProfileDetails:
+      "Every registered user has the opportunity to fill out a teacher profile and post their own advertisement, the editing of which is provided in the profile",
+    allTeachersDetails:
+      "The platform includes a page with advertisements of all teachers, which can be sorted by the teacher's country of origin, the price of a trial lesson, language, or teaching specialization",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -151,6 +165,10 @@ const messages = {
     or: "or",
     newPhoto: "New photo",
     sussessUpd: "Your data has been updated successfully",
+    userProfile: "User profile",
+    chat: "Business chat",
+    teacherProfile: "Teacher profile",
+    allTeachers: "All teachers",
 
     //validation
     priceValidation: "Price is required",
@@ -234,6 +252,21 @@ const messages = {
       "можливість поставити запитання викладачеві через службовий чат.",
     aboutText3:
       "Розпочніть свою унікальну освітню подорож вже сьогодні разом з нами!",
+    aboutCard1: "викладачів мають міжнародні сертифікати",
+    aboutCard2: "уроків проводиться щогодини",
+    aboutCard3: "реєстрацій на пробний урок щотижня",
+    aboutCard4: "задоволених учнів за 5 років",
+    aboutTitle1: "Функціонал платформи",
+    aboutText4:
+      "Платформа для вивчення мов пропонує користувачам персональний профіль, чат для спілкування, анкету для викладачів та сторінку з переліком усіх доступних викладачів",
+    userProfileDetails:
+      "Саме в ньому кожен користувач платформи має змогу змінити персональну інформацію; переглянути свої заняття, розклад, розміщені та вподобані оголошення тощо",
+    chatDetails:
+      "Можливість підтримувати зв’язок між учнем та викладачем є надзвичай-но важливою. Домовитися про зустріч, отримати фідбек про виконане домашнє завдання легко, навіть не виходячи з платформи",
+    teacherProfileDetails:
+      "Кожен зареєстрований користувач має змогу заповнити анкету викладача та викласти власне оголошення, редагування якого передбачено у профілі",
+    allTeachersDetails:
+      "На платформі передбачено сторінку з оголошеннями усіх викладачів, що можна сортувати за країною походження викладача, ціною пробного уроку, мовою або ж спеціалізацією викладання",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
@@ -326,6 +359,10 @@ const messages = {
     or: "або",
     newPhoto: "Нове фото",
     sussessUpd: "Ваші дані було успішно оновлено",
+    userProfile: "Профіль користувача",
+    chat: "Службовий чат",
+    teacherProfile: "Анкета викладача",
+    allTeachers: "Усі викладачі",
 
     //validation
     priceValidation: "Вкажіть ціну",
