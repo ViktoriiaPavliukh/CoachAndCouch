@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Container,
   Typography,
   Stack,
   Button,
@@ -16,6 +15,10 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { AboutUsImage } from "./AboutUsImage";
+import { ProfileImage } from "./ProfileImage";
+import { ChatImage } from "./ChatImage";
+import { TeacherProfileImage } from "./TeacherProfileImage";
+import { AllTeachersImage } from "./AllTeachersImage";
 import { themeReducer } from "@/redux/theme/slice";
 
 export function AboutUsPage() {
@@ -160,18 +163,23 @@ export function AboutUsPage() {
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "center",
           alignItems: "center",
-          gap: { xs: "35px", md: "77px", lg: "60px", xl: "90px" },
-          // maxWidth: { md: "60%", lg: "100%" },
+          gap: { xs: "35px", md: "50px 63px", lg: "60px", xl: "90px" },
+          mb: { xs: "96px", md: "114px", lg: "130px", xl: "176px" },
           flexWrap: "wrap",
         }}
       >
         <Card
           sx={{
-            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            width: { xs: "80%", md: "45%", lg: "21%", xl: "22%" },
             py: { xs: "32px", xl: "44px" },
             px: "30px",
             maxHeight: { xs: "152px", md: "158px", xl: "218px" },
             borderRadius: "8px",
+            background: (theme) => theme.palette.background.card,
           }}
         >
           <CardContent
@@ -187,7 +195,7 @@ export function AboutUsPage() {
               sx={{
                 fontSize: {
                   xs: "36px",
-                  lg: "48",
+                  lg: "48px",
                   xl: "60px",
                 },
                 lineHeight: "111%",
@@ -203,17 +211,22 @@ export function AboutUsPage() {
                 lineHeight: { xs: "143%", md: "150%", xl: "140%" },
               }}
             >
-              викладачів мають міжнародні сертифікати
+              {intl.formatMessage({ id: "aboutCard1" })}
             </Typography>
           </CardContent>
         </Card>
         <Card
           sx={{
-            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            width: { xs: "80%", md: "45%", lg: "21%", xl: "22%" },
             py: { xs: "32px", xl: "44px" },
             px: "30px",
             maxHeight: { xs: "152px", md: "158px", xl: "218px" },
             borderRadius: "8px",
+            background: (theme) => theme.palette.background.card,
           }}
         >
           <CardContent
@@ -229,7 +242,7 @@ export function AboutUsPage() {
               sx={{
                 fontSize: {
                   xs: "36px",
-                  lg: "48",
+                  lg: "48px",
                   xl: "60px",
                 },
                 lineHeight: "111%",
@@ -245,17 +258,22 @@ export function AboutUsPage() {
                 lineHeight: { xs: "143%", md: "150%", xl: "140%" },
               }}
             >
-              уроків проводиться щогодини
+              {intl.formatMessage({ id: "aboutCard2" })}
             </Typography>
           </CardContent>
         </Card>
         <Card
           sx={{
-            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            width: { xs: "80%", md: "45%", lg: "21%", xl: "22%" },
             py: { xs: "32px", xl: "44px" },
             px: "30px",
             maxHeight: { xs: "152px", md: "158px", xl: "218px" },
             borderRadius: "8px",
+            background: (theme) => theme.palette.background.card,
           }}
         >
           <CardContent
@@ -271,7 +289,7 @@ export function AboutUsPage() {
               sx={{
                 fontSize: {
                   xs: "36px",
-                  lg: "48",
+                  lg: "48px",
                   xl: "60px",
                 },
                 lineHeight: "111%",
@@ -287,17 +305,22 @@ export function AboutUsPage() {
                 lineHeight: { xs: "143%", md: "150%", xl: "140%" },
               }}
             >
-              реєстрацій на пробний урок щотижня
+              {intl.formatMessage({ id: "aboutCard3" })}
             </Typography>
           </CardContent>
         </Card>
         <Card
           sx={{
-            width: { xs: "80%", md: "45%", lg: "22%", xl: "22%" },
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            width: { xs: "80%", md: "45%", lg: "21%", xl: "22%" },
             py: { xs: "32px", xl: "44px" },
             px: "30px",
             maxHeight: { xs: "152px", md: "158px", xl: "218px" },
             borderRadius: "8px",
+            background: (theme) => theme.palette.background.card,
           }}
         >
           <CardContent
@@ -313,7 +336,7 @@ export function AboutUsPage() {
               sx={{
                 fontSize: {
                   xs: "36px",
-                  lg: "48",
+                  lg: "48px",
                   xl: "60px",
                 },
                 lineHeight: "111%",
@@ -329,7 +352,197 @@ export function AboutUsPage() {
                 lineHeight: { xs: "143%", md: "150%", xl: "140%" },
               }}
             >
-              задоволених учнів за 5 років
+              {intl.formatMessage({ id: "aboutCard3" })}
+            </Typography>
+          </CardContent>
+        </Card>
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+          gap: "40px",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography
+          sx={{ fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" } }}
+        >
+          {" "}
+          {intl.formatMessage({ id: "aboutTitle1" })}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: { xs: "16px", md: "18px", xl: "24px" },
+            maxWidth: { md: "494px", lg: "703px", xl: "937px" },
+          }}
+        >
+          {intl.formatMessage({ id: "aboutText4" })}
+        </Typography>
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", lg: "row" },
+          textAlign: "center",
+          justifyContent: "center",
+          alignItems: "stretch",
+          marginTop: { xs: "50px", lg: "60px", xl: "90px" },
+          gap: { xs: "35px", md: "40px", lg: "60px 40px", xl: "60px 70px" },
+          flexWrap: "wrap",
+        }}
+      >
+        <Card
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "left",
+            width: { xs: "100%", lg: "48%" },
+            borderRadius: "10px",
+            background: (theme) => theme.palette.background.card,
+          }}
+        >
+          <CardContent sx={{ p: { xs: "18px", md: "23px", xl: "38px" } }}>
+            <ProfileImage />
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "18px",
+                  md: "20px",
+                  xl: "24px",
+                },
+                lineHeight: "140%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+                mt: { xl: "24px", md: "18px", xs: "12px" },
+              }}
+            >
+              {intl.formatMessage({ id: "userProfile" })}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: "150%",
+                pt: "4px",
+              }}
+            >
+              {intl.formatMessage({ id: "userProfileDetails" })}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "left",
+            borderRadius: "10px",
+            width: { xs: "100%", lg: "48%" },
+            background: (theme) => theme.palette.background.card,
+          }}
+        >
+          <CardContent sx={{ p: { xs: "18px", md: "23px", xl: "38px" } }}>
+            <ChatImage />
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "18px",
+                  md: "20px",
+                  xl: "24px",
+                },
+                lineHeight: "140%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+                mt: { xl: "24px", md: "18px", xs: "12px" },
+              }}
+            >
+              {intl.formatMessage({ id: "chat" })}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: "150%",
+                pt: "4px",
+              }}
+            >
+              {intl.formatMessage({ id: "chatDetails" })}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "left",
+            borderRadius: "10px",
+            width: { xs: "100%", lg: "48%" },
+            background: (theme) => theme.palette.background.card,
+          }}
+        >
+          <CardContent sx={{ p: { xs: "18px", md: "23px", xl: "38px" } }}>
+            <TeacherProfileImage />
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "18px",
+                  md: "20px",
+                  xl: "24px",
+                },
+                lineHeight: "140%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+                mt: { xl: "24px", md: "18px", xs: "12px" },
+              }}
+            >
+              {intl.formatMessage({ id: "teacherProfile" })}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: "150%",
+                pt: "4px",
+              }}
+            >
+              {intl.formatMessage({ id: "teacherProfileDetails" })}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "left",
+            borderRadius: "10px",
+            width: { xs: "100%", lg: "48%" },
+            background: (theme) => theme.palette.background.card,
+          }}
+        >
+          <CardContent sx={{ p: { xs: "18px", md: "23px", xl: "38px" } }}>
+            <AllTeachersImage />
+            <Typography
+              sx={{
+                fontSize: {
+                  xs: "18px",
+                  md: "20px",
+                  xl: "24px",
+                },
+                lineHeight: "140%",
+                color: (theme) => theme.palette.buttonColor.listItem,
+                mt: { xl: "24px", md: "18px", xs: "12px" },
+              }}
+            >
+              {intl.formatMessage({ id: "allTeachers" })}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                lineHeight: "150%",
+                pt: "4px",
+              }}
+            >
+              {intl.formatMessage({ id: "allTeachersDetails" })}
             </Typography>
           </CardContent>
         </Card>
