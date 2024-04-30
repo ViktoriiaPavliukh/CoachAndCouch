@@ -34,7 +34,7 @@ export const Profile = ({ currentUser, countriesList }) => {
     lastName: currentUser?.lastName || "",
     email: currentUser?.email || "",
     birthday: currentUser?.birthday
-      ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
+      ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
       : "",
     sex: currentUser?.sex || "",
     country: currentUser?.country?.alpha2 || "",

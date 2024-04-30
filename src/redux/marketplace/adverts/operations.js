@@ -113,27 +113,17 @@ export const editAdvert = createAsyncThunk(
   "adverts/editAdvert",
   async ({ advertId, formData }, thunkAPI) => {
     try {
-      console.log("Editing advertisement...");
-      console.log("Advert ID:", advertId);
-      console.log("Form Data:", formData);
-      for (const pair of formData.entries()) {
-        const [key, value] = pair;
-        console.log(`${key}: ${value}`);
-      }
-
       const userToken = thunkAPI.getState().auth.accessToken;
-      console.log("User Token:", userToken);
-
-      // Set the authentication token in the headers
-      const headers = { Authorization: `Bearer ${userToken}` };
-
-      // Dispatch the API request
+      const jsonData = JSON.stringify(Object.fromEntries(formData));
+      const headers = {
+        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+      };
       const { data } = await privateAPI.patch(
         `/adverts/${advertId}`,
-        formData,
+        jsonData,
         { headers }
       );
-
       console.log("Advertisement edited successfully:", data);
       return data;
     } catch (error) {
@@ -144,29 +134,29 @@ export const editAdvert = createAsyncThunk(
   }
 );
 
-// export const editAdvert = createAsyncThunk(
-//   "adverts/editAdvert",
-//   async ({ advertId, formData }, thunkAPI) => {
-//     try {
-//       console.log("hi");
-//       console.log(advertId);
-//       console.log(formData);
+export const editAdvertImage = createAsyncThunk(
+  "adverts/editAdvertImage",
+  async ({ advertId, imageFile }, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
 
-//       const userToken = thunkAPI.getState().auth.accessToken;
-//       token.set(userToken);
-//       console.log(userToken);
-//       privateAPI.setToken(userToken);
-//       const { data } = await privateAPI.patch(
-//         `/adverts/${advertId}`,
-//         formData,
-//         {
-//           headers: { Authorization: `Bearer ${userToken}` },
-//         }
-//       );
-//       return data;
-//     } catch (error) {
-//       toast.error("Failed to edit advertisement");
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
+      const userToken = thunkAPI.getState().auth.accessToken;
+      console.log("User Token:", userToken);
+
+      const headers = { Authorization: `Bearer ${userToken}` };
+      const { data } = await privateAPI.patch(
+        `/adverts/${advertId}/image`,
+        formData,
+        { headers }
+      );
+
+      console.log("Advertisement image edited successfully:", data);
+      return data;
+    } catch (error) {
+      console.error("Failed to edit advertisement image:", error);
+      toast.error("Failed to edit advertisement image");
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

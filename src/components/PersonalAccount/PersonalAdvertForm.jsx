@@ -26,7 +26,10 @@ import {
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { selectCurrentUser } from "@/redux/users/selectors";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
-import { editAdvert } from "@/redux/marketplace/adverts/operations";
+import {
+  editAdvert,
+  editAdvertImage,
+} from "@/redux/marketplace/adverts/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
 import { v4 as uuidv4 } from "uuid";
@@ -34,14 +37,14 @@ import { format } from "date-fns";
 
 const validationSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
-  // description: Yup.string().required("Description is required"),
-  // spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  // teachingLanguages: Yup.array().min(
-  //   1,
-  //   "Select at least one teaching language"
-  // ),
-  // specializations: Yup.array().required("Specialization is required"),
-  // image: Yup.mixed().required("Select image for your advert"),
+  description: Yup.string().required("Description is required"),
+  spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
+  specializations: Yup.array().required("Specialization is required"),
+  image: Yup.mixed().required("Select image for your advert"),
 });
 
 export const PersonalAdvertForm = ({
@@ -55,38 +58,9 @@ export const PersonalAdvertForm = ({
 }) => {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
-  // const [image, setImage] = useState(currentUser.advert.imagePath);
+  const dispatch = useDispatch();
   const [avatar, setAvatar] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [teacherData, setTeacherData] = useState(teacher);
-  const [formData, setFormData] = useState({
-    image: currentUser?.advert?.imagePath || "",
-    firstName: currentUser?.firstName || "",
-    lastName: currentUser?.lastName || "",
-    email: currentUser?.email || "",
-    birthday: currentUser?.birthday
-      ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
-      : "",
-    sex: currentUser?.sex || "",
-    country: currentUser?.country?.alpha2
-      ? countriesCase(
-          en === "en"
-            ? countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
-                ?.nameEng || ""
-            : countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
-                ?.nameShort || ""
-        )
-      : "",
-    registeredAt: currentUser?.registeredAt
-      ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
-      : "",
-    description: currentUser?.advert?.description || "",
-    price: currentUser?.advert?.price || "",
-    specializations: currentUser?.advert?.specializations || [],
-    spokenLanguages: currentUser?.advert?.spokenLanguages || [],
-    teachingLanguages: currentUser?.advert?.teachingLanguages || [],
-  });
-  const dispatch = useDispatch();
 
   const handleTeacherProfileSubmit = (e) => {
     e.preventDefault();
@@ -94,13 +68,40 @@ export const PersonalAdvertForm = ({
   };
 
   const formik = useFormik({
-    initialValues: formData,
+    initialValues: {
+      image: currentUser?.advert?.imagePath || "",
+      firstName: currentUser?.firstName || "",
+      lastName: currentUser?.lastName || "",
+      email: currentUser?.email || "",
+      birthday: currentUser?.birthday
+        ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
+        : "",
+      sex: currentUser?.sex || "",
+      country: currentUser?.country?.alpha2
+        ? countriesCase(
+            en === "en"
+              ? countries.find(
+                  (el) => el.alpha2 === currentUser?.country?.alpha2
+                )?.nameEng || ""
+              : countries.find(
+                  (el) => el.alpha2 === currentUser?.country?.alpha2
+                )?.nameShort || ""
+          )
+        : "",
+      registeredAt: currentUser?.registeredAt
+        ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
+        : "",
+      description: currentUser?.advert?.description || "",
+      price: currentUser?.advert?.price || "",
+      specializations: teacher?.specializations || [],
+      spokenLanguages: teacher?.spokenLanguages || [],
+      teachingLanguages: teacher?.teachingLanguages || [],
+    },
     validationSchema,
     onSubmit: handleTeacherProfileSubmit,
   });
 
   const handleSaveButtonClick = async () => {
-    let formData;
     try {
       await formik.validateForm();
 
@@ -109,41 +110,37 @@ export const PersonalAdvertForm = ({
         return;
       }
 
-      formData = new FormData();
+      if (formik.values.image !== currentUser?.advert?.imagePath) {
+        await dispatch(
+          editAdvertImage({ advertId, imageFile: formik.values.image })
+        );
+      }
+      const formData = new FormData();
+      // Append fields to the FormData object
+      formData.append("description", formik.values.description);
+      formData.append("price", formik.values.price);
 
-      formData.append("image", formik.values.image);
-      setFormData((prevData) => ({
-        ...prevData,
-        image: formik.values.image,
-      }));
-
-      // // Specializations
-      // formik.values.specializations.forEach((spec) => {
-      //   formData.append("specializations[]", spec.id);
-      // });
-
-      // // Spoken Languages
-      // formik.values.spokenLanguages.forEach((lang) => {
-      //   formData.append("spokenLanguages[]", lang.id);
-      // });
-
-      const teachingLanguagesIds = formik.values.teachingLanguages.map(
-        (lang) => lang.id
+      // Append spokenLanguages array as JSON string
+      formData.append(
+        "spokenLanguages",
+        JSON.stringify(formik.values.spokenLanguages.map((lang) => lang.id))
       );
+
+      // Append teachingLanguages array as JSON string
       formData.append(
         "teachingLanguages",
-        JSON.stringify(teachingLanguagesIds)
+        JSON.stringify(formik.values.teachingLanguages.map((lang) => lang.id))
       );
 
-      // formData.append("description", formik.values.description);
-
-      // Dispatch the editAdvert action
+      // Append specializations array as JSON string
+      formData.append(
+        "specializations",
+        JSON.stringify(formik.values.specializations.map((spec) => spec.id))
+      );
+      console.log("Form Data before dispatch:", formData);
       await dispatch(editAdvert({ advertId, formData }));
 
-      // If successful, set edit mode to false
       setEditMode(false);
-
-      console.log("FormData:", formData);
     } catch (error) {
       console.error("Error editing advert:", error);
       // Handle error
@@ -152,25 +149,8 @@ export const PersonalAdvertForm = ({
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log("Input changed:", name, value);
     formik.setFieldValue(name, value);
-    console.log("Price value after change:", formik.values.price);
   };
-
-  // Effect to refetch advert data when dataChanged state changes
-  // useEffect(() => {
-  //   if (dataChanged) {
-  //     // Dispatch getAdvertById to fetch the updated advert data
-  //     dispatch(getAdvertById(advertId))
-  //       .then((data) => {
-  //         // Update the teacher state with the fetched data
-  //         setTeacherData(data.payload);
-  //       })
-  //       .catch((error) =>
-  //         console.error("Error fetching updated advert data: ", error)
-  //       );
-  //   }
-  // }, [dispatch, advertId, dataChanged]);
 
   return (
     <form
@@ -205,7 +185,7 @@ export const PersonalAdvertForm = ({
           }}
         >
           <PersonalImage
-            userImage={formData.image}
+            userImage={formik.values.image}
             width={"263px"}
             height={"205px"}
             borderRadius={"0"}
@@ -288,13 +268,12 @@ export const PersonalAdvertForm = ({
         </Box>
         <TextField
           fullWidth
-          // focused
           id="firstName"
           name="firstName"
           type="text"
           label={intl.formatMessage({ id: "name" })}
           disabled={true}
-          defaultValue={currentUser?.firstName}
+          defaultValue={formik.values.firstName}
           variant="outlined"
           onChange={handleInputChange}
           onBlur={formik.handleBlur}
@@ -307,7 +286,7 @@ export const PersonalAdvertForm = ({
           name="lastName"
           type="text"
           label={intl.formatMessage({ id: "lastName" })}
-          defaultValue={currentUser?.lastName || ""}
+          defaultValue={formik.values.lastName || ""}
           variant="outlined"
           disabled={true}
           onChange={handleInputChange}
@@ -318,7 +297,7 @@ export const PersonalAdvertForm = ({
         <TextField
           label="Email"
           name="email"
-          defaultValue={currentUser?.email}
+          defaultValue={formik.values.email}
           sx={{ width: { xs: "100%" } }}
           variant="outlined"
           disabled={true}
@@ -348,15 +327,12 @@ export const PersonalAdvertForm = ({
             id="userBirthday"
             name="birthday"
             disabled={true}
-            defaultValue={
-              currentUser.birthday
-                ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
-                : ""
-            }
+            defaultValue={formik.values.birthday}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={formik.touched.birthday && Boolean(formik.errors.birthday)}
             helperText={formik.touched.birthday && formik.errors.birthday}
+            InputLabelProps={{ shrink: true }}
           />
 
           <FormControl
@@ -373,13 +349,7 @@ export const PersonalAdvertForm = ({
               name="sex"
               label={intl.formatMessage({ id: "sex" })}
               disabled={true}
-              defaultValue={
-                currentUser.sex === "male"
-                  ? "male"
-                  : currentUser.sex === "female"
-                  ? "female"
-                  : "other"
-              }
+              defaultValue={formik.values.sex}
               onChange={handleInputChange}
               onBlur={formik.handleBlur}
               error={formik.touched.sex && Boolean(formik.errors.sex)}
@@ -409,7 +379,7 @@ export const PersonalAdvertForm = ({
             label={intl.formatMessage({ id: "pricePerHour" })}
             variant="outlined"
             type="number"
-            defaultValue={formData.price}
+            defaultValue={formik.values.price}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={formik.touched.price && Boolean(formik.errors.price)}
@@ -425,19 +395,7 @@ export const PersonalAdvertForm = ({
           label={intl.formatMessage({ id: "country" })}
           variant="outlined"
           disabled={true}
-          value={
-            currentUser?.country && en === "en"
-              ? countriesCase(
-                  countries.find(
-                    (el) => el.alpha2 === currentUser.country?.alpha2
-                  ).nameEng
-                ).split(",")
-              : countriesCase(
-                  countries.find(
-                    (el) => el.alpha2 === currentUser.country?.alpha2
-                  ).nameShort
-                ).split(",")
-          }
+          defaultValue={formik.values.country}
           onChange={handleInputChange}
           onBlur={formik.handleBlur}
           error={formik.touched.country && Boolean(formik.errors.country)}
@@ -453,7 +411,7 @@ export const PersonalAdvertForm = ({
             disabled={!editMode}
             multiple
             label="languagesSpoken"
-            value={teacher?.spokenLanguages || []}
+            defaultValue={formik.values.spokenLanguages}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={
@@ -486,7 +444,7 @@ export const PersonalAdvertForm = ({
             multiple
             label={intl.formatMessage({ id: "languagesTeaching" })}
             disabled={!editMode}
-            defaultValue={teacher?.teachingLanguages || []}
+            defaultValue={formik.values.teachingLanguages || []}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={
@@ -519,7 +477,7 @@ export const PersonalAdvertForm = ({
             disabled={!editMode}
             multiple
             label={intl.formatMessage({ id: "specialization" })}
-            value={teacher?.specializations || []}
+            value={formik.values.specializations || []}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={
@@ -552,7 +510,7 @@ export const PersonalAdvertForm = ({
           variant="outlined"
           disabled={!editMode}
           multiline
-          defaultValue={currentUser?.advert?.description}
+          defaultValue={formik.values.description}
           InputLabelProps={{ shrink: true }}
           InputProps={{ placeholder: "" }}
           onChange={handleInputChange}
@@ -570,11 +528,7 @@ export const PersonalAdvertForm = ({
             width: "100%",
           }}
           disabled={true}
-          defaultValue={
-            currentUser.registeredAt
-              ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
-              : ""
-          }
+          defaultValue={formik.values.registeredAt}
         />
         {editMode ? (
           <Button
