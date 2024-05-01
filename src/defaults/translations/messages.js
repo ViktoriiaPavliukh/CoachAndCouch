@@ -65,6 +65,9 @@ const messages = {
       "Every registered user has the opportunity to fill out a teacher profile and post their own advertisement, the editing of which is provided in the profile",
     allTeachersDetails:
       "The platform includes a page with advertisements of all teachers, which can be sorted by the teacher's country of origin, the price of a trial lesson, language, or teaching specialization",
+    aboutGreenPoster1:
+      "Student or graduate, teacher or enthusiast — everyone can join the community ",
+    aboutGreenPoster2: "We are already waiting for you!",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -267,6 +270,9 @@ const messages = {
       "Кожен зареєстрований користувач має змогу заповнити анкету викладача та викласти власне оголошення, редагування якого передбачено у профілі",
     allTeachersDetails:
       "На платформі передбачено сторінку з оголошеннями усіх викладачів, що можна сортувати за країною походження викладача, ціною пробного уроку, мовою або ж спеціалізацією викладання",
+    aboutGreenPoster1:
+      "Студент або випускник, викладач або любитель — кожен може приєднатися до спільноти ",
+    aboutGreenPoster2: "Ми вже чекаємо на вас!",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",

@@ -60,6 +60,14 @@ export default function App() {
           <Route path="*" element={<PageError />} />
           <Route index element={<TeachersPage />} />
           <Route path="about" element={<AboutUsPage />} />
+          <Route
+            path="about/login"
+            element={<RestrictedRoute redirectTo="/" component={<SignIn />} />}
+          />
+          <Route
+            path="about/registration"
+            element={<RestrictedRoute redirectTo="/" component={<SignUp />} />}
+          />
           <Route path="teachers/:id" element={<Card />} />
           <Route path="teacherform" element={<TeacherFormPage />} />
           <Route
