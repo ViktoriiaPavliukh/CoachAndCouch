@@ -68,6 +68,21 @@ const messages = {
     aboutGreenPoster1:
       "Student or graduate, teacher or enthusiast — everyone can join the community ",
     aboutGreenPoster2: "We are already waiting for you!",
+    aboutTrial: "How to order a trial lesson",
+    aboutTrial2:
+      "The website interface allows you to buy a trial lesson in just a few clicks - it's as simple as possible and doesn't require any extra effort from the user",
+    chooseTeacherTitle: "Choose a Teacher",
+    chooseTeacherText:
+      "Select the perfect teacher for yourself using various filters on the Home page.",
+    checkAdvertTitle: "Check the Advertisement",
+    checkAdvertText:
+      "Make sure the teaching languages, specializations, country of origin, and other information about the teacher provided in the advertisement suit you.",
+    setTrialTitle: "Schedule a Trial Lesson",
+    setTrialText:
+      "Choose a time for the lesson, provide brief information about yourself, including your current language level, the language you want to learn, your country of origin, native language, and learning goals",
+    payLessonTitle: "Pay for the Lesson",
+    payLessonText:
+      "You can pay with a card from any country or use Apple/Google Pay",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -273,6 +288,21 @@ const messages = {
     aboutGreenPoster1:
       "Студент або випускник, викладач або любитель — кожен може приєднатися до спільноти ",
     aboutGreenPoster2: "Ми вже чекаємо на вас!",
+    aboutTrial: "Як замовити пробний урок",
+    aboutTrial2:
+      "Інтерфейс сайту дозволяє купити пробне заняття всього за кілька кліків - це максимально просто та не вимагає зайвих зусиль від користувача",
+    chooseTeacherTitle: "Оберіть викладача",
+    chooseTeacherText:
+      "Оберіть ідеального викладача для себе за різними фільтрами на сторінці “Головна”",
+    checkAdvertTitle: "Продивіться оголошення",
+    checkAdvertText:
+      "Запевніться, що Вас влаштовує набір мов викладання, спеціалізації, країна походження та інша інформація про викладача, вказана в оголошенні",
+    setTrialTitle: "Оформіть пробний урок",
+    setTrialText:
+      "Оберіть час для заняття, вкажіть коротко інформацію про себе, а саме наявний рівень мови, яку бажаєте вивчати, країну походження, рідну мову та мету вивчення",
+    payLessonTitle: "Оплатіть урок",
+    payLessonText:
+      "Можете зробити це карткою будь-якої країни або Apple/Google Pay",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",

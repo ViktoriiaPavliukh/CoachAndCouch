@@ -20,6 +20,7 @@ import { ProfileImage } from "./ProfileImage";
 import { ChatImage } from "./ChatImage";
 import { TeacherProfileImage } from "./TeacherProfileImage";
 import { AllTeachersImage } from "./AllTeachersImage";
+import { Line } from "./Line";
 import { LargeLogoUp, LargeLogoDown } from "./LargeLogo";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
@@ -729,6 +730,142 @@ export function AboutUsPage() {
           </Box>
         </Box>
         <LargeLogoDown />
+      </Stack>
+      <Stack
+        sx={{
+          maxWidth: "xl",
+          px: { md: "60px", xs: "16px" },
+          pt: { xs: "100px", md: "114px", lg: "130px", xl: "180px" },
+          mb: { xs: "100px", md: "115px", lg: "130px", xl: "178px" },
+          gap: { xs: "22px", md: "33px", xl: "40px" },
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "left",
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: {
+              xs: "24px",
+              md: "36px",
+              lg: "48px",
+              xl: "60px",
+            },
+          }}
+        >
+          {intl.formatMessage({ id: "aboutTrial" })}
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: {
+              xs: "16px",
+              md: "18px",
+            },
+          }}
+        >
+          {intl.formatMessage({ id: "aboutTrial2" })}
+        </Typography>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            gap: { xs: "22px", md: "31px", xl: "40px" },
+            alignItems: "center",
+          }}
+        >
+          <Line />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: { xs: "20px", lg: "32px", xl: "35px" },
+              maxWidth: { xs: "283px", md: "579px", lg: "448px", xl: "574px" },
+            }}
+          >
+            <Stack>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.buttonColor.listItem,
+                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                }}
+              >
+                {intl.formatMessage({ id: "chooseTeacherTitle" })}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                  pt: "6px",
+                }}
+              >
+                {intl.formatMessage({ id: "chooseTeacherText" })}
+              </Typography>
+            </Stack>
+            <Stack>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.buttonColor.listItem,
+                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                }}
+              >
+                {intl.formatMessage({ id: "checkAdvertTitle" })}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                  pt: "6px",
+                }}
+              >
+                {intl.formatMessage({ id: "checkAdvertText" })}
+              </Typography>
+            </Stack>
+            <Stack>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.buttonColor.listItem,
+                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                }}
+              >
+                {intl.formatMessage({ id: "setTrialTitle" })}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                  pt: "6px",
+                }}
+              >
+                {intl.formatMessage({ id: "setTrialText" })}
+              </Typography>
+            </Stack>
+            <Stack>
+              <Typography
+                sx={{
+                  color: (theme) => theme.palette.buttonColor.listItem,
+                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                }}
+              >
+                {intl.formatMessage({ id: "payLessonTitle" })}
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                  pt: "6px",
+                }}
+              >
+                {intl.formatMessage({ id: "payLessonText" })}
+              </Typography>
+            </Stack>
+          </Box>
+        </Stack>
       </Stack>
     </Box>
   );
