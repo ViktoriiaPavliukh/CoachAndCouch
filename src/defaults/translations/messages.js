@@ -65,6 +65,28 @@ const messages = {
       "Every registered user has the opportunity to fill out a teacher profile and post their own advertisement, the editing of which is provided in the profile",
     allTeachersDetails:
       "The platform includes a page with advertisements of all teachers, which can be sorted by the teacher's country of origin, the price of a trial lesson, language, or teaching specialization",
+    aboutGreenPoster1:
+      "Student or graduate, teacher or enthusiast — everyone can join the community ",
+    aboutGreenPoster2: "We are already waiting for you!",
+    aboutTrial: "How to order a trial lesson",
+    aboutTrial2:
+      "The website interface allows you to buy a trial lesson in just a few clicks - it's as simple as possible and doesn't require any extra effort from the user",
+    chooseTeacherTitle: "Choose a Teacher",
+    chooseTeacherText:
+      "Select the perfect teacher for yourself using various filters on the Home page.",
+    checkAdvertTitle: "Check the Advertisement",
+    checkAdvertText:
+      "Make sure the teaching languages, specializations, country of origin, and other information about the teacher provided in the advertisement suit you.",
+    setTrialTitle: "Schedule a Trial Lesson",
+    setTrialText:
+      "Choose a time for the lesson, provide brief information about yourself, including your current language level, the language you want to learn, your country of origin, native language, and learning goals",
+    payLessonTitle: "Pay for the Lesson",
+    payLessonText:
+      "You can pay with a card from any country or use Apple/Google Pay",
+    forChildren: "For children",
+    forBasic: "Basic learning",
+    forSpeaking: "Spoken language",
+    forBusiness: "For business",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -84,7 +106,7 @@ const messages = {
     "personalAccount.dashboard": "Dashboard",
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
-    rate: "Rating",
+    rate: "Rate",
 
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
@@ -169,6 +191,10 @@ const messages = {
     chat: "Business chat",
     teacherProfile: "Teacher profile",
     allTeachers: "All teachers",
+    english: "English",
+    polish: "Polish",
+    spanish: "Spanish",
+    more: "More...",
 
     //validation
     priceValidation: "Price is required",
@@ -267,6 +293,28 @@ const messages = {
       "Кожен зареєстрований користувач має змогу заповнити анкету викладача та викласти власне оголошення, редагування якого передбачено у профілі",
     allTeachersDetails:
       "На платформі передбачено сторінку з оголошеннями усіх викладачів, що можна сортувати за країною походження викладача, ціною пробного уроку, мовою або ж спеціалізацією викладання",
+    aboutGreenPoster1:
+      "Студент або випускник, викладач або любитель — кожен може приєднатися до спільноти ",
+    aboutGreenPoster2: "Ми вже чекаємо на вас!",
+    aboutTrial: "Як замовити пробний урок",
+    aboutTrial2:
+      "Інтерфейс сайту дозволяє купити пробне заняття всього за кілька кліків - це максимально просто та не вимагає зайвих зусиль від користувача",
+    chooseTeacherTitle: "Оберіть викладача",
+    chooseTeacherText:
+      "Оберіть ідеального викладача для себе за різними фільтрами на сторінці “Головна”",
+    checkAdvertTitle: "Продивіться оголошення",
+    checkAdvertText:
+      "Запевніться, що Вас влаштовує набір мов викладання, спеціалізації, країна походження та інша інформація про викладача, вказана в оголошенні",
+    setTrialTitle: "Оформіть пробний урок",
+    setTrialText:
+      "Оберіть час для заняття, вкажіть коротко інформацію про себе, а саме наявний рівень мови, яку бажаєте вивчати, країну походження, рідну мову та мету вивчення",
+    payLessonTitle: "Оплатіть урок",
+    payLessonText:
+      "Можете зробити це карткою будь-якої країни або Apple/Google Pay",
+    forChildren: "Для дітей",
+    forBasic: "Вивчення основ",
+    forSpeaking: "Розмовна мова",
+    forBusiness: "Для бізнесу",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
@@ -363,6 +411,10 @@ const messages = {
     chat: "Службовий чат",
     teacherProfile: "Анкета викладача",
     allTeachers: "Усі викладачі",
+    english: "Англійська",
+    polish: "Польська",
+    spanish: "Іспанська",
+    more: "Більше...",
 
     //validation
     priceValidation: "Вкажіть ціну",
