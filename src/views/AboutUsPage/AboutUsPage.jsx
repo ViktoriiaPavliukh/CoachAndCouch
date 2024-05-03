@@ -6,7 +6,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Typography,
   Stack,
-  Button,
   MenuItem,
   Box,
   List,
@@ -753,6 +752,8 @@ export function AboutUsPage() {
       >
         <Typography
           sx={{
+            width: { xs: "91%", md: "64%" },
+            textAlign: "center",
             fontSize: {
               xs: "24px",
               md: "36px",
@@ -765,6 +766,8 @@ export function AboutUsPage() {
         </Typography>
         <Typography
           sx={{
+            textAlign: "center",
+            width: { xs: "91%", md: "64%", xl: "50%" },
             fontSize: {
               xs: "16px",
               md: "18px",
@@ -779,7 +782,7 @@ export function AboutUsPage() {
             flexDirection: { xs: "column-reverse", lg: "row" },
             justifyContent: "space-between",
             alignItems: "center",
-            maxWidth: "xl",
+            width: "100%",
           }}
         >
           <Box>
@@ -790,7 +793,7 @@ export function AboutUsPage() {
                 justifyContent: "space-between",
                 pt: { xs: "50px", lg: "0" },
                 width: "100%",
-                mb: { xs: "24px", md: "0" },
+                mb: { xs: "24px" },
               }}
             >
               <ChatIcon />
@@ -997,8 +1000,11 @@ export function AboutUsPage() {
             <Stack
               sx={{
                 mt: "18px",
+                display: "flex",
                 justifyContent: { xs: "center" },
                 alignItems: { xs: "center" },
+                flexDirection: { xs: "column", md: "row-reverse" },
+                gap: { md: "18px" },
               }}
             >
               <Card
