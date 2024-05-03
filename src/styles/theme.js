@@ -50,6 +50,7 @@ const createThemeTemplate = (themeColor) => ({
             mainPage: "#FAFAFA",
             messages: "#ffffff",
             card: "#FFF",
+            language: "#f3f4f6",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -76,6 +77,7 @@ const createThemeTemplate = (themeColor) => ({
           },
           textColor: {
             fontColor: "#000000",
+            green: "#0d5b1c",
             header: "#FFF",
             logo: "#F1F3EF",
             title: "#000",
@@ -114,6 +116,7 @@ const createThemeTemplate = (themeColor) => ({
             mainPage: "#262626",
             messages: "#4B5563",
             card: "#262626",
+            language: "#171717",
           },
           buttonColor: {
             header: "#EEC700",
@@ -141,6 +144,7 @@ const createThemeTemplate = (themeColor) => ({
           },
           textColor: {
             fontColor: "#FBFDF6",
+            green: "#0d5b1c",
             header: "#FFF",
             logo: "#F1F3EF",
             title: "#FBFDF6",

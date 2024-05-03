@@ -13,14 +13,19 @@ import {
   ListItem,
   Card,
   CardContent,
+  CardMedia,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CloseIcon from "@mui/icons-material/Close";
+import DoneIcon from "@mui/icons-material/Done";
 import { AboutUsImage } from "./AboutUsImage";
 import { ProfileImage } from "./ProfileImage";
 import { ChatImage } from "./ChatImage";
+import { PaymentImage } from "./PaymentImage";
 import { TeacherProfileImage } from "./TeacherProfileImage";
 import { AllTeachersImage } from "./AllTeachersImage";
 import { Line } from "./Line";
+import { ChatIcon } from "./ChatIcon";
 import { LargeLogoUp, LargeLogoDown } from "./LargeLogo";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
@@ -584,6 +589,7 @@ export function AboutUsPage() {
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: (theme) => theme.palette.primary.main,
+          width: "100%",
         }}
       >
         <LargeLogoUp />
@@ -767,105 +773,482 @@ export function AboutUsPage() {
         >
           {intl.formatMessage({ id: "aboutTrial2" })}
         </Typography>
-        <Stack
+        <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            gap: { xs: "22px", md: "31px", xl: "40px" },
+            flexDirection: { xs: "column-reverse", lg: "row" },
+            justifyContent: "space-between",
             alignItems: "center",
+            maxWidth: "xl",
           }}
         >
-          <Line />
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: { xs: "20px", lg: "32px", xl: "35px" },
-              maxWidth: { xs: "283px", md: "579px", lg: "448px", xl: "574px" },
-            }}
-          >
-            <Stack>
-              <Typography
-                sx={{
-                  color: (theme) => theme.palette.buttonColor.listItem,
-                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
-                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
-                }}
-              >
-                {intl.formatMessage({ id: "chooseTeacherTitle" })}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
-                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
-                  pt: "6px",
-                }}
-              >
-                {intl.formatMessage({ id: "chooseTeacherText" })}
-              </Typography>
+          <Box>
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                pt: { xs: "50px", lg: "0" },
+                width: "100%",
+                mb: { xs: "24px", md: "0" },
+              }}
+            >
+              <ChatIcon />
+              <Box>
+                <List sx={{ p: 0 }}>
+                  <ListItem sx={{ p: 0 }}>
+                    <DoneIcon
+                      sx={{
+                        color: (theme) => theme.palette.textColor.green,
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        pl: "10px",
+                        fontSize: { xs: "14px", md: "18px", xl: "20px" },
+                        lineHeight: "140%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "forChildren" })}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <DoneIcon
+                      sx={{
+                        color: (theme) => theme.palette.textColor.green,
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        pl: "10px",
+                        fontSize: { xs: "14px", md: "18px", xl: "20px" },
+                        lineHeight: "140%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "forBasic" })}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <DoneIcon
+                      sx={{
+                        color: (theme) => theme.palette.textColor.green,
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        pl: "10px",
+                        fontSize: { xs: "14px", md: "18px", xl: "20px" },
+                        lineHeight: "140%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "forSpeaking" })}
+                    </Typography>
+                  </ListItem>
+                  <ListItem sx={{ p: 0 }}>
+                    <CloseIcon
+                      sx={{
+                        color: (theme) => theme.palette.textColor.red,
+                      }}
+                    />
+                    <Typography
+                      sx={{
+                        pl: "10px",
+                        fontSize: { xs: "14px", md: "18px", xl: "20px" },
+                        lineHeight: "140%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "forBusiness" })}
+                    </Typography>
+                  </ListItem>
+                </List>
+              </Box>
             </Stack>
-            <Stack>
-              <Typography
+            <Card
+              sx={{
+                display: "flex",
+                minWidth: "343px",
+                background: (theme) => theme.palette.background.card,
+              }}
+            >
+              <CardMedia
+                component="img"
                 sx={{
-                  color: (theme) => theme.palette.buttonColor.listItem,
-                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
-                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                  width: { xs: "134px", md: "167px", lg: "187px" },
+                }}
+                image="src/assets/images/imgGirl.png"
+                alt="French Girl"
+              />
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    pl: "16px",
+                    pr: "10px",
+                    py: "20px",
+                    gap: "10px",
+                    flexDirection: "column",
+                    minWidth: { xs: "177px", md: "222px" },
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      gap: "10px",
+                      flexDirection: "row",
+                      justifyContent: "start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "16px", md: "18px", xl: "20px" },
+                        lineHeight: "140%",
+                      }}
+                    >
+                      Lolly Pops
+                    </Typography>
+                    <img
+                      src={`https://flagcdn.com/w40/fr.png`}
+                      srcSet={`https://flagcdn.com/w80/fr.png 2x`}
+                      alt="fr flag"
+                      style={{
+                        width: "28px",
+                        height: "20px",
+                        borderRadius: "4px",
+                      }}
+                    />
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: { xs: "6px", md: "7px" },
+                      justifyContent: "start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        px: "10px",
+                        py: "4px",
+                        backgroundColor: (theme) =>
+                          theme.palette.background.language,
+                        borderRadius: "16px",
+                        fontSize: { xs: "9px", md: "12px", xl: "15px" },
+                        lineHeight: "143%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "english" })}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        px: "10px",
+                        py: "4px",
+                        backgroundColor: (theme) =>
+                          theme.palette.background.language,
+                        borderRadius: "16px",
+                        fontSize: { xs: "9px", md: "12px", xl: "15px" },
+                        lineHeight: "143%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "polish" })}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "9px", md: "12px", xl: "15px" },
+                        lineHeight: "143%",
+                        pt: "10px",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "more" })}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    sx={{ display: "flex", flexDirection: "row", gap: "25px" }}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "10px", md: "12px", xl: "14px" },
+                        lineHeight: "143%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "rate" })}: 3.37
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "10px", md: "12px", xl: "14px" },
+                        lineHeight: "143%",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "lessons" })}: 156
+                    </Typography>
+                  </Stack>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "16px", md: "18px", xl: "20px" },
+                      color: (theme) => theme.palette.buttonColor.listItem,
+                    }}
+                  >
+                    40$
+                  </Typography>
+                </CardContent>
+              </Box>
+            </Card>
+            <Stack
+              sx={{
+                mt: "18px",
+                justifyContent: { xs: "center" },
+                alignItems: { xs: "center" },
+              }}
+            >
+              <Card
+                sx={{
+                  display: "flex",
+                  minWidth: "343px",
+                  background: (theme) => theme.palette.background.card,
                 }}
               >
-                {intl.formatMessage({ id: "checkAdvertTitle" })}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
-                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
-                  pt: "6px",
-                }}
-              >
-                {intl.formatMessage({ id: "checkAdvertText" })}
-              </Typography>
-            </Stack>
-            <Stack>
-              <Typography
-                sx={{
-                  color: (theme) => theme.palette.buttonColor.listItem,
-                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
-                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
-                }}
-              >
-                {intl.formatMessage({ id: "setTrialTitle" })}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
-                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
-                  pt: "6px",
-                }}
-              >
-                {intl.formatMessage({ id: "setTrialText" })}
-              </Typography>
-            </Stack>
-            <Stack>
-              <Typography
-                sx={{
-                  color: (theme) => theme.palette.buttonColor.listItem,
-                  fontSize: { xs: "18px", md: "20px", xl: "24px" },
-                  lineHeight: { xs: "156%", md: "140%", xl: "133%" },
-                }}
-              >
-                {intl.formatMessage({ id: "payLessonTitle" })}
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: "14px", md: "16px", xl: "20px" },
-                  lineHeight: { xs: "143%", md: "150%", xl: "140%" },
-                  pt: "6px",
-                }}
-              >
-                {intl.formatMessage({ id: "payLessonText" })}
-              </Typography>
+                <CardMedia
+                  component="img"
+                  sx={{
+                    width: { xs: "134px", md: "167px", lg: "187px" },
+                  }}
+                  image="src/assets/images/imgUa.png"
+                  alt="Girl"
+                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardContent
+                    sx={{
+                      display: "flex",
+                      pl: "16px",
+                      pr: "10px",
+                      py: "20px",
+                      gap: "10px",
+                      flexDirection: "column",
+                      minWidth: { xs: "177px", md: "222px" },
+                    }}
+                  >
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        gap: "10px",
+                        flexDirection: "row",
+                        justifyContent: "start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "16px", md: "18px", xl: "20px" },
+                          lineHeight: "140%",
+                        }}
+                      >
+                        Elina Kim
+                      </Typography>
+                      <img
+                        src={`https://flagcdn.com/w40/ua.png`}
+                        srcSet={`https://flagcdn.com/w80/ua.png 2x`}
+                        alt="ua flag"
+                        style={{
+                          width: "28px",
+                          height: "20px",
+                          borderRadius: "4px",
+                        }}
+                      />
+                    </Stack>
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: { xs: "6px", md: "7px" },
+                        justifyContent: "start",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          px: "10px",
+                          py: "4px",
+                          backgroundColor: (theme) =>
+                            theme.palette.background.language,
+                          borderRadius: "16px",
+                          fontSize: { xs: "9px", md: "12px", xl: "15px" },
+                          lineHeight: "143%",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "spanish" })}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          px: "10px",
+                          py: "4px",
+                          backgroundColor: (theme) =>
+                            theme.palette.background.language,
+                          borderRadius: "16px",
+                          fontSize: { xs: "9px", md: "12px", xl: "15px" },
+                          lineHeight: "143%",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "polish" })}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "9px", md: "12px", xl: "15px" },
+                          lineHeight: "143%",
+                          pt: "10px",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "more" })}
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "25px",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "10px", md: "12px", xl: "14px" },
+                          lineHeight: "143%",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "rate" })}: 4.01
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: "10px", md: "12px", xl: "14px" },
+                          lineHeight: "143%",
+                        }}
+                      >
+                        {intl.formatMessage({ id: "lessons" })}: 13
+                      </Typography>
+                    </Stack>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "16px", md: "18px", xl: "20px" },
+                        color: (theme) => theme.palette.buttonColor.listItem,
+                      }}
+                    >
+                      15$
+                    </Typography>
+                  </CardContent>
+                </Box>
+              </Card>
+              <PaymentImage />
             </Stack>
           </Box>
-        </Stack>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              gap: { xs: "22px", md: "31px", xl: "40px" },
+              alignItems: "center",
+            }}
+          >
+            <Line />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: { xs: "20px", lg: "32px", xl: "35px" },
+                maxWidth: {
+                  xs: "283px",
+                  md: "579px",
+                  lg: "448px",
+                  xl: "574px",
+                },
+              }}
+            >
+              <Stack>
+                <Typography
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                    fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                    lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "chooseTeacherTitle" })}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                    pt: "6px",
+                  }}
+                >
+                  {intl.formatMessage({ id: "chooseTeacherText" })}
+                </Typography>
+              </Stack>
+              <Stack>
+                <Typography
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                    fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                    lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "checkAdvertTitle" })}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                    pt: "6px",
+                  }}
+                >
+                  {intl.formatMessage({ id: "checkAdvertText" })}
+                </Typography>
+              </Stack>
+              <Stack>
+                <Typography
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                    fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                    lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "setTrialTitle" })}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                    pt: "6px",
+                  }}
+                >
+                  {intl.formatMessage({ id: "setTrialText" })}
+                </Typography>
+              </Stack>
+              <Stack>
+                <Typography
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                    fontSize: { xs: "18px", md: "20px", xl: "24px" },
+                    lineHeight: { xs: "156%", md: "140%", xl: "133%" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "payLessonTitle" })}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "143%", md: "150%", xl: "140%" },
+                    pt: "6px",
+                  }}
+                >
+                  {intl.formatMessage({ id: "payLessonText" })}
+                </Typography>
+              </Stack>
+            </Box>
+          </Stack>
+        </Box>
       </Stack>
     </Box>
   );

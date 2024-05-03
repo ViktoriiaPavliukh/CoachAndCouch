@@ -83,6 +83,10 @@ const messages = {
     payLessonTitle: "Pay for the Lesson",
     payLessonText:
       "You can pay with a card from any country or use Apple/Google Pay",
+    forChildren: "For children",
+    forBasic: "Basic learning",
+    forSpeaking: "Spoken language",
+    forBusiness: "For business",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -102,7 +106,7 @@ const messages = {
     "personalAccount.dashboard": "Dashboard",
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
-    rate: "Rating",
+    rate: "Rate",
 
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
@@ -187,6 +191,10 @@ const messages = {
     chat: "Business chat",
     teacherProfile: "Teacher profile",
     allTeachers: "All teachers",
+    english: "English",
+    polish: "Polish",
+    spanish: "Spanish",
+    more: "More...",
 
     //validation
     priceValidation: "Price is required",
@@ -303,6 +311,10 @@ const messages = {
     payLessonTitle: "Оплатіть урок",
     payLessonText:
       "Можете зробити це карткою будь-якої країни або Apple/Google Pay",
+    forChildren: "Для дітей",
+    forBasic: "Вивчення основ",
+    forSpeaking: "Розмовна мова",
+    forBusiness: "Для бізнесу",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
@@ -399,6 +411,10 @@ const messages = {
     chat: "Службовий чат",
     teacherProfile: "Анкета викладача",
     allTeachers: "Усі викладачі",
+    english: "Англійська",
+    polish: "Польська",
+    spanish: "Іспанська",
+    more: "Більше...",
 
     //validation
     priceValidation: "Вкажіть ціну",
