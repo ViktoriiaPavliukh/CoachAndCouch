@@ -10,16 +10,21 @@ import {
   Box,
   List,
   ListItem,
+  ListItemText,
   Card,
   CardContent,
   CardMedia,
+  Button,
+  Modal,
 } from "@mui/material";
+import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import { AboutUsImage } from "./AboutUsImage";
 import { ProfileImage } from "./ProfileImage";
 import { ChatImage } from "./ChatImage";
+import { FillFormImage } from "./FillFormImage";
 import { PaymentImage } from "./PaymentImage";
 import { TeacherProfileImage } from "./TeacherProfileImage";
 import { AllTeachersImage } from "./AllTeachersImage";
@@ -35,8 +40,20 @@ export function AboutUsPage() {
   const intl = useIntl();
   const dispatch = useDispatch();
   const [pathname, setPathname] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [modalContentType, setModalContentType] = useState(null);
   const path = useLocation().pathname;
   const navigate = useNavigate();
+
+  const onShowModalClick = (contentType) => {
+    setModalContentType(contentType);
+    setShowModal(true);
+  };
+
+  const onBackdropClose = () => {
+    setShowModal(false);
+    setModalContentType(null);
+  };
   useEffect(() => {
     setPathname(path);
   }, [path]);
@@ -1254,6 +1271,336 @@ export function AboutUsPage() {
               </Stack>
             </Box>
           </Stack>
+        </Box>
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: (theme) => theme.palette.primary.main,
+          width: "100%",
+        }}
+      >
+        <LargeLogoUp />
+        <Box
+          sx={{
+            pt: { xs: "98px", md: "108px", lg: "44px", xl: "66px" },
+            mb: { xs: "86px", md: "96px", lg: "54px" },
+            width: { xs: "91%", md: "82%", lg: "63%", xl: "45%" },
+            color: (theme) => theme.palette.textColor.header,
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: { xs: "22px", md: "17px", xl: "20px" },
+          }}
+        >
+          <Stack sx={{ display: "inline" }}>
+            <Typography
+              sx={{
+                fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" },
+                display: "inline",
+              }}
+            >
+              {intl.formatMessage({ id: "orderTrialText1" })}
+            </Typography>
+            <Typography
+              variant="span"
+              sx={{
+                fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" },
+                color: (theme) => theme.palette.textColor.lightYellow,
+                display: "inline",
+              }}
+            >
+              з Elina Olexandrivna за 7 $!
+            </Typography>
+          </Stack>
+          <Typography
+            sx={{
+              fontSize: { xs: "16px", md: "18px", xl: "20px" },
+              px: { md: "12%", lg: "13%" },
+            }}
+          >
+            {intl.formatMessage({ id: "orderTrialText2" })}
+          </Typography>
+          <Button
+            onClick={() => onShowModalClick("trialLesson")}
+            variant="contained"
+            sx={{
+              py: "12px",
+              px: "30px",
+              borderRadius: "6px",
+              color: (theme) => theme.palette.buttonColor.fontColor,
+              fontSize: "14px",
+              fontWeight: "400",
+              transition: "background-color 0.3s",
+              backgroundColor: (theme) => theme.palette.buttonColor.lightYellow,
+              "&:hover": {
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.lightYellowHover,
+              },
+            }}
+          >
+            {intl.formatMessage({ id: "orderTrialButton" })}
+          </Button>
+          {showModal && (
+            <Modal
+              onBackdropClose={onBackdropClose}
+              contentType={modalContentType}
+            />
+          )}
+        </Box>
+        <LargeLogoDown />
+      </Stack>
+      <Stack
+        sx={{
+          display: "flex",
+          width: "100%",
+          flexDirection: "column",
+          gap: { xs: "50px", lg: "60px", xl: "90px" },
+          px: { md: "60px", xs: "16px" },
+          mb: { xs: "100px", md: "114px", lg: "130px", xl: "168px" },
+        }}
+      >
+        <Box
+          sx={{
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            pt: { xs: "78px", md: "114px", lg: "130px", xl: "180px" },
+            gap: { xs: "22px", md: "33px" },
+          }}
+        >
+          <Typography
+            sx={{
+              width: "100%",
+              fontSize: { xs: "24px", md: "36px", lg: "48px" },
+            }}
+          >
+            {intl.formatMessage({ id: "header.becomeTeacher" })}
+          </Typography>
+          <Typography
+            sx={{
+              width: "100%",
+              fontSize: { xs: "16px", md: "18px", xl: "24px" },
+              lineHeight: { xs: "24px", xl: "34px" },
+              width: { xs: "91%", md: "79%", lg: "52%", xl: "60%" },
+            }}
+          >
+            {intl.formatMessage({ id: "aboutText4" })}
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", lg: "row" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: { lg: "20%", xl: "10%" },
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              pt: "16px",
+              fontSize: "40px",
+              maxWidth: { xl: "677px" },
+            }}
+          >
+            <Typography
+              variant="text"
+              sx={{
+                fontSize: { xs: "18px", xl: "24px" },
+                lineHeight: { xs: "24px", xl: "34px" },
+              }}
+            >
+              {intl.formatMessage({ id: "aboutListTitle" })}
+            </Typography>
+            <List
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: { xs: "10px", xl: "12px" },
+                p: "0",
+              }}
+            >
+              <ListItem sx={{ display: "flex", gap: "12px", p: "0" }}>
+                <CheckCircleIcon
+                  fontSize="large"
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "20px", md: "24px", xl: "28px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "aboutList4" })}{" "}
+                </Typography>
+              </ListItem>
+              <ListItem sx={{ display: "flex", gap: "12px", p: "0" }}>
+                <CheckCircleIcon
+                  fontSize="large"
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "20px", md: "24px", xl: "28px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "aboutList5" })}
+                </Typography>
+              </ListItem>
+              <ListItem sx={{ display: "flex", gap: "12px", p: "0" }}>
+                <CheckCircleIcon
+                  fontSize="large"
+                  sx={{
+                    color: (theme) => theme.palette.buttonColor.listItem,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "14px", md: "16px", xl: "20px" },
+                    lineHeight: { xs: "20px", md: "24px", xl: "28px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "aboutList6" })}
+                </Typography>
+              </ListItem>
+            </List>
+            <Box
+              sx={{
+                mt: { xs: "22px", md: "33px", xl: "40px" },
+                fontSize: { xs: "18px", xl: "24px" },
+                lineHeight: { xs: "24px", xl: "34px" },
+              }}
+            >
+              <Typography
+                sx={{
+                  display: "inline",
+                  fontSize: { xs: "18px", xl: "24px" },
+                  lineHeight: { xs: "24px", xl: "34px" },
+                }}
+              >
+                {intl.formatMessage({ id: "aboutText5" })}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "inline",
+                  fontSize: { xs: "18px", xl: "24px" },
+                  lineHeight: { xs: "24px", xl: "34px" },
+                  color: (theme) => theme.palette.buttonColor.listItem,
+                }}
+              >
+                {intl.formatMessage({ id: "aboutText6" })}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "inline",
+                  fontSize: { xs: "18px", xl: "24px" },
+                  lineHeight: { xs: "24px", xl: "34px" },
+                }}
+              >
+                {intl.formatMessage({ id: "aboutText7" })}
+              </Typography>
+            </Box>
+            <Button
+              onClick={() => onShowModalClick("trialLesson")}
+              variant="contained"
+              sx={{
+                width: "fit-content",
+                py: "12px",
+                px: "30px",
+                borderRadius: "6px",
+                color: (theme) => theme.palette.buttonColor.fontColor,
+                fontSize: "14px",
+                fontWeight: "400",
+                transition: "background-color 0.3s",
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.greenYellow,
+                "&:hover": {
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.greenYellowHover,
+                },
+              }}
+            >
+              {intl.formatMessage({ id: "fillAdv" })}
+            </Button>
+          </Box>
+          <Box sx={{ position: "relative" }}>
+            <FillFormImage />
+            <List
+              sx={{
+                padding: "0",
+                position: "absolute",
+                right: "0",
+                top: { lg: "0", xs: "44px" },
+              }}
+            >
+              <ListItem sx={{ padding: "0" }}>
+                <CircleIcon
+                  sx={{
+                    fontSize: "small",
+                    color: (theme) => theme.palette.buttonColor.lightYellow,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "10px", md: "18px", xl: "20px" },
+                    lineHeight: { xs: "156%" },
+                    ml: { xs: "6px", md: "10px", xl: "12px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "pricePerLesson" })}
+                </Typography>
+              </ListItem>
+              <ListItem sx={{ padding: "0" }}>
+                <CircleIcon
+                  sx={{
+                    fontSize: "small",
+                    color: (theme) => theme.palette.buttonColor.lightYellow,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "10px", md: "18px", xl: "20px" },
+                    lineHeight: { xs: "156%" },
+                    ml: { xs: "6px", md: "10px", xl: "12px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "languagesTeaching" })}
+                </Typography>
+              </ListItem>
+              <ListItem sx={{ padding: "0" }}>
+                <CircleIcon
+                  sx={{
+                    fontSize: "small",
+                    color: (theme) => theme.palette.buttonColor.lightYellow,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontSize: { xs: "10px", md: "18px", xl: "20px" },
+                    lineHeight: { xs: "156%" },
+                    ml: { xs: "6px", md: "10px", xl: "12px" },
+                  }}
+                >
+                  {intl.formatMessage({ id: "specialization" })}
+                </Typography>
+              </ListItem>
+            </List>
+          </Box>
         </Box>
       </Stack>
     </Box>
