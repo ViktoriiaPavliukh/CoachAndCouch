@@ -87,6 +87,21 @@ const messages = {
     forBasic: "Basic learning",
     forSpeaking: "Spoken language",
     forBusiness: "For business",
+    orderTrialText1: "Take a trial lesson ",
+    orderTrialText2:
+      "If you are not satisfied with your trial lesson, we will offer a lesson with another teacher or a full refund",
+    orderTrialButton: "Book a trial lesson",
+    aboutText4:
+      "Share knowledge and earn without leaving home. Register to start teaching on Coach&Couch",
+    aboutListTitle: "With our platform, you're sure to:",
+    aboutList4: "find new students;",
+    aboutList5: "grow your own business;",
+    aboutList6: "be confident in lesson payments.",
+    aboutText5:
+      "Starting a teaching career is easy - just fill out the form. It'll take a maximum of ",
+    aboutText6: "10 minutes",
+    aboutText7: " of your time!",
+    pricePerLesson: "Price per hour",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -94,7 +109,6 @@ const messages = {
     reviewMessage: "Your comment:",
     deleteAccount: "Delete account",
     filterAdverts: "There are no adverts in the selected categories",
-
     dashboard: "Dashboard",
     "personalAccount.profile": "Profile",
     "personalAccount.lessons": "My Lessons",
@@ -155,6 +169,7 @@ const messages = {
     saveBtn: "Save",
     saveChanges: "Save changes",
     goBack: "Go back",
+    fillAdv: "Fill out the form",
 
     //Status
     online: "Online",
@@ -315,6 +330,22 @@ const messages = {
     forBasic: "Вивчення основ",
     forSpeaking: "Розмовна мова",
     forBusiness: "Для бізнесу",
+    orderTrialText1: "Візьміть пробний урок ",
+    orderTrialText2:
+      "Якщо ви залишитеся незадоволеними своїм пробним уроком, ми запропонуємо урок з іншим викладачем або повну компенсацію",
+    orderTrialButton: "Замовити пробний урок",
+    aboutText4:
+      "Діліться знаннями та заробляйте, не виходячи з дому. Реєструйтеся, щоб почати викладати на Coach&Couch",
+    aboutListTitle: "З нашою платформою ти неодмінно:",
+    aboutList4: "знайдеш нових учнів;",
+    aboutList5: "розвинеш власний бізнес;",
+    aboutList6: "будеш впевнений в оплаті уроків.",
+    aboutText5:
+      "Розпочати кар'єру викладача легко, заповнивши анкету. Це займе максимум ",
+    aboutText6: "10 хв",
+    aboutText7: " твого часу!",
+    pricePerLesson: "Вартість за годину",
+    
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
@@ -375,6 +406,7 @@ const messages = {
     saveBtn: "Зберегти",
     saveChanges: "Зберегти зміни",
     goBack: "Повернутись назад",
+    fillAdv: "Заповнити анкету",
 
     //Status
     online: "Онлайн",
