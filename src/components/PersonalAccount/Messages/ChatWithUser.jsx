@@ -11,8 +11,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Aperture, MapPin, Send } from "react-feather";
-import { useDispatch } from "react-redux";
+import { Aperture, ChevronLeft, MapPin, Send } from "react-feather";
+import { useIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { lightTheme, darkTheme } from "../../../styles/theme";
+import { selectTheme } from "@/redux/theme/selectors";
+import { PropTypes } from "prop-types";
 
 const messageItem = {
   width: { xs: "300px", md: "350px", lg: "466px" },
@@ -43,15 +47,21 @@ const userMessages = {
   ...messageItem,
   ...userMessageItem,
 };
-export const ChatWithUser = (userChat) => {
+export const ChatWithUser = ({ user, onClose }) => {
   const [message, setMessage] = useState("");
+  const theme = useSelector(selectTheme);
   const [sentMessage, setSentMessage] = useState(null);
   const dispatch = useDispatch;
+  const intl = useIntl();
+  const correspondenceName = user.userCorrespondenceId.name;
+  const correspondenceId = user.userCorrespondenceId.id;
+  const correspondenceCountry = user.userCorrespondenceId.country;
+  const messages = user.messages;
 
-  const correspondenceName = userChat.user.userCorrespondenceId.name;
-  const correspondenceId = userChat.user.userCorrespondenceId.id;
-  const correspondenceCountry = userChat.user.userCorrespondenceId.country;
-  const messages = userChat.user.messages;
+  const sendBtnColor = !theme
+    ? lightTheme.palette.buttonColor.send
+    : darkTheme.palette.buttonColor.send;
+
   const handleSendMessage = async () => {
     try {
       await dispatch(sendMessageFromUser({ correspondenceId, message }));
@@ -61,6 +71,7 @@ export const ChatWithUser = (userChat) => {
       console.error("Error sending message:", error);
     }
   };
+
   const groupedMessages = messages.reduce((acc, curr) => {
     const messageDate = new Date(curr.writtedAt).toLocaleDateString();
     if (!acc[messageDate]) {
@@ -75,7 +86,7 @@ export const ChatWithUser = (userChat) => {
       sx={{
         display: "block",
         m: { lg: "32px 55px 0 2px", xl: "26px 90px 32px 32px" },
-        width: { xs: "100%", md: "446px", lg: "855px", xl: "1142px" },
+        width: "100%",
         height: "100vh",
         boxSizing: "border-box",
       }}
@@ -92,6 +103,32 @@ export const ChatWithUser = (userChat) => {
         }}
       >
         <Box>
+          <Box sx={{ display: { xs: "block", md: "none" } }}>
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                background: "transparent",
+                border: "none",
+                marginBottom: "16px",
+                color: "inherit",
+              }}
+            >
+              <ChevronLeft />
+              <p
+                style={{
+                  textDecoration: "underline",
+                  fontSize: "16px",
+                  lineHeight: "150%",
+                }}
+              >
+                {intl.formatMessage({ id: "goBack" })}
+              </p>
+            </button>
+          </Box>
           <Box sx={{ display: "flex", gap: "20px", mb: "12px" }}>
             <Avatar
               sx={{
@@ -106,7 +143,11 @@ export const ChatWithUser = (userChat) => {
               <Typography> {correspondenceName}</Typography>
               <Box sx={{ display: "flex", gap: "8px", mt: "8px" }}>
                 <MapPin />
-                <Typography>{correspondenceCountry}</Typography>
+                <Typography
+                  sx={{ color: (theme) => theme.palette.textColor.remarks }}
+                >
+                  {correspondenceCountry}
+                </Typography>
               </Box>
             </Box>
           </Box>
@@ -129,7 +170,7 @@ export const ChatWithUser = (userChat) => {
                   lineHeight: "1.43",
                   borderRadius: "16px",
                   padding: "4px 8px",
-                  background: "#f3f4f6",
+                  background: (theme) => theme.palette.background.messagesDate,
                 }}
               >
                 {date}
@@ -138,7 +179,6 @@ export const ChatWithUser = (userChat) => {
             <List>
               {messages.map((message) => {
                 const date = new Date(message.writtedAt);
-                console.log(date);
                 const hours = date.getUTCHours();
                 const minutes = date.getUTCMinutes();
                 const messageTime = `${hours}:${minutes}`;
@@ -201,19 +241,14 @@ export const ChatWithUser = (userChat) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <Box>
-            <Input type="file" id="file-input" style={{ display: "none" }} />
-          </Box>
           <IconButton
             sx={{
               borderRadius: "6px",
               border: "2px solid",
               borderColor: (theme) =>
                 theme.palette.buttonColorComponentFigma.defaultGreen,
-              color: "inherit",
-              minWidth: "37px",
-              height: "34px",
-              p: "8px",
+              width: "40px",
+              height: "40px",
               display: "flex",
               alignItems: "center",
               "&:hover": {
@@ -224,10 +259,14 @@ export const ChatWithUser = (userChat) => {
             }}
             onClick={handleSendMessage}
           >
-            <Send sx={{ stroke: (theme) => theme.palette.buttonColor.send }} />
+            <Send color={sendBtnColor} />
           </IconButton>
         </Box>
       </Box>
     </Box>
   );
+};
+ChatWithUser.propTypes = {
+  user: PropTypes.object,
+  onClose: PropTypes.func,
 };

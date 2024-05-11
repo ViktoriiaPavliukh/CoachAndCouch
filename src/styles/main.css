@@ -62,6 +62,12 @@ img {
   justify-content: space-between !important;
   margin-bottom: 16px !important;
 }
+@media screen and (max-width: 767px) {
+  .rbc-toolbar {
+    gap: 16px !important;
+    align-items: start !important;
+  }
+}
 @media screen and (min-width: 1440px) {
   .rbc-toolbar {
     margin-bottom: 40px !important;

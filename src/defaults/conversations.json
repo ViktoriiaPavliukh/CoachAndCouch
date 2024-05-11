@@ -86,6 +86,13 @@
         "message": "good talk",
         "writtedAt": "2024-01-21T22:49:35.931Z",
         "isReaded": true
+      },
+      {
+        "id": 74,
+        "userSender": 1,
+        "message": "see you",
+        "writtedAt": "2024-01-22T22:49:35.931Z",
+        "isReaded": true
       }
     ]
   }

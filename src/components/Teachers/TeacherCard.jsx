@@ -292,6 +292,7 @@ export function TeacherCard({ teacher }) {
         <Modal
           onBackdropClose={onBackdropClose}
           contentType={modalContentType}
+          isOpen={showModal}
         />
       )}
     </>

@@ -37,11 +37,6 @@ export const pages = [
     iconFeatherName: "Smile",
   },
   {
-    title: <FormattedMessage id="personalAccount.dashboard" />,
-    link: "dashboard",
-    iconFeatherName: "Grid",
-  },
-  {
     title: <FormattedMessage id="personalAccount.settings" />,
     link: "settings",
     iconFeatherName: "Settings",

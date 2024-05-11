@@ -43,8 +43,6 @@ export const Sidebar = () => {
       sx={{
         display: { xs: "none", lg: "flex" },
         flexDirection: "column",
-        gap: "16px",
-
         justifyContent: "space-between",
         width: "316px",
         height: "100vh",
@@ -54,13 +52,12 @@ export const Sidebar = () => {
       }}
     >
       <Box>
-        {pages.slice(0, 8).map((item, index) => {
+        {pages.slice(0, 7).map((item, index) => {
           const IconComponent = FeatherIcons[item.iconFeatherName];
           return (
             <Box
               component={Link}
               to={item.link}
-              // sx={linkStyles}
               sx={
                 location.pathname === `/user/${user.id}/${item.link}`
                   ? activeLinkStyles

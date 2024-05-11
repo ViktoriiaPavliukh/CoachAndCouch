@@ -14,7 +14,7 @@ export function TeacherListBox({ page, setPage }) {
   const count = adverts.totalPages;
   const intl = useIntl();
 
-  const handleChange = (e, p) => {
+  const handleChange = (p) => {
     setPage(p);
     items.jump(p);
   };
@@ -25,7 +25,7 @@ export function TeacherListBox({ page, setPage }) {
           container
           sx={{
             flexDirection: { sm: "column", md: "row" },
-            columnGap: { md: "28px", lg: "3%" },
+            columnGap: { md: "28px" },
             rowGap: { xs: "28px", lg: "40px" },
             justifyContent: "center",
           }}
@@ -53,7 +53,6 @@ export function TeacherListBox({ page, setPage }) {
           background: (theme) => theme.palette.background,
           backgroundImage:
             "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))",
-          // background: "#FFF",
           boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
           "& .MuiPaginationItem-page.Mui-selected": {
             color: "#FFF",

@@ -130,7 +130,7 @@ export function Header() {
               gap: "56px",
             }}
           >
-            {pages.slice(9, 12).map(({ title, link }) => (
+            {pages.slice(8, 11).map(({ title, link }) => (
               <Button
                 key={title.props.id}
                 onClick={() => {
@@ -245,7 +245,7 @@ export function Header() {
                 </MenuItem>
               </Box>
             ) : (
-              pages.slice(12, 13).map(({ title, link }) => (
+              pages.slice(11, 12).map(({ title, link }) => (
                 <MenuItem
                   sx={{
                     px: "12px",
@@ -279,7 +279,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(13).map(({ title, link }) => (
+                {pages.slice(12).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -353,7 +353,7 @@ export function Header() {
                   padding: "40px 60px",
                 }}
               >
-                {pages.slice(9, 12).map(({ title, link }) => (
+                {pages.slice(8, 11).map(({ title, link }) => (
                   <MenuMobItem
                     // disableGutters={true}
                     key={title.props.id}
@@ -382,7 +382,7 @@ export function Header() {
                     <Box
                       sx={{ borderTop: "1px solid #4B5563", margin: "28px 0" }}
                     />
-                    {pages.slice(0, 8).map(({ title, link }) => (
+                    {pages.slice(0, 7).map(({ title, link }) => (
                       <MenuMobItem
                         // disableGutters={true}
                         key={title.props.id}
@@ -414,7 +414,7 @@ export function Header() {
 
                 {isLoggedIn ? (
                   <Box>
-                    {pages.slice(8, 9).map(({ title, link }) => (
+                    {pages.slice(7, 8).map(({ title, link }) => (
                       <MenuMobItem
                         key={title.props.id}
                         onClick={() => {
