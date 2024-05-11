@@ -16,7 +16,6 @@ const messages = {
     firstNameMaxCharacters: "Name must be at most 20 characters",
     passwordMatch: "Passwords must match",
     passwordConfirmRequired: "Password confirmation is required",
-
     "header.teachers": "Home",
     "header.becomeTeacher": "Become a teacher",
     "header.aboutUs": "About us",
@@ -40,16 +39,69 @@ const messages = {
     list3: "Professional teachers and native speakers",
 
     //about
+
     aboutSubtitle:
-      "Our platform is here to be your reliable companion on the journey to mastering a new language.",
+      "Our platform is your reliable partner on the journey to mastering a new language.",
     aboutText1:
-      "We offer a wide range of languages for learning, including popular and less common ones. You can choose the one that interests you the most. Our lessons are designed with modern teaching methods in mind, incorporating audio and video materials, interactive exercises, and the opportunity for free conversation.",
-    aboutText2:
-      "Learning on our platform takes place in a 24/7 mode, allowing you to study at any time and from any place that is convenient for you. You can choose the level of difficulty and topics that interest you and work on them at your own pace.",
-    aboutText3:
-      "We provide the opportunity to communicate with native speakers, allowing you to enhance your skills and improve pronunciation.",
-    aboutUpper:
-      "Join our vibrant student community, where you can share successes and receive support from like-minded peers.",
+      "It is a unique interactive platform that makes the process of online language learning as personalized and effective as possible. Each user has the opportunity to choose the perfect teacher for themselves and at the same time start teaching others - all in an online format, with the ability to choose a convenient schedule and flexible payment system.",
+    aboutText2: "The platform also offers:",
+    aboutList1: "a wide selection of languages for learning and teaching;",
+    aboutList2: "modern teaching methods;",
+    aboutList3:
+      "the ability to ask the teacher questions through the messaging chat.",
+    aboutText3: "Start your unique educational journey today with us!",
+    aboutCard1: "of the teachers have international certificates",
+    aboutCard2: "lessons are held every hour",
+    aboutCard3: "registrations for trial lessons are received every week",
+    aboutCard4: "satisfied students over 5 years",
+    aboutTitle1: "Functionality of the platform",
+    aboutText4:
+      "The platform for language learning offers users a personal profile, a chat for communication, a questionnaire for teachers, and a page with a list of all available teachers",
+    userProfileDetails:
+      "In the user profile, each platform user can change personal information, view their classes, schedule, posted and liked announcements, and more",
+    chatDetails:
+      "The ability to maintain communication between students and teachers is extremely important. Arranging a meeting, receiving feedback on completed homework can be easily done without even leaving the platform",
+    teacherProfileDetails:
+      "Every registered user has the opportunity to fill out a teacher profile and post their own advertisement, the editing of which is provided in the profile",
+    allTeachersDetails:
+      "The platform includes a page with advertisements of all teachers, which can be sorted by the teacher's country of origin, the price of a trial lesson, language, or teaching specialization",
+    aboutGreenPoster1:
+      "Student or graduate, teacher or enthusiast — everyone can join the community ",
+    aboutGreenPoster2: "We are already waiting for you!",
+    aboutTrial: "How to order a trial lesson",
+    aboutTrial2:
+      "The website interface allows you to buy a trial lesson in just a few clicks - it's as simple as possible and doesn't require any extra effort from the user",
+    chooseTeacherTitle: "Choose a Teacher",
+    chooseTeacherText:
+      "Select the perfect teacher for yourself using various filters on the Home page.",
+    checkAdvertTitle: "Check the Advertisement",
+    checkAdvertText:
+      "Make sure the teaching languages, specializations, country of origin, and other information about the teacher provided in the advertisement suit you.",
+    setTrialTitle: "Schedule a Trial Lesson",
+    setTrialText:
+      "Choose a time for the lesson, provide brief information about yourself, including your current language level, the language you want to learn, your country of origin, native language, and learning goals",
+    payLessonTitle: "Pay for the Lesson",
+    payLessonText:
+      "You can pay with a card from any country or use Apple/Google Pay",
+    forChildren: "For children",
+    forBasic: "Basic learning",
+    forSpeaking: "Spoken language",
+    forBusiness: "For business",
+    orderTrialText1: "Take a trial lesson ",
+    orderTrialText2:
+      "If you are not satisfied with your trial lesson, we will offer a lesson with another teacher or a full refund",
+    orderTrialButton: "Book a trial lesson",
+    aboutText4:
+      "Share knowledge and earn without leaving home. Register to start teaching on Coach&Couch",
+    aboutListTitle: "With our platform, you're sure to:",
+    aboutList4: "find new students;",
+    aboutList5: "grow your own business;",
+    aboutList6: "be confident in lesson payments.",
+    aboutText5:
+      "Starting a teaching career is easy - just fill out the form. It'll take a maximum of ",
+    aboutText6: "10 minutes",
+    aboutText7: " of your time!",
+    pricePerLesson: "Price per hour",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -57,7 +109,6 @@ const messages = {
     reviewMessage: "Your comment:",
     deleteAccount: "Delete account",
     filterAdverts: "There are no adverts in the selected categories",
-
     dashboard: "Dashboard",
     "personalAccount.profile": "Profile",
     "personalAccount.lessons": "My Lessons",
@@ -69,7 +120,7 @@ const messages = {
     "personalAccount.dashboard": "Dashboard",
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
-    rate: "Rating",
+    rate: "Rate",
 
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
@@ -118,6 +169,7 @@ const messages = {
     saveBtn: "Save",
     saveChanges: "Save changes",
     goBack: "Go back",
+    fillAdv: "Fill out the form",
 
     //Status
     online: "Online",
@@ -149,6 +201,15 @@ const messages = {
     addPhoto: "+ Add photo",
     or: "or",
     newPhoto: "New photo",
+    sussessUpd: "Your data has been updated successfully",
+    userProfile: "User profile",
+    chat: "Business chat",
+    teacherProfile: "Teacher profile",
+    allTeachers: "All teachers",
+    english: "English",
+    polish: "Polish",
+    spanish: "Spanish",
+    more: "More...",
 
     //validation
     priceValidation: "Price is required",
@@ -224,13 +285,67 @@ const messages = {
     aboutSubtitle:
       "Наша платформа - це ваш надійний партнер у подорожі до опанування нової мови.",
     aboutText1:
-      "Ми пропонуємо широкий вибір мов для вивчення, включаючи популярні та менш поширені мови. Ви можете вибрати ту, яка вас цікавить найбільше. Наші уроки розроблені з урахуванням сучасних методів навчання, і вони включають в себе аудіо та відео матеріали, інтерактивні вправи та можливість вільного спілкування.",
-    aboutText2:
-      "Навчання на нашій платформі відбувається в режимі 24/7, дозволяючи вам вчитися в будь-який час та в будь-якому місці, що для вас зручно. Ви можете вибрати рівень складності та теми, які вас цікавлять, і працювати над ними на власному темпі.",
+      "це унікальна інтерактивна платформа, що робить процес онлайн-вивчення іноземних мов максимально персоналізованим та ефективним. Кожен користувач має змогу обрати ідеального для себе викладача та водночас почати викладати іншим - і все це в онлайн-форматі, з можливістю вибору зручного розкладу та гнучкої системи оплати.",
+    aboutText2: "Платформа додатково пропонує:",
+    aboutList1: "широкий вибір мов для вивчення та викладання;",
+    aboutList2: "сучасні методи навчання;",
+    aboutList3:
+      "можливість поставити запитання викладачеві через службовий чат.",
     aboutText3:
-      "Ми надаємо можливість спілкуватися з носіями мови, щоб ви могли вдосконалити свої навички та покращити вимову.",
-    aboutUpper:
-      "Приєднуйтесь до нашої активної спільноти студентів, де ви можете ділитися успіхами та отримувати підтримку від однодумців.",
+      "Розпочніть свою унікальну освітню подорож вже сьогодні разом з нами!",
+    aboutCard1: "викладачів мають міжнародні сертифікати",
+    aboutCard2: "уроків проводиться щогодини",
+    aboutCard3: "реєстрацій на пробний урок щотижня",
+    aboutCard4: "задоволених учнів за 5 років",
+    aboutTitle1: "Функціонал платформи",
+    aboutText4:
+      "Платформа для вивчення мов пропонує користувачам персональний профіль, чат для спілкування, анкету для викладачів та сторінку з переліком усіх доступних викладачів",
+    userProfileDetails:
+      "Саме в ньому кожен користувач платформи має змогу змінити персональну інформацію; переглянути свої заняття, розклад, розміщені та вподобані оголошення тощо",
+    chatDetails:
+      "Можливість підтримувати зв’язок між учнем та викладачем є надзвичай-но важливою. Домовитися про зустріч, отримати фідбек про виконане домашнє завдання легко, навіть не виходячи з платформи",
+    teacherProfileDetails:
+      "Кожен зареєстрований користувач має змогу заповнити анкету викладача та викласти власне оголошення, редагування якого передбачено у профілі",
+    allTeachersDetails:
+      "На платформі передбачено сторінку з оголошеннями усіх викладачів, що можна сортувати за країною походження викладача, ціною пробного уроку, мовою або ж спеціалізацією викладання",
+    aboutGreenPoster1:
+      "Студент або випускник, викладач або любитель — кожен може приєднатися до спільноти ",
+    aboutGreenPoster2: "Ми вже чекаємо на вас!",
+    aboutTrial: "Як замовити пробний урок",
+    aboutTrial2:
+      "Інтерфейс сайту дозволяє купити пробне заняття всього за кілька кліків - це максимально просто та не вимагає зайвих зусиль від користувача",
+    chooseTeacherTitle: "Оберіть викладача",
+    chooseTeacherText:
+      "Оберіть ідеального викладача для себе за різними фільтрами на сторінці “Головна”",
+    checkAdvertTitle: "Продивіться оголошення",
+    checkAdvertText:
+      "Запевніться, що Вас влаштовує набір мов викладання, спеціалізації, країна походження та інша інформація про викладача, вказана в оголошенні",
+    setTrialTitle: "Оформіть пробний урок",
+    setTrialText:
+      "Оберіть час для заняття, вкажіть коротко інформацію про себе, а саме наявний рівень мови, яку бажаєте вивчати, країну походження, рідну мову та мету вивчення",
+    payLessonTitle: "Оплатіть урок",
+    payLessonText:
+      "Можете зробити це карткою будь-якої країни або Apple/Google Pay",
+    forChildren: "Для дітей",
+    forBasic: "Вивчення основ",
+    forSpeaking: "Розмовна мова",
+    forBusiness: "Для бізнесу",
+    orderTrialText1: "Візьміть пробний урок ",
+    orderTrialText2:
+      "Якщо ви залишитеся незадоволеними своїм пробним уроком, ми запропонуємо урок з іншим викладачем або повну компенсацію",
+    orderTrialButton: "Замовити пробний урок",
+    aboutText4:
+      "Діліться знаннями та заробляйте, не виходячи з дому. Реєструйтеся, щоб почати викладати на Coach&Couch",
+    aboutListTitle: "З нашою платформою ти неодмінно:",
+    aboutList4: "знайдеш нових учнів;",
+    aboutList5: "розвинеш власний бізнес;",
+    aboutList6: "будеш впевнений в оплаті уроків.",
+    aboutText5:
+      "Розпочати кар'єру викладача легко, заповнивши анкету. Це займе максимум ",
+    aboutText6: "10 хв",
+    aboutText7: " твого часу!",
+    pricePerLesson: "Вартість за годину",
+    
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
@@ -291,6 +406,7 @@ const messages = {
     saveBtn: "Зберегти",
     saveChanges: "Зберегти зміни",
     goBack: "Повернутись назад",
+    fillAdv: "Заповнити анкету",
 
     //Status
     online: "Онлайн",
@@ -322,6 +438,15 @@ const messages = {
     addPhoto: "+ Додати фото",
     or: "або",
     newPhoto: "Нове фото",
+    sussessUpd: "Ваші дані було успішно оновлено",
+    userProfile: "Профіль користувача",
+    chat: "Службовий чат",
+    teacherProfile: "Анкета викладача",
+    allTeachers: "Усі викладачі",
+    english: "Англійська",
+    polish: "Польська",
+    spanish: "Іспанська",
+    more: "Більше...",
 
     //validation
     priceValidation: "Вкажіть ціну",

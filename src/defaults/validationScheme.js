@@ -87,3 +87,11 @@ export const userValidationSchema = Yup.object().shape({
   photoPath: Yup.mixed(),
   country: Yup.string().required("Country is required"),
 });
+
+export const userEditSchema = Yup.object().shape({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  birthday: Yup.string().required("Birthday is required").nullable(),
+  aboutMe: Yup.string().required("Description is required"),
+  country: Yup.string().required("Country is required"),
+});

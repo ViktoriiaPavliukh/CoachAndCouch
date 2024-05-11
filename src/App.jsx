@@ -25,7 +25,7 @@ import {
   Schedule,
   Messages,
   Settings,
-  Profile,
+  ProfileData,
   Advertisements,
   LikesPages,
   Feedback,
@@ -60,6 +60,14 @@ export default function App() {
           <Route path="*" element={<PageError />} />
           <Route index element={<TeachersPage />} />
           <Route path="about" element={<AboutUsPage />} />
+          <Route
+            path="about/login"
+            element={<RestrictedRoute redirectTo="/" component={<SignIn />} />}
+          />
+          <Route
+            path="about/registration"
+            element={<RestrictedRoute redirectTo="/" component={<SignUp />} />}
+          />
           <Route path="teachers/:id" element={<Card />} />
           <Route path="teacherform" element={<TeacherFormPage />} />
           <Route
@@ -82,7 +90,7 @@ export default function App() {
           />
           <Route path="user/:id" element={<PersonalAccount />}>
             <Route path="advertisements" element={<Advertisements />} />
-            <Route path="profile" element={<Profile />} />
+            <Route path="profile" element={<ProfileData />} />
             <Route path="lessons" element={<Lessons />} />
             <Route path="likes" element={<LikesPages />} />
             <Route path="feedback" element={<Feedback />} />

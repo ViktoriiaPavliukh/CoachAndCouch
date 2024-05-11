@@ -6,6 +6,8 @@ import {
   sendMessageFromUser,
   getUserMessages,
   getCurrentUser,
+  editUser,
+  updateUserPhoto,
 } from "./operations";
 
 const usersSlice = createSlice({
@@ -73,6 +75,22 @@ const usersSlice = createSlice({
       })
       .addCase(getUserMessages.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(editUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(editUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(updateUserPhoto.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(updateUserPhoto.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),

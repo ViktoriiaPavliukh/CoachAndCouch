@@ -6,6 +6,8 @@ import {
   getAdverts,
   postAdvert,
   filterAdverts,
+  editAdvert,
+  editAdvertImage,
 } from "./operations";
 
 const advertsSlice = createSlice({
@@ -53,6 +55,22 @@ const advertsSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.adverts = action.payload;
+      })
+      .addCase(editAdvert.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(editAdvert.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(editAdvertImage.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(editAdvertImage.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
