@@ -1,7 +1,8 @@
-import { format } from "date-fns";
+import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
 import { Button } from "@mui/material";
 import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "react-feather";
 
 function getCurrentMonday() {
   const now = new Date();
@@ -14,7 +15,12 @@ function getCurrentMonday() {
 }
 
 // api/teacher/<id>/get-free-schedule/<week> <- monday
-const response = ["2023-12-18 17:00", "2023-12-18 18:00", "2023-12-18 19:00", "2023-12-17 21:00"];
+const response = [
+  "2024-04-11 17:00",
+  "2024-04-14 18:00",
+  "2024-04-12 19:00",
+  "2024-04-11 21:00",
+];
 
 export const TrialLessonWrapper = () => {
   const [selected, setSelected] = useState();
@@ -24,7 +30,11 @@ export const TrialLessonWrapper = () => {
   const schedule = new Map();
   for (const d of response) {
     const date = new Date(d);
-    const day = new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime();
+    const day = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    ).getTime();
 
     let hours = schedule.get(day);
     if (!hours) {
@@ -61,14 +71,35 @@ export const TrialLessonWrapper = () => {
   };
 
   const isSameDay = (a, b) => {
-    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+    return (
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate()
+    );
   };
+
+  const sunday = endOfWeek(monday, { weekStartsOn: 1 });
+  const formattedRange = `${format(monday, "dd")} - ${format(
+    sunday,
+    "dd"
+  )} ${format(monday, "MMMM").toLowerCase()}`;
+
+  const btnArrow = {
+    border: "none",
+    padding: "0px",
+    backgroundColor: "transparent",
+    // color: !theme
+    //   ? lightTheme.palette.textColor.fontColor
+    //   : darkTheme.palette.textColor.fontColor,
+  };
+
+  console.log(week);
 
   return (
     <div
       style={{
-        width: "500px",
-        height: "500px",
+        width: "1000px",
+        height: "800px",
         position: "absolute",
         top: "50%",
         left: "50%",
@@ -77,7 +108,7 @@ export const TrialLessonWrapper = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-start",
-        padding: "40px",
+        padding: "48px 48px 134px 48px",
         overflow: "hidden",
       }}
     >
@@ -89,29 +120,52 @@ export const TrialLessonWrapper = () => {
           alignItems: "flex-start",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "row", flexWrap: "nowrap", gap: "20px", alignSelf: "center" }}>
-          <button onClick={() => shiftWeek(-1)} disabled={monday <= now}>
-            prev
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            gap: "20px",
+            alignSelf: "center",
+          }}
+        >
+          <button
+            style={btnArrow}
+            onClick={() => shiftWeek(-1)}
+            disabled={monday <= now}
+          >
+            <ChevronLeft color="#000" />
           </button>
-          <div>{format(monday, "MMM yyyy")}</div>
-          <button onClick={() => shiftWeek(+1)}>next</button>
-          <button onClick={() => setMonday(getCurrentMonday())}>today</button>
+          <div>{formattedRange}</div>
+          <button style={btnArrow} onClick={() => shiftWeek(+1)}>
+            {" "}
+            <ChevronRight color="#000" />
+          </button>
+          <div>{format(now, "yyyy")}</div>
         </div>
 
-        <ul style={{ display: "flex", justifyContent: "space-between", width: "435px" }}>
+        <ul
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
+        >
           {week.map((el, idx) => (
             <li key={idx}>
               <button
                 style={{
                   border: "none",
                   borderRadius: "4px",
-                  backgroundColor: isSameDay(now, el) ? "green" : "transparent",
-                  color: isSameDay(now, el) ? "white" : "inherit",
+                  backgroundColor: "transparent",
+                  // backgroundColor: isSameDay(now, el) ? "green" : "transparent",
+                  color: isSameDay(now, el) ? "#0E5B1D" : "#4b5563",
                   padding: 0,
                   width: "50px",
                 }}
               >
-                {format(el, "dd")}
+                <p>{format(el, "EE")}</p>
+                <p>{format(el, "dd")}</p>
               </button>
             </li>
           ))}
@@ -120,11 +174,11 @@ export const TrialLessonWrapper = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-
-            width: "450px",
+            // width: "450px",
             justifyContent: "space-between",
-            height: "250px",
-            overflowY: "scroll",
+            gap: "39px",
+            // height: "250px",
+            // overflowY: "scroll",
           }}
         >
           {week.map((el, idx) => (
@@ -141,7 +195,11 @@ export const TrialLessonWrapper = () => {
         <Button
           type="button"
           variant="contained"
-          sx={{ p: "12px 24px", alignSelf: "center", width: { xs: "100%", md: "fit-content" } }}
+          sx={{
+            p: "12px 24px",
+            alignSelf: "center",
+            width: { xs: "100%", md: "fit-content" },
+          }}
         >
           Далі
         </Button>

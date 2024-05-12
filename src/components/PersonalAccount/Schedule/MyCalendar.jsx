@@ -16,14 +16,14 @@ const localizer = momentLocalizer(moment);
 const eventsList = [
   {
     title: "DTS STARTS",
-    start: new Date(2024, 2, 28, 15, 0, 0),
-    end: new Date(2024, 2, 28, 16, 30, 0),
+    start: new Date(2024, 4, 11, 15, 0, 0),
+    end: new Date(2024, 4, 11, 16, 30, 0),
   },
 
   {
     title: "DTS ENDS",
-    start: new Date(2024, 2, 30, 12, 0, 0),
-    end: new Date(2024, 2, 30, 13, 0, 0),
+    start: new Date(2024, 4, 12, 12, 0, 0),
+    end: new Date(2024, 4, 12, 13, 0, 0),
   },
 
   {

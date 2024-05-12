@@ -5,13 +5,29 @@ import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
 
-export const Modal = ({ onBackdropClose, contentType, id }) => {
+export const Modal = ({ onBackdropClose, contentType, id, isOpen }) => {
   useEffect(() => {
-    document.body.classList.add("openModal");
-    return () => {
-      document.body.classList.remove("openModal");
+    const handleNoScroll = () => {
+      document.body.style.overflow = isOpen ? "hidden" : "auto";
     };
-  }, []);
+
+    const handlePressEsc = (e) => {
+      if (e.code === "Escape") {
+        onBackdropClose();
+      }
+    };
+    if (isOpen) {
+      handleNoScroll();
+      window.addEventListener("resize", handleNoScroll);
+    }
+    window.addEventListener("keydown", handlePressEsc);
+
+    return () => {
+      window.removeEventListener("keydown", handlePressEsc);
+      window.removeEventListener("resize", handleNoScroll);
+      document.body.style.overflow = "auto";
+    };
+  }, [onBackdropClose, isOpen]);
 
   const onBackdrop = (e) => {
     if (e.target === e.currentTarget) {
@@ -52,4 +68,5 @@ export const Modal = ({ onBackdropClose, contentType, id }) => {
 
 Modal.propTypes = {
   onBackdropClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool,
 };

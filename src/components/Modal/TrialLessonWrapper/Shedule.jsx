@@ -3,9 +3,8 @@ import { Button } from "@mui/material";
 
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
   const now = new Date();
-
   let shedule = [];
-  for (let i = 0; i < 24; i++) {
+  for (let i = 10; i < 19; i++) {
     shedule.push(i);
   }
 
@@ -18,9 +17,8 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
     const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), h);
     return date <= now || !availableHours.has(h);
   };
-
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
       {shedule.map((sh, idx) => (
         <Button
           disabled={isDisabled(sh)}
@@ -30,10 +28,10 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
           sx={{
             minWidth: "50px",
             border: "none",
-            backgroundColor: sh === hour ? "lime" : "transparent",
+            backgroundColor: sh === hour ? "transparent" : "#e5e5e5",
             padding: 0,
             maxWidth: "50px",
-            color: "gray",
+            color: sh === hour ? "#000" : "#6b7280",
             "&:hover": {
               backgroundColor: "red",
               color: "white",
