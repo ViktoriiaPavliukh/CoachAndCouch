@@ -1388,7 +1388,7 @@ export function AboutUsPage() {
               width: "100%",
               fontSize: { xs: "16px", md: "18px", xl: "24px" },
               lineHeight: { xs: "24px", xl: "34px" },
-              width: { xs: "91%", md: "79%", lg: "52%", xl: "60%" },
+              // width: { xs: "91%", md: "79%", lg: "52%", xl: "60%" },
             }}
           >
             {intl.formatMessage({ id: "aboutText4" })}
