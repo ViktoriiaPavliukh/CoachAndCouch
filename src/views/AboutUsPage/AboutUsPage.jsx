@@ -35,6 +35,9 @@ import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
 import { pages } from "@/defaults";
 import { themeReducer } from "@/redux/theme/slice";
+import imgUa from "@assets/images/imgUa.png";
+import imgGirl from "@assets/images/imgGirl.png";
+import formDark from "@assets/images/laptopDark.svg";
 
 export function AboutUsPage() {
   const intl = useIntl();
@@ -659,12 +662,11 @@ export function AboutUsPage() {
           >
             {!isLoggedIn && (
               <Box display="flex" flexDirection="row">
-                {pages.slice(13).map(({ title, link }) => (
+                {pages.slice(12).map(({ title, link }) => (
                   <MenuItem
                     key={title}
-                    onClick={() => {
-                      navigate(link);
-                    }}
+                    component={Link}
+                    to="../registration"
                     sx={{
                       py: "12px",
                       px: "12px",
@@ -733,15 +735,14 @@ export function AboutUsPage() {
                     borderWidth: "1px",
                     borderStyle: "solid",
                     "&:hover": {
-                      color: (theme) => theme.palette.primary.ac,
+                      color: (theme) => theme.palette.primary.accent,
                     },
                     textTransform: "uppercase",
                     textAlign: "center",
                   }}
                   key={title}
-                  onClick={() => {
-                    navigate(link);
-                  }}
+                  component={Link}
+                  to="../login"
                 >
                   <Typography sx={{ textAlign: "center", margin: "0 auto" }}>
                     {intl.formatMessage({ id: "header.login" })}
@@ -895,7 +896,7 @@ export function AboutUsPage() {
                 sx={{
                   width: { xs: "134px", md: "167px", lg: "187px" },
                 }}
-                image="src/assets/images/imgGirl.png"
+                image={imgGirl}
                 alt="French Girl"
               />
               <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -1036,7 +1037,7 @@ export function AboutUsPage() {
                   sx={{
                     width: { xs: "134px", md: "167px", lg: "187px" },
                   }}
-                  image="src/assets/images/imgUa.png"
+                  image={imgUa}
                   alt="Girl"
                 />
                 <Box
@@ -1515,28 +1516,31 @@ export function AboutUsPage() {
                 {intl.formatMessage({ id: "aboutText7" })}
               </Typography>
             </Box>
-            <Button
-              onClick={() => onShowModalClick("trialLesson")}
-              variant="contained"
-              sx={{
-                width: "fit-content",
-                py: "12px",
-                px: "30px",
-                borderRadius: "6px",
-                color: (theme) => theme.palette.buttonColor.fontColor,
-                fontSize: "14px",
-                fontWeight: "400",
-                transition: "background-color 0.3s",
-                backgroundColor: (theme) =>
-                  theme.palette.buttonColor.greenYellow,
-                "&:hover": {
+            {!user.advert ? (
+              <Button
+                component={Link}
+                to="../teacherform"
+                variant="contained"
+                sx={{
+                  width: "fit-content",
+                  py: "12px",
+                  px: "30px",
+                  borderRadius: "6px",
+                  color: (theme) => theme.palette.buttonColor.fontColor,
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  transition: "background-color 0.3s",
                   backgroundColor: (theme) =>
-                    theme.palette.buttonColor.greenYellowHover,
-                },
-              }}
-            >
-              {intl.formatMessage({ id: "fillAdv" })}
-            </Button>
+                    theme.palette.buttonColor.greenYellow,
+                  "&:hover": {
+                    backgroundColor: (theme) =>
+                      theme.palette.buttonColor.greenYellowHover,
+                  },
+                }}
+              >
+                {intl.formatMessage({ id: "fillAdv" })}
+              </Button>
+            ) : null}
           </Box>
           <Box sx={{ position: "relative" }}>
             <FillFormImage />
