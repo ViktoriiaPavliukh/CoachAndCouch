@@ -75,19 +75,15 @@ export const TeacherFormPage = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
-
-  console.log(user);
-  console.log(token);
   const navigate = useNavigate();
-
   const adverts = useSelector(advertsSelector)?.adverts;
   const advertId = adverts
     ? adverts.find((advert) => advert.user.id === user.id)
     : null;
-
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const countriesList = useSelector(countriesSelector);
+
   useEffect(() => {
     if (advertId) {
       navigate(`/teachers/${advertId}`);
@@ -97,7 +93,6 @@ export const TeacherFormPage = () => {
     dispatch(getCountries());
   }, [dispatch, advertId, navigate]);
 
-  console.log("user", user);
   initialValues.updateUser.firstName = user.firstName;
   initialValues.updateUser.lastName = user.lastName ?? "";
   initialValues.updateUser.country = user.country ?? "";
@@ -129,9 +124,7 @@ export const TeacherFormPage = () => {
         JSON.stringify(values.specializations.map((el) => el.id))
       );
       transformedData.append("updateUser", JSON.stringify(updateUser));
-
       transformedData.append("image", values.image);
-
       dispatch(postAdvert(transformedData));
     },
   });
@@ -140,7 +133,6 @@ export const TeacherFormPage = () => {
     <SignUp />
   ) : (
     <Box
-      maxWidth="xl"
       sx={{
         backgroundImage: `url(${mainBg})`,
         backgroundSize: "cover",
@@ -156,6 +148,7 @@ export const TeacherFormPage = () => {
         sx={{
           backgroundColor: (theme) => theme.palette.background.paper,
           p: { md: "40px", xs: "40px 20px" },
+          width: { xs: "89%", md: "80%", lg: "71%", xl: "70%" },
         }}
       >
         <form onSubmit={formik.handleSubmit}>
@@ -165,7 +158,6 @@ export const TeacherFormPage = () => {
             {intl.formatMessage({ id: "teacherForm" })}
           </Typography>
           <Stack
-            // fullWidth
             sx={{
               display: "flex",
               flexDirection: { md: "row" },
@@ -175,7 +167,6 @@ export const TeacherFormPage = () => {
           >
             <TextField
               fullWidth
-              // focused
               id="firstName"
               name="updateUser.firstName"
               type="text"
@@ -206,21 +197,24 @@ export const TeacherFormPage = () => {
               helperText={formik.touched.lastName && formik.errors.lastName}
             />
           </Stack>
-
           <Stack
             sx={{
               display: "flex",
+              width: "100%",
               flexDirection: { md: "row" },
               gap: "24px",
               marginBottom: "24px",
+              flex: "1 1 auto",
             }}
           >
-            <FormControl variant="outlined">
+            <FormControl
+              variant="outlined"
+              sx={{
+                minWidth: { md: "162px", lg: "298px", xl: "408px" },
+              }}
+            >
               <InputLabel>{intl.formatMessage({ id: "country" })}</InputLabel>
               <Select
-                style={{
-                  minWidth: "274px",
-                }}
                 id="country"
                 name="updateUser.country"
                 label="country"
@@ -230,7 +224,6 @@ export const TeacherFormPage = () => {
                     "updateUser.country",
                     event.target.value
                   );
-                  console.log(event.target.value);
                 }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.country && Boolean(formik.errors.country)}
@@ -247,11 +240,17 @@ export const TeacherFormPage = () => {
             <TextField
               type="date"
               label={intl.formatMessage({ id: "birthday" })}
-              sx={{
-                minWidth: "274px",
-              }}
+              // sx={{
+              //   width: { md: "162px", lg: "298px", xl: "408px" },
+              // }}
+              fullWidth
+              sx={{ flex: "1 1 auto" }}
+              multiline
+              variant="outlined"
               InputLabelProps={{ shrink: true }}
-              InputProps={{ placeholder: "" }}
+              InputProps={{
+                placeholder: intl.formatMessage({ id: "datePlaceholder" }),
+              }}
               name="updateUser.birthday"
               value={formik.values.updateUser.birthday}
               onChange={formik.handleChange}
@@ -266,12 +265,8 @@ export const TeacherFormPage = () => {
               }
             />
             <TextField
-              style={{
-                "&::placeholder": {
-                  color: "red",
-                },
-                minWidth: "274px",
-              }}
+              fullWidth
+              // sx={{ width: { md: "30%" } }}
               id="price"
               name="price"
               label={intl.formatMessage({ id: "pricePerHour" })}
@@ -322,7 +317,6 @@ export const TeacherFormPage = () => {
                   ))}
               </Select>
             </FormControl>
-
             <FormControl fullWidth variant="outlined">
               <InputLabel>
                 {intl.formatMessage({ id: "languagesTeaching" })}
@@ -353,10 +347,8 @@ export const TeacherFormPage = () => {
                   ))}
               </Select>
             </FormControl>
-
             <FormControl fullWidth variant="outlined">
               <InputLabel>
-                {" "}
                 {intl.formatMessage({ id: "specialization" })}
               </InputLabel>
               <Select
@@ -414,7 +406,6 @@ export const TeacherFormPage = () => {
               }
             />
           </Stack>
-
           <FormControl
             style={{
               display: "flex",
@@ -482,7 +473,6 @@ export const TeacherFormPage = () => {
               />
             </RadioGroup>
           </FormControl>
-
           <FormControl
             fullWidth
             style={{
@@ -551,7 +541,7 @@ export const TeacherFormPage = () => {
                 />
               </label>
               {!image && (
-                <p
+                <Typography
                   style={{
                     position: "absolute",
                     top: "50%",
@@ -562,11 +552,10 @@ export const TeacherFormPage = () => {
                   }}
                 >
                   {intl.formatMessage({ id: "addPhoto" })}
-                </p>
+                </Typography>
               )}
             </Box>
           </FormControl>
-
           <Stack
             direction="row"
             sx={{
@@ -578,7 +567,6 @@ export const TeacherFormPage = () => {
             <Button variant="contained" type="submit">
               {intl.formatMessage({ id: "publishBtn" })}
             </Button>
-            {/* <Button variant="outlined">Зберегти чернетку</Button> */}
           </Stack>
         </form>
       </Box>
