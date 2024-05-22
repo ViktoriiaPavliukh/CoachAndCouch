@@ -210,6 +210,7 @@ const messages = {
     polish: "Polish",
     spanish: "Spanish",
     more: "More...",
+    datePlaceholder: "dd.mm.yyyy",
 
     //validation
     priceValidation: "Price is required",
@@ -446,6 +447,7 @@ const messages = {
     polish: "Польська",
     spanish: "Іспанська",
     more: "Більше...",
+    datePlaceholder: "дд.мм.рррр",
 
     //validation
     priceValidation: "Вкажіть ціну",
