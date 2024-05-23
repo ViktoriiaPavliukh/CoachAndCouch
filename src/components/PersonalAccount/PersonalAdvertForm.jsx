@@ -116,23 +116,16 @@ export const PersonalAdvertForm = ({
         );
       }
       const formData = new FormData();
-      // Append fields to the FormData object
       formData.append("description", formik.values.description);
       formData.append("price", formik.values.price);
-
-      // Append spokenLanguages array as JSON string
       formData.append(
         "spokenLanguages",
         JSON.stringify(formik.values.spokenLanguages.map((lang) => lang.id))
       );
-
-      // Append teachingLanguages array as JSON string
       formData.append(
         "teachingLanguages",
         JSON.stringify(formik.values.teachingLanguages.map((lang) => lang.id))
       );
-
-      // Append specializations array as JSON string
       formData.append(
         "specializations",
         JSON.stringify(formik.values.specializations.map((spec) => spec.id))
@@ -143,7 +136,6 @@ export const PersonalAdvertForm = ({
       setEditMode(false);
     } catch (error) {
       console.error("Error editing advert:", error);
-      // Handle error
     }
   };
 
@@ -321,8 +313,6 @@ export const PersonalAdvertForm = ({
             sx={{
               flex: "1 1 auto",
               width: { xs: "100%", lg: "auto" },
-              // width: { xs: "100%", lg: "31%", xl: "32%" },
-              // marginBottom: { xs: "24px", lg: "0" },
             }}
             id="userBirthday"
             name="birthday"
@@ -339,8 +329,6 @@ export const PersonalAdvertForm = ({
             variant="outlined"
             sx={{
               flex: "1 1 auto",
-              // width: { xs: "100%", md: "48%", lg: "31%", xl: "31%" },
-              // marginBottom: { xs: "24px", md: "0" },
             }}
           >
             <InputLabel> {intl.formatMessage({ id: "sex" })}</InputLabel>
@@ -370,7 +358,6 @@ export const PersonalAdvertForm = ({
               "&::placeholder": {
                 color: "red",
               },
-              // width: { xs: "100%", md: "49%", lg: "31%", xl: "32%" },
               flex: "1 1 auto",
             }}
             id="price"
@@ -429,7 +416,7 @@ export const PersonalAdvertForm = ({
             {languages &&
               languages.map((language) => (
                 <MenuItem key={language.id} value={language}>
-                  {language.languageUa}
+                  {en === "en" ? language.languageEn : language.languageUa}
                 </MenuItem>
               ))}
           </Select>
@@ -444,7 +431,7 @@ export const PersonalAdvertForm = ({
             multiple
             label={intl.formatMessage({ id: "languagesTeaching" })}
             disabled={!editMode}
-            defaultValue={formik.values.teachingLanguages || []}
+            defaultValue={formik.values.teachingLanguages}
             onChange={handleInputChange}
             onBlur={formik.handleBlur}
             error={
@@ -462,7 +449,7 @@ export const PersonalAdvertForm = ({
             {languages &&
               languages.map((language) => (
                 <MenuItem key={language.id} value={language}>
-                  {language.languageUa}
+                  {en === "en" ? language.languageEn : language.languageUa}
                 </MenuItem>
               ))}
           </Select>
@@ -497,7 +484,9 @@ export const PersonalAdvertForm = ({
             {specializations &&
               specializations.map((specialization) => (
                 <MenuItem key={specialization.id} value={specialization}>
-                  {specialization.specializationUa}
+                  {en === "en"
+                    ? specialization.specializationEn
+                    : specialization.specializationUa}
                 </MenuItem>
               ))}
           </Select>

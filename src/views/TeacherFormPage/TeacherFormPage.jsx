@@ -35,6 +35,7 @@ import {
   languagesSelector,
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 
 const initialValues = {
   price: 0,
@@ -71,6 +72,7 @@ const validationSchema = Yup.object({
 
 export const TeacherFormPage = () => {
   const intl = useIntl();
+  const en = useSelector(selectCurrentLanguage);
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
@@ -240,9 +242,6 @@ export const TeacherFormPage = () => {
             <TextField
               type="date"
               label={intl.formatMessage({ id: "birthday" })}
-              // sx={{
-              //   width: { md: "162px", lg: "298px", xl: "408px" },
-              // }}
               fullWidth
               sx={{ flex: "1 1 auto" }}
               multiline
@@ -266,7 +265,6 @@ export const TeacherFormPage = () => {
             />
             <TextField
               fullWidth
-              // sx={{ width: { md: "30%" } }}
               id="price"
               name="price"
               label={intl.formatMessage({ id: "pricePerHour" })}
@@ -306,13 +304,17 @@ export const TeacherFormPage = () => {
                   Boolean(formik.errors.spokenLanguages)
                 }
                 renderValue={(selected) =>
-                  selected.map((language) => language.languageUa).join(", ")
+                  selected
+                    .map((language) =>
+                      en === "en" ? language.languageEn : language.languageUa
+                    )
+                    .join(", ")
                 }
               >
                 {languages &&
                   languages.map((language) => (
                     <MenuItem key={uuidv4()} value={language}>
-                      {language.languageUa}
+                      {en === "en" ? language.languageEn : language.languageUa}
                     </MenuItem>
                   ))}
               </Select>
@@ -336,13 +338,17 @@ export const TeacherFormPage = () => {
                   Boolean(formik.errors.teachingLanguages)
                 }
                 renderValue={(selected) =>
-                  selected.map((language) => language.languageUa).join(", ")
+                  selected
+                    .map((language) =>
+                      en === "en" ? language.languageEn : language.languageUa
+                    )
+                    .join(", ")
                 }
               >
                 {languages &&
                   languages.map((language) => (
                     <MenuItem key={uuidv4()} value={language}>
-                      {language.languageUa}
+                      {en === "en" ? language.languageEn : language.languageUa}
                     </MenuItem>
                   ))}
               </Select>
@@ -367,14 +373,20 @@ export const TeacherFormPage = () => {
                 }
                 renderValue={(selected) =>
                   selected
-                    .map((specialization) => specialization.specializationUa)
+                    .map((specialization) =>
+                      en === "en"
+                        ? specialization.specializationEn
+                        : specialization.specializationUa
+                    )
                     .join(", ")
                 }
               >
                 {specializations &&
                   specializations.map((specialization) => (
                     <MenuItem key={uuidv4()} value={specialization}>
-                      {specialization.specializationUa}
+                      {en === "en"
+                        ? specialization.specializationEn
+                        : specialization.specializationUa}
                     </MenuItem>
                   ))}
               </Select>
