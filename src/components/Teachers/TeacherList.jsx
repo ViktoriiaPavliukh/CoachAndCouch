@@ -1,6 +1,5 @@
 import { Box, Grid, Pagination, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
-
 import { TeacherCard } from "./TeacherCard";
 import usePagination from "../../hooks/usePagination";
 import { useSelector } from "react-redux";

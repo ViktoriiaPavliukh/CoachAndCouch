@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useSelector, useDispatch } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
@@ -21,6 +21,7 @@ import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { AboutUsImage } from "./AboutUsImage";
 import { ProfileImage } from "./ProfileImage";
 import { ChatImage } from "./ChatImage";
@@ -42,11 +43,21 @@ import formDark from "@assets/images/laptopDark.svg";
 export function AboutUsPage() {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const adverts = useSelector(advertsSelector);
   const [pathname, setPathname] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const path = useLocation().pathname;
   const navigate = useNavigate();
+
+  const randomAdvert = useMemo(() => {
+    if (adverts.adverts?.length) {
+      const randomIndex = Math.floor(Math.random() * adverts.adverts.length);
+      return adverts.adverts[randomIndex];
+    }
+    return null;
+  }, [adverts.adverts]);
+
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -1307,16 +1318,20 @@ export function AboutUsPage() {
             >
               {intl.formatMessage({ id: "orderTrialText1" })}
             </Typography>
-            <Typography
-              variant="span"
-              sx={{
-                fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" },
-                color: (theme) => theme.palette.textColor.lightYellow,
-                display: "inline",
-              }}
-            >
-              з Elina Olexandrivna за 7 $!
-            </Typography>
+            {randomAdvert && (
+              <Typography
+                variant="span"
+                sx={{
+                  fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" },
+                  color: (theme) => theme.palette.textColor.lightYellow,
+                  display: "inline",
+                }}
+              >
+                {intl.formatMessage({ id: "with" })}{" "}
+                {randomAdvert.user.firstName} {randomAdvert.user.lastName}{" "}
+                {intl.formatMessage({ id: "with" })} 7 $!
+              </Typography>
+            )}
           </Stack>
           <Typography
             sx={{
