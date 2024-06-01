@@ -17,6 +17,19 @@ export const getAdverts = createAsyncThunk(
   }
 );
 
+export const fetchAdverts = createAsyncThunk(
+  "adverts/fetchAdverts",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await publicAPI.get("/adverts");
+      return data;
+    } catch (error) {
+      toast.error(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
 export const getAdvertById = createAsyncThunk(
   "adverts/getAdvertById",
   async (id, thunkAPI) => {

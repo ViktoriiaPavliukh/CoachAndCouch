@@ -10,13 +10,13 @@ import {
   Box,
   List,
   ListItem,
-  ListItemText,
   Card,
   CardContent,
   CardMedia,
   Button,
   Modal,
 } from "@mui/material";
+import { fetchAdverts } from "@/redux/marketplace/adverts/operations.js";
 import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
@@ -50,6 +50,10 @@ export function AboutUsPage() {
   const path = useLocation().pathname;
   const navigate = useNavigate();
 
+  useEffect(() => {
+    dispatch(fetchAdverts());
+  }, [dispatch]);
+
   const randomAdvert = useMemo(() => {
     if (adverts.adverts?.length) {
       const randomIndex = Math.floor(Math.random() * adverts.adverts.length);
@@ -57,7 +61,6 @@ export function AboutUsPage() {
     }
     return null;
   }, [adverts.adverts]);
-
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -1329,7 +1332,7 @@ export function AboutUsPage() {
               >
                 {intl.formatMessage({ id: "with" })}{" "}
                 {randomAdvert.user.firstName} {randomAdvert.user.lastName}{" "}
-                {intl.formatMessage({ id: "with" })} 7 $!
+                {intl.formatMessage({ id: "for" })} 7$!
               </Typography>
             )}
           </Stack>
