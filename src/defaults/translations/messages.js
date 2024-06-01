@@ -102,6 +102,8 @@ const messages = {
     aboutText6: "10 minutes",
     aboutText7: " of your time!",
     pricePerLesson: "Price per hour",
+    with: "with",
+    for: "for",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
@@ -346,6 +348,8 @@ const messages = {
     aboutText6: "10 хв",
     aboutText7: " твого часу!",
     pricePerLesson: "Вартість за годину",
+    with: "з",
+    for: "за",
 
     //HomePage
     findTeacher: "Знайдіть ідеального викладача",
