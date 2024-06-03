@@ -130,38 +130,40 @@ export function Header() {
               gap: "56px",
             }}
           >
-            {pages.slice(7, 10).map(({ title, link }) => (
-              <Button
-                key={title.props.id}
-                onClick={() => {
-                  handleCloseNavMenu(link);
-                }}
-                sx={{
-                  fontSize: "18px",
-                  lineHeight: "28px",
-                  fontWeight: 400,
-                  color: (theme) =>
-                    pathname === `/${link}` || pathname === `${link}`
-                      ? theme.palette.textColor.black
-                      : theme.palette.textColor.header,
-                  display: "block",
-                  textTransform: "lowercase",
-                  "&:first-letter": {
-                    textTransform: "capitalize",
-                  },
-                  transition: "color 0.3s",
-                  backgroundColor: (theme) =>
-                    pathname === `/${link}` || pathname === `${link}`
-                      ? theme.palette.buttonColor.header
-                      : null,
-                  "&:hover": {
-                    color: (theme) => theme.palette.primary.accent,
-                  },
-                }}
-              >
-                {title}
-              </Button>
-            ))}
+            {pages.slice(8, 11).map(({ title, link }) =>
+              !user.advert || link !== "teacherform" ? (
+                <Button
+                  key={title.props.id}
+                  onClick={() => {
+                    handleCloseNavMenu(link);
+                  }}
+                  sx={{
+                    fontSize: "18px",
+                    lineHeight: "28px",
+                    fontWeight: 400,
+                    color: (theme) =>
+                      pathname === `/${link}` || pathname === `${link}`
+                        ? theme.palette.textColor.black
+                        : theme.palette.textColor.header,
+                    display: "block",
+                    textTransform: "lowercase",
+                    "&:first-letter": {
+                      textTransform: "capitalize",
+                    },
+                    transition: "color 0.3s",
+                    backgroundColor: (theme) =>
+                      pathname === `/${link}` || pathname === `${link}`
+                        ? theme.palette.buttonColor.header
+                        : null,
+                    "&:hover": {
+                      color: (theme) => theme.palette.primary.accent,
+                    },
+                  }}
+                >
+                  {title}
+                </Button>
+              ) : null
+            )}
           </Box>
           {/* <Stack
             direction="row"
@@ -245,7 +247,7 @@ export function Header() {
                 </MenuItem>
               </Box>
             ) : (
-              pages.slice(10, 11).map(({ title, link }) => (
+              pages.slice(11, 12).map(({ title, link }) => (
                 <MenuItem
                   sx={{
                     px: "12px",
@@ -279,7 +281,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(11).map(({ title, link }) => (
+                {pages.slice(12).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -353,35 +355,45 @@ export function Header() {
                   padding: "40px 60px",
                 }}
               >
-{pages.slice(7, 10).map(({ title, link }) => (
-                  <MenuMobItem
-                    // disableGutters={true}
-                    key={title.props.id}
-                    onClick={() => {
-                      handleCloseNavMenu(link);
-                    }}
-                    sx={{
-                      padding: 0,
-                      backgroundColor: (theme) => theme.palette.background,
-                    }}
-                  >
-                    <Typography
-                      textAlign="left"
-                      variant="fontHeader"
+                {pages.slice(8, 11).map(({ title, link }) =>
+                  !user.advert || link !== "teacherform" ? (
+                    <MenuMobItem
+                      key={title.props.id}
+                      onClick={() => {
+                        handleCloseNavMenu(link);
+                      }}
                       sx={{
-                        mr: 0,
-                        padding: "6px 16px",
+                        padding: 0,
+                        backgroundColor: (theme) => theme.palette.background,
+                        "&:hover": {
+                          color: (theme) =>
+                            theme.palette.textColor.greenYellowHover,
+                        },
                       }}
                     >
-                      {title}
-                    </Typography>
-                  </MenuMobItem>
-                ))}               {isLoggedIn && (
+                      <Typography
+                        textAlign="left"
+                        variant="fontHeader"
+                        sx={{
+                          mr: 0,
+                          padding: "6px 16px",
+                          "&:hover": {
+                            color: (theme) =>
+                              theme.palette.textColor.greenYellowHover,
+                          },
+                        }}
+                      >
+                        {title}
+                      </Typography>
+                    </MenuMobItem>
+                  ) : null
+                )}
+                {isLoggedIn && (
                   <div>
                     <Box
                       sx={{ borderTop: "1px solid #4B5563", margin: "28px 0" }}
                     />
-                    {pages.slice(0, 6).map(({ title, link }) => (
+                    {pages.slice(0, 7).map(({ title, link }) => (
                       <MenuMobItem
                         // disableGutters={true}
                         key={title.props.id}
@@ -421,7 +433,7 @@ export function Header() {
 
                 {isLoggedIn ? (
                   <Box>
-                    {pages.slice(6, 7).map(({ title, link }) => (
+                    {pages.slice(7, 8).map(({ title, link }) => (
                       <MenuMobItem
                         key={title.props.id}
                         onClick={() => {
@@ -506,6 +518,7 @@ export function Header() {
                       }}
                     >
                       <Typography
+                        // disableGutters={true}
                         textAlign="left"
                         variant="fontHeader"
                         sx={{
