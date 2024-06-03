@@ -16,11 +16,11 @@ export const pages = [
     link: "schedule",
     iconFeatherName: "Calendar",
   },
-  {
-    title: <FormattedMessage id="personalAccount.messages" />,
-    link: "messages",
-    iconFeatherName: "MessageSquare",
-  },
+  // {
+  //   title: <FormattedMessage id="personalAccount.messages" />,
+  //   link: "messages",
+  //   iconFeatherName: "MessageSquare",
+  // },
   {
     title: <FormattedMessage id="personalAccount.likes" />,
     link: "likes",
