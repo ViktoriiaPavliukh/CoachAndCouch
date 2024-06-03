@@ -353,7 +353,7 @@ export function Header() {
                   padding: "40px 60px",
                 }}
               >
-                {pages.slice(7, 10).map(({ title, link }) => (
+{pages.slice(7, 10).map(({ title, link }) => (
                   <MenuMobItem
                     // disableGutters={true}
                     key={title.props.id}
@@ -376,8 +376,7 @@ export function Header() {
                       {title}
                     </Typography>
                   </MenuMobItem>
-                ))}
-                {isLoggedIn && (
+                ))}               {isLoggedIn && (
                   <div>
                     <Box
                       sx={{ borderTop: "1px solid #4B5563", margin: "28px 0" }}
@@ -392,6 +391,10 @@ export function Header() {
                         sx={{
                           padding: 0,
                           backgroundColor: (theme) => theme.palette.background,
+                          "&:hover": {
+                            color: (theme) =>
+                              theme.palette.textColor.greenYellowHover,
+                          },
                         }}
                       >
                         <Typography
@@ -400,6 +403,10 @@ export function Header() {
                           sx={{
                             mr: 0,
                             padding: "6px 16px",
+                            "&:hover": {
+                              color: (theme) =>
+                                theme.palette.textColor.greenYellowHover,
+                            },
                           }}
                         >
                           {title}
@@ -431,6 +438,10 @@ export function Header() {
                           sx={{
                             mr: 0,
                             padding: "6px 16px",
+                            "&:hover": {
+                              color: (theme) =>
+                                theme.palette.textColor.greenYellowHover,
+                            },
                           }}
                         >
                           {title}
@@ -452,6 +463,10 @@ export function Header() {
                         sx={{
                           mr: 0,
                           padding: "6px 16px",
+                          "&:hover": {
+                            color: (theme) =>
+                              theme.palette.textColor.greenYellowHover,
+                          },
                         }}
                       >
                         {intl.formatMessage({ id: "header.logout" })}

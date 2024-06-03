@@ -65,6 +65,16 @@ export function Advertisements() {
       dataChanged={dataChanged}
     />
   ) : (
-    <Typography>{intl.formatMessage({ id: "noAdvertisement" })}</Typography>
+    <Typography
+      sx={{
+        display: "flex",
+        width: "100%",
+        height: "50vh",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {intl.formatMessage({ id: "noAdvertisement" })}
+    </Typography>
   );
 }

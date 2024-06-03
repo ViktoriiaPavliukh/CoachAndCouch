@@ -12,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { RestrictedRoute } from "@components/RestrictedRoute";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { refreshUser } from "@/redux/auth/operations";
 import { AdminPanelPage } from "./views/AdminPanelPage/AdminPanelPage";
 import { selectRefreshToken } from "./redux/auth/selectors";
@@ -60,14 +59,6 @@ export default function App() {
           <Route path="*" element={<PageError />} />
           <Route index element={<TeachersPage />} />
           <Route path="about" element={<AboutUsPage />} />
-          <Route
-            path="about/login"
-            element={<RestrictedRoute redirectTo="/" component={<SignIn />} />}
-          />
-          <Route
-            path="about/registration"
-            element={<RestrictedRoute redirectTo="/" component={<SignUp />} />}
-          />
           <Route path="teachers/:id" element={<Card />} />
           <Route path="teacherform" element={<TeacherFormPage />} />
           <Route

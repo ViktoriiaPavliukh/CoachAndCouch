@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { useSelector, useDispatch } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/auth/selectors";
@@ -10,17 +10,18 @@ import {
   Box,
   List,
   ListItem,
-  ListItemText,
   Card,
   CardContent,
   CardMedia,
   Button,
   Modal,
 } from "@mui/material";
+import { fetchAdverts } from "@/redux/marketplace/adverts/operations.js";
 import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
+import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
 import { AboutUsImage } from "./AboutUsImage";
 import { ProfileImage } from "./ProfileImage";
 import { ChatImage } from "./ChatImage";
@@ -35,15 +36,31 @@ import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
 import { pages } from "@/defaults";
 import { themeReducer } from "@/redux/theme/slice";
+import imgUa from "@assets/images/imgUa.png";
+import imgGirl from "@assets/images/imgGirl.png";
+import formDark from "@assets/images/laptopDark.svg";
 
 export function AboutUsPage() {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const adverts = useSelector(advertsSelector);
   const [pathname, setPathname] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const path = useLocation().pathname;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchAdverts());
+  }, [dispatch]);
+
+  const randomAdvert = useMemo(() => {
+    if (adverts.adverts?.length) {
+      const randomIndex = Math.floor(Math.random() * adverts.adverts.length);
+      return adverts.adverts[randomIndex];
+    }
+    return null;
+  }, [adverts.adverts]);
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -659,12 +676,11 @@ export function AboutUsPage() {
           >
             {!isLoggedIn && (
               <Box display="flex" flexDirection="row">
-                {pages.slice(13).map(({ title, link }) => (
+                {pages.slice(12).map(({ title, link }) => (
                   <MenuItem
                     key={title}
-                    onClick={() => {
-                      navigate(link);
-                    }}
+                    component={Link}
+                    to="../registration"
                     sx={{
                       py: "12px",
                       px: "12px",
@@ -733,15 +749,14 @@ export function AboutUsPage() {
                     borderWidth: "1px",
                     borderStyle: "solid",
                     "&:hover": {
-                      color: (theme) => theme.palette.primary.ac,
+                      color: (theme) => theme.palette.primary.accent,
                     },
                     textTransform: "uppercase",
                     textAlign: "center",
                   }}
                   key={title}
-                  onClick={() => {
-                    navigate(link);
-                  }}
+                  component={Link}
+                  to="../login"
                 >
                   <Typography sx={{ textAlign: "center", margin: "0 auto" }}>
                     {intl.formatMessage({ id: "header.login" })}
@@ -895,7 +910,7 @@ export function AboutUsPage() {
                 sx={{
                   width: { xs: "134px", md: "167px", lg: "187px" },
                 }}
-                image="src/assets/images/imgGirl.png"
+                image={imgGirl}
                 alt="French Girl"
               />
               <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -1036,7 +1051,7 @@ export function AboutUsPage() {
                   sx={{
                     width: { xs: "134px", md: "167px", lg: "187px" },
                   }}
-                  image="src/assets/images/imgUa.png"
+                  image={imgUa}
                   alt="Girl"
                 />
                 <Box
@@ -1306,16 +1321,20 @@ export function AboutUsPage() {
             >
               {intl.formatMessage({ id: "orderTrialText1" })}
             </Typography>
-            <Typography
-              variant="span"
-              sx={{
-                fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" },
-                color: (theme) => theme.palette.textColor.lightYellow,
-                display: "inline",
-              }}
-            >
-              з Elina Olexandrivna за 7 $!
-            </Typography>
+            {randomAdvert && (
+              <Typography
+                variant="span"
+                sx={{
+                  fontSize: { xs: "24px", md: "36px", lg: "48px", xl: "60px" },
+                  color: (theme) => theme.palette.textColor.lightYellow,
+                  display: "inline",
+                }}
+              >
+                {intl.formatMessage({ id: "with" })}{" "}
+                {randomAdvert.user.firstName} {randomAdvert.user.lastName}{" "}
+                {intl.formatMessage({ id: "for" })} 7$!
+              </Typography>
+            )}
           </Stack>
           <Typography
             sx={{
@@ -1385,7 +1404,6 @@ export function AboutUsPage() {
           </Typography>
           <Typography
             sx={{
-              width: "100%",
               fontSize: { xs: "16px", md: "18px", xl: "24px" },
               lineHeight: { xs: "24px", xl: "34px" },
               // width: { xs: "91%", md: "79%", lg: "52%", xl: "60%" },
@@ -1515,28 +1533,31 @@ export function AboutUsPage() {
                 {intl.formatMessage({ id: "aboutText7" })}
               </Typography>
             </Box>
-            <Button
-              onClick={() => onShowModalClick("trialLesson")}
-              variant="contained"
-              sx={{
-                width: "fit-content",
-                py: "12px",
-                px: "30px",
-                borderRadius: "6px",
-                color: (theme) => theme.palette.buttonColor.fontColor,
-                fontSize: "14px",
-                fontWeight: "400",
-                transition: "background-color 0.3s",
-                backgroundColor: (theme) =>
-                  theme.palette.buttonColor.greenYellow,
-                "&:hover": {
+            {!user.advert ? (
+              <Button
+                component={Link}
+                to="../teacherform"
+                variant="contained"
+                sx={{
+                  width: "fit-content",
+                  py: "12px",
+                  px: "30px",
+                  borderRadius: "6px",
+                  color: (theme) => theme.palette.buttonColor.fontColor,
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  transition: "background-color 0.3s",
                   backgroundColor: (theme) =>
-                    theme.palette.buttonColor.greenYellowHover,
-                },
-              }}
-            >
-              {intl.formatMessage({ id: "fillAdv" })}
-            </Button>
+                    theme.palette.buttonColor.greenYellow,
+                  "&:hover": {
+                    backgroundColor: (theme) =>
+                      theme.palette.buttonColor.greenYellowHover,
+                  },
+                }}
+              >
+                {intl.formatMessage({ id: "fillAdv" })}
+              </Button>
+            ) : null}
           </Box>
           <Box sx={{ position: "relative" }}>
             <FillFormImage />

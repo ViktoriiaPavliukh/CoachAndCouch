@@ -2,7 +2,11 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { editUser, updateUserPhoto } from "@/redux/users/operations";
+import {
+  editUser,
+  updateUserPhoto,
+  updateUserEmail,
+} from "@/redux/users/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
 import {
@@ -78,6 +82,10 @@ export const Profile = ({ currentUser, countriesList }) => {
 
       await dispatch(editUser(editedData));
 
+       if (formik.values.email !== currentUser.email) {
+         await dispatch(updateUserEmail(formik.values.email));
+       }
+
       if (values.photo) {
         const photoFormData = new FormData();
         photoFormData.append("photo", values.photo);
@@ -140,7 +148,6 @@ export const Profile = ({ currentUser, countriesList }) => {
               }}
             >
               <PersonalImage userImage={currentUser.photoPath} />
-
               {editMode ? (
                 <Stack
                   direction="column"
@@ -235,11 +242,10 @@ export const Profile = ({ currentUser, countriesList }) => {
                 multiline
                 sx={{ width: { xs: "100%", lg: "48%", xl: "49%" } }}
                 variant="outlined"
-                disabled={true}
-                // disabled={!editMode}
-                // onChange={handleInputChange}
-                // error={Boolean(formik.errors.email)}
-                // helperText={formik.errors.email}
+                disabled={!editMode}
+                onChange={handleInputChange}
+                error={Boolean(formik.errors.email)}
+                helperText={formik.errors.email}
               />
               <TextField
                 type="date"

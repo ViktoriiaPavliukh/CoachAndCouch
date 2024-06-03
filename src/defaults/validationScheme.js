@@ -11,10 +11,10 @@ export const loginSchema = (intl) => {
       .required(intl.formatMessage({ id: "emailRequired" })),
     password: Yup.string()
       .matches(
-        /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
+        /^(?=.*[A-Z])(?=.*\d).{6,20}$/,
         intl.formatMessage({ id: "passwordValidation" })
       )
-      .max(16, intl.formatMessage({ id: "passwordMaxCharacters" }))
+      .max(20, intl.formatMessage({ id: "passwordMaxCharacters" }))
       .required(intl.formatMessage({ id: "passwordRequired" })),
   });
 };

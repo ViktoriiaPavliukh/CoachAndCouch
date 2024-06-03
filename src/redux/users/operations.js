@@ -148,6 +148,7 @@ export const editUser = createAsyncThunk(
     }
   }
 );
+
 export const updateUserPhoto = createAsyncThunk(
   "users/updateUserPhoto",
   async (photo, thunkAPI) => {
@@ -158,6 +159,27 @@ export const updateUserPhoto = createAsyncThunk(
       const { data } = await privateAPI.patch(`/users/photo`, photo, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
+
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateUserEmail = createAsyncThunk(
+  "users/updateUserEmail",
+  async (email, thunkAPI) => {
+    try {
+      const userToken = thunkAPI.getState().auth.accessToken;
+      token.set(userToken);
+      const { data } = await privateAPI.patch(
+        `/users/email`,
+        { email },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      );
 
       return data;
     } catch (error) {
