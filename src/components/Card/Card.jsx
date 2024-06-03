@@ -44,7 +44,7 @@ export function Card() {
   }, [dispatch, teacherId]);
 
   const teacher = useSelector(advertByIdSelector);
-
+  console.log(teacher?.user.email);
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
     <Container
@@ -113,9 +113,7 @@ export function Card() {
                       },
                     }}
                   >
-                    <MessageBtn
-                      onShowModalClick={() => onShowModalClick("sendMessage")}
-                    />
+                    <MessageBtn email={teacher?.user.email} />
                     <LikeBtn />
                   </Box>
                 </Box>
@@ -208,9 +206,8 @@ export function Card() {
                 mb: "20px",
               }}
             >
-              <MessageBtn
-                onShowModalClick={() => onShowModalClick("sendMessage")}
-              />
+              <MessageBtn email={teacher?.user.email} />
+
               <LikeBtn />
             </Box>
             <Box mb="40px">

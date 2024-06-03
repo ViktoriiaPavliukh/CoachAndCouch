@@ -98,8 +98,8 @@ export const TrialLessonWrapper = () => {
   return (
     <div
       style={{
-        width: "1000px",
-        height: "800px",
+        width: "800px",
+        height: "600px",
         position: "absolute",
         top: "50%",
         left: "50%",

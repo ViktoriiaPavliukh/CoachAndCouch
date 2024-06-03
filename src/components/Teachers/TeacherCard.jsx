@@ -34,7 +34,6 @@ export function TeacherCard({ teacher }) {
   // console.log(user);
 
   const [isFavorite, setIsFavorite] = useState(false);
-  // console.log(isFavorite);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
 
