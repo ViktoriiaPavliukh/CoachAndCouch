@@ -397,9 +397,22 @@ export const PersonalAdvertForm = ({
             name="spokenLanguages"
             disabled={!editMode}
             multiple
-            label="languagesSpoken"
-            defaultValue={formik.values.spokenLanguages}
-            onChange={handleInputChange}
+            label={intl.formatMessage({ id: "languagesSpoken" })}
+            value={formik.values.spokenLanguages}
+            onChange={(event) => {
+              const selectedLanguage =
+                event.target.value[event.target.value.length - 1];
+              if (
+                !formik.values.spokenLanguages.some(
+                  (lang) => lang.id === selectedLanguage.id
+                )
+              ) {
+                formik.setFieldValue("spokenLanguages", [
+                  ...formik.values.spokenLanguages,
+                  selectedLanguage,
+                ]);
+              }
+            }}
             onBlur={formik.handleBlur}
             error={
               formik.touched.spokenLanguages &&
@@ -415,8 +428,40 @@ export const PersonalAdvertForm = ({
           >
             {languages &&
               languages.map((language) => (
-                <MenuItem key={language.id} value={language}>
+                <MenuItem
+                  key={language.id}
+                  value={language}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
                   {en === "en" ? language.languageEn : language.languageUa}
+                  {formik.values.spokenLanguages.some(
+                    (selectedLanguage) => selectedLanguage.id === language.id
+                  ) && (
+                    <Button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        const updatedLanguages =
+                          formik.values.spokenLanguages.filter(
+                            (selectedLanguage) =>
+                              selectedLanguage.id !== language.id
+                          );
+                        formik.setFieldValue(
+                          "spokenLanguages",
+                          updatedLanguages
+                        );
+                      }}
+                      sx={{
+                        marginLeft: "10px",
+                        color: (theme) => theme.palette.textColor.red,
+                      }}
+                    >
+                      {intl.formatMessage({ id: "remove" })}
+                    </Button>
+                  )}
                 </MenuItem>
               ))}
           </Select>
@@ -431,8 +476,21 @@ export const PersonalAdvertForm = ({
             multiple
             label={intl.formatMessage({ id: "languagesTeaching" })}
             disabled={!editMode}
-            defaultValue={formik.values.teachingLanguages}
-            onChange={handleInputChange}
+            value={formik.values.teachingLanguages}
+            onChange={(event) => {
+              const selectedLanguage =
+                event.target.value[event.target.value.length - 1];
+              if (
+                !formik.values.teachingLanguages.some(
+                  (lang) => lang.id === selectedLanguage.id
+                )
+              ) {
+                formik.setFieldValue("teachingLanguages", [
+                  ...formik.values.teachingLanguages,
+                  selectedLanguage,
+                ]);
+              }
+            }}
             onBlur={formik.handleBlur}
             error={
               formik.touched.teachingLanguages &&
@@ -448,12 +506,143 @@ export const PersonalAdvertForm = ({
           >
             {languages &&
               languages.map((language) => (
-                <MenuItem key={language.id} value={language}>
-                  {en === "en" ? language.languageEn : language.languageUa}
+                <MenuItem
+                  key={language.id}
+                  value={language}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>
+                    {en === "en" ? language.languageEn : language.languageUa}
+                  </div>
+                  {formik.values.teachingLanguages.some(
+                    (selectedLanguage) => selectedLanguage.id === language.id
+                  ) && (
+                    <Button
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        const updatedLanguages =
+                          formik.values.teachingLanguages.filter(
+                            (selectedLanguage) =>
+                              selectedLanguage.id !== language.id
+                          );
+                        formik.setFieldValue(
+                          "teachingLanguages",
+                          updatedLanguages
+                        );
+                      }}
+                      sx={{
+                        marginLeft: "10px",
+                        color: (theme) => theme.palette.textColor.red,
+                      }}
+                    >
+                      {intl.formatMessage({ id: "remove" })}
+                    </Button>
+                  )}
                 </MenuItem>
               ))}
           </Select>
         </FormControl>
+        <FormControl
+          fullWidth
+          variant="outlined"
+          error={
+            formik.touched.specializations &&
+            Boolean(formik.errors.specializations)
+          }
+        >
+          <InputLabel>
+            {intl.formatMessage({ id: "specialization" })}
+          </InputLabel>
+          <Select
+            id="specializations"
+            name="specializations"
+            disabled={!editMode}
+            multiple
+            label={intl.formatMessage({ id: "specialization" })}
+            value={formik.values.specializations}
+            // onChange={(event) => {
+            //   formik.setFieldValue("specializations", event.target.value);
+            // }}
+            onChange={(event) => {
+              const selectedLanguage =
+                event.target.value[event.target.value.length - 1];
+              if (
+                !formik.values.specializations.some(
+                  (lang) => lang.id === selectedLanguage.id
+                )
+              ) {
+                formik.setFieldValue("specializations", [
+                  ...formik.values.specializations,
+                  selectedLanguage,
+                ]);
+              }
+            }}
+            onBlur={formik.handleBlur}
+            renderValue={(selected) =>
+              selected
+                .map((specialization) =>
+                  en === "en"
+                    ? specialization.specializationEn
+                    : specialization.specializationUa
+                )
+                .join(", ")
+            }
+          >
+            {specializations.map((specialization) => (
+              <MenuItem
+                key={specialization.id}
+                value={specialization}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <div>
+                  {en === "en"
+                    ? specialization.specializationEn
+                    : specialization.specializationUa}
+                </div>
+                {formik.values.specializations.some(
+                  (selectedSpecialization) =>
+                    selectedSpecialization.id === specialization.id
+                ) && (
+                  <Button
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      const updatedSpecializations =
+                        formik.values.specializations.filter(
+                          (selectedSpecialization) =>
+                            selectedSpecialization.id !== specialization.id
+                        );
+                      formik.setFieldValue(
+                        "specializations",
+                        updatedSpecializations
+                      );
+                    }}
+                    sx={{
+                      marginLeft: "10px",
+                      color: (theme) => theme.palette.textColor.red,
+                    }}
+                  >
+                    {intl.formatMessage({ id: "remove" })}
+                  </Button>
+                )}
+              </MenuItem>
+            ))}
+          </Select>
+          {formik.touched.specializations && formik.errors.specializations && (
+            <Typography variant="body2" color="error">
+              {formik.errors.specializations}
+            </Typography>
+          )}
+        </FormControl>
+
+        {/* 
         <FormControl fullWidth variant="outlined">
           <InputLabel>
             {intl.formatMessage({ id: "specialization" })}
@@ -490,7 +679,7 @@ export const PersonalAdvertForm = ({
                 </MenuItem>
               ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
         <TextField
           fullWidth
           id="description"
