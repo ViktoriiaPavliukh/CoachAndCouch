@@ -474,6 +474,7 @@ export const PersonalAdvertForm = ({
             id="teachingLanguages"
             name="teachingLanguages"
             multiple
+            multiline
             label={intl.formatMessage({ id: "languagesTeaching" })}
             disabled={!editMode}
             value={formik.values.teachingLanguages}
@@ -515,9 +516,9 @@ export const PersonalAdvertForm = ({
                     alignItems: "center",
                   }}
                 >
-                  <div>
+                  <Typography>
                     {en === "en" ? language.languageEn : language.languageUa}
-                  </div>
+                  </Typography>
                   {formik.values.teachingLanguages.some(
                     (selectedLanguage) => selectedLanguage.id === language.id
                   ) && (
@@ -560,24 +561,25 @@ export const PersonalAdvertForm = ({
           <Select
             id="specializations"
             name="specializations"
-            disabled={!editMode}
             multiple
             label={intl.formatMessage({ id: "specialization" })}
+            disabled={!editMode}
             value={formik.values.specializations}
             // onChange={(event) => {
             //   formik.setFieldValue("specializations", event.target.value);
             // }}
             onChange={(event) => {
-              const selectedLanguage =
+              const selected =
                 event.target.value[event.target.value.length - 1];
               if (
                 !formik.values.specializations.some(
-                  (lang) => lang.id === selectedLanguage.id
+                  (spec) => spec.id === selected.id
                 )
               ) {
+                console.log(selected);
                 formik.setFieldValue("specializations", [
                   ...formik.values.specializations,
-                  selectedLanguage,
+                  selected,
                 ]);
               }
             }}
@@ -602,11 +604,11 @@ export const PersonalAdvertForm = ({
                   alignItems: "center",
                 }}
               >
-                <div>
+                <Typography>
                   {en === "en"
                     ? specialization.specializationEn
                     : specialization.specializationUa}
-                </div>
+                </Typography>
                 {formik.values.specializations.some(
                   (selectedSpecialization) =>
                     selectedSpecialization.id === specialization.id
@@ -641,45 +643,6 @@ export const PersonalAdvertForm = ({
             </Typography>
           )}
         </FormControl>
-
-        {/* 
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>
-            {intl.formatMessage({ id: "specialization" })}
-          </InputLabel>
-          <Select
-            id="specializations"
-            name="specializations"
-            disabled={!editMode}
-            multiple
-            label={intl.formatMessage({ id: "specialization" })}
-            value={formik.values.specializations || []}
-            onChange={handleInputChange}
-            onBlur={formik.handleBlur}
-            error={
-              formik.touched.specializations &&
-              Boolean(formik.errors.specializations)
-            }
-            renderValue={(selected) =>
-              selected
-                .map((specialization) =>
-                  en === "en"
-                    ? specialization.specializationEn
-                    : specialization.specializationUa
-                )
-                .join(", ")
-            }
-          >
-            {specializations &&
-              specializations.map((specialization) => (
-                <MenuItem key={specialization.id} value={specialization}>
-                  {en === "en"
-                    ? specialization.specializationEn
-                    : specialization.specializationUa}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl> */}
         <TextField
           fullWidth
           id="description"
