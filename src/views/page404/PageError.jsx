@@ -5,7 +5,6 @@ import { Box, Typography, Button, useTheme } from "@mui/material/";
 import mainBg from "@assets/images/bg.png";
 import ZeroIcon from "@/assets/icons/ZeroIcon";
 import FourIcon from "@/assets/icons/FourIcon";
-import { maxWidth } from "@mui/system";
 
 export default function PageError() {
   const navigate = useNavigate();
@@ -21,16 +20,29 @@ export default function PageError() {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${mainBg})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        position: "relative",
         width: "100vw",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(${mainBg})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          opacity: theme.palette.mode === "light" ? "1" : "0.4",
+          zIndex: -1,
+        }}
+      />
       <Box
         sx={{
           display: "flex",
