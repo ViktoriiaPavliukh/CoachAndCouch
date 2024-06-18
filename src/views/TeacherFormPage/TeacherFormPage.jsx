@@ -36,6 +36,7 @@ import {
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import countries from "../../defaults/countries/countries.json";
 
 const initialValues = {
   price: 0,
@@ -104,8 +105,12 @@ export const TeacherFormPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       const transformedData = new FormData();
+      const selectedCountry = countriesList.find(
+        (country) => country.alpha2 === values.country
+      );
+      const countryId = selectedCountry ? selectedCountry.id : null;
       const updateUser = {
-        country: values.updateUser.country.id,
+        country: countryId,
         birthday: values.updateUser.birthday,
         sex: values.updateUser.sex,
         firstName: values.updateUser.firstName,
@@ -229,14 +234,34 @@ export const TeacherFormPage = () => {
                 }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.country && Boolean(formik.errors.country)}
-                renderValue={(selected) => selected.alpha2}
+                renderValue={(selected) => {
+                  const selectedCountry = countries.find(
+                    (el) => el.alpha2 === selected
+                  );
+                  return selectedCountry
+                    ? en === "en"
+                      ? selectedCountry.nameEng
+                      : selectedCountry.nameShort
+                    : selected;
+                }}
               >
                 {countriesList &&
-                  countriesList.map((country) => (
-                    <MenuItem key={uuidv4()} value={country}>
-                      {country.alpha2}
-                    </MenuItem>
-                  ))}
+                  countriesList.map((country) => {
+                    const fullCountry = countries.find(
+                      (el) => el.alpha2 === country.alpha2
+                    );
+                    if (fullCountry) {
+                      return (
+                        <MenuItem key={country.alpha2} value={country.alpha2}>
+                          {en === "en"
+                            ? fullCountry.nameEng
+                            : fullCountry.nameShort}
+                        </MenuItem>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
               </Select>
             </FormControl>
             <TextField
