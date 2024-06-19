@@ -36,6 +36,7 @@ import {
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import countries from "../../defaults/countries/countries.json";
 
 const initialValues = {
   price: 0,
@@ -76,6 +77,7 @@ export const TeacherFormPage = () => {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  console.log(token);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const adverts = useSelector(advertsSelector)?.adverts;
@@ -104,13 +106,19 @@ export const TeacherFormPage = () => {
     validationSchema,
     onSubmit: async (values) => {
       const transformedData = new FormData();
+      const selectedCountry = countriesList.find(
+        (country) => country.alpha2 === values.updateUser.country
+      );
+      const countryId = selectedCountry ? selectedCountry.id : null;
       const updateUser = {
-        country: values.updateUser.country.id,
+        country: countryId,
         birthday: values.updateUser.birthday,
         sex: values.updateUser.sex,
         firstName: values.updateUser.firstName,
         lastName: values.updateUser.lastName,
       };
+
+      console.log(updateUser);
       transformedData.append("description", values.description);
       transformedData.append("price", values.price);
       transformedData.append(
@@ -127,6 +135,7 @@ export const TeacherFormPage = () => {
       );
       transformedData.append("updateUser", JSON.stringify(updateUser));
       transformedData.append("image", values.image);
+      console.log(transformedData);
       dispatch(postAdvert(transformedData));
     },
   });
@@ -229,14 +238,34 @@ export const TeacherFormPage = () => {
                 }}
                 onBlur={formik.handleBlur}
                 error={formik.touched.country && Boolean(formik.errors.country)}
-                renderValue={(selected) => selected.alpha2}
+                renderValue={(selected) => {
+                  const selectedCountry = countries.find(
+                    (el) => el.alpha2 === selected
+                  );
+                  return selectedCountry
+                    ? en === "en"
+                      ? selectedCountry.nameEng
+                      : selectedCountry.nameShort
+                    : selected;
+                }}
               >
                 {countriesList &&
-                  countriesList.map((country) => (
-                    <MenuItem key={uuidv4()} value={country}>
-                      {country.alpha2}
-                    </MenuItem>
-                  ))}
+                  countriesList.map((country) => {
+                    const fullCountry = countries.find(
+                      (el) => el.alpha2 === country.alpha2
+                    );
+                    if (fullCountry) {
+                      return (
+                        <MenuItem key={country.alpha2} value={country.alpha2}>
+                          {en === "en"
+                            ? fullCountry.nameEng
+                            : fullCountry.nameShort}
+                        </MenuItem>
+                      );
+                    } else {
+                      return null;
+                    }
+                  })}
               </Select>
             </FormControl>
             <TextField
