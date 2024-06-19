@@ -4,7 +4,6 @@ import {
   languagesSelector,
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
-
 import { Filter } from "../../components/Teachers/Filter";
 import { Button, Stack, Box } from "@mui/material";
 import { useIntl } from "react-intl";
@@ -81,19 +80,39 @@ export function FilterTeacherPanel({ onFiltersChange }) {
           }
           currentInputId={selectedFilters.language}
         />
-        <Filter
+        {/* <Filter
           options={[...countries].map((el) => ({
             id: el.id,
             alpha2: el.alpha2,
-            nameEng: countriesCase(
-              countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng
-            ),
-            nameShort: countriesCase(
+            nameEng: countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng,
+            nameShort:
               countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2)
-                .nameShort
-            ),
+                .nameShort,
           }))}
           typeoption={en == "en" ? "nameEng" : "nameShort"}
+          label={
+            selectedFilters.country === ""
+              ? intl.formatMessage({ id: "country" })
+              : ""
+          }
+          onFilterChange={(selectedValue) =>
+            handleFilterChange("country", selectedValue)
+          }
+          currentInputId={selectedFilters.country}
+        /> */}
+        <Filter
+          options={countries.map((el) => {
+            const countryJSON = countriesJSON.find(
+              (elJSON) => elJSON.alpha2 === el.alpha2
+            ) || {};
+            return {
+              id: el.id,
+              alpha2: el.alpha2,
+              nameEng: countryJSON.nameEng || "",
+              nameShort: countriesCase(countryJSON.nameShort || ""),
+            };
+          })}
+          typeoption={en === "en" ? "nameEng" : "nameShort"}
           label={
             selectedFilters.country === ""
               ? intl.formatMessage({ id: "country" })
