@@ -77,6 +77,7 @@ export const TeacherFormPage = () => {
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
+  console.log(token);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const adverts = useSelector(advertsSelector)?.adverts;
@@ -106,7 +107,7 @@ export const TeacherFormPage = () => {
     onSubmit: async (values) => {
       const transformedData = new FormData();
       const selectedCountry = countriesList.find(
-        (country) => country.alpha2 === values.country
+        (country) => country.alpha2 === values.updateUser.country
       );
       const countryId = selectedCountry ? selectedCountry.id : null;
       const updateUser = {
@@ -116,6 +117,8 @@ export const TeacherFormPage = () => {
         firstName: values.updateUser.firstName,
         lastName: values.updateUser.lastName,
       };
+
+      console.log(updateUser);
       transformedData.append("description", values.description);
       transformedData.append("price", values.price);
       transformedData.append(
@@ -132,6 +135,7 @@ export const TeacherFormPage = () => {
       );
       transformedData.append("updateUser", JSON.stringify(updateUser));
       transformedData.append("image", values.image);
+      console.log(transformedData);
       dispatch(postAdvert(transformedData));
     },
   });
