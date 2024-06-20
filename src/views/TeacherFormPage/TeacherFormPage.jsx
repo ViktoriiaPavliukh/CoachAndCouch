@@ -268,12 +268,36 @@ export const TeacherFormPage = () => {
                   })}
               </Select>
             </FormControl>
-            <TextField
+            {/* <TextField
               type="date"
               label={intl.formatMessage({ id: "birthday" })}
               fullWidth
               sx={{ flex: "1 1 auto" }}
               multiline
+              variant="outlined"
+              InputLabelProps={{ shrink: true }}
+              InputProps={{
+                placeholder: intl.formatMessage({ id: "datePlaceholder" }),
+              }}
+              name="updateUser.birthday"
+              value={formik.values.updateUser.birthday}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.updateUser?.birthday &&
+                Boolean(formik.errors.updateUser?.birthday)
+              }
+              helperText={
+                formik.touched.updateUser?.birthday &&
+                formik.errors.updateUser?.birthday
+              }
+            /> */}
+            <TextField
+              type="date"
+              label={intl.formatMessage({ id: "birthday" })}
+              fullWidth
+              sx={{ flex: "1 1 auto" }}
+              // multiline
               variant="outlined"
               InputLabelProps={{ shrink: true }}
               InputProps={{
