@@ -63,7 +63,7 @@ export const postAdvert = createAsyncThunk(
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
-      console, log(advertData);
+      console.log(advertData);
       const { data } = await privateAPI.post("/adverts", advertData);
       // if (thunkAPI.status === 201) {
       //   toast.success("You add the advert", {
