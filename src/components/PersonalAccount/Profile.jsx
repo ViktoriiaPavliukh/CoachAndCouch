@@ -22,9 +22,10 @@ import {
   Input,
   Avatar,
 } from "@mui/material";
-import countries from "../../defaults/countries/countries.json";
 import { userEditSchema } from "../../defaults/validationScheme";
 import { PersonalImage } from "./PersonalImage";
+import countriesJSON from "../../defaults/countries/countries.json";
+import countriesCase from "@/helpers/countriesCase";
 import IconPlus from "../../assets/icons/IconPlus.jsx";
 
 export const Profile = ({ currentUser, countriesList }) => {
@@ -82,9 +83,9 @@ export const Profile = ({ currentUser, countriesList }) => {
 
       await dispatch(editUser(editedData));
 
-       if (formik.values.email !== currentUser.email) {
-         await dispatch(updateUserEmail(formik.values.email));
-       }
+      if (formik.values.email !== currentUser.email) {
+        await dispatch(updateUserEmail(formik.values.email));
+      }
 
       if (values.photo) {
         const photoFormData = new FormData();
@@ -312,7 +313,7 @@ export const Profile = ({ currentUser, countriesList }) => {
                 >
                   {countriesList &&
                     countriesList.map((country) => {
-                      const fullCountry = countries.find(
+                      const fullCountry = countriesJSON.find(
                         (el) => el.alpha2 === country.alpha2
                       );
                       if (fullCountry) {
@@ -320,7 +321,7 @@ export const Profile = ({ currentUser, countriesList }) => {
                           <MenuItem key={country.alpha2} value={country.alpha2}>
                             {en === "en"
                               ? fullCountry.nameEng
-                              : fullCountry.nameLong}
+                              : countriesCase(fullCountry.nameShort)}
                           </MenuItem>
                         );
                       } else {

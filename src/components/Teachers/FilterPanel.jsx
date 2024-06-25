@@ -9,7 +9,6 @@ import { Button, Stack, Box } from "@mui/material";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
-
 import countriesJSON from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 import { useEffect, useState } from "react";
@@ -80,26 +79,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
           }
           currentInputId={selectedFilters.language}
         />
-        {/* <Filter
-          options={[...countries].map((el) => ({
-            id: el.id,
-            alpha2: el.alpha2,
-            nameEng: countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2).nameEng,
-            nameShort:
-              countriesJSON.find((elJSON) => elJSON.alpha2 == el.alpha2)
-                .nameShort,
-          }))}
-          typeoption={en == "en" ? "nameEng" : "nameShort"}
-          label={
-            selectedFilters.country === ""
-              ? intl.formatMessage({ id: "country" })
-              : ""
-          }
-          onFilterChange={(selectedValue) =>
-            handleFilterChange("country", selectedValue)
-          }
-          currentInputId={selectedFilters.country}
-        /> */}
         <Filter
           options={countries.map((el) => {
             const countryJSON = countriesJSON.find(
