@@ -555,9 +555,9 @@
     "code": "238",
     "alpha2": "FK",
     "alpha3": "FLK",
-    "nameShort": "ФОЛКЛЕНДСЬКІ (МАЛЬВІНСЬКІ) ОСТРОВИ",
-    "nameLong": "ФОЛКЛЕНДСЬКІ (МАЛЬВІНСЬКІ) ОСТРОВИ",
-    "nameEng": "Falkland Islands (Malvinas)"
+    "nameShort": "ФОЛКЛЕНДСЬКІ ОСТРОВИ",
+    "nameLong": "ФОЛКЛЕНДСЬКІ ОСТРОВИ",
+    "nameEng": "Falkland Islands"
   },
   {
     "code": "239",
@@ -779,9 +779,9 @@
     "code": "336",
     "alpha2": "VA",
     "alpha3": "VAT",
-    "nameShort": "СВЯТИЙ ПРЕСТОЛ (ДЕРЖАВА-МІСТО ВАТИКАН)",
-    "nameLong": "СВЯТИЙ ПРЕСТОЛ (ДЕРЖАВА-МІСТО ВАТИКАН)",
-    "nameEng": "Holly See (Vatican City State)"
+    "nameShort": "ВАТИКАН",
+    "nameLong": "ВАТИКАН",
+    "nameEng": "Vatican"
   },
   {
     "code": "340",
@@ -1867,9 +1867,9 @@
     "code": "807",
     "alpha2": "MK",
     "alpha3": "MKD",
-    "nameShort": "РЕСПУБЛІКА МАКЕДОНІЯ (КОЛИШНЯ ЮГОСЛАВСЬКА РЕСПУБЛІ",
-    "nameLong": "Республіка Македонія (колишня Югославська республіка)",
-    "nameEng": "Macedonia (The former Yugoslav Republic of)"
+    "nameShort": "РЕСПУБЛІКА МАКЕДОНІЯ",
+    "nameLong": "Республіка Македонія",
+    "nameEng": "Macedonia"
   },
   {
     "code": "818",
@@ -1965,7 +1965,7 @@
     "alpha3": "VEN",
     "nameShort": "ВЕНЕСУЕЛА",
     "nameLong": "ВЕНЕСУЕЛА",
-    "nameEng": "Venezuela (Bolivarian Republic of)"
+    "nameEng": "Venezuela"
   },
   {
     "code": "876",

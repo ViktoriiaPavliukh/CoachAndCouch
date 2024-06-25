@@ -20,6 +20,7 @@ import {
 import { PersonalImage } from "./PersonalImage";
 import IconPlus from "../../assets/icons/IconPlus";
 import countriesCase from "@/helpers/countriesCase";
+import countriesJSON from "../../defaults/countries/countries.json";
 import {
   advertByIdSelector,
   selectAdvertsIsLoading,
@@ -77,17 +78,13 @@ export const PersonalAdvertForm = ({
         ? format(new Date(currentUser.birthday), "yyyy-MM-dd")
         : "",
       sex: currentUser?.sex || "",
-      country: currentUser?.country?.alpha2
-        ? countriesCase(
-            en === "en"
-              ? countries.find(
-                  (el) => el.alpha2 === currentUser?.country?.alpha2
-                )?.nameEng || ""
-              : countries.find(
-                  (el) => el.alpha2 === currentUser?.country?.alpha2
-                )?.nameShort || ""
-          )
-        : "",
+      country: countriesCase(
+        en === "en"
+          ? countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
+              ?.nameEng || ""
+          : countries.find((el) => el.alpha2 === currentUser?.country?.alpha2)
+              ?.nameShort || ""
+      ),
       registeredAt: currentUser?.registeredAt
         ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy HH:mm")
         : "",
@@ -258,7 +255,7 @@ export const PersonalAdvertForm = ({
             </Stack>
           ) : null}
         </Box>
-        <TextField
+        {/* <TextField
           fullWidth
           id="firstName"
           name="firstName"
@@ -387,7 +384,7 @@ export const PersonalAdvertForm = ({
           onBlur={formik.handleBlur}
           error={formik.touched.country && Boolean(formik.errors.country)}
           helperText={formik.touched.country && formik.errors.country}
-        />
+        /> */}
         <FormControl fullWidth variant="outlined">
           <InputLabel>
             {intl.formatMessage({ id: "languagesSpoken" })}
@@ -661,7 +658,7 @@ export const PersonalAdvertForm = ({
           }
           helperText={formik.touched.description && formik.errors.description}
         />
-        <TextField
+        {/* <TextField
           label={intl.formatMessage({ id: "registrationDate" })}
           variant="outlined"
           name="registeredAt"
@@ -670,7 +667,7 @@ export const PersonalAdvertForm = ({
           }}
           disabled={true}
           defaultValue={formik.values.registeredAt}
-        />
+        /> */}
         {editMode ? (
           <Button
             type="button"
