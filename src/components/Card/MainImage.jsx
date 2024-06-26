@@ -10,8 +10,8 @@ export function MainImage({ src }) {
       src={src || mainImage}
       alt="Teacher's profile"
       sx={{
-        width: { lg: "473px", xs: "343px", md: "385px" },
-        height: { lg: "362px", xs: "263px", md: "483px" },
+        width: { xl: "570px", lg: "473px", xs: "343px", md: "385px" },
+        height: { xl: "421px", lg: "362px", xs: "263px", md: "483px" },
         borderRadius: "16px",
         maxWidth: "100%",
       }}

@@ -414,7 +414,7 @@ const messages = {
     fillAdv: "Заповнити анкету",
 
     //Status
-    online: "Онлайн",
+    online: "У мережі",
     noAdvertisement: "Ви ще не маєте оголошення",
 
     //Repeating

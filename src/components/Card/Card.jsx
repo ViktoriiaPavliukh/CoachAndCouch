@@ -8,19 +8,20 @@ import {
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Container, Typography } from "@mui/material";
+import CircleIcon from "@mui/icons-material/Circle";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
 import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
-
 import countriesCase from "@/helpers/countriesCase";
 import countries from "../../defaults/countries/countries.json";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
+import { Stack } from "@mui/system";
 
 export function Card() {
   const [showModal, setShowModal] = useState(false);
@@ -50,8 +51,8 @@ export function Card() {
     <Container
       component="div"
       sx={{
-        pt: 11,
-        maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
+        pt: "40px",
+        // maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
         pl: { lg: "30px", md: "20px", sm: "15px" },
         pr: { lg: "30px", md: "20px", sm: "15px" },
       }}
@@ -64,7 +65,7 @@ export function Card() {
             <Box
               sx={{
                 display: "flex",
-                gap: "24px",
+                gap: "56px",
                 mb: "40px",
                 flexDirection: { xs: "column", md: "row" },
               }}
@@ -73,7 +74,7 @@ export function Card() {
               <Box
                 sx={{
                   display: "flex",
-                  width: "100%",
+                  width: { xs: "100%", lg: "36%" },
                   paddingTop: "9.6px",
                   flexDirection: "column",
                 }}
@@ -83,58 +84,52 @@ export function Card() {
                     display: "flex",
                     width: "100%",
                     mb: "20px",
+                    justifyContent: "space-between",
                     alignItems: "center",
                     p: 0,
                   }}
                 >
-                  <Typography variant="posterName">
-                    {teacher.user.firstName + " " + teacher.user.lastName}
-                  </Typography>
-                  <img
-                    src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
-                    srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
-                    width="40"
-                    height="36"
-                    alt="ua"
-                    style={{
-                      width: "52px",
-                      height: "36px",
-                      marginLeft: "4px",
-                      border: "0.2px solid rgba(0, 0, 0, 0.14)",
-                    }}
-                  />
-                  <Box
+                  <Stack direction="column">
+                    <Typography variant="fontHeader">
+                      {teacher.user.firstName}
+                    </Typography>
+                    <Typography variant="fontHeader">
+                      {teacher.user.lastName}
+                    </Typography>
+                  </Stack>
+                  <Stack
                     sx={{
-                      display: {
-                        xs: "none",
-                        lg: "flex",
-                        alignItems: "center",
-                        mb: "20px",
-                      },
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "6px",
                     }}
                   >
-                    <MessageBtn email={teacher?.user.email} />
                     <LikeBtn />
-                  </Box>
+                    <Typography variant="posterDescription">12</Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <CircleIcon
+                      fontSize="12px"
+                      sx={{
+                        color: (theme) => theme.palette.buttonColor.listItem,
+                      }}
+                    />
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "online" })}
+                    </Typography>
+                  </Stack>
                 </Box>
                 <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
-                  <span
-                    style={{
-                      display: "inline-block",
-                      width: "12px",
-                      height: "12px",
-                      borderRadius: "50%",
-                      backgroundColor: "#0E5B1D",
-                      marginRight: "12px",
-                    }}
-                  ></span>
-                  <Typography
-                    color="grey.700"
-                    variant="posterItem"
-                    sx={{ mr: 5.5 }}
-                  >
-                    {intl.formatMessage({ id: "online" })}
-                  </Typography>
                   <Typography
                     variant="posterItem"
                     color="grey.700"
@@ -197,6 +192,42 @@ export function Card() {
                 <Typography variant="posterCategory" color="grey.600">
                   {intl.formatMessage({ id: "platforms" })}
                 </Typography>
+                <Box
+                  sx={{
+                    width: { xs: "100%", lg: "50%" },
+                    display: "flex",
+                    flexDirection: "column",
+                    ml: "auto",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: { xs: "column-reverse", md: "row" },
+                      gap: 4,
+                      alignItems: "center",
+                      mb: 8,
+                    }}
+                  >
+                    <Button
+                      onClick={() => onShowModalClick("trialLesson")}
+                      type="button"
+                      variant="contained"
+                      sx={{
+                        p: "12px 24px",
+                        width: { xs: "100%", md: "328px" },
+                      }}
+                    >
+                      <Typography variant="posterButton">
+                        {intl.formatMessage({ id: "trialLessonBtn" })}
+                      </Typography>
+                    </Button>
+                    <Typography variant="posterPrice">
+                      {Math.ceil(teacher.price)} $
+                    </Typography>
+                  </Box>
+                  <MessageBtn email={teacher?.user.email} />
+                </Box>
               </Box>
             </Box>
             <Box
@@ -248,38 +279,6 @@ export function Card() {
                   userImage={userImage}
                   advertId={teacher.id}
                 />
-              </Box>
-              <Box
-                sx={{
-                  width: { xs: "100%", lg: "50%" },
-                  display: "flex",
-                  flexDirection: "column",
-                  ml: "auto",
-                }}
-              >
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: { xs: "column-reverse", md: "row" },
-                    gap: 4,
-                    alignItems: "center",
-                    mb: 8,
-                  }}
-                >
-                  <Button
-                    onClick={() => onShowModalClick("trialLesson")}
-                    type="button"
-                    variant="contained"
-                    sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
-                  >
-                    <Typography variant="posterButton">
-                      {intl.formatMessage({ id: "trialLessonBtn" })}
-                    </Typography>
-                  </Button>
-                  <Typography variant="posterPrice">
-                    {Math.ceil(teacher.price)} $
-                  </Typography>
-                </Box>
               </Box>
             </Box>
             {showModal && (
