@@ -102,6 +102,7 @@ const messages = {
     aboutText6: "10 minutes",
     aboutText7: " of your time!",
     pricePerLesson: "Price per hour",
+    priceOfLesson: "Lesson price",
     with: "with",
     for: "for",
 
@@ -349,6 +350,7 @@ const messages = {
     aboutText6: "10 хв",
     aboutText7: " твого часу!",
     pricePerLesson: "Вартість за годину",
+    priceOfLesson: "Ціна уроку",
     with: "з",
     for: "за",
 

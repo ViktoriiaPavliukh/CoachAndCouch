@@ -129,25 +129,76 @@ export function Card() {
                     </Typography>
                   </Stack>
                 </Box>
-                <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
-                  <Typography
-                    variant="posterItem"
-                    color="grey.700"
-                    sx={{ mr: 0.5 }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: "20px",
+                    gap: "12px",
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      p: "16px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.listItem,
+                      color: (theme) => theme.palette.textColor.black,
+                      borderRadius: "8px",
+                      gap: "10px",
+                      width: "100%",
+                    }}
                   >
-                    {intl.formatMessage({ id: "rate" })}:
-                  </Typography>
-                  <Typography variant="posterItem" sx={{ mr: 3.5 }}>
-                    {roundRating(teacher.user.rating)}
-                  </Typography>
-                  <Typography
-                    variant="posterItem"
-                    color="grey.700"
-                    sx={{ mr: 0.5 }}
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "lessons" })}
+                    </Typography>
+                    <Typography variant="fontHeader">156</Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      py: "16px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.listItem,
+                      color: (theme) => theme.palette.textColor.black,
+                      borderRadius: "8px",
+                      gap: "10px",
+                      width: "100%",
+                    }}
                   >
-                    {intl.formatMessage({ id: "lessons" })}:
-                  </Typography>
-                  <Typography variant="posterItem">156</Typography>
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "rate" })}
+                    </Typography>
+                    <Typography variant="fontHeader">
+                      {roundRating(teacher.user.rating)}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      py: "16px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.listItem,
+                      color: (theme) => theme.palette.textColor.black,
+                      borderRadius: "8px",
+                      gap: "10px",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "priceOfLesson" })}
+                    </Typography>
+                    <Typography variant="fontHeader">
+                      {Math.ceil(teacher.price)}$
+                    </Typography>
+                  </Stack>
                 </Box>
                 <Typography variant="posterCategory" color="grey.600">
                   {intl.formatMessage({ id: "languagesTeaching" })}
@@ -222,9 +273,9 @@ export function Card() {
                         {intl.formatMessage({ id: "trialLessonBtn" })}
                       </Typography>
                     </Button>
-                    <Typography variant="posterPrice">
+                    {/* <Typography variant="posterPrice">
                       {Math.ceil(teacher.price)} $
-                    </Typography>
+                    </Typography> */}
                   </Box>
                   <MessageBtn email={teacher?.user.email} />
                 </Box>
