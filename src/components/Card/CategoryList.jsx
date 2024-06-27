@@ -3,32 +3,30 @@ import { List, ListItem } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 
 export function CategoryList({ elements }) {
-  // console.log(elements);
   return (
     <List
       sx={{
         display: "flex",
         flexWrap: "wrap",
-        mb: 2.5,
-        mt: 1,
-        gap: 1,
+        mb: "18px",
+        mt: "8px",
+        gap: "5px",
         p: 0,
-        color: "grey.400",
       }}
     >
       {elements?.map((e) => (
         <ListItem
           key={uuidv4()}
           sx={{
-            padding: "4px 8px",
-            border: "1px solid lightgrey",
+            padding: "6px 14px",
+            backgroundColor: (theme) => theme.palette.background.messagesDate,
             borderRadius: "16px",
-            fontSize: "12px",
+            fontSize: "16px",
             fontStyle: "normal",
             fontWeight: "400",
             lineHeight: "calc(16 / 12)",
             width: "auto",
-            color: "text.primary",
+            color: (theme) => theme.palette.textColor.listColor,
           }}
         >
           {Object.values(e)}

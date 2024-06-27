@@ -75,21 +75,28 @@ export function Card() {
                 sx={{
                   display: "flex",
                   width: { xs: "100%", lg: "36%" },
-                  paddingTop: "9.6px",
                   flexDirection: "column",
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
-                    width: "100%",
+                    width: { xs: "100%", lg: "463px" },
                     mb: "20px",
                     justifyContent: "space-between",
                     alignItems: "center",
                     p: 0,
+                    gap: "24px",
                   }}
                 >
-                  <Stack direction="column">
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "12px",
+                      flexWrap: "wrap",
+                    }}
+                  >
                     <Typography variant="fontHeader">
                       {teacher.user.firstName}
                     </Typography>
@@ -124,7 +131,10 @@ export function Card() {
                         color: (theme) => theme.palette.buttonColor.listItem,
                       }}
                     />
-                    <Typography variant="posterDescription">
+                    <Typography
+                      variant="posterDescription"
+                      sx={{ textWrap: "nowrap" }}
+                    >
                       {intl.formatMessage({ id: "online" })}
                     </Typography>
                   </Stack>
@@ -136,6 +146,7 @@ export function Card() {
                     alignItems: "center",
                     mb: "20px",
                     gap: "12px",
+                    width: { xs: "100%", lg: "463px" },
                   }}
                 >
                   <Stack
@@ -200,29 +211,7 @@ export function Card() {
                     </Typography>
                   </Stack>
                 </Box>
-                <Typography variant="posterCategory" color="grey.600">
-                  {intl.formatMessage({ id: "languagesTeaching" })}
-                </Typography>
-                <CategoryList
-                  elements={
-                    teacher.teachingLanguages &&
-                    teacher.teachingLanguages.map((el) =>
-                      en == "en" ? el.languageEn : el.languageUa
-                    )
-                  }
-                />
-                <Typography variant="posterCategory" color="grey.600">
-                  {intl.formatMessage({ id: "specialization" })}
-                </Typography>
-                <CategoryList
-                  elements={
-                    teacher.specializations &&
-                    teacher.specializations.map((el) =>
-                      en == "en" ? el.specializationEn : el.specializationUa
-                    )
-                  }
-                />
-                <Typography variant="posterCategory" color="grey.600">
+                <Typography variant="text">
                   {intl.formatMessage({ id: "country" })}
                 </Typography>
                 <CategoryList
@@ -240,9 +229,31 @@ export function Card() {
                         ).split(",")
                   }
                 />
-                <Typography variant="posterCategory" color="grey.600">
-                  {intl.formatMessage({ id: "platforms" })}
+                <Typography variant="text">
+                  {intl.formatMessage({ id: "languagesTeaching" })}
                 </Typography>
+                <CategoryList
+                  elements={
+                    teacher.teachingLanguages &&
+                    teacher.teachingLanguages.map((el) =>
+                      en == "en" ? el.languageEn : el.languageUa
+                    )
+                  }
+                />
+                {/* <Typography variant="posterCategory">
+                  {intl.formatMessage({ id: "specialization" })}
+                </Typography>
+                <CategoryList
+                  elements={
+                    teacher.specializations &&
+                    teacher.specializations.map((el) =>
+                      en == "en" ? el.specializationEn : el.specializationUa
+                    )
+                  }
+                /> */}
+                {/* <Typography variant="text">
+                  {intl.formatMessage({ id: "platforms" })}
+                </Typography> */}
                 <Box
                   sx={{
                     width: { xs: "100%", lg: "50%" },
