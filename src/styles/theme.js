@@ -53,6 +53,7 @@ const createThemeTemplate = (themeColor) => ({
             messagesUsers: "#d1d5db",
             card: "#FFF",
             language: "#f3f4f6",
+            yellow: "#EEC700",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -122,6 +123,7 @@ const createThemeTemplate = (themeColor) => ({
             messagesUsers: "#737373",
             card: "#262626",
             language: "#171717",
+            yellow: "EEC700",
           },
           buttonColor: {
             header: "#EEC700",

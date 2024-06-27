@@ -48,13 +48,12 @@ export function Card() {
   console.log(teacher?.user.email);
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
-    <Container
+    <Box
       component="div"
       sx={{
-        pt: "40px",
-        // maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
-        pl: { lg: "30px", md: "20px", sm: "15px" },
-        pr: { lg: "30px", md: "20px", sm: "15px" },
+        width: "100%",
+        py: "40px",
+        px: { xs: "16px", md: "60px" },
       }}
     >
       {isLoading ? (
@@ -286,45 +285,38 @@ export function Card() {
               sx={{
                 display: "flex",
                 width: "100%",
+                gap: "56px",
                 flexDirection: { xs: "column", lg: "row" },
               }}
             >
               <Stack
                 sx={{
-                  width: { xs: "100%", lg: "62%", xl: "82%" },
+                  width: { xs: "100%", lg: "54%", xl: "49%" },
                 }}
               >
                 <Typography variant="fontHeader" component="p" mb="20px">
                   {intl.formatMessage({ id: "aboutMe" })}
                 </Typography>
-                <Typography variant="text">{teacher.description}</Typography>
+                <Typography variant="text" mb="40px">
+                  {teacher.description}
+                </Typography>
               </Stack>
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: { xs: "column-reverse", lg: "row" },
-                  width: "100%",
-                  gap: "5%",
+                  width: { xs: "100%" },
+                  flexDirection: "column",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    width: { xs: "100%", lg: "572px" },
-                    flexDirection: "column",
-                  }}
-                >
-                  <Typography variant="posterTitle" color="grey.600" mb="36px">
-                    {intl.formatMessage({ id: "feedback" })} (
-                    {teacher.user.feedbacksToMe.length})
-                  </Typography>
-                  <ReviewList
-                    // elements={teacher.user.feedbacksToMe}
-                    id={teacher.user.id}
-                    userImage={userImage}
-                    advertId={teacher.id}
-                  />
-                </Box>
+                <Typography variant="fontHeader" mb="20px">
+                  {intl.formatMessage({ id: "feedback" })} (
+                  {teacher.user.feedbacksToMe.length})
+                </Typography>
+                <ReviewList
+                  // elements={teacher.user.feedbacksToMe}
+                  id={teacher.user.id}
+                  advertId={teacher.id}
+                />
               </Box>
             </Box>
             {showModal && (
@@ -337,6 +329,6 @@ export function Card() {
           </>
         )
       )}
-    </Container>
+    </Box>
   );
 }

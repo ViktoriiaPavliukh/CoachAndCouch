@@ -1,19 +1,28 @@
 import { PropTypes } from "prop-types";
-import { Box, Button, List, ListItem, Input, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Input,
+  Typography,
+  TextField,
+} from "@mui/material";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import { addFeedback } from "@/redux/users/operations";
-
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { toast } from "react-toastify";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { useIntl } from "react-intl";
-
 import format from "date-fns/format";
 import { useState } from "react";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import { advertByIdSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { Stack } from "@mui/system";
 
-export function ReviewList({ id, userImage, advertId }) {
+export function ReviewList({ id, advertId }) {
   const [rating, setRating] = useState(null);
 
   const [hover, setHover] = useState(null);
@@ -28,17 +37,19 @@ export function ReviewList({ id, userImage, advertId }) {
     showAll || showAllByDefault ? reviews : reviews.slice(0, defaultShow);
 
   const [message, setMessage] = useState("");
-  // console.log(message);
   const intl = useIntl();
   const dispatch = useDispatch();
-
   const token = useSelector(selectToken);
   const en = useSelector(selectCurrentLanguage);
   const userId = useSelector(selectUser).id;
 
+  const capitalizeFirstLetter = (text) => {
+    if (!text) return text;
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  };
+
   const reviewHandleSubmit = (e) => {
     e.preventDefault();
-    // console.log(rating);
     if (rating === null) {
       if (en === "en") {
         toast.error("Please, enter the rating", {
@@ -67,7 +78,6 @@ export function ReviewList({ id, userImage, advertId }) {
       mark: rating,
       message: message,
     };
-    console.log(feedback);
 
     if (!token) {
       if (en === "en") {
@@ -100,34 +110,46 @@ export function ReviewList({ id, userImage, advertId }) {
 
     e.target.reset();
   };
-  // console.log(elements);
 
   return (
-    <>
+    <Box
+      sx={{
+        display: "flex",
+        gap: "56px",
+        width: "100%",
+        flexDirection: { xs: "column", lg: "row" },
+      }}
+    >
       <List
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 5,
+          gap: "44px",
           marginBottom: "30px",
+          width: { xs: "100%", lg: "37%" },
+          p: 0,
         }}
       >
         {showAllByDefault ? null : (
-          <button
-            style={{
+          <Button
+            sx={{
               backgroundColor: "transparent",
               border: "none",
-              textDecoration: "underline",
-              textAlign: "end",
-              color: "#757575",
+              textDecoration: "none",
+              textTransform: "none",
+              color: (theme) => theme.palette.textColor.fontColor,
               position: "absolute",
-              top: "-55px",
-              right: 0,
+              bottom: "-40px",
+              transform: "translateX(-50%)",
+              left: "50%",
+              textAlign: "center",
             }}
             onClick={() => setShowAll((prev) => !prev)}
           >
-            {showAll ? "hide" : "Show all feedbacks"}
-          </button>
+            {capitalizeFirstLetter(
+              intl.formatMessage({ id: showAll ? "hide" : "showAll" })
+            )}
+          </Button>
         )}
         {[...elementsToShow]
           .sort(
@@ -137,11 +159,16 @@ export function ReviewList({ id, userImage, advertId }) {
           .map((e) => (
             <ListItem
               key={e.id}
-              sx={{ display: "flex", flexDirection: "column" }}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                p: 0,
+                width: "100%",
+              }}
             >
               <Box sx={{ display: "flex", gap: "24px", width: "100%" }}>
                 <img
-                  src={userImage}
+                  src={e.fromUser.photoPath}
                   alt={e.fromUser.firstName + " " + e.fromUser.lastName}
                   style={{ width: "85px", height: "85px", borderRadius: "50%" }}
                 />
@@ -151,40 +178,47 @@ export function ReviewList({ id, userImage, advertId }) {
                       display: "flex",
                       gap: "10px",
                       alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    <Typography
-                      component="p"
-                      variant="posterCategory"
-                      color="primary.main"
-                      sx={{ mb: "8px" }}
-                    >
+                    <Typography component="p" variant="text" sx={{ mb: "8px" }}>
                       {e.fromUser.firstName + " " + e.fromUser.lastName}
                     </Typography>
-                    <span
-                      style={{
-                        fontSize: "14px",
-                        lineHeight: "calc(20 / 14)",
-                        color: "grey.600",
-                        marginBottom: "8px",
+                    <Stack
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "top",
+                        pt: "3px",
+                        gap: "4px",
                       }}
                     >
-                      ({e.mark})
-                    </span>
+                      <StarBorderOutlinedIcon
+                        fontSize="16px"
+                        sx={{
+                          mt: "2px",
+                          color: (theme) => theme.palette.background.yellow,
+                        }}
+                      />
+                      <Typography
+                        variant="text"
+                        sx={{
+                          display: "flex",
+                          fontSize: "14px",
+                          lineHeight: "calc(20 / 14)",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        {e.mark}
+                      </Typography>
+                    </Stack>
                   </Box>
-
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      lineHeight: "calc(20 / 14)",
-                      color: "grey.600",
-                    }}
-                  >
+                  <Typography variant="posterDescription">
                     {e.message}
                   </Typography>
                 </Box>
               </Box>
-
               <Typography
                 sx={{
                   fontSize: "14px",
@@ -204,23 +238,33 @@ export function ReviewList({ id, userImage, advertId }) {
           display: "flex",
           flexDirection: "column",
           gap: 20,
-          width: "100%",
           alignItems: "left",
           padding: "8px 16px",
           marginBottom: "30px",
         }}
         onSubmit={(e) => reviewHandleSubmit(e)}
       >
-        <Typography
-          component="p"
-          variant="posterCategory"
-          color="primary.main"
-          sx={{ mb: "0px", mr: "auto", ml: "auto" }}
-        >
-          {/* Залиште свій відгук про викладача */}
-          {intl.formatMessage({ id: "titleRewiewForm" })}
-        </Typography>
-        <div
+        <Box>
+          <Typography component="p" variant="fontHeader">
+            {intl.formatMessage({ id: "titleRewiewForm" })}
+          </Typography>
+          <Stack
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "start",
+              alignItems: "center",
+              gap: "2px",
+              pt: "5px",
+            }}
+          >
+            <Typography component="p" variant="posterItem">
+              {intl.formatMessage({ id: "shareReview" })}
+            </Typography>
+            <InfoOutlinedIcon fontSize="12px" />
+          </Stack>
+        </Box>
+        <Box
           style={{
             display: "flex",
             flexDirection: "column",
@@ -275,7 +319,7 @@ export function ReviewList({ id, userImage, advertId }) {
               </span>
             )}
           </div>
-        </div>
+        </Box>
         <div
           style={{
             display: "flex",
@@ -283,8 +327,7 @@ export function ReviewList({ id, userImage, advertId }) {
             gap: 5,
           }}
         >
-          <label>{intl.formatMessage({ id: "reviewMessage" })}</label>
-          <Input
+          {/* <Input
             disableUnderline
             sx={{
               height: "200px",
@@ -299,11 +342,43 @@ export function ReviewList({ id, userImage, advertId }) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             inputProps={{ style: { textAlign: "start" } }}
+          /> */}
+          <TextField
+            variant="outlined"
+            multiline
+            label={intl.formatMessage({ id: "reviewMessage" })}
+            rows={8}
+            name="message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            InputProps={{
+              sx: {
+                borderRadius: "4px",
+                padding: "12px 16px",
+                border: "1px solid #D1D5DB",
+                color: (theme) => theme.palette.textColor.fontColor,
+                backgroundColor: (theme) => theme.palette.background,
+                alignItems: "start",
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#D1D5DB",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#D1D5DB",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#D1D5DB",
+                  },
+                },
+              },
+              style: { textAlign: "start" },
+            }}
+            fullWidth
           />
         </div>
         <Button
           type="submit"
-          sx={{ alignSelf: "center", p: "10px 18px" }}
+          sx={{ alignSelf: "start", p: "12px 32px" }}
           variant="contained"
         >
           <Typography variant="posterButton">
@@ -311,7 +386,7 @@ export function ReviewList({ id, userImage, advertId }) {
           </Typography>
         </Button>
       </form>
-    </>
+    </Box>
   );
 }
 
