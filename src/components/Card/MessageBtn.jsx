@@ -1,15 +1,12 @@
-import { PropTypes } from "prop-types";
+import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Button, Link, Typography } from "@mui/material";
 
 export function MessageBtn({ email }) {
   const intl = useIntl();
   return (
-    <Link href={`mailto:${email}`}>
-      <Button
-        variant="contained"
-        sx={{ marginLeft: "125px", marginRight: " 20px", p: "10px 18px" }}
-      >
+    <Link href={`mailto:${email}`} underline="none" sx={{display: "flex", flexGrow: 1}}>
+      <Button variant="outlined" sx={{ p: "12px 18px", width: "100%" }}>
         <Typography variant="posterButton">
           {intl.formatMessage({ id: "message" })}
         </Typography>
@@ -17,7 +14,7 @@ export function MessageBtn({ email }) {
     </Link>
   );
 }
+
 MessageBtn.propTypes = {
-  sx: PropTypes.objectOf(PropTypes.any),
   email: PropTypes.string.isRequired,
 };

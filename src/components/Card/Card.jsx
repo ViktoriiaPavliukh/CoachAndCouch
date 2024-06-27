@@ -256,38 +256,28 @@ export function Card() {
                 </Typography> */}
                 <Box
                   sx={{
-                    width: { xs: "100%", lg: "50%" },
+                    width: { xs: "100%" },
                     display: "flex",
-                    flexDirection: "column",
-                    ml: "auto",
+                    flexDirection: "row",
+                    gap: "24px",
+                    mt: "20px",
+                    justifyContent: "space-between",
                   }}
                 >
-                  <Box
+                  <Button
+                    onClick={() => onShowModalClick("trialLesson")}
+                    type="button"
+                    variant="contained"
                     sx={{
-                      display: "flex",
-                      flexDirection: { xs: "column-reverse", md: "row" },
-                      gap: 4,
-                      alignItems: "center",
-                      mb: 8,
+                      p: "12px 24px",
+                      borderRadius: "6px",
+                      flexGrow: 1,
                     }}
                   >
-                    <Button
-                      onClick={() => onShowModalClick("trialLesson")}
-                      type="button"
-                      variant="contained"
-                      sx={{
-                        p: "12px 24px",
-                        width: { xs: "100%", md: "328px" },
-                      }}
-                    >
-                      <Typography variant="posterButton">
-                        {intl.formatMessage({ id: "trialLessonBtn" })}
-                      </Typography>
-                    </Button>
-                    {/* <Typography variant="posterPrice">
-                      {Math.ceil(teacher.price)} $
-                    </Typography> */}
-                  </Box>
+                    <Typography variant="posterButton">
+                      {intl.formatMessage({ id: "trialLessonBtn" })}
+                    </Typography>
+                  </Button>
                   <MessageBtn email={teacher?.user.email} />
                 </Box>
               </Box>
