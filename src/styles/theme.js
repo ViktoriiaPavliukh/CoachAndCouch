@@ -53,6 +53,7 @@ const createThemeTemplate = (themeColor) => ({
             messagesUsers: "#d1d5db",
             card: "#FFF",
             language: "#f3f4f6",
+            yellow: "#EEC700",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -99,6 +100,7 @@ const createThemeTemplate = (themeColor) => ({
             remarks: "#4B5563",
             linkHover: "#004305",
             red: "#b91c1b",
+            listColor: "#1f2937",
           },
         }
       : {
@@ -121,7 +123,7 @@ const createThemeTemplate = (themeColor) => ({
             messagesUsers: "#737373",
             card: "#262626",
             language: "#171717",
-
+            yellow: "EEC700",
           },
           buttonColor: {
             header: "#EEC700",
@@ -169,6 +171,7 @@ const createThemeTemplate = (themeColor) => ({
             remarks: "#D1D5DB",
             linkHover: "#CFAC00",
             red: "#b91c1b",
+            listColor: "#FFFFFF",
           },
         },
   typography: {

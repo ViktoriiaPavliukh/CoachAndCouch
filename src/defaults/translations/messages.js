@@ -102,13 +102,15 @@ const messages = {
     aboutText6: "10 minutes",
     aboutText7: " of your time!",
     pricePerLesson: "Price per hour",
+    priceOfLesson: "Lesson price",
     with: "with",
     for: "for",
 
     // ReviewList
     titleRewiewForm: "Leave a comment about the teacher",
     reviewMark: "Rate this type 1 to 5:",
-    reviewMessage: "Your comment:",
+    reviewMessage: "Your comment",
+    shareReview: "Will be published for everyone",
     deleteAccount: "Delete account",
     filterAdverts: "There are no adverts in the selected categories",
     dashboard: "Dashboard",
@@ -123,6 +125,8 @@ const messages = {
     "personalAccount.settings": "Settings",
     "personalAccount.logout": "Logout",
     rate: "Rate",
+    showAll: "Show more feedbacks",
+    hide: "Hide",
 
     "signup.registration": "Registration",
     "signup.firstName": "Your name",
@@ -349,6 +353,7 @@ const messages = {
     aboutText6: "10 хв",
     aboutText7: " твого часу!",
     pricePerLesson: "Вартість за годину",
+    priceOfLesson: "Ціна уроку",
     with: "з",
     for: "за",
 
@@ -362,9 +367,12 @@ const messages = {
     // ReviewList
     titleRewiewForm: "Залиште свій відгук про викладача",
     reviewMark: "Оцініть від 1 до 5:",
-    reviewMessage: "Ваш відгук:",
+    reviewMessage: "Ваш відгук",
+    shareReview: "Буде опубліковано для всіх",
     deleteAccount: "Видалити аккаунт",
     filterAdverts: "Немає оголошень за обраними категоріями",
+    showAll: "Дивитися більше відгуків",
+    hide: "Приховати",
 
     dashboard: "Дашборд",
     "personalAccount.profile": "Профіль",
@@ -414,7 +422,7 @@ const messages = {
     fillAdv: "Заповнити анкету",
 
     //Status
-    online: "Онлайн",
+    online: "У мережі",
     noAdvertisement: "Ви ще не маєте оголошення",
 
     //Repeating

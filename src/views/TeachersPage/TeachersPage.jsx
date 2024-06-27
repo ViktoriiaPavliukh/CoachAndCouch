@@ -7,11 +7,8 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
-// import { FiberManualRecord as FiberManualRecordIcon } from "@mui/icons-material";
 import { DescriptionImage } from "../../components/Teachers/DescriptionImage";
-
 import { useNavigate } from "react-router-dom";
-
 import { TeacherFilterResult } from "@/components/Teachers/TeacherFilterResult";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -43,7 +40,6 @@ export function TeachersPage() {
       <Box
         width="100%"
         sx={{
-          // maxWidth: { lg: "1320px", xl: "1800px", md: "648px", sm: "343px" },
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",

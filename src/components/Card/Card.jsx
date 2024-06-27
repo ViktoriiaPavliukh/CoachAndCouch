@@ -8,19 +8,20 @@ import {
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Container, Typography } from "@mui/material";
+import CircleIcon from "@mui/icons-material/Circle";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
 import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
 import userImage from "@assets/templates/avatar_1.webp";
-
 import countriesCase from "@/helpers/countriesCase";
 import countries from "../../defaults/countries/countries.json";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
+import { Stack } from "@mui/system";
 
 export function Card() {
   const [showModal, setShowModal] = useState(false);
@@ -47,13 +48,12 @@ export function Card() {
   console.log(teacher?.user.email);
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
-    <Container
+    <Box
       component="div"
       sx={{
-        pt: 11,
-        maxWidth: { lg: "1200px", md: "834px", sm: "375px" },
-        pl: { lg: "30px", md: "20px", sm: "15px" },
-        pr: { lg: "30px", md: "20px", sm: "15px" },
+        width: "100%",
+        py: "40px",
+        px: { xs: "16px", md: "60px" },
       }}
     >
       {isLoading ? (
@@ -64,8 +64,8 @@ export function Card() {
             <Box
               sx={{
                 display: "flex",
-                gap: "24px",
-                mb: "40px",
+                gap: "56px",
+                mb: "57px",
                 flexDirection: { xs: "column", md: "row" },
               }}
             >
@@ -73,110 +73,144 @@ export function Card() {
               <Box
                 sx={{
                   display: "flex",
-                  width: "100%",
-                  paddingTop: "9.6px",
+                  width: { xs: "100%", lg: "36%" },
                   flexDirection: "column",
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
-                    width: "100%",
+                    width: { xs: "100%", lg: "463px" },
                     mb: "20px",
+                    justifyContent: "space-between",
                     alignItems: "center",
                     p: 0,
+                    gap: "24px",
                   }}
                 >
-                  <Typography variant="posterName">
-                    {teacher.user.firstName + " " + teacher.user.lastName}
-                  </Typography>
-                  <img
-                    src={`https://flagcdn.com/w40/${teacher.user.country?.alpha2.toLowerCase()}.png`}
-                    srcSet={`https://flagcdn.com/w80/${teacher.user.country?.alpha2.toLowerCase()}.png 2x`}
-                    width="40"
-                    height="36"
-                    alt="ua"
-                    style={{
-                      width: "52px",
-                      height: "36px",
-                      marginLeft: "4px",
-                      border: "0.2px solid rgba(0, 0, 0, 0.14)",
-                    }}
-                  />
-                  <Box
+                  <Stack
                     sx={{
-                      display: {
-                        xs: "none",
-                        lg: "flex",
-                        alignItems: "center",
-                        mb: "20px",
-                      },
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "12px",
+                      flexWrap: "wrap",
                     }}
                   >
-                    <MessageBtn email={teacher?.user.email} />
+                    <Typography variant="fontHeader">
+                      {teacher.user.firstName}
+                    </Typography>
+                    <Typography variant="fontHeader">
+                      {teacher.user.lastName}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "6px",
+                    }}
+                  >
                     <LikeBtn />
-                  </Box>
-                </Box>
-                <Box sx={{ display: "flex", alignItems: "center", mb: "20px" }}>
-                  <span
-                    style={{
-                      display: "inline-block",
-                      width: "12px",
-                      height: "12px",
-                      borderRadius: "50%",
-                      backgroundColor: "#0E5B1D",
-                      marginRight: "12px",
+                    <Typography variant="posterDescription">12</Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      gap: "10px",
                     }}
-                  ></span>
-                  <Typography
-                    color="grey.700"
-                    variant="posterItem"
-                    sx={{ mr: 5.5 }}
                   >
-                    {intl.formatMessage({ id: "online" })}
-                  </Typography>
-                  <Typography
-                    variant="posterItem"
-                    color="grey.700"
-                    sx={{ mr: 0.5 }}
-                  >
-                    {intl.formatMessage({ id: "rate" })}:
-                  </Typography>
-                  <Typography variant="posterItem" sx={{ mr: 3.5 }}>
-                    {roundRating(teacher.user.rating)}
-                  </Typography>
-                  <Typography
-                    variant="posterItem"
-                    color="grey.700"
-                    sx={{ mr: 0.5 }}
-                  >
-                    {intl.formatMessage({ id: "lessons" })}:
-                  </Typography>
-                  <Typography variant="posterItem">156</Typography>
+                    <CircleIcon
+                      fontSize="12px"
+                      sx={{
+                        color: (theme) => theme.palette.buttonColor.listItem,
+                      }}
+                    />
+                    <Typography
+                      variant="posterDescription"
+                      sx={{ textWrap: "nowrap" }}
+                    >
+                      {intl.formatMessage({ id: "online" })}
+                    </Typography>
+                  </Stack>
                 </Box>
-                <Typography variant="posterCategory" color="grey.600">
-                  {intl.formatMessage({ id: "languagesTeaching" })}
-                </Typography>
-                <CategoryList
-                  elements={
-                    teacher.teachingLanguages &&
-                    teacher.teachingLanguages.map((el) =>
-                      en == "en" ? el.languageEn : el.languageUa
-                    )
-                  }
-                />
-                <Typography variant="posterCategory" color="grey.600">
-                  {intl.formatMessage({ id: "specialization" })}
-                </Typography>
-                <CategoryList
-                  elements={
-                    teacher.specializations &&
-                    teacher.specializations.map((el) =>
-                      en == "en" ? el.specializationEn : el.specializationUa
-                    )
-                  }
-                />
-                <Typography variant="posterCategory" color="grey.600">
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    mb: "20px",
+                    gap: "12px",
+                    width: { xs: "100%", lg: "463px" },
+                  }}
+                >
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      p: "16px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.listItem,
+                      color: (theme) => theme.palette.textColor.black,
+                      borderRadius: "8px",
+                      gap: "10px",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "lessons" })}
+                    </Typography>
+                    <Typography variant="fontHeader">156</Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      py: "16px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.listItem,
+                      color: (theme) => theme.palette.textColor.black,
+                      borderRadius: "8px",
+                      gap: "10px",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "rate" })}
+                    </Typography>
+                    <Typography variant="fontHeader">
+                      {roundRating(teacher.user.rating)}
+                    </Typography>
+                  </Stack>
+                  <Stack
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      py: "16px",
+                      backgroundColor: (theme) =>
+                        theme.palette.buttonColor.listItem,
+                      color: (theme) => theme.palette.textColor.black,
+                      borderRadius: "8px",
+                      gap: "10px",
+                      width: "100%",
+                    }}
+                  >
+                    <Typography variant="posterDescription">
+                      {intl.formatMessage({ id: "priceOfLesson" })}
+                    </Typography>
+                    <Typography variant="fontHeader">
+                      {Math.ceil(teacher.price)}$
+                    </Typography>
+                  </Stack>
+                </Box>
+                <Typography variant="text">
                   {intl.formatMessage({ id: "country" })}
                 </Typography>
                 <CategoryList
@@ -194,92 +228,95 @@ export function Card() {
                         ).split(",")
                   }
                 />
-                <Typography variant="posterCategory" color="grey.600">
-                  {intl.formatMessage({ id: "platforms" })}
+                <Typography variant="text">
+                  {intl.formatMessage({ id: "languagesTeaching" })}
                 </Typography>
-              </Box>
-            </Box>
-            <Box
-              sx={{
-                display: { xs: "flex", lg: "none" },
-                alignItems: "center",
-                mb: "20px",
-              }}
-            >
-              <MessageBtn email={teacher?.user.email} />
-
-              <LikeBtn />
-            </Box>
-            <Box mb="40px">
-              <Typography
-                variant="posterTitle"
-                component="p"
-                color="grey.600"
-                mb="36px"
-              >
-                {intl.formatMessage({ id: "aboutMe" })}
-              </Typography>
-              <Typography variant="posterDescription">
-                {teacher.description}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column-reverse", lg: "row" },
-                width: "100%",
-                gap: "5%",
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  width: { xs: "100%", lg: "572px" },
-                  flexDirection: "column",
-                }}
-              >
-                <Typography variant="posterTitle" color="grey.600" mb="36px">
-                  {intl.formatMessage({ id: "feedback" })} (
-                  {teacher.user.feedbacksToMe.length})
-                </Typography>
-                <ReviewList
-                  // elements={teacher.user.feedbacksToMe}
-                  id={teacher.user.id}
-                  userImage={userImage}
-                  advertId={teacher.id}
+                <CategoryList
+                  elements={
+                    teacher.teachingLanguages &&
+                    teacher.teachingLanguages.map((el) =>
+                      en == "en" ? el.languageEn : el.languageUa
+                    )
+                  }
                 />
-              </Box>
-              <Box
-                sx={{
-                  width: { xs: "100%", lg: "50%" },
-                  display: "flex",
-                  flexDirection: "column",
-                  ml: "auto",
-                }}
-              >
+                {/* <Typography variant="posterCategory">
+                  {intl.formatMessage({ id: "specialization" })}
+                </Typography>
+                <CategoryList
+                  elements={
+                    teacher.specializations &&
+                    teacher.specializations.map((el) =>
+                      en == "en" ? el.specializationEn : el.specializationUa
+                    )
+                  }
+                /> */}
+                {/* <Typography variant="text">
+                  {intl.formatMessage({ id: "platforms" })}
+                </Typography> */}
                 <Box
                   sx={{
+                    width: { xs: "100%" },
                     display: "flex",
-                    flexDirection: { xs: "column-reverse", md: "row" },
-                    gap: 4,
-                    alignItems: "center",
-                    mb: 8,
+                    flexDirection: "row",
+                    gap: "24px",
+                    mt: "20px",
+                    justifyContent: "space-between",
                   }}
                 >
                   <Button
                     onClick={() => onShowModalClick("trialLesson")}
                     type="button"
                     variant="contained"
-                    sx={{ p: "12px 24px", width: { xs: "100%", md: "328px" } }}
+                    sx={{
+                      p: "12px 24px",
+                      borderRadius: "6px",
+                      flexGrow: 1,
+                    }}
                   >
                     <Typography variant="posterButton">
                       {intl.formatMessage({ id: "trialLessonBtn" })}
                     </Typography>
                   </Button>
-                  <Typography variant="posterPrice">
-                    {Math.ceil(teacher.price)} $
-                  </Typography>
+                  <MessageBtn email={teacher?.user.email} />
                 </Box>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                display: "flex",
+                width: "100%",
+                gap: "56px",
+                flexDirection: { xs: "column", lg: "row" },
+              }}
+            >
+              <Stack
+                sx={{
+                  width: { xs: "100%", lg: "54%", xl: "49%" },
+                }}
+              >
+                <Typography variant="fontHeader" component="p" mb="20px">
+                  {intl.formatMessage({ id: "aboutMe" })}
+                </Typography>
+                <Typography variant="text" mb="40px">
+                  {teacher.description}
+                </Typography>
+              </Stack>
+              <Box
+                sx={{
+                  display: "flex",
+                  width: { xs: "100%" },
+                  flexDirection: "column",
+                }}
+              >
+                <Typography variant="fontHeader" mb="20px">
+                  {intl.formatMessage({ id: "feedback" })} (
+                  {teacher.user.feedbacksToMe.length})
+                </Typography>
+                <ReviewList
+                  // elements={teacher.user.feedbacksToMe}
+                  id={teacher.user.id}
+                  advertId={teacher.id}
+                />
               </Box>
             </Box>
             {showModal && (
@@ -292,6 +329,6 @@ export function Card() {
           </>
         )
       )}
-    </Container>
+    </Box>
   );
 }
