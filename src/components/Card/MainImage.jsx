@@ -12,7 +12,7 @@ export function MainImage({ src }) {
       sx={{
         width: { xl: "570px", lg: "473px", xs: "343px", md: "385px" },
         height: { xl: "421px", lg: "362px", xs: "263px", md: "483px" },
-        borderRadius: "16px",
+        borderRadius: "8px",
         maxWidth: "100%",
       }}
     />

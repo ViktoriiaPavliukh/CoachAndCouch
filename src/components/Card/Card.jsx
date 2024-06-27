@@ -66,7 +66,7 @@ export function Card() {
               sx={{
                 display: "flex",
                 gap: "56px",
-                mb: "40px",
+                mb: "57px",
                 flexDirection: { xs: "column", md: "row" },
               }}
             >
@@ -284,53 +284,47 @@ export function Card() {
             </Box>
             <Box
               sx={{
-                display: { xs: "flex", lg: "none" },
-                alignItems: "center",
-                mb: "20px",
-              }}
-            >
-              <MessageBtn email={teacher?.user.email} />
-
-              <LikeBtn />
-            </Box>
-            <Box mb="40px">
-              <Typography
-                variant="posterTitle"
-                component="p"
-                color="grey.600"
-                mb="36px"
-              >
-                {intl.formatMessage({ id: "aboutMe" })}
-              </Typography>
-              <Typography variant="posterDescription">
-                {teacher.description}
-              </Typography>
-            </Box>
-            <Box
-              sx={{
                 display: "flex",
-                flexDirection: { xs: "column-reverse", lg: "row" },
                 width: "100%",
-                gap: "5%",
+                flexDirection: { xs: "column", lg: "row" },
               }}
             >
+              <Stack
+                sx={{
+                  width: { xs: "100%", lg: "62%", xl: "82%" },
+                }}
+              >
+                <Typography variant="fontHeader" component="p" mb="20px">
+                  {intl.formatMessage({ id: "aboutMe" })}
+                </Typography>
+                <Typography variant="text">{teacher.description}</Typography>
+              </Stack>
               <Box
                 sx={{
                   display: "flex",
-                  width: { xs: "100%", lg: "572px" },
-                  flexDirection: "column",
+                  flexDirection: { xs: "column-reverse", lg: "row" },
+                  width: "100%",
+                  gap: "5%",
                 }}
               >
-                <Typography variant="posterTitle" color="grey.600" mb="36px">
-                  {intl.formatMessage({ id: "feedback" })} (
-                  {teacher.user.feedbacksToMe.length})
-                </Typography>
-                <ReviewList
-                  // elements={teacher.user.feedbacksToMe}
-                  id={teacher.user.id}
-                  userImage={userImage}
-                  advertId={teacher.id}
-                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: { xs: "100%", lg: "572px" },
+                    flexDirection: "column",
+                  }}
+                >
+                  <Typography variant="posterTitle" color="grey.600" mb="36px">
+                    {intl.formatMessage({ id: "feedback" })} (
+                    {teacher.user.feedbacksToMe.length})
+                  </Typography>
+                  <ReviewList
+                    // elements={teacher.user.feedbacksToMe}
+                    id={teacher.user.id}
+                    userImage={userImage}
+                    advertId={teacher.id}
+                  />
+                </Box>
               </Box>
             </Box>
             {showModal && (
