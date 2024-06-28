@@ -34,6 +34,7 @@ import {
   getLanguages,
   getSpecializations,
   getUsersAsAdmin,
+  getFeedbacksAsAdmin,
 } from "@/redux/admin/operations";
 import {
   advertsAsAdminSelector,
@@ -41,6 +42,7 @@ import {
   languagesSelector,
   specializationsSelector,
   usersAsAdminSelector,
+  feedbacksAsAdminSelector,
 } from "@/redux/admin/adminSelector";
 import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
 import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
@@ -108,8 +110,10 @@ function VerticalTabs() {
   const countries = useSelector(countriesSelector);
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
-  console.log(languages);
-  console.log(countries);
+  const feedbacks = useSelector(feedbacksAsAdminSelector);
+  console.log("Feedbacks from state:", feedbacks);
+  // console.log(languages);
+  // console.log(countries);
   console.log(token);
 
   useEffect(() => {
@@ -118,11 +122,19 @@ function VerticalTabs() {
     dispatch(getCountries());
     dispatch(getLanguages());
     dispatch(getSpecializations());
+    dispatch(getFeedbacksAsAdmin());
   }, [dispatch]);
 
-  console.log(adverts);
+  // console.log(adverts);
   const users = useSelector(usersAsAdminSelector);
-  console.log(users);
+
+  const teacherUserIds = adverts.map((advert) => advert.user.id);
+
+  // Filter feedbacks based on teacherUserIds
+  const getFeedbacksForTeacher = (teacherId) => {
+    return feedbacks.filter((feedback) => feedback.toUser.id === teacherId);
+  };
+  // console.log(users);
   return (
     <Box
       sx={{
@@ -140,37 +152,60 @@ function VerticalTabs() {
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs"
-        sx={{ borderRight: 1, borderColor: "divider", alignItems: "flex-start", minWidth: "105px", width: "105px" }}
+        sx={{
+          borderRight: 1,
+          borderColor: "divider",
+          alignItems: "flex-start",
+          minWidth: "105px",
+          width: "105px",
+        }}
       >
         <Tab
           label="Adverts"
           {...a11yProps(0)}
-          sx={{ alignItems: "flex-start", paddingLeft: "0px", paddingRight: "20px" }}
+          sx={{
+            alignItems: "flex-start",
+            paddingLeft: "0px",
+            paddingRight: "20px",
+          }}
         />
         <Tab
           label="Users"
           {...a11yProps(1)}
-          sx={{ alignItems: "flex-start", paddingLeft: "0px", paddingRight: "20px" }}
+          sx={{
+            alignItems: "flex-start",
+            paddingLeft: "0px",
+            paddingRight: "20px",
+          }}
         />
         <Tab
           label="Settings"
           {...a11yProps(2)}
-          sx={{ alignItems: "flex-start", paddingLeft: "0px", paddingRight: "20px" }}
+          sx={{
+            alignItems: "flex-start",
+            paddingLeft: "0px",
+            paddingRight: "20px",
+          }}
         />
       </Tabs>
-      <TabPanel value={value} index={0} style={{ display: "flex", justifyContent: "center" }}>
+      <TabPanel
+        value={value}
+        index={0}
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         <Box>
           <h2>Adverts</h2>
           <TableContainer component={Paper}>
             <Table
               sx={{
-                "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root": {
-                  backgroundColor: "#546658",
-                  color: "white",
-                  "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
-                    backgroundColor: "white",
+                "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root":
+                  {
+                    backgroundColor: "#546658",
+                    color: "white",
+                    "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
+                      backgroundColor: "white",
+                    },
                   },
-                },
               }}
               style={{
                 "& td": { fontSize: "16px" },
@@ -180,21 +215,36 @@ function VerticalTabs() {
                 <TableRow>
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0", padding: "6px 0", fontSize: "18px", fontWeight: "500" }}
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      padding: "6px 0",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
                   >
                     ID
                   </TableCell>
 
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0", padding: "6px 0", fontSize: "18px", fontWeight: "500" }}
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      padding: "6px 0",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
                   >
                     Advert
                   </TableCell>
 
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0", padding: "6px 10px", fontSize: "18px", fontWeight: "500" }}
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      padding: "6px 10px",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
                   >
                     Price
                   </TableCell>
@@ -213,7 +263,12 @@ function VerticalTabs() {
                   </TableCell>
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0", padding: "6px 6px", fontSize: "18px", fontWeight: "500" }}
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      padding: "6px 6px",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
                   >
                     Image
                   </TableCell>
@@ -227,12 +282,26 @@ function VerticalTabs() {
                     }}
                   >
                     <TableRow>
-                      <TableCell align="center" style={{ width: "260px", fontSize: "18px", fontWeight: "500" }}>
+                      <TableCell
+                        align="center"
+                        style={{
+                          width: "260px",
+                          fontSize: "18px",
+                          fontWeight: "500",
+                        }}
+                      >
                         Languages
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell sx={{ padding: 0, borderBottom: "none", fontSize: "18px", fontWeight: "500" }}>
+                      <TableCell
+                        sx={{
+                          padding: 0,
+                          borderBottom: "none",
+                          fontSize: "18px",
+                          fontWeight: "500",
+                        }}
+                      >
                         <TableRow>
                           <TableCell
                             align="center"
@@ -249,7 +318,13 @@ function VerticalTabs() {
                           </TableCell>
                           <TableCell
                             align="center"
-                            sx={{ border: "none", width: "110px", padding: "6px", fontSize: "18px", fontWeight: "500" }}
+                            sx={{
+                              border: "none",
+                              width: "110px",
+                              padding: "6px",
+                              fontSize: "18px",
+                              fontWeight: "500",
+                            }}
                           >
                             Spoken
                           </TableCell>
@@ -260,7 +335,12 @@ function VerticalTabs() {
 
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0", padding: "6px 0", fontSize: "18px", fontWeight: "500" }}
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      padding: "6px 0",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
                   >
                     Edit
                   </TableCell>
@@ -272,34 +352,62 @@ function VerticalTabs() {
                     <TableRow
                       key={uuidv4()}
                       style={{
-                        backgroundColor: advert.isDeleted ? "rgba(175, 186, 202, 0.3)" : "none",
+                        backgroundColor: advert.isDeleted
+                          ? "rgba(175, 186, 202, 0.3)"
+                          : "none",
                       }}
                     >
-                      <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0", padding: "10px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{
+                          width: "50px",
+                          border: "1px solid #e0e0e0",
+                          padding: "10px",
+                        }}
+                      >
                         {advert.id}
                       </TableCell>
 
-                      <TableCell align="left" sx={{ border: "1px solid #e0e0e0", width: "250px", padding: "10px" }}>
+                      <TableCell
+                        align="left"
+                        sx={{
+                          border: "1px solid #e0e0e0",
+                          width: "250px",
+                          padding: "10px",
+                        }}
+                      >
                         <Typography sx={{ fontWeight: "600" }}>
-                          {advert.user.firstName}&nbsp;{advert.user.lastName ? advert.user.lastName : ""}
+                          {advert.user.firstName}&nbsp;
+                          {advert.user.lastName ? advert.user.lastName : ""}
                         </Typography>
-                        <Typography sx={{ marginBottom: "20px" }}>{advert.user.email}</Typography>
+                        <Typography sx={{ marginBottom: "20px" }}>
+                          {advert.user.email}
+                        </Typography>
 
                         <p>
                           Create at:
                           <br />
                           <Typography sx={{ fontWeight: "600" }}>
-                            {format(new Date(advert.createdAt), "dd.MM.yyyy HH:mm")}
+                            {format(
+                              new Date(advert.createdAt),
+                              "dd.MM.yyyy HH:mm"
+                            )}
                           </Typography>
                         </p>
                       </TableCell>
 
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ border: "1px solid #e0e0e0", padding: "10px" }}
+                      >
                         {advert.price}
                         {"$"}
                       </TableCell>
 
-                      <TableCell align="left" sx={{ padding: "10px", paddingRight: 0 }}>
+                      <TableCell
+                        align="left"
+                        sx={{ padding: "10px", paddingRight: 0 }}
+                      >
                         <Box
                           sx={{
                             maxHeight: "100px",
@@ -323,15 +431,19 @@ function VerticalTabs() {
                             "&::-webkit-scrollbar-thumb:hover": {
                               background: "#555",
                             },
-                            "&.MuiTableCell-root:hover::-webkit-scrollbar-thumb ": {
-                              background: "white",
-                            },
+                            "&.MuiTableCell-root:hover::-webkit-scrollbar-thumb ":
+                              {
+                                background: "white",
+                              },
                           }}
                         >
                           {advert.description}
                         </Box>
                       </TableCell>
-                      <TableCell align="center" sx={{ border: "1px solid #e0e0e0", padding: "10px" }}>
+                      <TableCell
+                        align="center"
+                        sx={{ border: "1px solid #e0e0e0", padding: "10px" }}
+                      >
                         <img
                           src={advert.imagePath}
                           width="100"
@@ -364,7 +476,11 @@ function VerticalTabs() {
                             }}
                           >
                             {advert.teachingLanguages
-                              .map((language) => (en === "en" ? language.languageEn : language.languageUa))
+                              .map((language) =>
+                                en === "en"
+                                  ? language.languageEn
+                                  : language.languageUa
+                              )
                               .join(", ")}
                           </div>
 
@@ -380,7 +496,11 @@ function VerticalTabs() {
                             }}
                           >
                             {advert.spokenLanguages
-                              .map((language) => (en === "en" ? language.languageEn : language.languageUa))
+                              .map((language) =>
+                                en === "en"
+                                  ? language.languageEn
+                                  : language.languageUa
+                              )
                               .join(", ")}
                           </div>
                         </div>
@@ -397,15 +517,19 @@ function VerticalTabs() {
                           sx={{
                             mb: "15px",
                             border: "1px solid",
-                            borderColor: (theme) => theme.palette.buttonColor.fontColor,
+                            borderColor: (theme) =>
+                              theme.palette.buttonColor.fontColor,
 
-                            color: (theme) => theme.palette.buttonColor.fontColor,
+                            color: (theme) =>
+                              theme.palette.buttonColor.fontColor,
                             fontSize: "14px",
                             fontWeight: "700",
                             transition: "background-color 0.3s",
-                            backgroundColor: (theme) => theme.palette.buttonColor.main,
+                            backgroundColor: (theme) =>
+                              theme.palette.buttonColor.main,
                             "&:hover": {
-                              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
+                              backgroundColor: (theme) =>
+                                theme.palette.buttonColor.darkHover,
                               // borderColor: (theme) => theme.palette.buttonColor.fontColor,
                             },
 
@@ -416,7 +540,9 @@ function VerticalTabs() {
                           }}
                           style={{}}
                           onClick={() => {
-                            setDeleteState(deleteState === "delete" ? "undo" : "delete");
+                            setDeleteState(
+                              deleteState === "delete" ? "undo" : "delete"
+                            );
                             dispatch(deleteAdvertsAsAdmin(advert.id));
                           }}
                         >
@@ -437,9 +563,12 @@ function VerticalTabs() {
                             fontWeight: "700",
                             transition: "background-color 0.3s",
                             "&:hover": {
-                              backgroundColor: (theme) => theme.palette.buttonColor.darkHover,
-                              borderColor: (theme) => theme.palette.buttonColor.fontColor,
-                              color: (theme) => theme.palette.buttonColor.fontColor,
+                              backgroundColor: (theme) =>
+                                theme.palette.buttonColor.darkHover,
+                              borderColor: (theme) =>
+                                theme.palette.buttonColor.fontColor,
+                              color: (theme) =>
+                                theme.palette.buttonColor.fontColor,
                               "& svg": {
                                 fill: "white",
                               },
@@ -452,7 +581,8 @@ function VerticalTabs() {
                             alignItems: "center",
                             width: "95px",
                             border: "1px solid",
-                            borderColor: (theme) => theme.palette.buttonColor.main,
+                            borderColor: (theme) =>
+                              theme.palette.buttonColor.main,
                             backgroundColor: "white",
                           }}
                         >
@@ -484,32 +614,56 @@ function VerticalTabs() {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     ID
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     User
                   </TableCell>
 
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     Registered At
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     Last visit
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     Photo
                   </TableCell>
                   {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     IsDeleted ?
                   </TableCell> */}
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     Advert
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     Feedbacks
                   </TableCell>
-                  <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ border: "1px solid #e0e0e0" }}
+                  >
                     Edit
                   </TableCell>
                 </TableRow>
@@ -519,25 +673,46 @@ function VerticalTabs() {
                   <TableRow
                     key={uuidv4()}
                     style={{
-                      backgroundColor: user.isDeleted ? "rgba(175, 186, 202, 0.3)" : "transparent",
+                      backgroundColor: user.isDeleted
+                        ? "rgba(175, 186, 202, 0.3)"
+                        : "transparent",
                     }}
                   >
-                    <TableCell align="center" sx={{ width: "50px", border: "1px solid #e0e0e0" }}>
+                    <TableCell
+                      align="center"
+                      sx={{ width: "50px", border: "1px solid #e0e0e0" }}
+                    >
                       {user.id}
                     </TableCell>
-                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
                       {user.firstName}&nbsp;{user.lastName ? user.lastName : ""}
                       <br />
                       {user.email}
                     </TableCell>
 
-                    <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
-                      {parseJSON(user.registeredAt).toLocaleString("en-GB", { timeZone: "UTC" })}
+                    <TableCell
+                      align="left"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
+                      {parseJSON(user.registeredAt).toLocaleString("en-GB", {
+                        timeZone: "UTC",
+                      })}
                     </TableCell>
-                    <TableCell align="left" sx={{ border: "1px solid #e0e0e0" }}>
-                      {parseJSON(user.lastVisit).toLocaleString("en-GB", { timeZone: "UTC" })}
+                    <TableCell
+                      align="left"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
+                      {parseJSON(user.lastVisit).toLocaleString("en-GB", {
+                        timeZone: "UTC",
+                      })}
                     </TableCell>
-                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
                       <img
                         src={user.photoPath}
                         width="100"
@@ -551,23 +726,48 @@ function VerticalTabs() {
                       {`${user.isDeleted}`}
                     </TableCell> */}
 
-                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
                       {user.advert ? <button>Advert</button> : "no"}
                     </TableCell>
 
-                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                      {user.feedbacks
-                        ? user.feedbacks && (
-                            <ul>
-                              {user.feedbacks.map(({ feedback }) => (
-                                <li key={uuidv4()}>{feedback}</li>
-                              ))}
-                            </ul>
-                          )
-                        : null}
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
+                      {getFeedbacksForTeacher(user.id).map((feedback) => (
+                        <Stack
+                          key={feedback.id}
+                          direction="row"
+                          sx={{
+                            border: "1px solid grey",
+                            display: "flex",
+                            gap: "5px",
+                          }}
+                        >
+                          <Box>
+                            <Typography>
+                              {feedback.message} from{" "}
+                              {feedback.fromUser.firstName}{" "}
+                              {feedback.fromUser.lastName}
+                            </Typography>
+                            <Typography>
+                              {format(
+                                parseJSON(feedback.createdAt),
+                                "dd/MM/yyyy HH:mm"
+                              )}
+                            </Typography>
+                          </Box>
+                        </Stack>
+                      ))}
                     </TableCell>
 
-                    <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    <TableCell
+                      align="center"
+                      sx={{ border: "1px solid #e0e0e0" }}
+                    >
                       <button
                         style={{ width: "24px", height: "24px" }}
                         disabled={user.role === "admin" ? true : false}
@@ -578,7 +778,11 @@ function VerticalTabs() {
                         D
                       </button>
                       <button
-                        style={{ width: "24px", height: "24px", border: "none" }}
+                        style={{
+                          width: "24px",
+                          height: "24px",
+                          border: "none",
+                        }}
                         disabled={user.role === "admin" ? true : false}
                       >
                         E
@@ -657,7 +861,14 @@ function VerticalTabs() {
           </label>
           <button type="submit">Add</button>
         </form> */}
-        <Stack style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", gap: "50px" }}>
+        <Stack
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "50px",
+          }}
+        >
           <AddLanguageForm languages={languages} />
           <AddSpecializationForm specializations={specializations} />
         </Stack>
@@ -701,7 +912,11 @@ export const AdminPanelPage = () => {
         }}
       >
         <span style={{ marginBottom: "20px" }}>
-          <SvgIcon component={KeyboardBackspaceSharpIcon} height="18px" style={{ verticalAlign: "middle" }} />
+          <SvgIcon
+            component={KeyboardBackspaceSharpIcon}
+            height="18px"
+            style={{ verticalAlign: "middle" }}
+          />
           Back to the Home page
         </span>
       </Link>
