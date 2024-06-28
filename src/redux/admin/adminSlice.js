@@ -14,6 +14,7 @@ import {
   getLanguages,
   getSpecializations,
   getUsersAsAdmin,
+  getFeedbacksAsAdmin,
 } from "./operations";
 
 const adminSlice = createSlice({
@@ -22,6 +23,7 @@ const adminSlice = createSlice({
     adverts: [],
     users: [],
     countries: [],
+    feedbacks: [],
     languages: [],
     specializations: [],
     isLoading: false,
@@ -47,7 +49,9 @@ const adminSlice = createSlice({
       .addCase(deleteSpecializationAsAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        const index = state.items.findIndex((specialization) => specialization.id === action.payload.id);
+        const index = state.items.findIndex(
+          (specialization) => specialization.id === action.payload.id
+        );
         state.specializations.splice(index, 1);
       })
       .addCase(getLanguages.fulfilled, (state, action) => {
@@ -58,7 +62,9 @@ const adminSlice = createSlice({
       .addCase(deleteLanguageAsAdmin.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        const index = state.items.findIndex((language) => language.id === action.payload.id);
+        const index = state.items.findIndex(
+          (language) => language.id === action.payload.id
+        );
         state.languages.splice(index, 1);
       })
       .addCase(addLanguagesAsAdmin.fulfilled, (state, action) => {
@@ -103,6 +109,11 @@ const adminSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.adverts = action.payload;
+      })
+      .addCase(getFeedbacksAsAdmin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.feedbacks = action.payload;
       })
       .addMatcher(
         (action) => action.type.endsWith("/rejected"),
