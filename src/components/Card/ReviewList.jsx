@@ -7,6 +7,7 @@ import {
   Input,
   Typography,
   TextField,
+  Stack,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
@@ -20,22 +21,18 @@ import format from "date-fns/format";
 import { useState } from "react";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import { advertByIdSelector } from "@/redux/marketplace/adverts/advertsSelector";
-import { Stack } from "@mui/system";
+import mainImage from "@assets/icons/noPhoto.png";
 
-export function ReviewList({ id, advertId }) {
+export function ReviewList({ id, advertId, feedback }) {
   const [rating, setRating] = useState(null);
-
   const [hover, setHover] = useState(null);
   const totalStars = 5;
-
   const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
-
   const [showAll, setShowAll] = useState(false);
   const defaultShow = 3;
   const showAllByDefault = reviews.length <= defaultShow;
   const elementsToShow =
     showAll || showAllByDefault ? reviews : reviews.slice(0, defaultShow);
-
   const [message, setMessage] = useState("");
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -120,118 +117,134 @@ export function ReviewList({ id, advertId }) {
         flexDirection: { xs: "column", lg: "row" },
       }}
     >
-      <List
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "44px",
-          marginBottom: "30px",
-          width: { xs: "100%", lg: "37%" },
-          p: 0,
-        }}
-      >
-        {showAllByDefault ? null : (
-          <Button
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-              textDecoration: "none",
-              textTransform: "none",
-              color: (theme) => theme.palette.textColor.fontColor,
-              position: "absolute",
-              bottom: "-40px",
-              transform: "translateX(-50%)",
-              left: "50%",
-              textAlign: "center",
-            }}
-            onClick={() => setShowAll((prev) => !prev)}
-          >
-            {capitalizeFirstLetter(
-              intl.formatMessage({ id: showAll ? "hide" : "showAll" })
-            )}
-          </Button>
-        )}
-        {[...elementsToShow]
-          .sort(
-            (a, b) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          )
-          .map((e) => (
-            <ListItem
-              key={e.id}
+      <Stack direction="column" sx={{ width: { xs: "100%", lg: "36%" } }}>
+        <Typography variant="fontHeader" mb="20px">
+          {intl.formatMessage({ id: "feedback" })} ({feedback})
+        </Typography>
+        <List
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "44px",
+            marginBottom: "30px",
+            width: { xs: "100%" },
+            p: 0,
+          }}
+        >
+          {showAllByDefault ? null : (
+            <Button
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                p: 0,
-                width: "100%",
+                backgroundColor: "transparent",
+                border: "none",
+                textDecoration: "none",
+                textTransform: "none",
+                color: (theme) => theme.palette.textColor.fontColor,
+                position: "absolute",
+                bottom: "-40px",
+                transform: "translateX(-50%)",
+                left: "50%",
+                textAlign: "center",
               }}
+              onClick={() => setShowAll((prev) => !prev)}
             >
-              <Box sx={{ display: "flex", gap: "24px", width: "100%" }}>
-                <img
-                  src={e.fromUser.photoPath}
-                  alt={e.fromUser.firstName + " " + e.fromUser.lastName}
-                  style={{ width: "85px", height: "85px", borderRadius: "50%" }}
-                />
-                <Box>
-                  <Box
-                    style={{
-                      display: "flex",
-                      gap: "10px",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography component="p" variant="text" sx={{ mb: "8px" }}>
-                      {e.fromUser.firstName + " " + e.fromUser.lastName}
-                    </Typography>
-                    <Stack
-                      sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "center",
-                        alignItems: "top",
-                        pt: "3px",
-                        gap: "4px",
-                      }}
-                    >
-                      <StarBorderOutlinedIcon
-                        fontSize="16px"
-                        sx={{
-                          mt: "2px",
-                          color: (theme) => theme.palette.background.yellow,
-                        }}
-                      />
-                      <Typography
-                        variant="text"
-                        sx={{
-                          display: "flex",
-                          fontSize: "14px",
-                          lineHeight: "calc(20 / 14)",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        {e.mark}
-                      </Typography>
-                    </Stack>
-                  </Box>
-                  <Typography variant="posterDescription">
-                    {e.message}
-                  </Typography>
-                </Box>
-              </Box>
-              <Typography
+              {capitalizeFirstLetter(
+                intl.formatMessage({ id: showAll ? "hide" : "showAll" })
+              )}
+            </Button>
+          )}
+          {[...elementsToShow]
+            .sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            )
+            .map((e) => (
+              <ListItem
+                key={e.id}
                 sx={{
-                  fontSize: "14px",
-                  lineHeight: "calc(20 / 14)",
-                  color: "grey.600",
-                  alignSelf: "flex-end",
+                  display: "flex",
+                  flexDirection: "column",
+                  p: 0,
+                  width: "100%",
                 }}
               >
-                {format(new Date(e.createdAt), "dd.MM.yyyy HH:mm")}
-              </Typography>
-            </ListItem>
-          ))}
-      </List>
+                <Box sx={{ display: "flex", gap: "24px", width: "100%" }}>
+                  <img
+                    src={e.fromUser.photoPath || mainImage}
+                    alt={e.fromUser.firstName + " " + e.fromUser.lastName}
+                    style={{
+                      width: "85px",
+                      height: "85px",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <Box sx={{display: "flex", flexDirection: "column"}}>
+                    <Box
+                      style={{
+                        display: "flex",
+                        gap: "10px",
+                        alignItems: "center",
+                        justifyContent: "start",
+                      }}
+                    >
+                      <Typography
+                        component="p"
+                        variant="text"
+                        sx={{ mb: "8px", p: 0 }}
+                      >
+                        {e.fromUser.firstName +
+                          " " +
+                          (e.fromUser.lastName || "")}
+                      </Typography>
+                      <Stack
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          alignItems: "top",
+                          pt: "3px",
+                          gap: "4px",
+                        }}
+                      >
+                        <StarBorderOutlinedIcon
+                          fontSize="16px"
+                          sx={{
+                            mt: "2px",
+                            color: (theme) => theme.palette.background.yellow,
+                          }}
+                        />
+                        <Typography
+                          variant="text"
+                          sx={{
+                            display: "flex",
+                            fontSize: "14px",
+                            lineHeight: "calc(20 / 14)",
+                            marginBottom: "8px",
+                          }}
+                        >
+                          {e.mark}
+                        </Typography>
+                      </Stack>
+                    </Box>
+                    <Typography variant="posterDescription">
+                      {e.message}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Typography
+                  sx={{
+                    fontSize: "14px",
+                    lineHeight: "calc(20 / 14)",
+                    color: "grey.600",
+                    alignSelf: "flex-end",
+                  }}
+                >
+                  {format(new Date(e.createdAt), "dd.MM.yyyy HH:mm")}
+                </Typography>
+              </ListItem>
+            ))}
+        </List>
+      </Stack>
       <form
         id="reviewForm"
         style={{
@@ -239,8 +252,8 @@ export function ReviewList({ id, advertId }) {
           flexDirection: "column",
           gap: 20,
           alignItems: "left",
-          padding: "8px 16px",
           marginBottom: "30px",
+          width: { xs: "100%", lg: "67%" },
         }}
         onSubmit={(e) => reviewHandleSubmit(e)}
       >

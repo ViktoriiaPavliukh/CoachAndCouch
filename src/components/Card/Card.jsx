@@ -45,7 +45,6 @@ export function Card() {
   }, [dispatch, teacherId]);
 
   const teacher = useSelector(advertByIdSelector);
-  console.log(teacher?.user.email);
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
     <Box
@@ -297,7 +296,7 @@ export function Card() {
                 <Typography variant="fontHeader" component="p" mb="20px">
                   {intl.formatMessage({ id: "aboutMe" })}
                 </Typography>
-                <Typography variant="text" mb="40px">
+                <Typography variant="text" sx={{mb: "40px", textAlign: "justify"}}>
                   {teacher.description}
                 </Typography>
               </Stack>
@@ -308,12 +307,8 @@ export function Card() {
                   flexDirection: "column",
                 }}
               >
-                <Typography variant="fontHeader" mb="20px">
-                  {intl.formatMessage({ id: "feedback" })} (
-                  {teacher.user.feedbacksToMe.length})
-                </Typography>
                 <ReviewList
-                  // elements={teacher.user.feedbacksToMe}
+                  feedback={teacher.user.feedbacksToMe.length}
                   id={teacher.user.id}
                   advertId={teacher.id}
                 />
