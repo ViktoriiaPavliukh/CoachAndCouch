@@ -84,18 +84,22 @@ export const postAdvert = createAsyncThunk(
 
 export const favoriteAdvert = createAsyncThunk(
   "adverts/favoriteAdverts",
-  async (id, thunkAPI) => {
+  async (advertId, thunkAPI) => {
     try {
-      const userToken = thunkAPI.getState().auth.accessToken;
-      token.set(userToken);
-      const { data } = await privateAPI.put(`/adverts/${id}/favorite`);
+      console.log(advertId);
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      token.set(persistToken);
 
-      toast.success(`adverts id = ${id} was add/remove to your favorite`, {
-        icon: false,
-      });
-      return data;
+      console.log(`Making PUT request to /adverts/${advertId}/favorite`);
+      const response = await privateAPI.put(
+        `/adverts/${advertId}/favorite`,
+        {}
+      );
+      console.log(response.data);
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.error("Error response:", error.response);
+      return thunkAPI.rejectWithValue(error.response.data);
     }
   }
 );

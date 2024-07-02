@@ -111,7 +111,7 @@ export function Card() {
                       gap: "6px",
                     }}
                   >
-                    <LikeBtn />
+                    <LikeBtn advertId={teacherId.id} />
                     <Typography variant="posterDescription">12</Typography>
                   </Stack>
                   <Stack
@@ -296,7 +296,10 @@ export function Card() {
                 <Typography variant="fontHeader" component="p" mb="20px">
                   {intl.formatMessage({ id: "aboutMe" })}
                 </Typography>
-                <Typography variant="text" sx={{mb: "40px", textAlign: "justify"}}>
+                <Typography
+                  variant="text"
+                  sx={{ mb: "40px", textAlign: "justify" }}
+                >
                   {teacher.description}
                 </Typography>
               </Stack>
