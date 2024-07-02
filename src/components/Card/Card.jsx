@@ -28,6 +28,9 @@ export function Card() {
   const [modalContentType, setModalContentType] = useState(null);
   const en = useSelector(selectCurrentLanguage);
   const teacherId = useParams();
+  const teacher = useSelector(advertByIdSelector);
+  console.log(teacher);
+
   const isLoading = useSelector(selectAdvertsIsLoading);
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -44,7 +47,6 @@ export function Card() {
     dispatch(getAdvertById(teacherId.id));
   }, [dispatch, teacherId]);
 
-  const teacher = useSelector(advertByIdSelector);
   // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
     <Box
@@ -111,8 +113,11 @@ export function Card() {
                       gap: "6px",
                     }}
                   >
-                    <LikeBtn />
-                    <Typography variant="posterDescription">12</Typography>
+                    <LikeBtn advertId={teacherId.id} />
+                    <Typography variant="posterDescription">
+                      {" "}
+                      {teacher.likes?.length || 0}
+                    </Typography>
                   </Stack>
                   <Stack
                     sx={{
@@ -296,7 +301,10 @@ export function Card() {
                 <Typography variant="fontHeader" component="p" mb="20px">
                   {intl.formatMessage({ id: "aboutMe" })}
                 </Typography>
-                <Typography variant="text" sx={{mb: "40px", textAlign: "justify"}}>
+                <Typography
+                  variant="text"
+                  sx={{ mb: "40px", textAlign: "justify" }}
+                >
                   {teacher.description}
                 </Typography>
               </Stack>

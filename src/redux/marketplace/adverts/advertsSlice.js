@@ -8,8 +8,10 @@ import {
   filterAdverts,
   editAdvert,
   editAdvertImage,
-  fetchAdverts
+  fetchAdverts,
+  fetchLikedAdverts,
 } from "./operations";
+import { getCurrentUser } from "../../users/operations";
 
 const advertsSlice = createSlice({
   name: "adverts",
@@ -19,9 +21,13 @@ const advertsSlice = createSlice({
     isLoading: false,
     error: null,
     favoriteAdverts: {},
+    likes: [],
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.likes = action.payload.likes || [];
+      })
       .addCase(favoriteAdvert.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
@@ -74,14 +80,30 @@ const advertsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(fetchAdverts.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(fetchAdverts.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.status = "succeeded";
         state.adverts = action.payload;
       })
       .addCase(fetchAdverts.rejected, (state, action) => {
-        state.status = 'failed';
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(fetchLikedAdverts.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchLikedAdverts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (Array.isArray(action.payload)) {
+          state.adverts = action.payload;
+        } else {
+          console.error("Expected an array but got:", action.payload);
+        }
+      })
+      .addCase(fetchLikedAdverts.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload;
       })
       .addMatcher(

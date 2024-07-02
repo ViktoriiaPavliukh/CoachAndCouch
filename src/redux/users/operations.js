@@ -27,7 +27,7 @@ export const getCurrentUser = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
+      console.log(persistToken);
       const { data } = await privateAPI.get(`/users`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
