@@ -72,12 +72,12 @@ export function TeacherCard({ teacher }) {
       <Card
         teacher={teacher}
         sx={{
-          // height: "500px",
-          maxWidth: "350px",
+          width: { xs: "343px", lg: "400px" },
           minWidth: "100wv",
           borderRadius: "8px",
           boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
-          // backgroundColor: setBg,
+          flexGrow: 1,
+          height: "100%",
         }}
       >
         <CardActionArea onClick={() => handleClick()}>
@@ -98,7 +98,7 @@ export function TeacherCard({ teacher }) {
             }}
           />
         </CardActionArea>
-        <CardContent>
+        <CardContent sx={{ flexGrow: 1 }}>
           <Stack
             direction="row"
             sx={{
