@@ -38,7 +38,6 @@ export const fetchLikedAdverts = createAsyncThunk(
       const likedAdverts = data.adverts.filter((advert) =>
         likedAdvertIds.includes(advert.id)
       );
-      console.log(likedAdverts, "operation");
       return likedAdverts;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -46,20 +45,6 @@ export const fetchLikedAdverts = createAsyncThunk(
   }
 );
 
-// export const fetchLikedAdverts = createAsyncThunk(
-//   "adverts/fetchLikedAdverts",
-//   async (likedAdvertIds, thunkAPI) => {
-//     try {
-//       const { data } = await publicAPI.get("/adverts");
-//       const likedAdverts = data.adverts.filter((advert) =>
-//         likedAdvertIds.includes(advert.id)
-//       );
-//       return likedAdverts;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
 export const getAdvertById = createAsyncThunk(
   "adverts/getAdvertById",
   async (id, thunkAPI) => {

@@ -180,6 +180,7 @@ const messages = {
     //Status
     online: "Online",
     noAdvertisement: "You don't have any advertisements yet",
+    noFavorites: "You haven't added any teachers to your favorites yet",
 
     //Repeating
     lessons: "Lessons",
@@ -424,6 +425,7 @@ const messages = {
     //Status
     online: "У мережі",
     noAdvertisement: "Ви ще не маєте оголошення",
+    noFavorites: "Ви ще не додали жодного викладача до обраних",
 
     //Repeating
     lessons: "Уроки",

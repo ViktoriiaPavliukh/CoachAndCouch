@@ -6,7 +6,6 @@ import Loader from "../Loader/Loader";
 import { getCurrentUser } from "@/redux/users/operations";
 import { fetchLikedAdverts } from "@/redux/marketplace/adverts/operations";
 import {
-  likesSelector,
   selectAdvertsIsLoading,
   advertsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
@@ -20,13 +19,9 @@ export function LikesPages() {
   const dispatch = useDispatch();
   const intl = useIntl();
   const adverts = useSelector(advertsSelector) || [];
-  console.log("adverts", adverts);
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
   const isLoadingUser = useSelector(selectUserIsLoading);
   const isLoadingAdverts = useSelector(selectAdvertsIsLoading);
-  const likedAdverts = useSelector(likesSelector);
-  console.log("114", likedAdverts);
   const [likedAdvertIds, setLikedAdvertIds] = useState([]);
 
   useEffect(() => {
@@ -34,13 +29,15 @@ export function LikesPages() {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log("Current User:", currentUser);
-    if (currentUser && currentUser.likes && currentUser.likes.length > 0) {
+
+    if (
+      currentUser &&
+      Array.isArray(currentUser.likes) &&
+      currentUser.likes.length > 0
+    ) {
       const ids = currentUser.likes.map((like) => like.advert.id);
-      console.log("Liked Advert IDs:", ids);
       setLikedAdvertIds(ids);
     } else {
-      // Handle case where likes are not available or empty
       setLikedAdvertIds([]);
     }
   }, [currentUser]);
@@ -50,29 +47,51 @@ export function LikesPages() {
       dispatch(fetchLikedAdverts(likedAdvertIds));
     }
   }, [dispatch, likedAdvertIds]);
-  console.log(133, likedAdvertIds);
 
-  const isLoading = isLoadingUser || isLoadingAdverts;
+  if (currentUser.likes.length > 0 && !Array.isArray(adverts)) {
+    return null;
+  }
 
   return (
-    <>
-      <Grid
-        container
-        sx={{
-          flexDirection: { sm: "column", md: "row" },
-          columnGap: { md: "28px" },
-          rowGap: { xs: "28px", lg: "40px" },
-          justifyContent: "left",
-          ml: { lg: "48px" },
-          py: "38px",
-        }}
-      >
-        {adverts.map((advert) => (
-          <Grid item key={advert.id}>
-            <TeacherCard teacher={advert} />
-          </Grid>
-        ))}
-      </Grid>
-    </>
+    <Box
+      sx={{
+        display: "flex",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {likedAdvertIds.length === 0 ? (
+        <Typography
+          sx={{
+            display: "flex",
+            width: "100%",
+            height: "100vh",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {intl.formatMessage({ id: "noFavorites" })}
+        </Typography>
+      ) : (
+        <Grid
+          container
+          sx={{
+            flexDirection: { sm: "column", md: "row" },
+            columnGap: { md: "28px", lg: "60px" },
+            rowGap: { xs: "28px", lg: "40px" },
+            justifyContent: { xs: "center", lg: "left" },
+            ml: { lg: "48px" },
+            py: "38px",
+          }}
+        >
+          {adverts.map((advert) => (
+            <Grid item key={advert.id}>
+              <TeacherCard teacher={advert} />
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    </Box>
   );
 }
