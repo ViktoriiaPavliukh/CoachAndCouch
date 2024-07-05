@@ -2,21 +2,18 @@ import React from "react";
 import { IconButton } from "@mui/material";
 import { FavoriteBorderOutlined as Icon } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { favoriteAdvert } from "@/redux/marketplace/adverts/operations"; // Adjust the path according to your project structure
+import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
 
-export function LikeBtn({ advertId }) {
+export function LikeBtn({ advertId, onLikeClick }) {
   const dispatch = useDispatch();
 
   const handleLike = async () => {
     try {
-      console.log(
-        `advertId before dispatch: ${advertId}, type: ${typeof advertId}`
-      );
-      await dispatch(favoriteAdvert(String(advertId))).unwrap(); // Ensure advertId is a string
-      // Handle success if needed
+      event.preventDefault();
+      await dispatch(favoriteAdvert(String(advertId))).unwrap();
+      window.location.reload();
     } catch (error) {
       console.error("Failed to mark as favorite:", error);
-      // Handle error appropriately
     }
   };
 

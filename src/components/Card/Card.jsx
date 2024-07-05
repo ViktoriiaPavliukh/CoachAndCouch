@@ -5,16 +5,20 @@ import {
   advertByIdSelector,
   selectAdvertsIsLoading,
 } from "@/redux/marketplace/adverts/advertsSelector";
+import { getCurrentUser } from "@/redux/users/operations";
+import {
+  selectCurrentUser,
+  selectUserIsLoading,
+} from "@/redux/users/selectors";
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
-import { Box, Button, Container, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
 import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
-import userImage from "@assets/templates/avatar_1.webp";
 import countriesCase from "@/helpers/countriesCase";
 import countries from "../../defaults/countries/countries.json";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -26,28 +30,43 @@ import { Stack } from "@mui/system";
 export function Card() {
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+  const [likesCount, setLikesCount] = useState(0);
   const en = useSelector(selectCurrentLanguage);
+  const currentUser = useSelector(selectCurrentUser);
   const teacherId = useParams();
   const teacher = useSelector(advertByIdSelector);
-  console.log(teacher);
-
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const dispatch = useDispatch();
+  const intl = useIntl();
+
+  useEffect(() => {
+    dispatch(getAdvertById(teacherId.id));
+  }, [dispatch, teacherId]);
+
+  useEffect(() => {
+    if (teacher) {
+      setLikesCount(teacher.likes?.length || 0); 
+    }
+  }, [teacher]);
+
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
     setShowModal(true);
+  };
+
+  const handleLikeClick = () => {
+    setLikesCount((prevLikesCount) =>
+      teacher.likes?.some((like) => like.userId === currentUser.id)
+        ? prevLikesCount - 1
+        : prevLikesCount + 1
+    );
   };
 
   const onBackdropClose = () => {
     setShowModal(false);
     setModalContentType(null);
   };
-  const intl = useIntl();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAdvertById(teacherId.id));
-  }, [dispatch, teacherId]);
 
-  // const teacher = adverts.find((advert) => advert.id === +teacherId.id);
   return (
     <Box
       component="div"
@@ -113,10 +132,13 @@ export function Card() {
                       gap: "6px",
                     }}
                   >
-                    <LikeBtn advertId={teacherId.id} />
+                    <LikeBtn
+                      advertId={teacherId.id}
+                      onLikeClick={handleLikeClick}
+                    />
                     <Typography variant="posterDescription">
                       {" "}
-                      {teacher.likes?.length || 0}
+                      {likesCount}
                     </Typography>
                   </Stack>
                   <Stack
