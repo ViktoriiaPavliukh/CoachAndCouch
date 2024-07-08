@@ -37,6 +37,7 @@ import {
 } from "@/redux/admin/adminSelector";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
+import countriesCase from "@/helpers/countriesCase";
 
 const initialValues = {
   price: 0,
@@ -245,7 +246,7 @@ export const TeacherFormPage = () => {
                   return selectedCountry
                     ? en === "en"
                       ? selectedCountry.nameEng
-                      : selectedCountry.nameShort
+                      : countriesCase(selectedCountry.nameShort)
                     : selected;
                 }}
               >
@@ -259,7 +260,7 @@ export const TeacherFormPage = () => {
                         <MenuItem key={country.alpha2} value={country.alpha2}>
                           {en === "en"
                             ? fullCountry.nameEng
-                            : fullCountry.nameShort}
+                            : countriesCase(fullCountry.nameShort)}
                         </MenuItem>
                       );
                     } else {
