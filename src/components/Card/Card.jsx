@@ -5,7 +5,7 @@ import {
   advertByIdSelector,
   selectAdvertsIsLoading,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import { getCurrentUser } from "@/redux/users/operations";
+import { getCurrentUser, sendMessageFromUser } from "@/redux/users/operations";
 import {
   selectCurrentUser,
   selectUserIsLoading,
@@ -26,6 +26,7 @@ import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
+import { selectUser } from "@/redux/auth/selectors";
 
 export function Card() {
   const [showModal, setShowModal] = useState(false);
@@ -45,7 +46,7 @@ export function Card() {
 
   useEffect(() => {
     if (teacher) {
-      setLikesCount(teacher.likes?.length || 0); 
+      setLikesCount(teacher.likes?.length || 0);
     }
   }, [teacher]);
 
@@ -303,7 +304,9 @@ export function Card() {
                       {intl.formatMessage({ id: "trialLessonBtn" })}
                     </Typography>
                   </Button>
-                  <MessageBtn email={teacher?.user.email} />
+                  <MessageBtn
+                    onShowModalClick={() => onShowModalClick("sendMessage")}
+                  />
                 </Box>
               </Box>
             </Box>

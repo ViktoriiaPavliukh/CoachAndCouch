@@ -2,19 +2,21 @@ import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { Button, Link, Typography } from "@mui/material";
 
-export function MessageBtn({ email }) {
+export function MessageBtn({ onShowModalClick }) {
   const intl = useIntl();
   return (
-    <Link href={`mailto:${email}`} underline="none" sx={{display: "flex", flexGrow: 1}}>
-      <Button variant="outlined" sx={{ p: "12px 18px", width: "100%" }}>
-        <Typography variant="posterButton">
-          {intl.formatMessage({ id: "message" })}
-        </Typography>
-      </Button>
-    </Link>
+    <Button
+      onClick={onShowModalClick}
+      sx={{ p: "12px 24px", borderRadius: "6px" }}
+      variant="contained"
+    >
+      <Typography variant="posterButton">
+        {intl.formatMessage({ id: "message" })}
+      </Typography>
+    </Button>
   );
 }
 
 MessageBtn.propTypes = {
-  email: PropTypes.string.isRequired,
+  onShowModalClick: PropTypes.func.isRequired,
 };

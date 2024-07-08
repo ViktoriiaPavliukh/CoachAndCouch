@@ -6,21 +6,21 @@ export const pages = [
     link: "profile",
     iconFeatherName: "FileText",
   },
-  {
-    title: <FormattedMessage id="personalAccount.lessons" />,
-    link: "lessons",
-    iconFeatherName: "Edit2",
-  },
+  // {
+  //   title: <FormattedMessage id="personalAccount.lessons" />,
+  //   link: "lessons",
+  //   iconFeatherName: "Edit2",
+  // },
   {
     title: <FormattedMessage id="personalAccount.schedule" />,
     link: "schedule",
     iconFeatherName: "Calendar",
   },
-  // {
-  //   title: <FormattedMessage id="personalAccount.messages" />,
-  //   link: "messages",
-  //   iconFeatherName: "MessageSquare",
-  // },
+  {
+    title: <FormattedMessage id="personalAccount.messages" />,
+    link: "messages",
+    iconFeatherName: "MessageSquare",
+  },
   {
     title: <FormattedMessage id="personalAccount.likes" />,
     link: "likes",
