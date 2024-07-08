@@ -66,7 +66,11 @@ export const Sidebar = () => {
               key={index}
             >
               {IconComponent && <IconComponent />}
-              <Typography variant="posterSubtitle" noWrap>
+              <Typography
+                variant="posterSubtitle"
+                noWrap
+                sx={{ textTransform: "none" }}
+              >
                 {item.title}
               </Typography>
             </Box>
