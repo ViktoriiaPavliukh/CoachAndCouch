@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,6 +50,26 @@ export const Profile = ({ currentUser, countriesList }) => {
     photo: null,
   });
 
+  useEffect(() => {
+    if (currentUser) {
+      setFormData({
+        firstName: currentUser.firstName || "",
+        lastName: currentUser.lastName || "",
+        email: currentUser.email || "",
+        birthday: currentUser.birthday
+          ? format(new Date(currentUser.birthday), "dd.MM.yyyy")
+          : "",
+        sex: currentUser.sex || "",
+        country: currentUser.country?.alpha2 || "",
+        registeredAt: currentUser.registeredAt
+          ? format(new Date(currentUser.registeredAt), "dd.MM.yyyy")
+          : "",
+        aboutMe: currentUser.aboutMe || "",
+        photo: currentUser.photoPath || null,
+      });
+    }
+  }, [currentUser]);
+
   const handleUserProfileSubmit = async (values) => {
     try {
       await formik.validateForm();
@@ -93,6 +113,7 @@ export const Profile = ({ currentUser, countriesList }) => {
         await dispatch(updateUserPhoto(photoFormData));
       }
       setEditMode(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error editing user:", error);
     }
