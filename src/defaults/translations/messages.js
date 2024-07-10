@@ -241,6 +241,14 @@ const messages = {
     //schedule
     "schedule.today": "Today",
     "schedule.week": "Week",
+
+    //Admin
+    avatar: "Image",
+    usersAdmin: "Users",
+    username: "User name",
+    advert: "Advert",
+    registeredAt: "Registered At",
+    lastVisit: "Last visit",
   },
 
   uk: {
@@ -486,6 +494,14 @@ const messages = {
     //schedule
     "schedule.today": "Сьогодні",
     "schedule.week": "Тиждень",
+
+    //Admin
+    avatar: "Аватарка",
+    username: "Ім'я користувача",
+    usersAdmin: "Користувачі",
+    advert: "Оголошення",
+    registeredAt: "Дата реєстраціЇ",
+    lastVisit: "Востаннє на сайті",
   },
 };
 
