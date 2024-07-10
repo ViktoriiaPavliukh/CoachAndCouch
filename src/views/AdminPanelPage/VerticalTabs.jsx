@@ -2,6 +2,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { format, parseJSON } from "date-fns";
+import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
@@ -65,6 +66,7 @@ export function VerticalTabs() {
   //   },
   // });
   const en = useSelector(selectCurrentLanguage);
+  const intl = useIntl();
   const [value, setValue] = React.useState(0);
   const [deleteState, setDeleteState] = React.useState("delete");
   const handleChange = (event, newValue) => {
@@ -571,8 +573,10 @@ export function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Box>
-          <h2>Users</h2>
-          <TableContainer>
+          <Typography sx={{ fontSize: { lg: "48px" } }}>
+            {intl.formatMessage({ id: "usersAdmin" })}
+          </Typography>
+          <TableContainer sx={{ mt: "36px" }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -582,6 +586,7 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
                     ID
@@ -592,9 +597,10 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Photo
+                    {intl.formatMessage({ id: "avatar" })}
                   </TableCell>
                   <TableCell
                     align="center"
@@ -602,6 +608,7 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
                     E-mail
@@ -612,9 +619,10 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    User name
+                    {intl.formatMessage({ id: "username" })}
                   </TableCell>
                   <TableCell
                     align="center"
@@ -622,9 +630,10 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Advert
+                    {intl.formatMessage({ id: "advert" })}
                   </TableCell>
                   <TableCell
                     align="center"
@@ -632,9 +641,10 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Registered At
+                    {intl.formatMessage({ id: "registeredAt" })}
                   </TableCell>
                   <TableCell
                     align="center"
@@ -642,9 +652,10 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Last visit
+                    {intl.formatMessage({ id: "lastVisit" })}
                   </TableCell>
                   {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
                     IsDeleted ?
@@ -669,7 +680,7 @@ export function VerticalTabs() {
                 {users.map((user) => (
                   <TableRow
                     key={uuidv4()}
-                    style={{
+                    sx={{
                       backgroundColor: user.isDeleted
                         ? "rgba(175, 186, 202, 0.3)"
                         : "transparent",
@@ -682,6 +693,8 @@ export function VerticalTabs() {
                         borderBottom: "1px solid",
                         color: (theme) => theme.palette.textColor.listColor,
                         borderX: "none",
+                        fontSize: "18px",
+                        fontWeight: "500",
                       }}
                     >
                       {user.id}
@@ -710,6 +723,7 @@ export function VerticalTabs() {
                         borderBottom: "1px solid",
                         color: (theme) => theme.palette.textColor.listColor,
                         borderX: "none",
+                        fontSize: "16px",
                       }}
                     >
                       {user.email}
@@ -720,6 +734,8 @@ export function VerticalTabs() {
                         borderBottom: "1px solid",
                         color: (theme) => theme.palette.textColor.listColor,
                         borderX: "none",
+                        fontSize: "18px",
+                        fontWeight: "500",
                       }}
                     >
                       {user.firstName}&nbsp;{user.lastName ? user.lastName : ""}
@@ -752,6 +768,7 @@ export function VerticalTabs() {
                         borderBottom: "1px solid",
                         color: (theme) => theme.palette.textColor.listColor,
                         borderX: "none",
+                        fontSize: "16px",
                       }}
                     >
                       {formatDate(user.registeredAt)}
@@ -762,6 +779,7 @@ export function VerticalTabs() {
                         borderBottom: "1px solid",
                         color: (theme) => theme.palette.textColor.listColor,
                         borderX: "none",
+                        fontSize: "16px",
                       }}
                     >
                       {formatDate(user.lastVisit)}
