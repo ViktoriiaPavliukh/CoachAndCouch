@@ -5,6 +5,7 @@ import { format, parseJSON } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import {
   Box,
   Button,
@@ -21,7 +22,8 @@ import {
 } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { selectToken } from "@/redux/auth/selectors";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import {
   deleteAdvertsAsAdmin,
@@ -70,12 +72,17 @@ export function VerticalTabs() {
   };
 
   const dispatch = useDispatch();
-  const token = useSelector(selectToken);
   const adverts = useSelector(advertsAsAdminSelector);
-  const countries = useSelector(countriesSelector);
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const feedbacks = useSelector(feedbacksAsAdminSelector);
+  const formatDate = (dateString) => {
+    const date = parseJSON(dateString);
+    const day = String(date.getUTCDate()).padStart(2, "0");
+    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+    const year = date.getUTCFullYear();
+    return `${day}.${month}.${year}`;
+  };
 
   useEffect(() => {
     dispatch(getAdvertsAsAdmin());
@@ -180,7 +187,17 @@ export function VerticalTabs() {
                   >
                     ID
                   </TableCell>
-
+                  <TableCell
+                    align="center"
+                    sx={{
+                      border: "1px solid #e0e0e0",
+                      padding: "6px 6px",
+                      fontSize: "18px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    Image
+                  </TableCell>
                   <TableCell
                     align="center"
                     sx={{
@@ -216,17 +233,6 @@ export function VerticalTabs() {
                     }}
                   >
                     Description
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{
-                      border: "1px solid #e0e0e0",
-                      padding: "6px 6px",
-                      fontSize: "18px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    Image
                   </TableCell>
                   <TableCell
                     sx={{
@@ -323,7 +329,21 @@ export function VerticalTabs() {
                       >
                         {advert.id}
                       </TableCell>
-
+                      <TableCell
+                        align="center"
+                        sx={{ border: "1px solid #e0e0e0", padding: "10px" }}
+                      >
+                        <img
+                          src={advert.imagePath}
+                          style={{
+                            borderRadius: "100px",
+                            width: "70px",
+                            height: "70px",
+                            objectFit: "cover",
+                            // maxHeight: "100px",
+                          }}
+                        />
+                      </TableCell>
                       <TableCell
                         align="left"
                         sx={{
@@ -395,20 +415,6 @@ export function VerticalTabs() {
                         >
                           {advert.description}
                         </Box>
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        sx={{ border: "1px solid #e0e0e0", padding: "10px" }}
-                      >
-                        <img
-                          src={advert.imagePath}
-                          width="100"
-                          height="100"
-                          style={{
-                            objectFit: "cover",
-                            maxHeight: "100px",
-                          }}
-                        />
                       </TableCell>
                       <TableCell sx={{ padding: 0, maxWidth: "220px" }}>
                         <div
@@ -566,62 +572,97 @@ export function VerticalTabs() {
       <TabPanel value={value} index={1}>
         <Box>
           <h2>Users</h2>
-          <TableContainer component={Paper}>
+          <TableContainer>
             <Table>
               <TableHead>
                 <TableRow>
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
                   >
                     ID
                   </TableCell>
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
-                  >
-                    User
-                  </TableCell>
-
-                  <TableCell
-                    align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
-                  >
-                    Registered At
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
-                  >
-                    Last visit
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
                   >
                     Photo
                   </TableCell>
-                  {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                    IsDeleted ?
-                  </TableCell> */}
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
+                  >
+                    E-mail
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
+                  >
+                    User name
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
                   >
                     Advert
                   </TableCell>
                   <TableCell
                     align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
                   >
-                    Feedbacks
+                    Registered At
                   </TableCell>
                   <TableCell
                     align="center"
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
+                  >
+                    Last visit
+                  </TableCell>
+                  {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
+                    IsDeleted ?
+                  </TableCell> */}
+                  {/* <TableCell
+                    align="center"
                     sx={{ border: "1px solid #e0e0e0" }}
                   >
-                    Edit
-                  </TableCell>
+                    Feedbacks
+                  </TableCell> */}
+                  <TableCell
+                    align="center"
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                    }}
+                  ></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -636,60 +677,100 @@ export function VerticalTabs() {
                   >
                     <TableCell
                       align="center"
-                      sx={{ width: "50px", border: "1px solid #e0e0e0" }}
+                      sx={{
+                        width: "50px",
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
                     >
                       {user.id}
                     </TableCell>
                     <TableCell
                       align="center"
-                      sx={{ border: "1px solid #e0e0e0" }}
-                    >
-                      {user.firstName}&nbsp;{user.lastName ? user.lastName : ""}
-                      <br />
-                      {user.email}
-                    </TableCell>
-
-                    <TableCell
-                      align="left"
-                      sx={{ border: "1px solid #e0e0e0" }}
-                    >
-                      {parseJSON(user.registeredAt).toLocaleString("en-GB", {
-                        timeZone: "UTC",
-                      })}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ border: "1px solid #e0e0e0" }}
-                    >
-                      {parseJSON(user.lastVisit).toLocaleString("en-GB", {
-                        timeZone: "UTC",
-                      })}
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ border: "1px solid #e0e0e0" }}
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
                     >
                       <img
                         src={user.photoPath}
-                        width="100"
-                        height="80"
                         style={{
+                          borderRadius: "100px",
+                          width: "70px",
+                          height: "70px",
                           objectFit: "cover",
                         }}
                       />
                     </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
+                    >
+                      {user.email}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
+                    >
+                      {user.firstName}&nbsp;{user.lastName ? user.lastName : ""}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
+                    >
+                      {user.advert ? (
+                        <CheckCircleIcon
+                          sx={{
+                            color: (theme) => theme.palette.buttonColor.main,
+                          }}
+                        />
+                      ) : (
+                        <CancelIcon
+                          sx={{
+                            color: (theme) => theme.palette.textColor.red,
+                          }}
+                        />
+                      )}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
+                    >
+                      {formatDate(user.registeredAt)}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
+                    >
+                      {formatDate(user.lastVisit)}
+                    </TableCell>
+
                     {/* <TableCell align="center" sx={{ width: "400px" }}>
                       {`${user.isDeleted}`}
                     </TableCell> */}
-
-                    <TableCell
-                      align="center"
-                      sx={{ border: "1px solid #e0e0e0" }}
-                    >
-                      {user.advert ? <button>Advert</button> : "no"}
-                    </TableCell>
-
-                    <TableCell
+                    {/* <TableCell
                       align="center"
                       sx={{ border: "1px solid #e0e0e0" }}
                     >
@@ -718,31 +799,37 @@ export function VerticalTabs() {
                           </Box>
                         </Stack>
                       ))}
-                    </TableCell>
+                    </TableCell> */}
 
                     <TableCell
                       align="center"
-                      sx={{ border: "1px solid #e0e0e0" }}
+                      sx={{
+                        borderBottom: "1px solid",
+                        color: (theme) => theme.palette.textColor.listColor,
+                        borderX: "none",
+                      }}
                     >
-                      <button
-                        style={{ width: "24px", height: "24px" }}
+                      <EditNoteIcon
+                        sx={{
+                          width: "24px",
+                          height: "24px",
+                          color: (theme) => theme.palette.textColor.grey,
+                          border: "none",
+                        }}
+                        disabled={user.role === "admin" ? true : false}
+                      />
+                      <DeleteOutlineIcon
+                        sx={{
+                          width: "24px",
+                          height: "24px",
+                          color: (theme) => theme.palette.textColor.grey,
+                          ml: "20px",
+                        }}
                         disabled={user.role === "admin" ? true : false}
                         onClick={() => {
                           dispatch(deleteUserAsAdmin(user.id));
                         }}
-                      >
-                        D
-                      </button>
-                      <button
-                        style={{
-                          width: "24px",
-                          height: "24px",
-                          border: "none",
-                        }}
-                        disabled={user.role === "admin" ? true : false}
-                      >
-                        E
-                      </button>
+                      />
                     </TableCell>
                   </TableRow>
                 ))}
