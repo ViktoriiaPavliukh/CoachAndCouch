@@ -27,19 +27,20 @@ import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import { selectUser } from "@/redux/auth/selectors";
+import useStatus from "@/hooks/useStatus";
 
 export function Card() {
   const intl = useIntl();
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
-  const [status, setStatus] = useState(intl.formatMessage({ id: "offline" }));
   const en = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
   const teacherId = useParams();
   const teacher = useSelector(advertByIdSelector);
   const lastVisit = teacher?.user?.lastVisit;
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const status = useStatus(lastVisit);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,26 +58,6 @@ export function Card() {
       setLikesCount(teacher.likes?.length || 0);
     }
   }, [teacher]);
-
-  useEffect(() => {
-    const checkStatus = () => {
-      if (lastVisit) {
-        const now = new Date();
-        const lastVisitTime = new Date(lastVisit);
-        const diff = now - lastVisitTime;
-        const minutesDiff = diff / (1000 * 60);
-
-        setStatus(
-          minutesDiff < 10
-            ? intl.formatMessage({ id: "online" })
-            : intl.formatMessage({ id: "offline" })
-        );
-      }
-    };
-    checkStatus();
-    const interval = setInterval(checkStatus, 60000);
-    return () => clearInterval(interval);
-  }, [lastVisit, intl]);
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
