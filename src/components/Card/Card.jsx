@@ -27,8 +27,10 @@ import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import { selectUser } from "@/redux/auth/selectors";
+import useStatus from "@/hooks/useStatus";
 
 export function Card() {
+  const intl = useIntl();
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
@@ -36,13 +38,20 @@ export function Card() {
   const currentUser = useSelector(selectCurrentUser);
   const teacherId = useParams();
   const teacher = useSelector(advertByIdSelector);
+  const lastVisit = teacher?.user?.lastVisit;
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const status = useStatus(lastVisit);
   const dispatch = useDispatch();
-  const intl = useIntl();
 
   useEffect(() => {
     dispatch(getAdvertById(teacherId.id));
   }, [dispatch, teacherId]);
+
+  useEffect(() => {
+    if (teacher) {
+      setLikesCount(teacher.likes?.length || 0);
+    }
+  }, [teacher]);
 
   useEffect(() => {
     if (teacher) {
@@ -154,14 +163,17 @@ export function Card() {
                     <CircleIcon
                       fontSize="12px"
                       sx={{
-                        color: (theme) => theme.palette.buttonColor.listItem,
+                        color:
+                          status === intl.formatMessage({ id: "online" })
+                            ? (theme) => theme.palette.buttonColor.listItem
+                            : (theme) => theme.palette.textColor.grey,
                       }}
                     />
                     <Typography
                       variant="posterDescription"
                       sx={{ textWrap: "nowrap" }}
                     >
-                      {intl.formatMessage({ id: "online" })}
+                      {status}
                     </Typography>
                   </Stack>
                 </Box>
