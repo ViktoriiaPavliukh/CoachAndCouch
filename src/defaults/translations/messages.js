@@ -179,6 +179,7 @@ const messages = {
 
     //Status
     online: "Online",
+    offline: "Offline",
     noAdvertisement: "You don't have any advertisements yet",
     noFavorites: "You haven't added any teachers to your favorites yet",
 
@@ -432,6 +433,7 @@ const messages = {
 
     //Status
     online: "У мережі",
+    offline: "Не в мережі",
     noAdvertisement: "Ви ще не маєте оголошення",
     noFavorites: "Ви ще не додали жодного викладача до обраних",
 

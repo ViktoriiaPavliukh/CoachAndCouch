@@ -29,16 +29,18 @@ import { Stack } from "@mui/system";
 import { selectUser } from "@/redux/auth/selectors";
 
 export function Card() {
+  const intl = useIntl();
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const [likesCount, setLikesCount] = useState(0);
+  const [status, setStatus] = useState(intl.formatMessage({ id: "offline" }));
   const en = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
   const teacherId = useParams();
   const teacher = useSelector(advertByIdSelector);
+  const lastVisit = teacher?.user?.lastVisit;
   const isLoading = useSelector(selectAdvertsIsLoading);
   const dispatch = useDispatch();
-  const intl = useIntl();
 
   useEffect(() => {
     dispatch(getAdvertById(teacherId.id));
@@ -49,6 +51,32 @@ export function Card() {
       setLikesCount(teacher.likes?.length || 0);
     }
   }, [teacher]);
+
+  useEffect(() => {
+    if (teacher) {
+      setLikesCount(teacher.likes?.length || 0);
+    }
+  }, [teacher]);
+
+  useEffect(() => {
+    const checkStatus = () => {
+      if (lastVisit) {
+        const now = new Date();
+        const lastVisitTime = new Date(lastVisit);
+        const diff = now - lastVisitTime;
+        const minutesDiff = diff / (1000 * 60);
+
+        setStatus(
+          minutesDiff < 10
+            ? intl.formatMessage({ id: "online" })
+            : intl.formatMessage({ id: "offline" })
+        );
+      }
+    };
+    checkStatus();
+    const interval = setInterval(checkStatus, 60000);
+    return () => clearInterval(interval);
+  }, [lastVisit, intl]);
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
@@ -154,14 +182,17 @@ export function Card() {
                     <CircleIcon
                       fontSize="12px"
                       sx={{
-                        color: (theme) => theme.palette.buttonColor.listItem,
+                        color:
+                          status === intl.formatMessage({ id: "online" })
+                            ? (theme) => theme.palette.buttonColor.listItem
+                            : (theme) => theme.palette.textColor.grey,
                       }}
                     />
                     <Typography
                       variant="posterDescription"
                       sx={{ textWrap: "nowrap" }}
                     >
-                      {intl.formatMessage({ id: "online" })}
+                      {status}
                     </Typography>
                   </Stack>
                 </Box>
