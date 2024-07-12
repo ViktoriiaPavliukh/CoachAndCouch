@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Box, Grid, Typography } from "@mui/material";
-import Loader from "../Loader/Loader";
 import { getCurrentUser } from "@/redux/users/operations";
 import { fetchLikedAdverts } from "@/redux/marketplace/adverts/operations";
 import {
@@ -17,11 +17,10 @@ import { TeacherCard } from "../Teachers/TeacherCard";
 
 export function LikesPages() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const intl = useIntl();
   const adverts = useSelector(advertsSelector) || [];
   const currentUser = useSelector(selectCurrentUser);
-  const isLoadingUser = useSelector(selectUserIsLoading);
-  const isLoadingAdverts = useSelector(selectAdvertsIsLoading);
   const [likedAdvertIds, setLikedAdvertIds] = useState([]);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ export function LikesPages() {
   }, [dispatch]);
 
   useEffect(() => {
-
     if (
       currentUser &&
       Array.isArray(currentUser.likes) &&
@@ -51,6 +49,12 @@ export function LikesPages() {
   if (currentUser.likes.length > 0 && !Array.isArray(adverts)) {
     return null;
   }
+
+  const handleClick = () => {
+    // e.preventDefault();
+
+    navigate(`/teachers/${teacher.id}`);
+  };
 
   return (
     <Box
@@ -80,9 +84,13 @@ export function LikesPages() {
             flexDirection: { sm: "column", md: "row" },
             columnGap: { md: "28px", lg: "60px" },
             rowGap: { xs: "28px", lg: "40px" },
-            justifyContent: { xs: "center", lg: "left" },
-            ml: { lg: "48px" },
+            justifyContent: {
+              xs: "center",
+              md: "flex-start",
+            },
+            alignItems: "center",
             py: "38px",
+            px: { xs: "16px", md: "60px", lg: "46px" },
           }}
         >
           {adverts.map((advert) => (
