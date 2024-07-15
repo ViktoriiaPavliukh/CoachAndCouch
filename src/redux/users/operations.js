@@ -186,3 +186,26 @@ export const updateUserEmail = createAsyncThunk(
     }
   }
 );
+
+export const getLikedAdverts = createAsyncThunk(
+  "users/getLikedAdverts",
+  async (currentUser, thunkAPI) => {
+    try {
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      console.log("Current User ID:", currentUser);
+      console.log("Persist Token:", persistToken);
+
+      token.set(persistToken);
+
+      const response = await privateAPI.get(`/users/${currentUser}/favorite`, {
+        headers: { Authorization: `Bearer ${persistToken}` },
+      });
+
+      console.log("Response Data:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching liked adverts:", error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
