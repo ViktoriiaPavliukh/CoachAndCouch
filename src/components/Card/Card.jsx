@@ -13,7 +13,6 @@ import {
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Typography } from "@mui/material";
-
 import CircleIcon from "@mui/icons-material/Circle";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
@@ -38,56 +37,60 @@ import {
 
 export function Card() {
   const intl = useIntl();
+  const en = useSelector(selectCurrentLanguage);
+  const [teacherData, setTeacherData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-  const en = useSelector(selectCurrentLanguage);
+
   const currentUser = useSelector(selectCurrentUser);
-  const teacherId = useParams();
+  const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
-  const lastVisit = teacher?.user?.lastVisit;
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAdvertById(teacherId.id));
+    if (teacherId) {
+      dispatch(getAdvertById(teacherId));
+    }
   }, [dispatch, teacherId]);
 
   useEffect(() => {
-    if (teacher) {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (teacher && currentUser) {
+      const userHasLiked = teacher.likes?.some(
+        (like) => like.userId === currentUser.id
+      );
+      setIsFavorite(userHasLiked);
       setLikesCount(teacher.likes?.length || 0);
     }
-  }, [teacher]);
+  }, [teacher, currentUser]);
+
+  const handleFavoriteAdd = async (id) => {
+    try {
+      await dispatch(favoriteAdvert(id));
+      await dispatch(getAdvertById(teacherId));
+    } catch (error) {
+      console.error("Failed to update favorite and fetch adverts:", error);
+    }
+  };
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
     setShowModal(true);
   };
 
-  // const handleLikeClick = () => {
-  //   setLikesCount((prevLikesCount) =>
-  //     teacher.likes?.some((like) => like.userId === currentUser.id)
-  //       ? prevLikesCount - 1
-  //       : prevLikesCount + 1
-  //   );
-  // };
-  const handleFavoriteAdd = async (id) => {
-    try {
-      await dispatch(favoriteAdvert(id));
-      await dispatch(getAdverts());
-      window.location.reload();
-    } catch (error) {
-      console.error("Failed to update favorite and fetch adverts:", error);
-    }
-  };
-
   const onBackdropClose = () => {
     setShowModal(false);
     setModalContentType(null);
   };
-
+  console.log(isFavorite);
   return (
     <Box
       component="div"
