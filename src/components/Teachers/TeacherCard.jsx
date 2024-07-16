@@ -57,12 +57,15 @@ export function TeacherCard({ teacher }) {
 
     navigate(`/teachers/${teacher.id}`);
   };
-  const handleFavoriteAdd = (id) => {
-    // setIsFavorite(() => (isFavorite ? false : true));
-
-    dispatch(favoriteAdvert(id)).then(() => dispatch(getAdverts()));
-    // console.log(teacher, id);
+  const handleFavoriteAdd = async (id) => {
+    try {
+      await dispatch(favoriteAdvert(id));
+      await dispatch(getAdverts());
+    } catch (error) {
+      console.error("Failed to update favorite and fetch adverts:", error);
+    }
   };
+
   // const setBg = () => {
   //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
   // };
