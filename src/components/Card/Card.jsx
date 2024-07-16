@@ -13,9 +13,12 @@ import {
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Typography } from "@mui/material";
+
 import CircleIcon from "@mui/icons-material/Circle";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
+import { IconButton } from "@mui/material";
+import { FavoriteBorderOutlined as Icon } from "@mui/icons-material";
 import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
@@ -28,11 +31,16 @@ import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import { selectUser } from "@/redux/auth/selectors";
 import useStatus from "@/hooks/useStatus";
+import {
+  favoriteAdvert,
+  getAdverts,
+} from "@/redux/marketplace/adverts/operations";
 
 export function Card() {
   const intl = useIntl();
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const en = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
@@ -53,23 +61,26 @@ export function Card() {
     }
   }, [teacher]);
 
-  useEffect(() => {
-    if (teacher) {
-      setLikesCount(teacher.likes?.length || 0);
-    }
-  }, [teacher]);
-
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
     setShowModal(true);
   };
 
-  const handleLikeClick = () => {
-    setLikesCount((prevLikesCount) =>
-      teacher.likes?.some((like) => like.userId === currentUser.id)
-        ? prevLikesCount - 1
-        : prevLikesCount + 1
-    );
+  // const handleLikeClick = () => {
+  //   setLikesCount((prevLikesCount) =>
+  //     teacher.likes?.some((like) => like.userId === currentUser.id)
+  //       ? prevLikesCount - 1
+  //       : prevLikesCount + 1
+  //   );
+  // };
+  const handleFavoriteAdd = async (id) => {
+    try {
+      await dispatch(favoriteAdvert(id));
+      await dispatch(getAdverts());
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to update favorite and fetch adverts:", error);
+    }
   };
 
   const onBackdropClose = () => {
@@ -142,13 +153,44 @@ export function Card() {
                       gap: "6px",
                     }}
                   >
-                    <LikeBtn
+                    {/* <LikeBtn
                       advertId={teacherId.id}
                       onLikeClick={handleLikeClick}
-                    />
+                    /> */}
+
+                    {!isFavorite && (
+                      <IconButton
+                        onClick={() => handleFavoriteAdd(teacher.id)}
+                        color="inherit"
+                        sx={{
+                          color: "text.primary",
+                          width: 32,
+                          height: 32,
+                          boxShadow:
+                            "0px 1px 1px 0px rgba(9, 10, 13, 0.08), 1px 0px 4px 0px rgba(9, 10, 13, 0.12)",
+                        }}
+                      >
+                        <Icon sx={{ width: 16, height: 16 }} />
+                      </IconButton>
+                    )}
+                    {isFavorite && (
+                      <IconButton
+                        color="inherit"
+                        onClick={() => handleFavoriteAdd(teacher.id)}
+                        sx={{
+                          color: "text.primary",
+                          width: 32,
+                          height: 32,
+                          boxShadow:
+                            "0px 1px 1px 0px rgba(9, 10, 13, 0.08), 1px 0px 4px 0px rgba(9, 10, 13, 0.12)",
+                        }}
+                      >
+                        <Icon sx={{ width: 16, height: 16 }} />
+                      </IconButton>
+                    )}
                     <Typography variant="posterDescription">
                       {" "}
-                      {likesCount}
+                      {teacher.likes.length}
                     </Typography>
                   </Stack>
                   <Stack
