@@ -5,11 +5,8 @@ import {
   advertByIdSelector,
   selectAdvertsIsLoading,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import { getCurrentUser, sendMessageFromUser } from "@/redux/users/operations";
-import {
-  selectCurrentUser,
-  selectUserIsLoading,
-} from "@/redux/users/selectors";
+import { getCurrentUser } from "@/redux/users/operations";
+import { selectCurrentUser } from "@/redux/users/selectors";
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Typography } from "@mui/material";
@@ -26,57 +23,49 @@ import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
-import { selectUser } from "@/redux/auth/selectors";
 import useStatus from "@/hooks/useStatus";
+import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
 
 export function Card() {
   const intl = useIntl();
+  const en = useSelector(selectCurrentLanguage);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
-  const [likesCount, setLikesCount] = useState(0);
-  const en = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
-  const teacherId = useParams();
+  const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
-  const lastVisit = teacher?.user?.lastVisit;
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const lastVisit = teacher?.user?.lastVisit;
+  const userLike = teacher?.likes?.some(
+    (like) => like.user.id === currentUser.id
+  );
   const status = useStatus(lastVisit);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(getAdvertById(teacherId.id));
+    dispatch(getCurrentUser());
+    if (teacherId) {
+      dispatch(getAdvertById(teacherId));
+    }
   }, [dispatch, teacherId]);
 
-  useEffect(() => {
-    if (teacher) {
-      setLikesCount(teacher.likes?.length || 0);
+  const handleFavoriteAdd = async (id) => {
+    try {
+      await dispatch(favoriteAdvert(id));
+      await dispatch(getAdvertById(teacherId));
+    } catch (error) {
+      console.error("Failed to update favorite and fetch adverts:", error);
     }
-  }, [teacher]);
-
-  useEffect(() => {
-    if (teacher) {
-      setLikesCount(teacher.likes?.length || 0);
-    }
-  }, [teacher]);
+  };
 
   const onShowModalClick = (contentType) => {
     setModalContentType(contentType);
     setShowModal(true);
   };
 
-  const handleLikeClick = () => {
-    setLikesCount((prevLikesCount) =>
-      teacher.likes?.some((like) => like.userId === currentUser.id)
-        ? prevLikesCount - 1
-        : prevLikesCount + 1
-    );
-  };
-
   const onBackdropClose = () => {
     setShowModal(false);
     setModalContentType(null);
   };
-
   return (
     <Box
       component="div"
@@ -143,12 +132,11 @@ export function Card() {
                     }}
                   >
                     <LikeBtn
-                      advertId={teacherId.id}
-                      onLikeClick={handleLikeClick}
+                      isLiked={userLike}
+                      onClick={() => handleFavoriteAdd(teacher.id)}
                     />
                     <Typography variant="posterDescription">
-                      {" "}
-                      {likesCount}
+                      {teacher.likes.length}
                     </Typography>
                   </Stack>
                   <Stack

@@ -101,16 +101,12 @@ export const favoriteAdvert = createAsyncThunk(
   "adverts/favoriteAdverts",
   async (advertId, thunkAPI) => {
     try {
-      console.log(advertId);
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-
-      console.log(`Making PUT request to /adverts/${advertId}/favorite`);
       const response = await privateAPI.put(
         `/adverts/${advertId}/favorite`,
         {}
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error response:", error.response);

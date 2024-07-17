@@ -8,6 +8,7 @@ import {
   getCurrentUser,
   editUser,
   updateUserPhoto,
+  getLikedAdverts,
 } from "./operations";
 
 const usersSlice = createSlice({
@@ -22,6 +23,7 @@ const usersSlice = createSlice({
     accessToken: null,
     users: [],
     messages: [],
+    likedAdverts: [],
   },
   extraReducers: (builder) => {
     builder
@@ -89,6 +91,18 @@ const usersSlice = createSlice({
         state.error = null;
       })
       .addCase(updateUserPhoto.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(getLikedAdverts.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getLikedAdverts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.likedAdverts = action.payload;
+      })
+      .addCase(getLikedAdverts.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })
