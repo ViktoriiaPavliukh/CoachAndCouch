@@ -5,11 +5,8 @@ import {
   advertByIdSelector,
   selectAdvertsIsLoading,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import { getCurrentUser, sendMessageFromUser } from "@/redux/users/operations";
-import {
-  selectCurrentUser,
-  selectUserIsLoading,
-} from "@/redux/users/selectors";
+import { getCurrentUser, getLikedAdverts } from "@/redux/users/operations";
+import { selectCurrentUser } from "@/redux/users/selectors";
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
 import { Box, Button, Typography } from "@mui/material";
@@ -28,49 +25,31 @@ import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
-import { selectUser } from "@/redux/auth/selectors";
 import useStatus from "@/hooks/useStatus";
-import {
-  favoriteAdvert,
-  getAdverts,
-} from "@/redux/marketplace/adverts/operations";
+import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
 
 export function Card() {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
-  const [teacherData, setTeacherData] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [likesCount, setLikesCount] = useState(0);
-
   const currentUser = useSelector(selectCurrentUser);
   const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
   const lastVisit = teacher?.user?.lastVisit;
+  const userLike = teacher?.likes?.some(
+    (like) => like.user.id === currentUser.id
+  );
   const status = useStatus(lastVisit);
   const dispatch = useDispatch();
-
   useEffect(() => {
+    dispatch(getCurrentUser());
     if (teacherId) {
       dispatch(getAdvertById(teacherId));
     }
   }, [dispatch, teacherId]);
 
-  useEffect(() => {
-    dispatch(getCurrentUser());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (teacher && currentUser) {
-      const userHasLiked = teacher.likes?.some(
-        (like) => like.userId === currentUser.id
-      );
-      setIsFavorite(userHasLiked);
-      setLikesCount(teacher.likes?.length || 0);
-    }
-  }, [teacher, currentUser]);
 
   const handleFavoriteAdd = async (id) => {
     try {
@@ -90,7 +69,6 @@ export function Card() {
     setShowModal(false);
     setModalContentType(null);
   };
-  console.log(isFavorite);
   return (
     <Box
       component="div"
@@ -161,7 +139,7 @@ export function Card() {
                       onLikeClick={handleLikeClick}
                     /> */}
 
-                    {!isFavorite && (
+                    {!userLike && (
                       <IconButton
                         onClick={() => handleFavoriteAdd(teacher.id)}
                         color="inherit"
@@ -176,12 +154,12 @@ export function Card() {
                         <Icon sx={{ width: 16, height: 16 }} />
                       </IconButton>
                     )}
-                    {isFavorite && (
+                    {userLike && (
                       <IconButton
                         color="inherit"
                         onClick={() => handleFavoriteAdd(teacher.id)}
                         sx={{
-                          color: "text.primary",
+                          color: (theme) => theme.palette.textColor.red,
                           width: 32,
                           height: 32,
                           boxShadow:
@@ -192,7 +170,6 @@ export function Card() {
                       </IconButton>
                     )}
                     <Typography variant="posterDescription">
-                      {" "}
                       {teacher.likes.length}
                     </Typography>
                   </Stack>
