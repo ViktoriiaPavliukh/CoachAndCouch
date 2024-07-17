@@ -5,7 +5,7 @@ import {
   advertByIdSelector,
   selectAdvertsIsLoading,
 } from "@/redux/marketplace/adverts/advertsSelector";
-import { getCurrentUser, getLikedAdverts } from "@/redux/users/operations";
+import { getCurrentUser } from "@/redux/users/operations";
 import { selectCurrentUser } from "@/redux/users/selectors";
 import { useParams } from "react-router-dom";
 import { Modal } from "../Modal/Modal";
@@ -13,8 +13,6 @@ import { Box, Button, Typography } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import { MainImage } from "./MainImage";
 import { LikeBtn } from "./LikeBtn";
-import { IconButton } from "@mui/material";
-import { FavoriteBorderOutlined as Icon } from "@mui/icons-material";
 import { MessageBtn } from "./MessageBtn";
 import { CategoryList } from "./CategoryList";
 import { ReviewList } from "./ReviewList";
@@ -49,7 +47,6 @@ export function Card() {
       dispatch(getAdvertById(teacherId));
     }
   }, [dispatch, teacherId]);
-
 
   const handleFavoriteAdd = async (id) => {
     try {
@@ -134,41 +131,10 @@ export function Card() {
                       gap: "6px",
                     }}
                   >
-                    {/* <LikeBtn
-                      advertId={teacherId.id}
-                      onLikeClick={handleLikeClick}
-                    /> */}
-
-                    {!userLike && (
-                      <IconButton
-                        onClick={() => handleFavoriteAdd(teacher.id)}
-                        color="inherit"
-                        sx={{
-                          color: "text.primary",
-                          width: 32,
-                          height: 32,
-                          boxShadow:
-                            "0px 1px 1px 0px rgba(9, 10, 13, 0.08), 1px 0px 4px 0px rgba(9, 10, 13, 0.12)",
-                        }}
-                      >
-                        <Icon sx={{ width: 16, height: 16 }} />
-                      </IconButton>
-                    )}
-                    {userLike && (
-                      <IconButton
-                        color="inherit"
-                        onClick={() => handleFavoriteAdd(teacher.id)}
-                        sx={{
-                          color: (theme) => theme.palette.textColor.red,
-                          width: 32,
-                          height: 32,
-                          boxShadow:
-                            "0px 1px 1px 0px rgba(9, 10, 13, 0.08), 1px 0px 4px 0px rgba(9, 10, 13, 0.12)",
-                        }}
-                      >
-                        <Icon sx={{ width: 16, height: 16 }} />
-                      </IconButton>
-                    )}
+                    <LikeBtn
+                      isLiked={userLike}
+                      onClick={() => handleFavoriteAdd(teacher.id)}
+                    />
                     <Typography variant="posterDescription">
                       {teacher.likes.length}
                     </Typography>
