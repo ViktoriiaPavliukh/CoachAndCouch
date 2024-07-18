@@ -1,3 +1,7 @@
+
+
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
@@ -7,10 +11,17 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
 import { Typography } from "@mui/material";
 import { Clock } from "react-feather";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import {
+  fetchBookings,
+  createBooking,
+} from "@/redux/marketplace/bookings/operations";
+import {
+  selectBookings,
+  selectBookingLoading,
+  selectBookingError,
+} from "@/redux/marketplace/bookings/selectors";
 
 const localizer = momentLocalizer(moment);
 const eventsList = [
@@ -141,6 +152,10 @@ const handleSlotSelection = () => {
   return { style: { backgroundColor: "red" } };
 };
 export const MyCalendar = () => {
+  const dispatch = useDispatch();
+  const bookings = useSelector(selectBookings);
+  const loading = useSelector(selectBookingLoading);
+  const error = useSelector(selectBookingError);
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
   const culture = language === "en" ? "en" : "ua";
@@ -150,6 +165,11 @@ export const MyCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
   // const [yearFilter, setYearFilter] = useState("");
+  useEffect(() => {
+    const startDate = moment().startOf("week").toISOString();
+    const endDate = moment().endOf("week").toISOString();
+    dispatch(fetchBookings({ startDate, endDate }));
+  }, [dispatch]);
 
   const handleSelectEvent = (event, e) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
