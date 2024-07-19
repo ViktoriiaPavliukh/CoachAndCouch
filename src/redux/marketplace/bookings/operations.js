@@ -23,19 +23,37 @@ export const fetchBookings = createAsyncThunk(
   }
 );
 
+// export const createBooking = createAsyncThunk(
+//   "bookings/createBooking",
+//   async ({ bookingId, languageId }, thunkAPI) => {
+//     try {
+//       console.log(bookingId, languageId);
+//       const persistToken = thunkAPI.getState().auth.accessToken;
+//       privateAPI.defaults.headers.common[
+//         "Authorization"
+//       ] = `Bearer ${persistToken}`;
+//       const { data } = await privateAPI.post("/booking/accept", {
+//         bookingId,
+//         languageId,
+//       });
+//       return data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response.data);
+//     }
+//   }
+// );
 export const createBooking = createAsyncThunk(
   "bookings/createBooking",
-  async ({ bookingId, languageId }, thunkAPI) => {
+  async ({ timeslots }, thunkAPI) => {
     try {
+      console.log(timeslots);
       const persistToken = thunkAPI.getState().auth.accessToken;
       privateAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${persistToken}`;
-      const { data } = await privateAPI.post("/booking/accept", {
-        bookingId,
-        languageId,
-      });
-      return data; 
+      const { data } = await privateAPI.post("/booking", { timeslots });
+      console.log(data);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
     }
