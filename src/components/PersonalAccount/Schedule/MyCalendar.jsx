@@ -23,13 +23,8 @@ import {
 import ConfirmModal from "./ConfirmModal";
 
 const localizer = momentLocalizer(moment);
-const eventsList = [
-  {
-    title: "DTS STARTS",
-    start: new Date(2024, 4, 11, 15, 0, 0),
-    end: new Date(2024, 4, 11, 16, 30, 0),
-  },
-];
+console.log(localizer);
+const eventsList = [];
 
 moment.locale("ua", {
   week: {
@@ -108,13 +103,19 @@ export const MyCalendar = () => {
   }, [dispatch]);
 
   const handleSlotSelection = ({ start, end }) => {
+    console.log(start, "initial");
+    console.log(end, "end in");
+    const localStart = moment(start).local().format("YYYY-MM-DD HH:mm:ss");
+    const localEnd = moment(end).local().format("YYYY-MM-DD HH:mm:ss");
+
+    console.log("Local start:", localStart);
+    console.log("Local end:", localEnd);
+
     const formattedStart = moment(start).startOf("hour").toISOString();
     const formattedEnd = moment(end).startOf("hour").toISOString();
 
-    console.log("Attempting to add slot:", {
-      start: formattedStart,
-      end: formattedEnd,
-    });
+    console.log("Formatted start:", formattedStart);
+    console.log("Formatted end:", formattedEnd);
 
     setSelectedSlots((prevSlots) => {
       const isDuplicate = prevSlots.some(
@@ -122,16 +123,8 @@ export const MyCalendar = () => {
       );
 
       if (isDuplicate) {
-        console.log("Duplicate slot detected, not adding:", {
-          start: formattedStart,
-          end: formattedEnd,
-        });
         return prevSlots;
       } else {
-        console.log("Adding new slot:", {
-          start: formattedStart,
-          end: formattedEnd,
-        });
         return [...prevSlots, { start: formattedStart, end: formattedEnd }];
       }
     });
@@ -142,7 +135,6 @@ export const MyCalendar = () => {
   const handleSelectEvent = (event, e) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
     setSelectedEvent(event);
-    setPopupPosition({ x: left + 100, y: top - 100 });
   };
 
   const handleCreateBooking = () => {
@@ -187,8 +179,8 @@ export const MyCalendar = () => {
     <div>
       <Calendar
         localizer={localizer}
-        formats={formats}
-        culture={culture}
+        // formats={formats}
+        // culture={culture}
         components={{
           toolbar: (props) => <CustomToolbar {...props} />,
           timeGutterHeader: TimeGutterHeader,
@@ -198,6 +190,7 @@ export const MyCalendar = () => {
           },
         }}
         defaultView={Views.WEEK}
+        defaultDate={new Date()}
         scrollToTime={defaultDate}
         events={eventsList}
         startAccessor="start"
@@ -209,7 +202,7 @@ export const MyCalendar = () => {
           color: !theme ? "#6b7280" : "#9ca3af",
         }}
         timeslots={1}
-        selectable={true}
+        selectable
         popup={true}
         step={60}
         onSelectSlot={handleSlotSelection}
@@ -223,7 +216,7 @@ export const MyCalendar = () => {
         open={openConfirmModal}
         onClose={() => setOpenConfirmModal(false)}
         onConfirm={handleCreateBooking}
-        slot={selectedSlots[0]} // Pass the selected slot to the modal
+        slot={selectedSlots[0]}
       />
       ;
     </div>
@@ -286,24 +279,21 @@ const CustomDayComponent = ({ date }) => {
 };
 
 const CustomEventComponent = ({ event }) => {
-  const { start, end, title } = event;
+  const { start, end } = event;
   return (
-    <div>
-      <div>{title}</div>
-      <div
-        style={{
-          display: "flex",
-          gap: "5px",
-          marginTop: "7px",
-          color: "#e5e7eb",
-          fontSize: "14px",
-          lineHeight: "1.42857",
-        }}
-      >
-        <Clock color="#e5e7eb" />
-        <div>
-          {`${moment(start).format("HH:mm")}-${moment(end).format("HH:mm")}`}
-        </div>
+    <div
+      style={{
+        display: "flex",
+        gap: "5px",
+        marginTop: "7px",
+        color: "#red",
+        fontSize: "14px",
+        lineHeight: "1.42857",
+      }}
+    >
+      <Clock color="#e5e7eb" />
+      <div>
+        {`${moment(start).format("HH:mm")}-${moment(end).format("HH:mm")}`}
       </div>
     </div>
   );
