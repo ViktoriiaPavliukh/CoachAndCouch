@@ -198,7 +198,7 @@ export const MyCalendar = () => {
         style={{
           width: "100%",
           display: "flex",
-          height: "90vh",
+          height: "100%",
           color: !theme ? "#6b7280" : "#9ca3af",
         }}
         timeslots={1}
