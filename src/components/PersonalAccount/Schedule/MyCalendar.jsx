@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
@@ -7,86 +9,22 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
 import { Typography } from "@mui/material";
 import { Clock } from "react-feather";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import {
+  fetchBookings,
+  createBooking,
+} from "@/redux/marketplace/bookings/operations";
+import {
+  selectBookings,
+  selectBookingLoading,
+  selectBookingError,
+} from "@/redux/marketplace/bookings/selectors";
+import ConfirmModal from "./ConfirmModal";
 
 const localizer = momentLocalizer(moment);
-const eventsList = [
-  {
-    title: "DTS STARTS",
-    start: new Date(2024, 4, 11, 15, 0, 0),
-    end: new Date(2024, 4, 11, 16, 30, 0),
-  },
-
-  {
-    title: "DTS ENDS",
-    start: new Date(2024, 4, 12, 12, 0, 0),
-    end: new Date(2024, 4, 12, 13, 0, 0),
-  },
-
-  {
-    title: "Some Event",
-    start: new Date(2024, 2, 27, 11, 0, 0),
-    end: new Date(2024, 2, 27, 12, 0, 0),
-    desc: "Most important meal of the day",
-  },
-
-  {
-    title: "Meeting",
-    start: new Date(2024, 3, 6, 10, 30, 0, 0),
-    end: new Date(2024, 3, 3, 12, 30, 0, 0),
-    desc: "Pre-meeting meeting, to prepare for the meeting",
-  },
-  {
-    title: "Lunch",
-    start: new Date(2024, 3, 12, 12, 0, 0, 0),
-    end: new Date(2024, 3, 12, 13, 0, 0, 0),
-    desc: "Power lunch",
-  },
-  {
-    title: "Meeting",
-    start: new Date(2024, 3, 12, 14, 0, 0, 0),
-    end: new Date(2024, 3, 12, 15, 0, 0, 0),
-  },
-  {
-    title: "Happy Hour",
-    start: new Date(2024, 3, 12, 17, 0, 0, 0),
-    end: new Date(2024, 3, 12, 17, 30, 0, 0),
-    desc: "Most important meal of the day",
-  },
-  {
-    title: "Dinner",
-    start: new Date(2024, 3, 12, 20, 0, 0, 0),
-    end: new Date(2024, 3, 12, 21, 0, 0, 0),
-  },
-  {
-    title: "Birthday Party",
-    start: new Date(2024, 3, 13, 7, 0, 0),
-    end: new Date(2024, 3, 13, 10, 30, 0),
-  },
-  {
-    title: "Birthday Party 2",
-    start: new Date(2024, 3, 13, 7, 0, 0),
-    end: new Date(2024, 3, 13, 10, 30, 0),
-  },
-  {
-    title: "Birthday Party 3",
-    start: new Date(2024, 3, 13, 7, 0, 0),
-    end: new Date(2024, 3, 13, 10, 30, 0),
-  },
-  {
-    title: "Late Night Event",
-    start: new Date(2024, 2, 27, 19, 30, 0),
-    end: new Date(2024, 2, 2, 2, 0, 0),
-  },
-  {
-    title: "Multi-day Event",
-    start: new Date(2015, 2, 20, 19, 30, 0),
-    end: new Date(2015, 2, 22, 2, 0, 0),
-  },
-];
+console.log(localizer);
+const eventsList = [];
 
 moment.locale("ua", {
   week: {
@@ -137,10 +75,16 @@ let formats = {
   timeGutterFormat: "HH:mm",
 };
 
-const handleSlotSelection = () => {
-  return { style: { backgroundColor: "red" } };
-};
+// const handleSlotSelection = (slotInfo) => {
+//   const { start, end } = slotInfo;
+//   console.log("Selected slot:", start, end);
+// };
+
 export const MyCalendar = () => {
+  const dispatch = useDispatch();
+  const bookings = useSelector(selectBookings);
+  const loading = useSelector(selectBookingLoading);
+  const error = useSelector(selectBookingError);
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
   const culture = language === "en" ? "en" : "ua";
@@ -148,34 +92,69 @@ export const MyCalendar = () => {
   defaultDate.setHours(7, 0, 0);
 
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [popupPosition, setPopupPosition] = useState({ x: 0, y: 0 });
-  // const [yearFilter, setYearFilter] = useState("");
+  const [selectedSlots, setSelectedSlots] = useState([]);
+  console.log(selectedSlots);
+  const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
+  useEffect(() => {
+    const startDate = moment().startOf("week").toISOString();
+    const endDate = moment().endOf("week").toISOString();
+    dispatch(fetchBookings({ startDate, endDate }));
+  }, [dispatch]);
+
+  const handleSlotSelection = ({ start, end }) => {
+    console.log(start, "initial");
+    console.log(end, "end in");
+    const localStart = moment(start).local().format("YYYY-MM-DD HH:mm:ss");
+    const localEnd = moment(end).local().format("YYYY-MM-DD HH:mm:ss");
+
+    console.log("Local start:", localStart);
+    console.log("Local end:", localEnd);
+
+    const formattedStart = moment(start).startOf("hour").toISOString();
+    const formattedEnd = moment(end).startOf("hour").toISOString();
+
+    console.log("Formatted start:", formattedStart);
+    console.log("Formatted end:", formattedEnd);
+
+    setSelectedSlots((prevSlots) => {
+      const isDuplicate = prevSlots.some(
+        (slot) => slot.start === formattedStart && slot.end === formattedEnd
+      );
+
+      if (isDuplicate) {
+        return prevSlots;
+      } else {
+        return [...prevSlots, { start: formattedStart, end: formattedEnd }];
+      }
+    });
+
+    setOpenConfirmModal(true);
+  };
 
   const handleSelectEvent = (event, e) => {
     const { left, top } = e.currentTarget.getBoundingClientRect();
     setSelectedEvent(event);
-    setPopupPosition({ x: left + 100, y: top - 100 });
   };
+
+  const handleCreateBooking = () => {
+    dispatch(createBooking({ timeslots: selectedSlots }));
+    setSelectedSlots([]);
+  };
+
   useEffect(() => {
     document.body.style.overflow = selectedEvent ? "hidden" : "auto";
   }, [selectedEvent]);
+
   const handleClosePopup = () => {
     setSelectedEvent(null);
   };
+
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       setSelectedEvent(null);
     }
   };
-  // const handleYearFilterChange = (year) => {
-  //   console.log("Selected year:", year);
-  //   setYearFilter(year);
-  // };
-  // const filteredEvents = yearFilter
-  //   ? eventsList.filter(
-  //       (event) => new Date(event.start).getFullYear() === parseInt(yearFilter)
-  //     )
-  //   : eventsList;
 
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
@@ -200,15 +179,10 @@ export const MyCalendar = () => {
     <div>
       <Calendar
         localizer={localizer}
-        formats={formats}
-        culture={culture}
+        // formats={formats}
+        // culture={culture}
         components={{
-          toolbar: (props) => (
-            <CustomToolbar
-              {...props}
-              // handleYearFilterChange={handleYearFilterChange}
-            />
-          ),
+          toolbar: (props) => <CustomToolbar {...props} />,
           timeGutterHeader: TimeGutterHeader,
           event: CustomEventComponent,
           week: {
@@ -216,6 +190,7 @@ export const MyCalendar = () => {
           },
         }}
         defaultView={Views.WEEK}
+        defaultDate={new Date()}
         scrollToTime={defaultDate}
         events={eventsList}
         startAccessor="start"
@@ -223,81 +198,27 @@ export const MyCalendar = () => {
         style={{
           width: "100%",
           display: "flex",
-          height: "90vh",
+          height: "100%",
           color: !theme ? "#6b7280" : "#9ca3af",
         }}
-        timeslots={2}
-        selectable={true}
+        timeslots={1}
+        selectable
         popup={true}
+        step={60}
         onSelectSlot={handleSlotSelection}
         onSelectEvent={handleSelectEvent}
         slotPropGetter={slotPropGetter}
         eventPropGetter={eventPropGetter}
         dayPropGetter={dayPropGetter}
+        onSelecting={(slotInfo) => handleSlotSelection(slotInfo)}
       />
-      {selectedEvent && (
-        <div
-          onClick={handleOverlayClick}
-          style={{
-            background: "transparent",
-            position: "fixed",
-            width: "100%",
-            height: "100%",
-            zIndex: "100",
-            top: 0,
-            left: 0,
-          }}
-        >
-          <div
-            className="popup"
-            style={{
-              position: "absolute",
-              top: popupPosition.y,
-              left: popupPosition.x,
-              boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-              borderRadius: "6px",
-              padding: "12px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "24px",
-              backgroundColor: !theme
-                ? lightTheme.palette.background.mainPage
-                : darkTheme.palette.background.mainPage,
-            }}
-            onClick={handleClosePopup}
-          >
-            <h3
-              style={{
-                fontWeight: "500",
-                fontSize: "24px",
-                lineHeight: "1.17",
-              }}
-            >
-              {selectedEvent.title}
-            </h3>
-            <p
-              style={{
-                fontWeight: "400",
-                fontSize: "18px",
-                lineHeight: "1.56",
-              }}
-            >{`${moment(selectedEvent.start).format("hh:mm")}-${moment(
-              selectedEvent.end
-            ).format("hh:mm")}`}</p>
-            {selectedEvent.desc && (
-              <p
-                style={{
-                  fontWeight: "400",
-                  fontSize: "18px",
-                  lineHeight: "1.55556",
-                }}
-              >
-                {selectedEvent.desc}
-              </p>
-            )}
-          </div>
-        </div>
-      )}
+      <ConfirmModal
+        open={openConfirmModal}
+        onClose={() => setOpenConfirmModal(false)}
+        onConfirm={handleCreateBooking}
+        slot={selectedSlots[0]}
+      />
+      ;
     </div>
   );
 };
@@ -339,6 +260,7 @@ const TimeGutterHeader = () => {
     </Typography>
   );
 };
+
 const CustomDayComponent = ({ date }) => {
   return (
     <div
@@ -355,25 +277,23 @@ const CustomDayComponent = ({ date }) => {
     </div>
   );
 };
+
 const CustomEventComponent = ({ event }) => {
-  const { start, end, title } = event;
+  const { start, end } = event;
   return (
-    <div>
-      <div>{title}</div>
-      <div
-        style={{
-          display: "flex",
-          gap: "5px",
-          marginTop: "7px",
-          color: "#e5e7eb",
-          fontSize: "14px",
-          lineHeight: "1.42857",
-        }}
-      >
-        <Clock color="#e5e7eb" />
-        <div>
-          {`${moment(start).format("hh:mm")}-${moment(end).format("hh:mm")}`}
-        </div>
+    <div
+      style={{
+        display: "flex",
+        gap: "5px",
+        marginTop: "7px",
+        color: "#red",
+        fontSize: "14px",
+        lineHeight: "1.42857",
+      }}
+    >
+      <Clock color="#e5e7eb" />
+      <div>
+        {`${moment(start).format("HH:mm")}-${moment(end).format("HH:mm")}`}
       </div>
     </div>
   );
@@ -382,6 +302,7 @@ const CustomEventComponent = ({ event }) => {
 CustomEventComponent.propTypes = {
   event: PropTypes.object.isRequired,
 };
+
 CustomDayComponent.propTypes = {
   date: PropTypes.object.isRequired,
 };
