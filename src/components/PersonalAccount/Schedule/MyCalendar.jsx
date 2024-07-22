@@ -13,6 +13,7 @@ import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import {
   fetchBookings,
+  fetchTeacherBookings,
   createBooking,
 } from "@/redux/marketplace/bookings/operations";
 import {
@@ -23,7 +24,6 @@ import {
 import ConfirmModal from "./ConfirmModal";
 
 const localizer = momentLocalizer(moment);
-console.log(localizer);
 const eventsList = [];
 
 moment.locale("ua", {
@@ -93,8 +93,11 @@ export const MyCalendar = () => {
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
-  console.log(selectedSlots);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchTeacherBookings());
+  }, [dispatch]);
 
   useEffect(() => {
     const startDate = moment().startOf("week").toISOString();
@@ -103,31 +106,9 @@ export const MyCalendar = () => {
   }, [dispatch]);
 
   const handleSlotSelection = ({ start, end }) => {
-    console.log(start, "initial");
-    console.log(end, "end in");
-    const localStart = moment(start).local().format("YYYY-MM-DD HH:mm:ss");
-    const localEnd = moment(end).local().format("YYYY-MM-DD HH:mm:ss");
-
-    console.log("Local start:", localStart);
-    console.log("Local end:", localEnd);
-
-    const formattedStart = moment(start).startOf("hour").toISOString();
-    const formattedEnd = moment(end).startOf("hour").toISOString();
-
-    console.log("Formatted start:", formattedStart);
-    console.log("Formatted end:", formattedEnd);
-
-    setSelectedSlots((prevSlots) => {
-      const isDuplicate = prevSlots.some(
-        (slot) => slot.start === formattedStart && slot.end === formattedEnd
-      );
-
-      if (isDuplicate) {
-        return prevSlots;
-      } else {
-        return [...prevSlots, { start: formattedStart, end: formattedEnd }];
-      }
-    });
+    const formattedStart = moment(start).toISOString();
+    const formattedEnd = moment(end).toISOString();
+    setSelectedSlots([{ start: formattedStart, end: formattedEnd }]);
 
     setOpenConfirmModal(true);
   };
@@ -179,8 +160,8 @@ export const MyCalendar = () => {
     <div>
       <Calendar
         localizer={localizer}
-        // formats={formats}
-        // culture={culture}
+        formats={formats}
+        culture={culture}
         components={{
           toolbar: (props) => <CustomToolbar {...props} />,
           timeGutterHeader: TimeGutterHeader,

@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchBookings, createBooking } from "./operations";
+import {
+  fetchBookings,
+  fetchTeacherBookings,
+  createBooking,
+} from "./operations";
 
 const bookingSlice = createSlice({
   name: "bookings",
@@ -11,6 +15,18 @@ const bookingSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchTeacherBookings.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTeacherBookings.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookings = action.payload;
+      })
+      .addCase(fetchTeacherBookings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(fetchBookings.pending, (state) => {
         state.loading = true;
         state.error = null;
