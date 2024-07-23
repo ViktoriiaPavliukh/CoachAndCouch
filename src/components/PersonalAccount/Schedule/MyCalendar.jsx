@@ -75,11 +75,6 @@ let formats = {
   timeGutterFormat: "HH:mm",
 };
 
-// const handleSlotSelection = (slotInfo) => {
-//   const { start, end } = slotInfo;
-//   console.log("Selected slot:", start, end);
-// };
-
 export const MyCalendar = () => {
   const dispatch = useDispatch();
   const bookings = useSelector(selectBookings);
@@ -94,9 +89,14 @@ export const MyCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [teacherSlots, setTeacherSlots] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchTeacherBookings());
+    dispatch(fetchTeacherBookings()).then((action) => {
+      if (action.payload) {
+        setTeacherSlots(action.payload);
+      }
+    });
   }, [dispatch]);
 
   useEffect(() => {
@@ -119,7 +119,13 @@ export const MyCalendar = () => {
   };
 
   const handleCreateBooking = () => {
-    dispatch(createBooking({ timeslots: selectedSlots }));
+    dispatch(createBooking({ timeslots: selectedSlots })).then(() => {
+      dispatch(fetchTeacherBookings()).then((action) => {
+        if (action.payload) {
+          setTeacherSlots(action.payload);
+        }
+      });
+    });
     setSelectedSlots([]);
   };
 
@@ -152,6 +158,18 @@ export const MyCalendar = () => {
       style: {
         backgroundColor: "transparent",
         color: color,
+      },
+    };
+  };
+
+  const slotPropGetter = (date) => {
+    const isTeacherBooking = teacherSlots.some((slot) =>
+      moment(slot.date).isSame(date, "minute")
+    );
+
+    return {
+      style: {
+        backgroundColor: isTeacherBooking ? "#e7f1d3" : "transparent",
       },
     };
   };
@@ -217,21 +235,21 @@ const eventPropGetter = () => {
   };
 };
 
-const slotPropGetter = (date) => {
-  const CURRENT_DATE = moment().toDate();
-  let backgroundColor;
+// const slotPropGetter = (date) => {
+//   const CURRENT_DATE = moment().toDate();
+//   let backgroundColor;
 
-  if (moment(date).isBefore(CURRENT_DATE, "month")) {
-    backgroundColor = "#fff";
-  }
+//   if (moment(date).isBefore(CURRENT_DATE, "month")) {
+//     backgroundColor = "#fff";
+//   }
 
-  var style = {
-    backgroundColor,
-  };
-  return {
-    style: style,
-  };
-};
+//   var style = {
+//     backgroundColor,
+//   };
+//   return {
+//     style: style,
+//   };
+// };
 
 const TimeGutterHeader = () => {
   const intl = useIntl();
