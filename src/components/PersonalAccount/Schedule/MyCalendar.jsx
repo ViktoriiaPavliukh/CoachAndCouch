@@ -13,6 +13,7 @@ import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import {
   fetchBookings,
+  fetchTeacherBookings,
   createBooking,
 } from "@/redux/marketplace/bookings/operations";
 import {
@@ -23,7 +24,6 @@ import {
 import ConfirmModal from "./ConfirmModal";
 
 const localizer = momentLocalizer(moment);
-console.log(localizer);
 const eventsList = [];
 
 moment.locale("ua", {
@@ -75,11 +75,6 @@ let formats = {
   timeGutterFormat: "HH:mm",
 };
 
-// const handleSlotSelection = (slotInfo) => {
-//   const { start, end } = slotInfo;
-//   console.log("Selected slot:", start, end);
-// };
-
 export const MyCalendar = () => {
   const dispatch = useDispatch();
   const bookings = useSelector(selectBookings);
@@ -93,8 +88,16 @@ export const MyCalendar = () => {
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
-  console.log(selectedSlots);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [teacherSlots, setTeacherSlots] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchTeacherBookings()).then((action) => {
+      if (action.payload) {
+        setTeacherSlots(action.payload);
+      }
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     const startDate = moment().startOf("week").toISOString();
@@ -103,31 +106,15 @@ export const MyCalendar = () => {
   }, [dispatch]);
 
   const handleSlotSelection = ({ start, end }) => {
-    console.log(start, "initial");
-    console.log(end, "end in");
-    const localStart = moment(start).local().format("YYYY-MM-DD HH:mm:ss");
-    const localEnd = moment(end).local().format("YYYY-MM-DD HH:mm:ss");
+    const now = moment();
 
-    console.log("Local start:", localStart);
-    console.log("Local end:", localEnd);
+    if (moment(start).isBefore(now)) {
+      return;
+    }
 
-    const formattedStart = moment(start).startOf("hour").toISOString();
-    const formattedEnd = moment(end).startOf("hour").toISOString();
-
-    console.log("Formatted start:", formattedStart);
-    console.log("Formatted end:", formattedEnd);
-
-    setSelectedSlots((prevSlots) => {
-      const isDuplicate = prevSlots.some(
-        (slot) => slot.start === formattedStart && slot.end === formattedEnd
-      );
-
-      if (isDuplicate) {
-        return prevSlots;
-      } else {
-        return [...prevSlots, { start: formattedStart, end: formattedEnd }];
-      }
-    });
+    const formattedStart = moment(start).toISOString();
+    const formattedEnd = moment(end).toISOString();
+    setSelectedSlots([{ start: formattedStart, end: formattedEnd }]);
 
     setOpenConfirmModal(true);
   };
@@ -138,7 +125,13 @@ export const MyCalendar = () => {
   };
 
   const handleCreateBooking = () => {
-    dispatch(createBooking({ timeslots: selectedSlots }));
+    dispatch(createBooking({ timeslots: selectedSlots })).then(() => {
+      dispatch(fetchTeacherBookings()).then((action) => {
+        if (action.payload) {
+          setTeacherSlots(action.payload);
+        }
+      });
+    });
     setSelectedSlots([]);
   };
 
@@ -159,6 +152,7 @@ export const MyCalendar = () => {
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
     const isToday = moment(date).isSame(today, "day");
+    const isPast = moment(date).isBefore(today, "day");
 
     let color = "inherit";
 
@@ -167,10 +161,26 @@ export const MyCalendar = () => {
         ? lightTheme.palette.primary.main
         : darkTheme.palette.primary.main;
     }
+
     return {
       style: {
         backgroundColor: "transparent",
-        color: color,
+        color: isPast ? "#FFF" : color,
+        pointerEvents: isPast ? "none" : "auto",
+        opacity: isPast ? 0.5 : 1,
+        backgroundColor: isPast ? "#aaaaaa" : "transparent",
+      },
+    };
+  };
+
+  const slotPropGetter = (date) => {
+    const isTeacherBooking = teacherSlots.some((slot) =>
+      moment(slot.date).isSame(date, "minute")
+    );
+
+    return {
+      style: {
+        backgroundColor: isTeacherBooking ? "#e7f1d3" : "transparent",
       },
     };
   };
@@ -179,8 +189,8 @@ export const MyCalendar = () => {
     <div>
       <Calendar
         localizer={localizer}
-        // formats={formats}
-        // culture={culture}
+        formats={formats}
+        culture={culture}
         components={{
           toolbar: (props) => <CustomToolbar {...props} />,
           timeGutterHeader: TimeGutterHeader,
@@ -218,7 +228,6 @@ export const MyCalendar = () => {
         onConfirm={handleCreateBooking}
         slot={selectedSlots[0]}
       />
-      ;
     </div>
   );
 };
@@ -233,22 +242,6 @@ const eventPropGetter = () => {
 
   return {
     style: eventStyle,
-  };
-};
-
-const slotPropGetter = (date) => {
-  const CURRENT_DATE = moment().toDate();
-  let backgroundColor;
-
-  if (moment(date).isBefore(CURRENT_DATE, "month")) {
-    backgroundColor = "#fff";
-  }
-
-  var style = {
-    backgroundColor,
-  };
-  return {
-    style: style,
   };
 };
 

@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 
 const ConfirmModal = ({ open, onClose, onConfirm, slot }) => {
   if (!slot) {
-    return null; // Don't render if slot is not provided
+    return null; 
   }
 
     const formattedStartDate = moment(slot.start).format("MMM DD, YYYY");
