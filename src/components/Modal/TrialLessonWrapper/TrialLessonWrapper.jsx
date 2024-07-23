@@ -14,7 +14,6 @@ function getCurrentMonday() {
   return mon;
 }
 
-// api/teacher/<id>/get-free-schedule/<week> <- monday
 const response = [
   "2024-04-11 17:00",
   "2024-04-14 18:00",
@@ -26,7 +25,6 @@ export const TrialLessonWrapper = () => {
   const [selected, setSelected] = useState();
   const [monday, setMonday] = useState(getCurrentMonday());
 
-  // request...
   const schedule = new Map();
   for (const d of response) {
     const date = new Date(d);

@@ -87,3 +87,19 @@ export const createBooking = createAsyncThunk(
     }
   }
 );
+
+export const fetchUserBookings = createAsyncThunk(
+  "bookings/fetchStudentBookings",
+  async (userId, thunkAPI) => {
+    try {
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      privateAPI.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${persistToken}`;
+      const { data } = await privateAPI.get(`/booking/${userId}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
