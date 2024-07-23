@@ -106,6 +106,12 @@ export const MyCalendar = () => {
   }, [dispatch]);
 
   const handleSlotSelection = ({ start, end }) => {
+    const now = moment();
+
+    if (moment(start).isBefore(now)) {
+      return;
+    }
+
     const formattedStart = moment(start).toISOString();
     const formattedEnd = moment(end).toISOString();
     setSelectedSlots([{ start: formattedStart, end: formattedEnd }]);
@@ -146,6 +152,7 @@ export const MyCalendar = () => {
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
     const isToday = moment(date).isSame(today, "day");
+    const isPast = moment(date).isBefore(today, "day");
 
     let color = "inherit";
 
@@ -154,10 +161,14 @@ export const MyCalendar = () => {
         ? lightTheme.palette.primary.main
         : darkTheme.palette.primary.main;
     }
+
     return {
       style: {
         backgroundColor: "transparent",
-        color: color,
+        color: isPast ? "#FFF" : color,
+        pointerEvents: isPast ? "none" : "auto",
+        opacity: isPast ? 0.5 : 1,
+        backgroundColor: isPast ? "#aaaaaa" : "transparent",
       },
     };
   };
@@ -217,7 +228,6 @@ export const MyCalendar = () => {
         onConfirm={handleCreateBooking}
         slot={selectedSlots[0]}
       />
-      ;
     </div>
   );
 };
@@ -234,22 +244,6 @@ const eventPropGetter = () => {
     style: eventStyle,
   };
 };
-
-// const slotPropGetter = (date) => {
-//   const CURRENT_DATE = moment().toDate();
-//   let backgroundColor;
-
-//   if (moment(date).isBefore(CURRENT_DATE, "month")) {
-//     backgroundColor = "#fff";
-//   }
-
-//   var style = {
-//     backgroundColor,
-//   };
-//   return {
-//     style: style,
-//   };
-// };
 
 const TimeGutterHeader = () => {
   const intl = useIntl();
