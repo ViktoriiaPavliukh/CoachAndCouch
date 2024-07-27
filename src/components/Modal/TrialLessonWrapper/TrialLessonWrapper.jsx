@@ -1,7 +1,14 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchTeacherSlots } from "@/redux/marketplace/bookings/operations";
+import {
+  selectTeacherBookings,
+  selectTeacherBookingsError,
+  selectTeacherBookingsLoading,
+} from "@/redux/marketplace/bookings/selectors";
 import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
 import { Button } from "@mui/material";
-import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 
 function getCurrentMonday() {
@@ -9,41 +16,41 @@ function getCurrentMonday() {
   const currentDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   let mon = new Date(currentDay);
-  mon.setDate(mon.getDate() - (mon.getDay() == 0 ? 7 : mon.getDay()) + 1);
+  mon.setDate(mon.getDate() - (mon.getDay() === 0 ? 7 : mon.getDay()) + 1);
 
   return mon;
 }
 
-// api/teacher/<id>/get-free-schedule/<week> <- monday
-const response = [
-  "2024-04-11 17:00",
-  "2024-04-14 18:00",
-  "2024-04-12 19:00",
-  "2024-04-11 21:00",
-];
-
-export const TrialLessonWrapper = () => {
-  const [selected, setSelected] = useState();
+export const TrialLessonWrapper = ({ id, teacherBookings }) => {
+  const dispatch = useDispatch();
+  const loading = useSelector(selectTeacherBookingsLoading);
+  const error = useSelector(selectTeacherBookingsError);
+  const [selected, setSelected] = useState(null);
   const [monday, setMonday] = useState(getCurrentMonday());
+  const [schedule, setSchedule] = useState(new Map());
 
-  // request...
-  const schedule = new Map();
-  for (const d of response) {
-    const date = new Date(d);
-    const day = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    ).getTime();
-
-    let hours = schedule.get(day);
-    if (!hours) {
-      hours = new Set();
-      schedule.set(day, hours);
+  useEffect(() => {
+    if (teacherBookings.length > 0) {
+      const newSchedule = new Map();
+      teacherBookings.forEach((slot) => {
+        const date = new Date(slot.date);
+        if (!isNaN(date)) {
+          const day = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate()
+          ).getTime();
+          let hours = newSchedule.get(day);
+          if (!hours) {
+            hours = new Set();
+            newSchedule.set(day, hours);
+          }
+          hours.add(date.getHours());
+        }
+      });
+      setSchedule(newSchedule);
     }
-
-    hours.add(date.getHours());
-  }
+  }, [teacherBookings]);
 
   const now = new Date();
   let week = [];
@@ -67,7 +74,8 @@ export const TrialLessonWrapper = () => {
   };
 
   const getAvailableHours = (d) => {
-    return schedule.get(d.getTime()) ?? new Set();
+    const availableHours = schedule.get(d.getTime()) ?? new Set();
+    return availableHours;
   };
 
   const isSameDay = (a, b) => {
@@ -88,20 +96,16 @@ export const TrialLessonWrapper = () => {
     border: "none",
     padding: "0px",
     backgroundColor: "transparent",
-    // color: !theme
-    //   ? lightTheme.palette.textColor.fontColor
-    //   : darkTheme.palette.textColor.fontColor,
+    color: "#000",
   };
-
-  console.log(week);
 
   return (
     <div
       style={{
         width: "800px",
-        height: "600px",
+        height: "80vh",
         position: "absolute",
-        top: "50%",
+        top: "55%",
         left: "50%",
         backgroundColor: "white",
         transform: "translate(-50%,-50%)",
@@ -109,7 +113,7 @@ export const TrialLessonWrapper = () => {
         justifyContent: "center",
         alignItems: "flex-start",
         padding: "48px 48px 134px 48px",
-        overflow: "hidden",
+        overflowY: "auto",
       }}
     >
       <div
@@ -134,12 +138,11 @@ export const TrialLessonWrapper = () => {
             onClick={() => shiftWeek(-1)}
             disabled={monday <= now}
           >
-            <ChevronLeft color="#000" />
+            <ChevronLeft />
           </button>
           <div>{formattedRange}</div>
           <button style={btnArrow} onClick={() => shiftWeek(+1)}>
-            {" "}
-            <ChevronRight color="#000" />
+            <ChevronRight />
           </button>
           <div>{format(now, "yyyy")}</div>
         </div>
@@ -158,7 +161,6 @@ export const TrialLessonWrapper = () => {
                   border: "none",
                   borderRadius: "4px",
                   backgroundColor: "transparent",
-                  // backgroundColor: isSameDay(now, el) ? "green" : "transparent",
                   color: isSameDay(now, el) ? "#0E5B1D" : "#4b5563",
                   padding: 0,
                   width: "50px",
@@ -174,11 +176,8 @@ export const TrialLessonWrapper = () => {
           style={{
             display: "flex",
             flexDirection: "row",
-            // width: "450px",
             justifyContent: "space-between",
             gap: "39px",
-            // height: "250px",
-            // overflowY: "scroll",
           }}
         >
           {week.map((el, idx) => (

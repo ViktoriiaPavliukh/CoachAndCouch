@@ -5,7 +5,13 @@ import { SendMessageWrapper } from "./SendMessageWrapper";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
 
-export const Modal = ({ onBackdropClose, contentType, id, isOpen }) => {
+export const Modal = ({
+  onBackdropClose,
+  contentType,
+  id,
+  isOpen,
+  teacherBookings,
+}) => {
   useEffect(() => {
     const handleNoScroll = () => {
       document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -40,7 +46,7 @@ export const Modal = ({ onBackdropClose, contentType, id, isOpen }) => {
       case "sendMessage":
         return <SendMessageWrapper id={id} onBackdropClose={onBackdropClose} />;
       case "trialLesson":
-        return <TrialLessonWrapper />;
+        return <TrialLessonWrapper id={id} teacherBookings={teacherBookings} />;
       default:
         return null;
     }

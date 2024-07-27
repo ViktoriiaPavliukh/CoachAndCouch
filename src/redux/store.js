@@ -19,6 +19,7 @@ import { adminReducer } from "./admin/adminSlice";
 import { usersReducer } from "./users/usersSlice";
 import { bookingReducer } from "./marketplace/bookings/bookingSlice";
 import { languageReducer } from "./marketplace/languages/languageSlice";
+import { teacherBookingReducer } from "./marketplace/bookings/teacherBookingsSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -52,6 +53,7 @@ export const store = configureStore({
     users: usersReducer,
     language: persistedLanguageReducer,
     bookings: bookingReducer,
+    teacherSlots: teacherBookingReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
