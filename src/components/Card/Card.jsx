@@ -25,6 +25,12 @@ import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import useStatus from "@/hooks/useStatus";
 import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
+import {
+  selectTeacherBookings,
+  selectTeacherBookingsError,
+  selectTeacherBookingsLoading,
+} from "@/redux/marketplace/bookings/selectors";
+import { fetchTeacherSlots } from "@/redux/marketplace/bookings/operations";
 
 export function Card() {
   const intl = useIntl();
@@ -35,16 +41,19 @@ export function Card() {
   const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const teacherBookings = useSelector(selectTeacherBookings);
   const lastVisit = teacher?.user?.lastVisit;
   const userLike = teacher?.likes?.some(
     (like) => like.user.id === currentUser.id
   );
   const status = useStatus(lastVisit);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getCurrentUser());
     if (teacherId) {
       dispatch(getAdvertById(teacherId));
+      dispatch(fetchTeacherSlots(teacherId));
     }
   }, [dispatch, teacherId]);
 
@@ -349,9 +358,11 @@ export function Card() {
             </Box>
             {showModal && (
               <Modal
+                user={teacher.user.id}
                 id={teacher.id}
                 onBackdropClose={onBackdropClose}
                 contentType={modalContentType}
+                teacherBookings={teacherBookings}
               />
             )}
           </>

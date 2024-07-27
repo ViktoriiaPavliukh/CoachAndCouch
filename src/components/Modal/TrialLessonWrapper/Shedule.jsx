@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
   const now = new Date();
   let shedule = [];
-  for (let i = 10; i < 19; i++) {
+  for (let i = 7; i < 24; i++) {
     shedule.push(i);
   }
 
@@ -28,10 +28,14 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
           sx={{
             minWidth: "50px",
             border: "none",
-            backgroundColor: sh === hour ? "transparent" : "#e5e5e5",
+            backgroundColor: isDisabled(sh)
+              ? "#e5e5e5"
+              : sh === hour
+              ? "transparent"
+              : "transparent",
             padding: 0,
             maxWidth: "50px",
-            color: sh === hour ? "#000" : "#6b7280",
+            color: sh === hour || !isDisabled(sh) ? "#000" : "#6b7280",
             "&:hover": {
               backgroundColor: "red",
               color: "white",

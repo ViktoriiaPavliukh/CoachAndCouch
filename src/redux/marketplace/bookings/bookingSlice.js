@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchBookings,
   fetchTeacherBookings,
-  fetchUserBookings,
   createBooking,
 } from "./operations";
 
@@ -49,18 +48,6 @@ const bookingSlice = createSlice({
         state.bookings.push(action.payload);
       })
       .addCase(createBooking.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(fetchUserBookings.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchUserBookings.fulfilled, (state, action) => {
-        state.loading = false;
-        state.userBookings = action.payload;
-      })
-      .addCase(fetchUserBookings.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
