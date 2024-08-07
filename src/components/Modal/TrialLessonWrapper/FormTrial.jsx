@@ -4,7 +4,11 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "@/redux/users/selectors";
-import { languagesSelector } from "@/redux/admin/adminSelector";
+import {
+  languagesSelector,
+  countriesSelector,
+  specializationsSelector,
+} from "@/redux/admin/adminSelector";
 import { getLanguages } from "@/redux/admin/operations";
 import {
   advertByIdSelector,
@@ -18,9 +22,14 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Stack,
   MenuItem,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
 import { languageProficiencyLevels } from "@/defaults";
+import countries from "../../../defaults/countries/countries.json";
+import countriesCase from "@/helpers/countriesCase";
 
 export default function FormTrial({ selected, onClose }) {
   const intl = useIntl();
@@ -29,11 +38,14 @@ export default function FormTrial({ selected, onClose }) {
   const { id: teacherId } = useParams();
   const currentUser = useSelector(selectCurrentUser);
   const languages = useSelector(languagesSelector);
-  console.log(languages);
+  const countriesList = useSelector(countriesSelector);
+  const specializations = useSelector(specializationsSelector);
   const teacher = useSelector(advertByIdSelector);
 
   const [choosenLanguages, setChoosenLanguages] = useState([]);
   const [teachingLevel, setTeachingLevel] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedSpecializations, setSelectedSpecializations] = useState([]);
 
   // useEffect(() => {
   //   dispatch(getLanguages());
@@ -54,6 +66,18 @@ export default function FormTrial({ selected, onClose }) {
 
   const handleTeachingLevelChange = (event) => {
     setTeachingLevel(event.target.value);
+  };
+
+  const handleCountryChange = (event) => {
+    setSelectedCountry(event.target.value);
+  };
+
+  const handleSpecializationClick = (specialization) => {
+    setSelectedSpecializations((prev) =>
+      prev.includes(specialization)
+        ? prev.filter((s) => s !== specialization)
+        : [...prev, specialization]
+    );
   };
 
   const proficiencyLevels =
@@ -77,6 +101,17 @@ export default function FormTrial({ selected, onClose }) {
         zIndex: 1000,
       }}
     >
+      <Stack
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "space-between",
+          flexDirection: "row",
+        }}
+      >
+        <ArrowBackIcon onClick={onClose} />
+        <CloseIcon onClick={onClose} />
+      </Stack>
       <Typography>Fill in the details</Typography>
       <form
         onSubmit={handleSubmit}
@@ -138,11 +173,111 @@ export default function FormTrial({ selected, onClose }) {
             ))}
           </Select>
         </FormControl>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", lg: "row" },
+            gap: { xs: "20px", lg: "64px" },
+          }}
+        >
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>{intl.formatMessage({ id: "whereFrom" })}</InputLabel>
+            <Select
+              id="country"
+              name="country"
+              label="whereFrom"
+              value={selectedCountry}
+              onChange={handleCountryChange}
+              renderValue={(selected) => {
+                const selectedCountry = countries.find(
+                  (el) => el.alpha2 === selected
+                );
+                return selectedCountry
+                  ? en === "en"
+                    ? selectedCountry.nameEng
+                    : countriesCase(selectedCountry.nameShort)
+                  : selected;
+              }}
+            >
+              {countriesList &&
+                countriesList.map((country) => {
+                  const fullCountry = countries.find(
+                    (el) => el.alpha2 === country.alpha2
+                  );
+                  if (fullCountry) {
+                    return (
+                      <MenuItem key={country.alpha2} value={country.alpha2}>
+                        {en === "en"
+                          ? fullCountry.nameEng
+                          : countriesCase(fullCountry.nameShort)}
+                      </MenuItem>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}
+            </Select>
+          </FormControl>
+          <FormControl fullWidth variant="outlined">
+            <InputLabel>
+              {intl.formatMessage({ id: "nativeLanguage" })}
+            </InputLabel>
+            <Select
+              id="nativeLanguage"
+              name="nativeLanguage"
+              label={intl.formatMessage({ id: "nativeLanguage" })}
+              multiple
+              value={choosenLanguages}
+              onChange={handleChoosenLanguagesChange}
+              renderValue={(selected) =>
+                selected
+                  .map((language) =>
+                    en === "en" ? language.languageEn : language.languageUa
+                  )
+                  .join(", ")
+              }
+            >
+              {languages &&
+                languages.map((language) => (
+                  <MenuItem key={uuidv4()} value={language}>
+                    {en === "en" ? language.languageEn : language.languageUa}
+                  </MenuItem>
+                ))}
+            </Select>
+          </FormControl>
+        </Stack>
+        <Typography> {intl.formatMessage({ id: "learningGoal" })}</Typography>
+        <Stack
+          sx={{
+            display: "flex",
+            flexDirection: {
+              xs: "column",
+              lg: "row",
+              flexWrap: "wrap",
+              gap: "18px 64px",
+            },
+          }}
+        >
+          {specializations &&
+            specializations.map((specialization) => (
+              <Button
+                key={uuidv4()}
+                variant={
+                  selectedSpecializations.includes(specialization)
+                    ? "contained"
+                    : "outlined"
+                }
+                sx={{ width: { lg: "47%" } }}
+                onClick={() => handleSpecializationClick(specialization)}
+              >
+                {en === "en"
+                  ? specialization.specializationEn
+                  : specialization.specializationUa}
+              </Button>
+            ))}
+        </Stack>
         <Button type="submit" variant="contained">
           Submit
-        </Button>
-        <Button variant="outlined" onClick={onClose}>
-          Close
         </Button>
       </form>
     </Box>
