@@ -242,6 +242,8 @@ const messages = {
     //schedule
     "schedule.today": "Today",
     "schedule.week": "Week",
+    chooseLanguage: "Select the language to learn",
+    chooseLevel: "Select your language proficiency level",
 
     //Admin
     avatar: "Image",
@@ -496,6 +498,8 @@ const messages = {
     //schedule
     "schedule.today": "Сьогодні",
     "schedule.week": "Тиждень",
+    chooseLanguage: "Оберіть мову для вивчення",
+    chooseLevel: "Оберіть ваш рівень володіння мовою",
 
     //Admin
     avatar: "Аватарка",
