@@ -9,7 +9,11 @@ import {
   countriesSelector,
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
-import { getLanguages } from "@/redux/admin/operations";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
 import {
   advertByIdSelector,
   selectAdvertsIsLoading,
@@ -24,10 +28,12 @@ import {
   Select,
   Stack,
   MenuItem,
+  Divider,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
 import { languageProficiencyLevels } from "@/defaults";
+import useFormattedDate from "@/hooks/useFormattedDate";
 import countries from "../../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 
@@ -41,6 +47,7 @@ export default function FormTrial({ selected, onClose }) {
   const countriesList = useSelector(countriesSelector);
   const specializations = useSelector(specializationsSelector);
   const teacher = useSelector(advertByIdSelector);
+  const formattedDateTime = useFormattedDate(selected);
 
   const [choosenLanguages, setChoosenLanguages] = useState([]);
   const [teachingLevel, setTeachingLevel] = useState("");
@@ -49,7 +56,9 @@ export default function FormTrial({ selected, onClose }) {
 
   // useEffect(() => {
   //   dispatch(getLanguages());
-  // }, [dispatch]);
+  //   dispatch(getSpecializations());
+  //   dispatch(getCountries());
+  // }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -86,19 +95,20 @@ export default function FormTrial({ selected, onClose }) {
   return (
     <Box
       sx={{
-        width: { xs: "343px", md: "648px", lg: "1208px" },
+        width: { xs: "91%", md: "84%", lg: "1208px" },
         height: "auto",
         position: "fixed",
         top: "50%",
         left: "50%",
         backgroundColor: "white",
         transform: "translate(-50%,-50%)",
-        padding: "48px",
+        padding: { xs: "8px", md: "48px" },
         display: "flex",
         flexDirection: "column",
-        gap: "20px",
         justifyContent: "center",
         zIndex: 1000,
+        overflowY: "auto",
+        backgroundColor: (theme) => theme.palette.background.paper,
       }}
     >
       <Stack
@@ -107,25 +117,57 @@ export default function FormTrial({ selected, onClose }) {
           width: "100%",
           justifyContent: "space-between",
           flexDirection: "row",
+          alignItems: "center",
         }}
       >
         <ArrowBackIcon onClick={onClose} />
+        <Typography
+          sx={{
+            display: { xs: "none", md: "flex" },
+            fontSize: { xs: "24px", md: "30px" },
+            textAlign: "center",
+          }}
+        >
+          {intl.formatMessage({ id: "fillForm" })}
+        </Typography>
         <CloseIcon onClick={onClose} />
       </Stack>
-      <Typography>Fill in the details</Typography>
+      <Typography
+        sx={{
+          textAlign: "center",
+          width: "100%",
+          pt: "12px",
+          display: { xs: "block", md: "none" },
+          margin: "0 auto",
+          fontSize: { xs: "24px", md: "30px" },
+        }}
+      >
+        {intl.formatMessage({ id: "fillForm" })}
+      </Typography>
+      <Divider sx={{ marginTop: "28px" }} />
       <form
         onSubmit={handleSubmit}
         style={{ display: "flex", flexDirection: "column", gap: "20px" }}
       >
-        <Typography>
-          {currentUser.firstName} {currentUser.lastName}
+        <Typography sx={{ mt: "24px" }}>
+          {currentUser.firstName}
+          {currentUser.lastName ? ` ${currentUser.lastName}` : ""}
+          {intl.formatMessage({ id: "booking" })}:
         </Typography>
         <Typography>
+          {intl.formatMessage({ id: "yourTeacher" })}:{" "}
           {teacher?.user?.firstName} {teacher?.user?.lastName}
         </Typography>
-        <Typography>{selected ? selected.toString() : ""}</Typography>
-        <Typography>{teacher?.price} USD</Typography>
-        <Typography>Розкажіть викладачу про себе</Typography>
+        <Typography>
+          {intl.formatMessage({ id: "dateTime" })}:{" "}
+          {/* {selected ? selected.toString() : ""} */}
+          {formattedDateTime}
+        </Typography>
+        <Typography>
+          {intl.formatMessage({ id: "priceSchedule" })}: {teacher?.price} USD
+        </Typography>
+        <Divider sx={{ marginTop: "4px", marginBottom: "8px" }} />
+        <Typography> {intl.formatMessage({ id: "formDetails" })}</Typography>
         <FormControl fullWidth variant="outlined">
           <InputLabel>
             {intl.formatMessage({ id: "chooseLanguage" })}
@@ -276,161 +318,14 @@ export default function FormTrial({ selected, onClose }) {
               </Button>
             ))}
         </Stack>
-        <Button type="submit" variant="contained">
-          Submit
+        <Button
+          type="submit"
+          variant="contained"
+          sx={{ width: "220px", margin: "0 auto" }}
+        >
+          {intl.formatMessage({ id: "payBtn" })}
         </Button>
       </form>
     </Box>
   );
 }
-
-// import React from "react";
-// import { useIntl } from "react-intl";
-// import { v4 as uuidv4 } from "uuid";
-// import { useParams } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-// import { selectCurrentUser } from "@/redux/users/selectors";
-// import { languagesSelector } from "@/redux/admin/adminSelector";
-// import {
-//   advertByIdSelector,
-//   selectAdvertsIsLoading,
-// } from "@/redux/marketplace/adverts/advertsSelector";
-// import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
-// import {
-//   Box,
-//   Button,
-//   Typography,
-//   TextField,
-//   FormControl,
-//   InputLabel,
-//   Select,
-//   MenuItem,
-//   Stack,
-//   Radio,
-//   RadioGroup,
-//   FormLabel,
-//   FormControlLabel,
-// } from "@mui/material";
-
-// export default function FormTrial({ selected, onClose }) {
-//   const intl = useIntl();
-//   const en = useSelector(selectCurrentLanguage);
-//   const dispatch = useDispatch();
-//   const { id: teacherId } = useParams();
-//   const currentUser = useSelector(selectCurrentUser);
-//   const languages = useSelector(languagesSelector);
-//   const teacher = useSelector(advertByIdSelector);
-//   console.log(teacher);
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//   };
-
-//   return (
-//     <Box
-//       sx={{
-//         width: { xs: "343px", md: "648px", lg: "1208px" },
-//         height: "400px",
-//         position: "fixed",
-//         top: "50%",
-//         left: "50%",
-//         backgroundColor: "white",
-//         transform: "translate(-50%,-50%)",
-//         padding: "48px",
-//         display: "flex",
-//         flexDirection: "column",
-//         gap: "20px",
-//         justifyContent: "center",
-//         zIndex: 1000,
-//       }}
-//     >
-//       <Typography>Fill in the details</Typography>
-//       <form
-//         onSubmit={handleSubmit}
-//         style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-//       >
-//         <Typography>
-//           {currentUser.firstName} {currentUser.lastName}
-//         </Typography>
-//         <Typography>
-//           {teacher.user.firstName} {teacher.user.lastName}
-//         </Typography>
-//         <Typography>{selected ? selected.toString() : ""}</Typography>
-//         <Typography>{teacher.price} USD</Typography>
-//         {/* <TextField label="Email" variant="outlined" type="email" required /> */}
-//         <Typography>Розкажіть викладачу про себе</Typography>
-//         <FormControl fullWidth variant="outlined">
-//           <InputLabel>
-//             {intl.formatMessage({ id: "languagesSpoken" })}
-//           </InputLabel>
-//           <Select
-//             id="spokenLanguages"
-//             name="spokenLanguages"
-//             multiple
-//             label="languagesSpoken"
-//             onChange={(event) => {
-//               formik.setFieldValue("spokenLanguages", event.target.value);
-//             }}
-//             onBlur={formik.handleBlur}
-//             error={
-//               formik.touched.spokenLanguages &&
-//               Boolean(formik.errors.spokenLanguages)
-//             }
-//             renderValue={(selected) =>
-//               selected
-//                 .map((language) =>
-//                   en === "en" ? language.languageEn : language.languageUa
-//                 )
-//                 .join(", ")
-//             }
-//           >
-//             {languages &&
-//               languages.map((language) => (
-//                 <MenuItem key={uuidv4()} value={language}>
-//                   {en === "en" ? language.languageEn : language.languageUa}
-//                 </MenuItem>
-//               ))}
-//           </Select>
-//         </FormControl>
-//         {/* <FormControl fullWidth variant="outlined">
-//           <InputLabel>
-//             {intl.formatMessage({ id: "languagesTeaching" })}
-//           </InputLabel>
-//           <Select
-//             id="teachingLanguages"
-//             name="teachingLanguages"
-//             multiple
-//             label="languagesTeaching"
-//             onChange={(event) => {
-//               formik.setFieldValue("teachingLanguages", event.target.value);
-//             }}
-//             onBlur={formik.handleBlur}
-//             error={
-//               formik.touched.teachingLanguages &&
-//               Boolean(formik.errors.teachingLanguages)
-//             }
-//             renderValue={(selected) =>
-//               selected
-//                 .map((language) =>
-//                   en === "en" ? language.languageEn : language.languageUa
-//                 )
-//                 .join(", ")
-//             }
-//           >
-//             {languages &&
-//               languages.map((language) => (
-//                 <MenuItem key={uuidv4()} value={language}>
-//                   {en === "en" ? language.languageEn : language.languageUa}
-//                 </MenuItem>
-//               ))}
-//           </Select>
-//         </FormControl> */}
-//         <Button type="submit" variant="contained">
-//           Submit
-//         </Button>
-//         <Button variant="outlined" onClick={onClose}>
-//           Close
-//         </Button>
-//       </form>
-//     </Box>
-//   );
-// }
