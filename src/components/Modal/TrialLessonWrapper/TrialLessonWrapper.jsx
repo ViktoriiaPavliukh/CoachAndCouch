@@ -30,7 +30,20 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
   const [monday, setMonday] = useState(getCurrentMonday());
   const [schedule, setSchedule] = useState(new Map());
   const [isFormModalVisible, setFormModalVisible] = useState(false);
-
+  const getSelectedSlotId = () => {
+    if (!selected) return null;
+    const selectedSlot = teacherBookings.find((slot) => {
+      const slotDate = new Date(slot.date);
+      return (
+        slotDate.getFullYear() === selected.getFullYear() &&
+        slotDate.getMonth() === selected.getMonth() &&
+        slotDate.getDate() === selected.getDate() &&
+        slotDate.getHours() === selected.getHours()
+      );
+    });
+    console.log(selectedSlot);
+    return selectedSlot;
+  };
   useEffect(() => {
     if (teacherBookings.length > 0) {
       const newSchedule = new Map();
@@ -116,7 +129,11 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
   return (
     <div>
       {isFormModalVisible && (
-        <FormTrial selected={selected} onClose={handleCloseModal} />
+        <FormTrial
+          selected={selected}
+          onClose={handleCloseModal}
+          bookingDetails={getSelectedSlotId()}
+        />
       )}
       <div
         style={{
