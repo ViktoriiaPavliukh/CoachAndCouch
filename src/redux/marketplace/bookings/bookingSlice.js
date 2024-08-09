@@ -57,6 +57,7 @@ const bookingSlice = createSlice({
         state.error = null;
       })
       .addCase(acceptBooking.fulfilled, (state, action) => {
+        console.log("Booking accepted successfully:", action.payload);
         state.loading = false;
         state.bookings.push(action.payload);
       })

@@ -86,16 +86,15 @@ export const acceptBooking = createAsyncThunk(
   async ({ bookingId, languageId, info }, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      // Set the Authorization header
+      console.log(persistToken);
       privateAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${persistToken}`;
 
-      // Construct the request body
       const requestBody = {
         bookingId,
         languageId,
-        info, // info contains level, from, motherTongue
+        info,
       };
 
       // Make the POST request to /booking/accept
