@@ -144,12 +144,14 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
     <Box
       sx={{
         width: { xs: "91%", md: "84%", lg: "1208px" },
-        height: "auto",
-        position: "fixed",
-        top: "50%",
+        height: "100%",
+        position: "absolute",
+        top: "30%",
         left: "50%",
         transform: "translate(-50%,-50%)",
-        padding: { xs: "8px", md: "48px" },
+        paddingX: { xs: "8px", md: "48px" },
+        paddingTop: { lg: "30%" },
+        pb: { xs: "24px", md: "48px" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

@@ -8,7 +8,7 @@ import {
 } from "@/redux/marketplace/bookings/selectors";
 import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import FormTrial from "./FormTrial";
 
@@ -123,11 +123,11 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
     border: "none",
     padding: "0px",
     backgroundColor: "transparent",
-    color: "#000",
+    color: (theme) => theme.palette.textColor.fontColor,
   };
 
   return (
-    <div>
+    <Box>
       {isFormModalVisible && (
         <FormTrial
           selected={selected}
@@ -135,33 +135,34 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
           bookingDetails={getSelectedSlotId()}
         />
       )}
-      <div
-        style={{
+      <Box
+        sx={{
           width: "800px",
           height: "80vh",
           position: "absolute",
           top: "55%",
           left: "50%",
-          backgroundColor: "white",
+          // backgroundColor: "white",
+          backgroundColor: (theme) => theme.palette.background.paper,
           transform: "translate(-50%,-50%)",
           display: isFormModalVisible ? "none" : "flex",
           justifyContent: "center",
           alignItems: "flex-start",
           padding: "48px 48px 134px 48px",
           overflowY: "auto",
-          zIndex: 1, // Ensure content is below modal
+          zIndex: 1,
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             gap: "30px",
             alignItems: "flex-start",
           }}
         >
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
               flexDirection: "row",
               flexWrap: "nowrap",
@@ -169,20 +170,19 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
               alignSelf: "center",
             }}
           >
-            <button
-              style={btnArrow}
+            <Button
+              sx={btnArrow}
               onClick={() => shiftWeek(-1)}
               disabled={monday <= now}
             >
               <ChevronLeft />
-            </button>
-            <div>{formattedRange}</div>
-            <button style={btnArrow} onClick={() => shiftWeek(+1)}>
+            </Button>
+            <Box>{formattedRange}</Box>
+            <Button sx={btnArrow} onClick={() => shiftWeek(+1)}>
               <ChevronRight />
-            </button>
-            <div>{format(now, "yyyy")}</div>
-          </div>
-
+            </Button>
+            <Box>{format(now, "yyyy")}</Box>
+          </Box>
           <ul
             style={{
               display: "flex",
@@ -239,8 +239,8 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
           >
             Далі
           </Button>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };

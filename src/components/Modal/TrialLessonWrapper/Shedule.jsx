@@ -1,7 +1,9 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
+  const [selectedHour, setSelectedHour] = useState(null);
   const now = new Date();
   let shedule = [];
   for (let i = 7; i < 24; i++) {
@@ -11,6 +13,7 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
   const handlerSheduleClick = (h) => {
     const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), h);
     scheduleChanged(date);
+    setSelectedHour(h);
   };
 
   const isDisabled = (h) => {
@@ -18,7 +21,13 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
     return date <= now || !availableHours.has(h);
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "20px",
+      }}
+    >
       {shedule.map((sh, idx) => (
         <Button
           disabled={isDisabled(sh)}
@@ -28,23 +37,29 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
           sx={{
             minWidth: "50px",
             border: "none",
-            backgroundColor: isDisabled(sh)
-              ? "#e5e5e5"
-              : sh === hour
-              ? "transparent"
-              : "transparent",
+            backgroundColor:
+              selectedHour === sh
+                ? (theme) => theme.palette.primary.main
+                : isDisabled(sh)
+                ? (theme) => theme.palette.buttonColor.disabled
+                : "transparent",
             padding: 0,
             maxWidth: "50px",
-            color: sh === hour || !isDisabled(sh) ? "#000" : "#6b7280",
+            color:
+              selectedHour === sh
+                ? (theme) => theme.palette.textColor.header
+                : isDisabled(sh)
+                ? (theme) => theme.palette.textColor.disabled
+                : (theme) => theme.palette.textColor.title,
             "&:hover": {
-              backgroundColor: "red",
+              backgroundColor: (theme) => theme.palette.primary.main,
               color: "white",
             },
           }}
           key={idx}
         >{`${sh.toString().padStart(2, "0")}:00`}</Button>
       ))}
-    </div>
+    </Box>
   );
 };
 Shedule.propTypes = {
