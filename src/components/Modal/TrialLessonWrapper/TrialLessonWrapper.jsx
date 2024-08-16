@@ -59,7 +59,6 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
         slotDate.getHours() === selected.getHours()
       );
     });
-    console.log(selectedSlot);
     return selectedSlot;
   };
 
@@ -95,11 +94,21 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
     week.push(day);
   }
 
-  const shiftWeek = (value) => {
-    const date = new Date(monday);
-    date.setDate(date.getDate() + 7 * value);
-    setMonday(date);
-  };
+ const shiftWeek = (value) => {
+   const newMonday = new Date(monday);
+   newMonday.setDate(newMonday.getDate() + 7 * value);
+   setMonday(newMonday);
+ };
+
+ const getFormattedYear = () => {
+   const sunday = endOfWeek(monday, { weekStartsOn: 1 });
+   const mondayYear = monday.getFullYear();
+   const sundayYear = sunday.getFullYear();
+
+   return mondayYear === sundayYear
+     ? mondayYear
+     : `${mondayYear} - ${sundayYear}`;
+ };
 
   const getSelectedHour = (d) => {
     if (!selected) return null;
@@ -133,10 +142,12 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
   };
 
   const sunday = endOfWeek(monday, { weekStartsOn: 1 });
-  const formattedRange = `${format(monday, "dd")} - ${format(
-    sunday,
-    "dd"
-  )} ${format(monday, "MMMM").toLowerCase()}`;
+const formattedRange = `${format(monday, "dd")} - ${format(
+  endOfWeek(monday, { weekStartsOn: 1 }),
+  "dd"
+)} ${format(monday, "MMMM", { locale: getLocale() }).toLowerCase()}`;
+
+const currentYear = getFormattedYear();
 
   const btnArrow = {
     border: "none",
@@ -199,7 +210,7 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
             <Button sx={btnArrow} onClick={() => shiftWeek(+1)}>
               <ChevronRight />
             </Button>
-            <Box>{format(now, "yyyy")}</Box>
+            <Box>{currentYear}</Box>
           </Box>
           <Grid container justifyContent="space-between" sx={{ width: "100%" }}>
             {week.map((el, idx) => (
