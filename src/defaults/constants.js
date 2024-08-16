@@ -38,3 +38,13 @@ export const languageProficiencyLevels = {
     { value: "proficient", label: "Вільне володіння" },
   ],
 };
+
+export const ukDayAbbreviations = {
+  пон: "Пн",
+  вів: "Вт",
+  сер: "Ср",
+  чтв: "Чт",
+  птн: "Пт",
+  суб: "Сб",
+  нед: "Нд",
+};

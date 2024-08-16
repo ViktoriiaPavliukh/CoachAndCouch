@@ -254,6 +254,7 @@ const messages = {
     whereFrom: "Where are you from?",
     nativeLanguage: "What is your native language?",
     learningGoal: "What is your purpose for learning this language?",
+    next: "Continue",
 
     //Admin
     avatar: "Image",
@@ -519,7 +520,8 @@ const messages = {
     chooseLevel: "Оберіть ваш рівень володіння мовою",
     whereFrom: "Звідки ви?",
     nativeLanguage: "Яка ваша рідна мова?",
-    learningGoal: "Яка ваша мета вивчення цієї мови?", 
+    learningGoal: "Яка ваша мета вивчення цієї мови?",
+    next: "Продовжити",
 
     //Admin
     avatar: "Аватарка",

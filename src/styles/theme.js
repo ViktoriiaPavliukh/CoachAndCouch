@@ -103,6 +103,7 @@ const createThemeTemplate = (themeColor) => ({
             red: "#b91c1b",
             listColor: "#1f2937",
             disabled: "#6A7280",
+            scheduleDay: "#4B5563",
           },
         }
       : {
@@ -176,6 +177,7 @@ const createThemeTemplate = (themeColor) => ({
             red: "#b91c1b",
             listColor: "#FFFFFF",
             disabled: "#6C7280",
+            scheduleDay: "#d1d5db",
           },
         },
   typography: {
