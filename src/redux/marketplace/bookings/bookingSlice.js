@@ -3,6 +3,7 @@ import {
   fetchBookings,
   fetchTeacherBookings,
   createBooking,
+  acceptBooking,
 } from "./operations";
 
 const bookingSlice = createSlice({
@@ -48,6 +49,19 @@ const bookingSlice = createSlice({
         state.bookings.push(action.payload);
       })
       .addCase(createBooking.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(acceptBooking.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(acceptBooking.fulfilled, (state, action) => {
+        console.log("Booking accepted successfully:", action.payload);
+        state.loading = false;
+        state.bookings.push(action.payload);
+      })
+      .addCase(acceptBooking.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

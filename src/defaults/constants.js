@@ -21,3 +21,20 @@ export const hobbyOptions = [
   { title: "Фотографія", hobby: "Photography" },
   { title: "Кулінарія", hobby: "Cooking" },
 ];
+
+export const languageProficiencyLevels = {
+  en: [
+    { value: "beginner", label: "Beginner" },
+    { value: "intermediate", label: "Intermediate" },
+    { value: "upperIntermediate", label: "Upper Intermediate" },
+    { value: "advanced", label: "Advanced" },
+    { value: "proficient", label: "Proficient" },
+  ],
+  ua: [
+    { value: "beginner", label: "Початківець" },
+    { value: "intermediate", label: "Середній" },
+    { value: "upperIntermediate", label: "Вище середнього" },
+    { value: "advanced", label: "Просунутий" },
+    { value: "proficient", label: "Вільне володіння" },
+  ],
+};

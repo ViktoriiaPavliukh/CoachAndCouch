@@ -6,3 +6,6 @@ export const selectTeacherBookings = (state) => state.teacherSlots.userBookings;
 export const selectTeacherBookingsLoading = (state) =>
   state.teacherSlots.loading;
 export const selectTeacherBookingsError = (state) => state.teacherSlots.error;
+export const selectTeacherSlots = (state) => state.teacherSlots.slots;
+export const selectTeacherSlotsLoading = (state) => state.teacherSlots.loading;
+export const selectTeacherSlotsError = (state) => state.teacherSlots.error;

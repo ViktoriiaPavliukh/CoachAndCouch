@@ -73,6 +73,7 @@ const createThemeTemplate = (themeColor) => ({
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
             send: "#1F2937",
+            disabled: "#E5E5E5",
           },
           buttonColorComponentFigma: {
             defaultGreen: "#0E5B1D",
@@ -101,6 +102,7 @@ const createThemeTemplate = (themeColor) => ({
             linkHover: "#004305",
             red: "#b91c1b",
             listColor: "#1f2937",
+            disabled: "#6A7280",
           },
         }
       : {
@@ -144,6 +146,7 @@ const createThemeTemplate = (themeColor) => ({
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
             send: "#9CA3AF",
+            disabled: "#A1A1AA",
           },
           buttonColorComponentFigma: {
             defaultGreen: "#387024",
@@ -172,6 +175,7 @@ const createThemeTemplate = (themeColor) => ({
             linkHover: "#CFAC00",
             red: "#b91c1b",
             listColor: "#FFFFFF",
+            disabled: "#6C7280",
           },
         },
   typography: {
