@@ -50,6 +50,7 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
 
   const getSelectedSlotId = () => {
     if (!selected) return null;
+
     const selectedSlot = teacherBookings.find((slot) => {
       const slotDate = new Date(slot.date);
       return (
@@ -59,26 +60,31 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
         slotDate.getHours() === selected.getHours()
       );
     });
+
     return selectedSlot;
   };
 
+  console.log(teacherBookings);
   useEffect(() => {
     if (teacherBookings.length > 0) {
       const newSchedule = new Map();
       teacherBookings.forEach((slot) => {
-        const date = new Date(slot.date);
-        if (!isNaN(date)) {
-          const day = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-          ).getTime();
-          let hours = newSchedule.get(day);
-          if (!hours) {
-            hours = new Set();
-            newSchedule.set(day, hours);
+        if (!slot.isBooked) {
+          // Check if the slot is not booked
+          const date = new Date(slot.date);
+          if (!isNaN(date)) {
+            const day = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate()
+            ).getTime();
+            let hours = newSchedule.get(day);
+            if (!hours) {
+              hours = new Set();
+              newSchedule.set(day, hours);
+            }
+            hours.add(date.getHours());
           }
-          hours.add(date.getHours());
         }
       });
       setSchedule(newSchedule);
@@ -94,21 +100,21 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
     week.push(day);
   }
 
- const shiftWeek = (value) => {
-   const newMonday = new Date(monday);
-   newMonday.setDate(newMonday.getDate() + 7 * value);
-   setMonday(newMonday);
- };
+  const shiftWeek = (value) => {
+    const newMonday = new Date(monday);
+    newMonday.setDate(newMonday.getDate() + 7 * value);
+    setMonday(newMonday);
+  };
 
- const getFormattedYear = () => {
-   const sunday = endOfWeek(monday, { weekStartsOn: 1 });
-   const mondayYear = monday.getFullYear();
-   const sundayYear = sunday.getFullYear();
+  const getFormattedYear = () => {
+    const sunday = endOfWeek(monday, { weekStartsOn: 1 });
+    const mondayYear = monday.getFullYear();
+    const sundayYear = sunday.getFullYear();
 
-   return mondayYear === sundayYear
-     ? mondayYear
-     : `${mondayYear} - ${sundayYear}`;
- };
+    return mondayYear === sundayYear
+      ? mondayYear
+      : `${mondayYear} - ${sundayYear}`;
+  };
 
   const getSelectedHour = (d) => {
     if (!selected) return null;
@@ -142,12 +148,12 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
   };
 
   const sunday = endOfWeek(monday, { weekStartsOn: 1 });
-const formattedRange = `${format(monday, "dd")} - ${format(
-  endOfWeek(monday, { weekStartsOn: 1 }),
-  "dd"
-)} ${format(monday, "MMMM", { locale: getLocale() }).toLowerCase()}`;
+  const formattedRange = `${format(monday, "dd")} - ${format(
+    endOfWeek(monday, { weekStartsOn: 1 }),
+    "dd"
+  )} ${format(monday, "MMMM", { locale: getLocale() }).toLowerCase()}`;
 
-const currentYear = getFormattedYear();
+  const currentYear = getFormattedYear();
 
   const btnArrow = {
     border: "none",
