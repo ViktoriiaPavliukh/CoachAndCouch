@@ -164,7 +164,6 @@ export const MyCalendar = () => {
 
     return {
       style: {
-        backgroundColor: "transparent",
         color: isPast ? "#FFF" : color,
         pointerEvents: isPast ? "none" : "auto",
         opacity: isPast ? 0.5 : 1,

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTeacherSlots } from "@/redux/marketplace/bookings/operations";
+import { useIntl } from "react-intl";
+import { uk, enUS } from "date-fns/locale";
 import {
-  selectTeacherBookings,
   selectTeacherBookingsError,
   selectTeacherBookingsLoading,
 } from "@/redux/marketplace/bookings/selectors";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import FormTrial from "./FormTrial";
+import { ukDayAbbreviations } from "@/defaults";
 
 function getCurrentMonday() {
   const now = new Date();
@@ -23,15 +25,32 @@ function getCurrentMonday() {
 }
 
 export const TrialLessonWrapper = ({ id, teacherBookings }) => {
-  const dispatch = useDispatch();
+  const intl = useIntl();
+  const currentLanguage = useSelector(selectCurrentLanguage);
   const loading = useSelector(selectTeacherBookingsLoading);
   const error = useSelector(selectTeacherBookingsError);
   const [selected, setSelected] = useState(null);
   const [monday, setMonday] = useState(getCurrentMonday());
   const [schedule, setSchedule] = useState(new Map());
   const [isFormModalVisible, setFormModalVisible] = useState(false);
+
+  const getLocale = () => {
+    return currentLanguage === "uk" ? uk : enUS;
+  };
+
+  const getDayAbbreviation = (day) => {
+    const formattedDay = format(day, "EEE", { locale: getLocale() });
+    if (currentLanguage === "uk") {
+      const abbreviation = ukDayAbbreviations[formattedDay];
+      return abbreviation || formattedDay;
+    } else {
+      return formattedDay;
+    }
+  };
+
   const getSelectedSlotId = () => {
     if (!selected) return null;
+
     const selectedSlot = teacherBookings.find((slot) => {
       const slotDate = new Date(slot.date);
       return (
@@ -41,26 +60,29 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
         slotDate.getHours() === selected.getHours()
       );
     });
-    console.log(selectedSlot);
+
     return selectedSlot;
   };
+
   useEffect(() => {
     if (teacherBookings.length > 0) {
       const newSchedule = new Map();
       teacherBookings.forEach((slot) => {
-        const date = new Date(slot.date);
-        if (!isNaN(date)) {
-          const day = new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate()
-          ).getTime();
-          let hours = newSchedule.get(day);
-          if (!hours) {
-            hours = new Set();
-            newSchedule.set(day, hours);
+        if (!slot.isBooked) {
+          const date = new Date(slot.date);
+          if (!isNaN(date)) {
+            const day = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate()
+            ).getTime();
+            let hours = newSchedule.get(day);
+            if (!hours) {
+              hours = new Set();
+              newSchedule.set(day, hours);
+            }
+            hours.add(date.getHours());
           }
-          hours.add(date.getHours());
         }
       });
       setSchedule(newSchedule);
@@ -77,9 +99,19 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
   }
 
   const shiftWeek = (value) => {
-    const date = new Date(monday);
-    date.setDate(date.getDate() + 7 * value);
-    setMonday(date);
+    const newMonday = new Date(monday);
+    newMonday.setDate(newMonday.getDate() + 7 * value);
+    setMonday(newMonday);
+  };
+
+  const getFormattedYear = () => {
+    const sunday = endOfWeek(monday, { weekStartsOn: 1 });
+    const mondayYear = monday.getFullYear();
+    const sundayYear = sunday.getFullYear();
+
+    return mondayYear === sundayYear
+      ? mondayYear
+      : `${mondayYear} - ${sundayYear}`;
   };
 
   const getSelectedHour = (d) => {
@@ -115,9 +147,11 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
 
   const sunday = endOfWeek(monday, { weekStartsOn: 1 });
   const formattedRange = `${format(monday, "dd")} - ${format(
-    sunday,
+    endOfWeek(monday, { weekStartsOn: 1 }),
     "dd"
-  )} ${format(monday, "MMMM").toLowerCase()}`;
+  )} ${format(monday, "MMMM", { locale: getLocale() }).toLowerCase()}`;
+
+  const currentYear = getFormattedYear();
 
   const btnArrow = {
     border: "none",
@@ -142,7 +176,6 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
           position: "absolute",
           top: "55%",
           left: "50%",
-          // backgroundColor: "white",
           backgroundColor: (theme) => theme.palette.background.paper,
           transform: "translate(-50%,-50%)",
           display: isFormModalVisible ? "none" : "flex",
@@ -181,52 +214,51 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
             <Button sx={btnArrow} onClick={() => shiftWeek(+1)}>
               <ChevronRight />
             </Button>
-            <Box>{format(now, "yyyy")}</Box>
+            <Box>{currentYear}</Box>
           </Box>
-          <ul
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
+          <Grid container justifyContent="space-between" sx={{ width: "100%" }}>
             {week.map((el, idx) => (
-              <li key={idx}>
-                <button
-                  style={{
-                    border: "none",
+              <Grid item key={idx}>
+                <Button
+                  variant="text"
+                  sx={{
                     borderRadius: "4px",
                     backgroundColor: "transparent",
-                    color: isSameDay(now, el) ? "#0E5B1D" : "#4b5563",
+                    color: isSameDay(now, el)
+                      ? (theme) => theme.palette.primary.main
+                      : (theme) => theme.palette.textColor.scheduleDay,
                     padding: 0,
+                    minWidth: 0,
                     width: "50px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                   }}
                 >
-                  <p>{format(el, "EE")}</p>
-                  <p>{format(el, "dd")}</p>
-                </button>
-              </li>
+                  <Typography sx={{ textTransform: "capitalize" }}>
+                    {getDayAbbreviation(el)}
+                  </Typography>
+                  <Typography>
+                    {format(el, "dd", { locale: getLocale() })}
+                  </Typography>
+                </Button>
+              </Grid>
             ))}
-          </ul>
-          <ul
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              gap: "39px",
-            }}
-          >
+          </Grid>
+          <Grid container justifyContent="space-between" spacing={5}>
             {week.map((el, idx) => (
-              <li key={idx} style={{ display: "block" }}>
-                <Shedule
-                  day={el}
-                  hour={getSelectedHour(el)}
-                  availableHours={getAvailableHours(el)}
-                  scheduleChanged={setSelected}
-                />
-              </li>
+              <Grid item key={idx}>
+                <Box sx={{ display: "block" }}>
+                  <Shedule
+                    day={el}
+                    hour={getSelectedHour(el)}
+                    availableHours={getAvailableHours(el)}
+                    scheduleChanged={setSelected}
+                  />
+                </Box>
+              </Grid>
             ))}
-          </ul>
+          </Grid>
           <Button
             type="button"
             variant="contained"
@@ -237,7 +269,7 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
             }}
             onClick={handleNextClick}
           >
-            Далі
+            {intl.formatMessage({ id: "next" })}
           </Button>
         </Box>
       </Box>

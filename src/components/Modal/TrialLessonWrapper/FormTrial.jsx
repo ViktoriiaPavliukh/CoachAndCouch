@@ -53,16 +53,17 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
   const [choosenLanguages, setChoosenLanguages] = useState([]);
   const [nativeLanguages, setNativeLanguages] = useState([]);
   const [teachingLevel, setTeachingLevel] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("");
+ const [selectedCountry, setSelectedCountry] = useState(
+   currentUser?.country?.alpha2 || ""
+ );
+
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
-  console.log(bookingDetails);
-  console.log(choosenLanguages[0]?.id);
 
   // useEffect(() => {
   //   dispatch(getLanguages());
   //   dispatch(getSpecializations());
   //   dispatch(getCountries());
-  // }, []);
+  // }, [dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -234,8 +235,8 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
                 .join(", ")
             }
           >
-            {languages &&
-              languages.map((language) => (
+            {teacher?.teachingLanguages &&
+              teacher.teachingLanguages.map((language) => (
                 <MenuItem key={uuidv4()} value={language}>
                   {en === "en" ? language.languageEn : language.languageUa}
                 </MenuItem>
