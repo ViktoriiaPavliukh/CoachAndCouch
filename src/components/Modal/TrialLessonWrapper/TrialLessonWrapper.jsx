@@ -64,13 +64,11 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
     return selectedSlot;
   };
 
-  console.log(teacherBookings);
   useEffect(() => {
     if (teacherBookings.length > 0) {
       const newSchedule = new Map();
       teacherBookings.forEach((slot) => {
         if (!slot.isBooked) {
-          // Check if the slot is not booked
           const date = new Date(slot.date);
           if (!isNaN(date)) {
             const day = new Date(
