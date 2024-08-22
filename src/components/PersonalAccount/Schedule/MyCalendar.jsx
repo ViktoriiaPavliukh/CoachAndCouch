@@ -7,7 +7,7 @@ import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Clock } from "react-feather";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -91,6 +91,17 @@ export const MyCalendar = () => {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
 
+  const eventsList = bookings.map((booking) => ({
+    start: new Date(booking.date),
+    end: new Date(
+      moment(booking.date)
+        .add(booking.duration, "minutes")
+        .add(1, "hour")
+        .toISOString()
+    ),
+    student: booking.student,
+  }));
+  
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
       if (action.payload) {
@@ -231,12 +242,14 @@ export const MyCalendar = () => {
   );
 };
 
-const eventPropGetter = () => {
+const eventPropGetter = (event) => {
   const eventStyle = {
-    backgroundColor: "#60a6fa",
+    backgroundColor: event.student ? "#4185f4" : "transparent",
     border: "none",
-    outline: "none",
-    padding: "8px",
+    borderRadius: "12px",
+    color: "#fff",
+    height: "50px",
+    padding: "10px 10px 60px",
   };
 
   return {
@@ -271,30 +284,46 @@ const CustomDayComponent = ({ date }) => {
 };
 
 const CustomEventComponent = ({ event }) => {
-  const { start, end } = event;
-  return (
-    <div
-      style={{
+  const { start, end, student } = event;
+
+  const studentInfo = student
+    ? `${student.firstName} ${student.lastName}`
+    : null;
+
+  return studentInfo ? (
+    <Box
+      sx={{
         display: "flex",
+        flexDirection: "column",
         gap: "5px",
-        marginTop: "7px",
-        color: "#red",
-        fontSize: "14px",
-        lineHeight: "1.42857",
+        backgroundColor: "#4185f4",
+        color: "#fff",
+        borderRadius: "4px",
+        padding: "0px",
+        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Clock color="#e5e7eb" />
-      <div>
-        {`${moment(start).format("HH:mm")}-${moment(end).format("HH:mm")}`}
-      </div>
-    </div>
-  );
+      <Typography sx={{ fontWeight: "bold" }}>{studentInfo}</Typography>
+      <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+        <Clock color="#e6e7eb" />
+        <Typography sx={{ color: "#f3f4f6" }}>{`${moment(start).format(
+          "HH:mm"
+        )} - ${moment(end).format("HH:mm")}`}</Typography>
+      </Box>
+    </Box>
+  ) : null;
 };
 
 CustomEventComponent.propTypes = {
-  event: PropTypes.object.isRequired,
+  event: PropTypes.shape({
+    start: PropTypes.instanceOf(Date).isRequired,
+    end: PropTypes.instanceOf(Date).isRequired,
+    student: PropTypes.shape({
+      firstName: PropTypes.string,
+      lastName: PropTypes.string,
+    }),
+  }).isRequired,
 };
-
 CustomDayComponent.propTypes = {
   date: PropTypes.object.isRequired,
 };
