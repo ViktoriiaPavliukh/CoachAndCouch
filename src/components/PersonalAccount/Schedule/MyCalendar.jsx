@@ -7,10 +7,11 @@ import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Modal, Button } from "@mui/material";
 import { Clock } from "react-feather";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import { selectCurrentUser } from "@/redux/users/selectors";
 import {
   fetchBookings,
   fetchTeacherBookings,
@@ -82,6 +83,8 @@ export const MyCalendar = () => {
   const error = useSelector(selectBookingError);
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
+  const currentUser = useSelector(selectCurrentUser);
+  console.log(currentUser);
   const culture = language === "en" ? "en" : "ua";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
@@ -89,6 +92,7 @@ export const MyCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
 
   const eventsList = bookings.map((booking) => ({
@@ -101,7 +105,7 @@ export const MyCalendar = () => {
     ),
     student: booking.student,
   }));
-  
+
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
       if (action.payload) {
@@ -120,6 +124,11 @@ export const MyCalendar = () => {
     const now = moment();
 
     if (moment(start).isBefore(now)) {
+      return;
+    }
+
+    if (!currentUser.advert) {
+      setOpenWarningModal(true);
       return;
     }
 
@@ -144,6 +153,10 @@ export const MyCalendar = () => {
       });
     });
     setSelectedSlots([]);
+  };
+
+  const handleCloseModal = () => {
+    setOpenWarningModal(false);
   };
 
   useEffect(() => {
@@ -238,6 +251,37 @@ export const MyCalendar = () => {
         onConfirm={handleCreateBooking}
         slot={selectedSlots[0]}
       />
+      <Modal
+        open={openWarningModal}
+        onClose={handleCloseModal}
+        aria-labelledby="teacher-only-warning"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
+            borderRadius: "8px",
+            boxShadow: 24,
+            p: 4,
+            textAlign: "center",
+          }}
+        >
+          <Typography id="teacher-only-warning" variant="h6">
+            Only teachers can add slots.
+          </Typography>
+          <Button
+            type="button"
+            variant="contained"
+            onClick={handleCloseModal}
+            sx={{ mt: "10px" }}
+          >
+            Close
+          </Button>
+        </Box>
+      </Modal>
     </div>
   );
 };
