@@ -23,6 +23,7 @@ import {
   selectBookingError,
 } from "@/redux/marketplace/bookings/selectors";
 import ConfirmModal from "./ConfirmModal";
+import TeacherOnlyModal from "./TeacherOnlyModal";
 
 const localizer = momentLocalizer(moment);
 const eventsList = [];
@@ -251,37 +252,7 @@ export const MyCalendar = () => {
         onConfirm={handleCreateBooking}
         slot={selectedSlots[0]}
       />
-      <Modal
-        open={openWarningModal}
-        onClose={handleCloseModal}
-        aria-labelledby="teacher-only-warning"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            bgcolor: "background.paper",
-            borderRadius: "8px",
-            boxShadow: 24,
-            p: 4,
-            textAlign: "center",
-          }}
-        >
-          <Typography id="teacher-only-warning" variant="h6">
-            Only teachers can add slots.
-          </Typography>
-          <Button
-            type="button"
-            variant="contained"
-            onClick={handleCloseModal}
-            sx={{ mt: "10px" }}
-          >
-            Close
-          </Button>
-        </Box>
-      </Modal>
+      <TeacherOnlyModal open={openWarningModal} onClose={handleCloseModal} />
     </div>
   );
 };
