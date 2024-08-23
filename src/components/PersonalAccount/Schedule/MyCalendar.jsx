@@ -22,6 +22,7 @@ import {
   selectBookingLoading,
   selectBookingError,
 } from "@/redux/marketplace/bookings/selectors";
+import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 
@@ -85,7 +86,6 @@ export const MyCalendar = () => {
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
-  console.log(currentUser);
   const culture = language === "en" ? "en" : "ua";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
@@ -114,6 +114,11 @@ export const MyCalendar = () => {
       }
     });
   }, [dispatch]);
+  useEffect(() => {
+    if (!currentUser || Object.keys(currentUser).length === 0) {
+      dispatch(getCurrentUser());
+    }
+  }, [currentUser, dispatch]);
 
   useEffect(() => {
     const startDate = moment().startOf("week").toISOString();

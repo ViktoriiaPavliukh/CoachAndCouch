@@ -1,8 +1,10 @@
 import React from "react";
+import { useIntl } from "react-intl";
 import { Modal, Box, Typography, Button } from "@mui/material";
 import PropTypes from "prop-types";
 
 const TeacherOnlyModal = ({ open, onClose }) => {
+  const intl = useIntl();
   return (
     <Modal open={open} onClose={onClose} aria-labelledby="teacher-only-warning">
       <Box
@@ -18,16 +20,14 @@ const TeacherOnlyModal = ({ open, onClose }) => {
           textAlign: "center",
         }}
       >
-        <Typography id="teacher-only-warning" variant="h6">
-          Only teachers can add slots.
-        </Typography>
+        <Typography>{intl.formatMessage({ id: "onlyTeachers" })}</Typography>
         <Button
           type="button"
           variant="contained"
           onClick={onClose}
-          sx={{ mt: "10px" }}
+          sx={{ mt: "20px" }}
         >
-          Close
+          {intl.formatMessage({ id: "closeBtn" })}
         </Button>
       </Box>
     </Modal>

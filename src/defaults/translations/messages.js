@@ -177,6 +177,8 @@ const messages = {
     goBack: "Go back",
     fillAdv: "Fill out the form",
     payBtn: "Pay",
+    closeBtn: "Close",
+    confirmBtn: "Confirm",
 
     //Status
     online: "Online",
@@ -255,6 +257,9 @@ const messages = {
     nativeLanguage: "What is your native language?",
     learningGoal: "What is your purpose for learning this language?",
     next: "Continue",
+    onlyTeachers: "Only teachers can add slots",
+    confirmSlot: "Confirm slot",
+    addSlot: "Do you want to add this slot: ",
 
     //Admin
     avatar: "Image",
@@ -422,7 +427,6 @@ const messages = {
     errorSubtitle: "Перевірте URL адресу сторінки або поверніться на головну",
 
     // Setings
-
     theme: "Тема",
     darkTheme: "Темна тема",
     lightTheme: "Світла тема",
@@ -444,6 +448,8 @@ const messages = {
     goBack: "Повернутись назад",
     fillAdv: "Заповнити анкету",
     payBtn: "Сплатити",
+    closeBtn: "Закрити",
+    confirmBtn: "Підтвердити",
 
     //Status
     online: "У мережі",
@@ -522,6 +528,9 @@ const messages = {
     nativeLanguage: "Яка ваша рідна мова?",
     learningGoal: "Яка ваша мета вивчення цієї мови?",
     next: "Продовжити",
+    onlyTeachers: "Тільки викладачі можуть додавати слоти",
+    confirmSlot: "Підтвердити слот",
+    addSlot: "Ви хочете додати цей слот: ",
 
     //Admin
     avatar: "Аватарка",
