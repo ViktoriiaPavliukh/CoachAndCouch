@@ -7,10 +7,11 @@ import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Modal, Button } from "@mui/material";
 import { Clock } from "react-feather";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
+import { selectCurrentUser } from "@/redux/users/selectors";
 import {
   fetchBookings,
   fetchTeacherBookings,
@@ -21,55 +22,13 @@ import {
   selectBookingLoading,
   selectBookingError,
 } from "@/redux/marketplace/bookings/selectors";
+import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
+import TeacherOnlyModal from "./TeacherOnlyModal";
+import momentLocale from "@/helpers/momentLocale";
 
 const localizer = momentLocalizer(moment);
 const eventsList = [];
-
-moment.locale("ua", {
-  week: {
-    dow: 1,
-    doy: 1,
-  },
-  weekdays: [
-    "Неділя",
-    "Понеділок",
-    "Вівторок",
-    "Середа",
-    "Четвер",
-    "П'ятниця",
-    "Субота",
-  ],
-  weekdaysShort: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-  months: [
-    "Січень",
-    "Лютий",
-    "Березень",
-    "Квітень",
-    "Травень",
-    "Червень",
-    "Липень",
-    "Серпень",
-    "Вересень",
-    "Жовтень",
-    "Листопад",
-    "Грудень",
-  ],
-  monthsShort: [
-    "Січ",
-    "Лют",
-    "Бер",
-    "Кві",
-    "Тра",
-    "Чер",
-    "Лип",
-    "Сер",
-    "Вер",
-    "Жов",
-    "Лис",
-    "Гру",
-  ],
-});
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -82,6 +41,7 @@ export const MyCalendar = () => {
   const error = useSelector(selectBookingError);
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
+  const currentUser = useSelector(selectCurrentUser);
   const culture = language === "en" ? "en" : "ua";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
@@ -89,6 +49,7 @@ export const MyCalendar = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
+  const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
 
   const eventsList = bookings.map((booking) => ({
@@ -101,7 +62,7 @@ export const MyCalendar = () => {
     ),
     student: booking.student,
   }));
-  
+
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
       if (action.payload) {
@@ -109,6 +70,16 @@ export const MyCalendar = () => {
       }
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!currentUser || Object.keys(currentUser).length === 0) {
+      dispatch(getCurrentUser());
+    }
+  }, [currentUser, dispatch]);
+
+  useEffect(() => {
+    momentLocale(language);
+  }, [language]);
 
   useEffect(() => {
     const startDate = moment().startOf("week").toISOString();
@@ -120,6 +91,11 @@ export const MyCalendar = () => {
     const now = moment();
 
     if (moment(start).isBefore(now)) {
+      return;
+    }
+
+    if (!currentUser.advert) {
+      setOpenWarningModal(true);
       return;
     }
 
@@ -144,6 +120,10 @@ export const MyCalendar = () => {
       });
     });
     setSelectedSlots([]);
+  };
+
+  const handleCloseModal = () => {
+    setOpenWarningModal(false);
   };
 
   useEffect(() => {
@@ -238,6 +218,7 @@ export const MyCalendar = () => {
         onConfirm={handleCreateBooking}
         slot={selectedSlots[0]}
       />
+      <TeacherOnlyModal open={openWarningModal} onClose={handleCloseModal} />
     </div>
   );
 };
