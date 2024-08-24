@@ -25,54 +25,10 @@ import {
 import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
+import momentLocale from "@/helpers/momentLocale";
 
 const localizer = momentLocalizer(moment);
 const eventsList = [];
-
-moment.locale("ua", {
-  week: {
-    dow: 1,
-    doy: 1,
-  },
-  weekdays: [
-    "Неділя",
-    "Понеділок",
-    "Вівторок",
-    "Середа",
-    "Четвер",
-    "П'ятниця",
-    "Субота",
-  ],
-  weekdaysShort: ["Нд", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"],
-  months: [
-    "Січень",
-    "Лютий",
-    "Березень",
-    "Квітень",
-    "Травень",
-    "Червень",
-    "Липень",
-    "Серпень",
-    "Вересень",
-    "Жовтень",
-    "Листопад",
-    "Грудень",
-  ],
-  monthsShort: [
-    "Січ",
-    "Лют",
-    "Бер",
-    "Кві",
-    "Тра",
-    "Чер",
-    "Лип",
-    "Сер",
-    "Вер",
-    "Жов",
-    "Лис",
-    "Гру",
-  ],
-});
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -114,11 +70,16 @@ export const MyCalendar = () => {
       }
     });
   }, [dispatch]);
+
   useEffect(() => {
     if (!currentUser || Object.keys(currentUser).length === 0) {
       dispatch(getCurrentUser());
     }
   }, [currentUser, dispatch]);
+
+  useEffect(() => {
+    momentLocale(language);
+  }, [language]);
 
   useEffect(() => {
     const startDate = moment().startOf("week").toISOString();
