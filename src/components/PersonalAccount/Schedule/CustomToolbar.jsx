@@ -43,7 +43,7 @@ export const CustomToolbar = ({
 
   const formatLabel = () => {
     moment.locale("uk");
-    const view = onView.name; // Check the view name (month, week, day, etc.)
+    const view = onView.name; 
     if (view === "month") {
       return moment(date).format("MMMM YYYY");
     } else if (view === "week") {

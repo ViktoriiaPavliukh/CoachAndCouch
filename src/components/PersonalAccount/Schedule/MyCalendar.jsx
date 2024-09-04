@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import "moment/locale/uk";
+import "moment/locale/en-gb";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
 import { Box, Typography, Modal, Button } from "@mui/material";
@@ -27,7 +29,6 @@ import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
 
-const localizer = momentLocalizer(moment);
 const eventsList = [];
 
 let formats = {
@@ -42,7 +43,7 @@ export const MyCalendar = () => {
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
-  const culture = language === "en" ? "en" : "ua";
+  const culture = language === "en" ? "en" : "uk";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
 
@@ -62,7 +63,6 @@ export const MyCalendar = () => {
     ),
     student: booking.student,
   }));
-
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
       if (action.payload) {
@@ -72,6 +72,12 @@ export const MyCalendar = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    moment.locale(culture);
+  }, [culture]);
+
+  const localizer = useMemo(() => momentLocalizer(moment), [culture]);
+
+  useEffect(() => {
     if (!currentUser || Object.keys(currentUser).length === 0) {
       dispatch(getCurrentUser());
     }
@@ -79,6 +85,7 @@ export const MyCalendar = () => {
 
   useEffect(() => {
     momentLocale(language);
+    moment.locale(culture); 
   }, [language]);
 
   useEffect(() => {
