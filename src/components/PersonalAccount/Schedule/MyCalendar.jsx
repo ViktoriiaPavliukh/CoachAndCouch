@@ -17,19 +17,23 @@ import { selectCurrentUser } from "@/redux/users/selectors";
 import {
   fetchBookings,
   fetchTeacherBookings,
+  fetchStudentBookings,
   createBooking,
 } from "@/redux/marketplace/bookings/operations";
 import {
   selectBookings,
   selectBookingLoading,
   selectBookingError,
+  selectStudentBookings,
+  selectStudentBookingsLoading,
+  selectStudentBookingsError,
 } from "@/redux/marketplace/bookings/selectors";
 import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
 
-const eventsList = [];
+// const eventsList = [];
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -46,14 +50,14 @@ export const MyCalendar = () => {
   const culture = language === "en" ? "en" : "uk";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
-
+  const studentBookings = useSelector(selectStudentBookings);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
 
-  const eventsList = bookings.map((booking) => ({
+  const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
     end: new Date(
       moment(booking.date)
@@ -61,8 +65,9 @@ export const MyCalendar = () => {
         .add(1, "hour")
         .toISOString()
     ),
-    student: booking.student,
+    student: booking.student || booking.teacher,
   }));
+
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
       if (action.payload) {
@@ -70,6 +75,9 @@ export const MyCalendar = () => {
       }
     });
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchStudentBookings(currentUser.id));
+  }, [dispatch, currentUser.id]);
 
   useEffect(() => {
     moment.locale(culture);
@@ -85,7 +93,7 @@ export const MyCalendar = () => {
 
   useEffect(() => {
     momentLocale(language);
-    moment.locale(culture); 
+    moment.locale(culture);
   }, [language]);
 
   useEffect(() => {

@@ -9,3 +9,7 @@ export const selectTeacherBookingsError = (state) => state.teacherSlots.error;
 export const selectTeacherSlots = (state) => state.teacherSlots.slots;
 export const selectTeacherSlotsLoading = (state) => state.teacherSlots.loading;
 export const selectTeacherSlotsError = (state) => state.teacherSlots.error;
+export const selectStudentBookings = (state) => state.bookings.studentBookings;
+export const selectStudentBookingsLoading = (state) => state.bookings.loading;
+export const selectStudentBookingsError = (state) => state.bookings.error;
+
