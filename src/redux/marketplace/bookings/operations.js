@@ -38,6 +38,24 @@ export const fetchTeacherBookings = createAsyncThunk(
   }
 );
 
+export const fetchStudentBookings = createAsyncThunk(
+  "bookings/fetchStudenBookings",
+  async (studentId, thunkAPI) => {
+    try {
+      console.log(studentId);
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      privateAPI.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${persistToken}`;
+      const { data } = await privateAPI.get(`/booking/${studentId}`);
+      console.log(data);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const createBooking = createAsyncThunk(
   "bookings/createBooking",
   async ({ timeslots }, thunkAPI) => {

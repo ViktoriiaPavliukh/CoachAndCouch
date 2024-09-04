@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
+import "moment/locale/uk";
+import "moment/locale/en-gb";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
 import { Box, Typography, Modal, Button } from "@mui/material";
@@ -15,20 +17,23 @@ import { selectCurrentUser } from "@/redux/users/selectors";
 import {
   fetchBookings,
   fetchTeacherBookings,
+  fetchStudentBookings,
   createBooking,
 } from "@/redux/marketplace/bookings/operations";
 import {
   selectBookings,
   selectBookingLoading,
   selectBookingError,
+  selectStudentBookings,
+  selectStudentBookingsLoading,
+  selectStudentBookingsError,
 } from "@/redux/marketplace/bookings/selectors";
 import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
 
-const localizer = momentLocalizer(moment);
-const eventsList = [];
+// const eventsList = [];
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -42,17 +47,17 @@ export const MyCalendar = () => {
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
-  const culture = language === "en" ? "en" : "ua";
+  const culture = language === "en" ? "en" : "uk";
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
-
+  const studentBookings = useSelector(selectStudentBookings);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
 
-  const eventsList = bookings.map((booking) => ({
+  const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
     end: new Date(
       moment(booking.date)
@@ -60,7 +65,7 @@ export const MyCalendar = () => {
         .add(1, "hour")
         .toISOString()
     ),
-    student: booking.student,
+    student: booking.student || booking.teacher,
   }));
 
   useEffect(() => {
@@ -70,6 +75,15 @@ export const MyCalendar = () => {
       }
     });
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchStudentBookings(currentUser.id));
+  }, [dispatch, currentUser.id]);
+
+  useEffect(() => {
+    moment.locale(culture);
+  }, [culture]);
+
+  const localizer = useMemo(() => momentLocalizer(moment), [culture]);
 
   useEffect(() => {
     if (!currentUser || Object.keys(currentUser).length === 0) {
@@ -79,6 +93,7 @@ export const MyCalendar = () => {
 
   useEffect(() => {
     momentLocale(language);
+    moment.locale(culture);
   }, [language]);
 
   useEffect(() => {

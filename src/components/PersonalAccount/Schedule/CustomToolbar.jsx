@@ -1,7 +1,8 @@
 import { PropTypes } from "prop-types";
 import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
-
+import moment from "moment";
+import "moment/locale/uk";
 import { Divider, FormControl, MenuItem, Select } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import { useEffect, useState } from "react";
@@ -39,6 +40,20 @@ export const CustomToolbar = ({
   useEffect(() => {
     setYearFilter(yearCurrent);
   }, [yearCurrent]);
+
+  const formatLabel = () => {
+    moment.locale("uk");
+    const view = onView.name; 
+    if (view === "month") {
+      return moment(date).format("MMMM YYYY");
+    } else if (view === "week") {
+      const startOfWeek = moment(date).startOf("week").format("D MMM");
+      const endOfWeek = moment(date).endOf("week").format("D MMM YYYY");
+      return `${startOfWeek} - ${endOfWeek}`;
+    } else {
+      return label; // Default to the provided label for other views
+    }
+  };
   return (
     <div className="rbc-toolbar ">
       <div className="rbc-btn-group rbc-btn-group-flex">
@@ -66,7 +81,7 @@ export const CustomToolbar = ({
               : darkTheme.palette.textColor.fontColor,
           }}
         >
-          {label}
+          {formatLabel()}
         </span>
         <FormControl sx={{ width: "80px", marginLeft: "20px" }}>
           <Select
