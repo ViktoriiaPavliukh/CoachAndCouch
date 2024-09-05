@@ -64,18 +64,25 @@ export function Card() {
     if (teacherId) {
       dispatch(getAdvertById(teacherId));
       dispatch(fetchTeacherSlots(teacherId));
-      dispatch(fetchStudentBookings(currentUser.id));
     }
   }, [dispatch, teacherId]);
 
   useEffect(() => {
-    if (studentBookings && currentUser?.id) {
+    if (currentUser?.id) {
+      dispatch(fetchStudentBookings(currentUser.id));
+    }
+  }, [dispatch, currentUser?.id]);
+
+  useEffect(() => {
+    if (studentBookings.length > 0 && teacherId) {
       const hasBookedBefore = studentBookings.some(
         (booking) => booking.advert.id.toString() === teacherId
       );
+
+      console.log(hasBookedBefore);
       setIsFirstTimeBooking(!hasBookedBefore);
     }
-  }, [studentBookings, currentUser, teacherId]);
+  }, [studentBookings, teacherId, currentUser]);
 
   const handleFavoriteAdd = async (id) => {
     try {
@@ -320,11 +327,7 @@ export function Card() {
                   }}
                 >
                   <Button
-                    onClick={() =>
-                      onShowModalClick(
-                        isFirstTimeBooking ? "trialLesson" : "bookLesson"
-                      )
-                    }
+                    onClick={() => onShowModalClick("trialLesson")}
                     type="button"
                     variant="contained"
                     sx={{
@@ -389,6 +392,7 @@ export function Card() {
                 onBackdropClose={onBackdropClose}
                 contentType={modalContentType}
                 teacherBookings={teacherBookings}
+                isFirstTimeBooking={isFirstTimeBooking}
               />
             )}
           </>

@@ -11,12 +11,13 @@ export const Modal = ({
   id,
   isOpen,
   teacherBookings,
+  isFirstTimeBooking,
 }) => {
   useEffect(() => {
     const handleNoScroll = () => {
       document.body.style.overflow = isOpen ? "hidden" : "auto";
     };
-
+console.log(isFirstTimeBooking)
     const handlePressEsc = (e) => {
       if (e.code === "Escape") {
         onBackdropClose();
@@ -46,7 +47,7 @@ export const Modal = ({
       case "sendMessage":
         return <SendMessageWrapper id={id} onBackdropClose={onBackdropClose} />;
       case "trialLesson":
-        return <TrialLessonWrapper id={id} teacherBookings={teacherBookings} />;
+        return <TrialLessonWrapper id={id} teacherBookings={teacherBookings} isFirstTimeBooking={isFirstTimeBooking}/>;
       default:
         return null;
     }
