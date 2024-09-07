@@ -26,7 +26,14 @@ import { Stack } from "@mui/system";
 import useStatus from "@/hooks/useStatus";
 import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
 import {
+  fetchBookings,
+  fetchTeacherBookings,
+  fetchStudentBookings,
+  createBooking,
+} from "@/redux/marketplace/bookings/operations";
+import {
   selectTeacherBookings,
+  selectStudentBookings,
   selectTeacherBookingsError,
   selectTeacherBookingsLoading,
 } from "@/redux/marketplace/bookings/selectors";
@@ -37,11 +44,14 @@ export function Card() {
   const en = useSelector(selectCurrentLanguage);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+  const [isFirstTimeBooking, setIsFirstTimeBooking] = useState(true);
   const currentUser = useSelector(selectCurrentUser);
   const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
   const teacherBookings = useSelector(selectTeacherBookings);
+  const studentBookings = useSelector(selectStudentBookings);
+
   const lastVisit = teacher?.user?.lastVisit;
   const userLike = teacher?.likes?.some(
     (like) => like.user.id === currentUser.id
@@ -56,6 +66,23 @@ export function Card() {
       dispatch(fetchTeacherSlots(teacherId));
     }
   }, [dispatch, teacherId]);
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      dispatch(fetchStudentBookings(currentUser.id));
+    }
+  }, [dispatch, currentUser?.id]);
+
+  useEffect(() => {
+    if (studentBookings.length > 0 && teacherId) {
+      const hasBookedBefore = studentBookings.some(
+        (booking) => booking.advert.id.toString() === teacherId
+      );
+
+      console.log(hasBookedBefore);
+      setIsFirstTimeBooking(!hasBookedBefore);
+    }
+  }, [studentBookings, teacherId, currentUser]);
 
   const handleFavoriteAdd = async (id) => {
     try {
@@ -310,7 +337,9 @@ export function Card() {
                     }}
                   >
                     <Typography variant="posterButton">
-                      {intl.formatMessage({ id: "trialLessonBtn" })}
+                      {isFirstTimeBooking
+                        ? intl.formatMessage({ id: "trialLessonBtn" })
+                        : intl.formatMessage({ id: "bookLesson" })}
                     </Typography>
                   </Button>
                   <MessageBtn
@@ -363,6 +392,7 @@ export function Card() {
                 onBackdropClose={onBackdropClose}
                 contentType={modalContentType}
                 teacherBookings={teacherBookings}
+                isFirstTimeBooking={isFirstTimeBooking}
               />
             )}
           </>

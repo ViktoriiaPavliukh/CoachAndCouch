@@ -42,7 +42,6 @@ export const fetchStudentBookings = createAsyncThunk(
   "bookings/fetchStudenBookings",
   async (studentId, thunkAPI) => {
     try {
-      console.log(studentId);
       const persistToken = thunkAPI.getState().auth.accessToken;
       privateAPI.defaults.headers.common[
         "Authorization"

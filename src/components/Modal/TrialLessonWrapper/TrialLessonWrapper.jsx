@@ -24,7 +24,11 @@ function getCurrentMonday() {
   return mon;
 }
 
-export const TrialLessonWrapper = ({ id, teacherBookings }) => {
+export const TrialLessonWrapper = ({
+  id,
+  teacherBookings,
+  isFirstTimeBooking,
+}) => {
   const intl = useIntl();
   const currentLanguage = useSelector(selectCurrentLanguage);
   const loading = useSelector(selectTeacherBookingsLoading);
@@ -167,6 +171,7 @@ export const TrialLessonWrapper = ({ id, teacherBookings }) => {
           selected={selected}
           onClose={handleCloseModal}
           bookingDetails={getSelectedSlotId()}
+          isFirstTimeBooking={isFirstTimeBooking}
         />
       )}
       <Box

@@ -260,6 +260,7 @@ const messages = {
     onlyTeachers: "Only teachers can add slots",
     confirmSlot: "Confirm slot",
     addSlot: "Do you want to add this slot: ",
+    bookLesson: "Book lesson",
 
     //Admin
     avatar: "Image",
@@ -531,6 +532,7 @@ const messages = {
     onlyTeachers: "Тільки викладачі можуть додавати слоти",
     confirmSlot: "Підтвердити слот",
     addSlot: "Ви хочете додати цей слот: ",
+    bookLesson: "Забронювати урок",
 
     //Admin
     avatar: "Аватарка",

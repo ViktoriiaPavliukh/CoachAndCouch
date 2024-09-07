@@ -38,8 +38,14 @@ import countries from "../../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 import { acceptBooking } from "@/redux/marketplace/bookings/operations";
 
-export default function FormTrial({ selected, onClose, bookingDetails }) {
+export default function FormTrial({
+  selected,
+  onClose,
+  bookingDetails,
+  isFirstTimeBooking,
+}) {
   const intl = useIntl();
+  console.log(isFirstTimeBooking);
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
   const { id: teacherId } = useParams();
@@ -49,14 +55,12 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
   const specializations = useSelector(specializationsSelector);
   const teacher = useSelector(advertByIdSelector);
   const formattedDateTime = useFormattedDate(selected);
-
   const [choosenLanguages, setChoosenLanguages] = useState([]);
   const [nativeLanguages, setNativeLanguages] = useState([]);
   const [teachingLevel, setTeachingLevel] = useState("");
- const [selectedCountry, setSelectedCountry] = useState(
-   currentUser?.country?.alpha2 || ""
- );
-
+  const [selectedCountry, setSelectedCountry] = useState(
+    currentUser?.country?.alpha2 || ""
+  );
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
 
   // useEffect(() => {
@@ -69,10 +73,10 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
     event.preventDefault();
 
     const selectedLanguageObj = languages.find(
-      (lang) => lang.id === choosenLanguages[0].id
+      (lang) => lang.id === choosenLanguages.id
     );
     const selectedNativeObj = languages.find(
-      (lang) => lang.id === nativeLanguages[0].id
+      (lang) => lang.id === nativeLanguages[0]?.id
     );
     const selectedCountryObj = countries.find(
       (country) => country.alpha2 === selectedCountry
@@ -94,20 +98,17 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
           : selectedNativeObj.languageUa
         : "",
     };
-
     const dataToPost = {
       bookingId: bookingDetails.id,
-      languageId: choosenLanguages[0].id,
+      languageId: choosenLanguages.id,
       info,
     };
-
-    console.log("Data to be posted:", dataToPost);
 
     dispatch(acceptBooking(dataToPost))
       .unwrap()
       .then((response) => {
         console.log("Booking successful:", response);
-        // onClose();
+        onClose();
       })
       .catch((error) => {
         console.error("Booking failed:", error);
@@ -215,7 +216,7 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
           {intl.formatMessage({ id: "priceSchedule" })}: {teacher?.price} USD
         </Typography>
         <Divider sx={{ marginTop: "4px", marginBottom: "8px" }} />
-        <Typography> {intl.formatMessage({ id: "formDetails" })}</Typography>
+        <Typography>{intl.formatMessage({ id: "formDetails" })}</Typography>
         <FormControl fullWidth variant="outlined">
           <InputLabel>
             {intl.formatMessage({ id: "chooseLanguage" })}
@@ -224,15 +225,10 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
             id="choosenLanguages"
             name="choosenLanguages"
             label={intl.formatMessage({ id: "chooseLanguage" })}
-            multiple
             value={choosenLanguages}
             onChange={handleChoosenLanguagesChange}
-            renderValue={(selected) =>
-              selected
-                .map((language) =>
-                  en === "en" ? language.languageEn : language.languageUa
-                )
-                .join(", ")
+            renderValue={(language) =>
+              en === "en" ? language.languageEn : language.languageUa
             }
           >
             {teacher?.teachingLanguages &&
@@ -243,135 +239,147 @@ export default function FormTrial({ selected, onClose, bookingDetails }) {
               ))}
           </Select>
         </FormControl>
-        <FormControl fullWidth variant="outlined">
-          <InputLabel>{intl.formatMessage({ id: "chooseLevel" })}</InputLabel>
-          <Select
-            id="teachingLevel"
-            name="teachingLevel"
-            label={intl.formatMessage({ id: "chooseLevel" })}
-            value={teachingLevel}
-            onChange={handleTeachingLevelChange}
-            renderValue={(selected) =>
-              proficiencyLevels.find((item) => item.value === selected)
-                ?.label || ""
-            }
-          >
-            {proficiencyLevels.map((level) => (
-              <MenuItem key={uuidv4()} value={level.value}>
-                {level.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: { xs: "column", lg: "row" },
-            gap: { xs: "20px", lg: "64px" },
-          }}
-        >
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>{intl.formatMessage({ id: "whereFrom" })}</InputLabel>
-            <Select
-              id="country"
-              name="country"
-              label="whereFrom"
-              value={selectedCountry}
-              onChange={handleCountryChange}
-              renderValue={(selected) => {
-                const selectedCountry = countries.find(
-                  (el) => el.alpha2 === selected
-                );
-                return selectedCountry
-                  ? en === "en"
-                    ? selectedCountry.nameEng
-                    : countriesCase(selectedCountry.nameShort)
-                  : selected;
-              }}
-            >
-              {countriesList &&
-                countriesList.map((country) => {
-                  const fullCountry = countries.find(
-                    (el) => el.alpha2 === country.alpha2
-                  );
-                  if (fullCountry) {
-                    return (
-                      <MenuItem key={country.alpha2} value={country.alpha2}>
-                        {en === "en"
-                          ? fullCountry.nameEng
-                          : countriesCase(fullCountry.nameShort)}
-                      </MenuItem>
-                    );
-                  } else {
-                    return null;
-                  }
-                })}
-            </Select>
-          </FormControl>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel>
-              {intl.formatMessage({ id: "nativeLanguage" })}
-            </InputLabel>
-            <Select
-              id="nativeLanguage"
-              name="nativeLanguage"
-              label={intl.formatMessage({ id: "nativeLanguage" })}
-              multiple
-              value={nativeLanguages}
-              onChange={handleNativeLanguagesChange}
-              renderValue={(selected) =>
-                selected
-                  .map((language) =>
-                    en === "en" ? language.languageEn : language.languageUa
-                  )
-                  .join(", ")
-              }
-            >
-              {languages &&
-                languages.map((language) => (
-                  <MenuItem key={uuidv4()} value={language}>
-                    {en === "en" ? language.languageEn : language.languageUa}
+        {isFirstTimeBooking && (
+          <>
+            <FormControl fullWidth variant="outlined">
+              <InputLabel>
+                {intl.formatMessage({ id: "chooseLevel" })}
+              </InputLabel>
+              <Select
+                id="teachingLevel"
+                name="teachingLevel"
+                label={intl.formatMessage({ id: "chooseLevel" })}
+                value={teachingLevel}
+                onChange={handleTeachingLevelChange}
+                renderValue={(selected) =>
+                  proficiencyLevels.find((item) => item.value === selected)
+                    ?.label || ""
+                }
+              >
+                {proficiencyLevels.map((level) => (
+                  <MenuItem key={uuidv4()} value={level.value}>
+                    {level.label}
                   </MenuItem>
                 ))}
-            </Select>
-          </FormControl>
-        </Stack>
-        <Typography> {intl.formatMessage({ id: "learningGoal" })}</Typography>
-        <Stack
-          sx={{
-            display: "flex",
-            flexDirection: {
-              xs: "column",
-              lg: "row",
-              flexWrap: "wrap",
-              gap: "18px 64px",
-            },
-          }}
-        >
-          {specializations &&
-            specializations.map((specialization) => (
-              <Button
-                key={uuidv4()}
-                variant={
-                  selectedSpecializations.includes(specialization)
-                    ? "contained"
-                    : "outlined"
-                }
-                sx={{ width: { lg: "47%" } }}
-                onClick={() => handleSpecializationClick(specialization)}
-              >
-                {en === "en"
-                  ? specialization.specializationEn
-                  : specialization.specializationUa}
-              </Button>
-            ))}
-        </Stack>
+              </Select>
+            </FormControl>
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", lg: "row" },
+                gap: { xs: "20px", lg: "64px" },
+              }}
+            >
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>
+                  {intl.formatMessage({ id: "whereFrom" })}
+                </InputLabel>
+                <Select
+                  id="country"
+                  name="country"
+                  label="whereFrom"
+                  value={selectedCountry}
+                  onChange={handleCountryChange}
+                  renderValue={(selected) => {
+                    const selectedCountry = countries.find(
+                      (el) => el.alpha2 === selected
+                    );
+                    return selectedCountry
+                      ? en === "en"
+                        ? selectedCountry.nameEng
+                        : countriesCase(selectedCountry.nameShort)
+                      : selected;
+                  }}
+                >
+                  {countriesList &&
+                    countriesList.map((country) => {
+                      const fullCountry = countries.find(
+                        (el) => el.alpha2 === country.alpha2
+                      );
+                      if (fullCountry) {
+                        return (
+                          <MenuItem key={country.alpha2} value={country.alpha2}>
+                            {en === "en"
+                              ? fullCountry.nameEng
+                              : countriesCase(fullCountry.nameShort)}
+                          </MenuItem>
+                        );
+                      } else {
+                        return null;
+                      }
+                    })}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>
+                  {intl.formatMessage({ id: "nativeLanguage" })}
+                </InputLabel>
+                <Select
+                  id="nativeLanguage"
+                  name="nativeLanguage"
+                  label={intl.formatMessage({ id: "nativeLanguage" })}
+                  multiple
+                  value={nativeLanguages}
+                  onChange={handleNativeLanguagesChange}
+                  renderValue={(selected) =>
+                    selected
+                      .map((language) =>
+                        en === "en" ? language.languageEn : language.languageUa
+                      )
+                      .join(", ")
+                  }
+                >
+                  {languages &&
+                    languages.map((language) => (
+                      <MenuItem key={uuidv4()} value={language}>
+                        {en === "en"
+                          ? language.languageEn
+                          : language.languageUa}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Stack>
+            <Typography>
+              {intl.formatMessage({ id: "learningGoal" })}
+            </Typography>
+            <Stack
+              sx={{
+                display: "flex",
+                flexDirection: {
+                  xs: "column",
+                  lg: "row",
+                  flexWrap: "wrap",
+                  gap: "18px 64px",
+                },
+              }}
+            >
+              {specializations &&
+                specializations.map((specialization) => (
+                  <Button
+                    key={uuidv4()}
+                    variant={
+                      selectedSpecializations.includes(specialization)
+                        ? "contained"
+                        : "outlined"
+                    }
+                    sx={{ width: { lg: "47%" } }}
+                    onClick={() => handleSpecializationClick(specialization)}
+                  >
+                    {en === "en"
+                      ? specialization.specializationEn
+                      : specialization.specializationUa}
+                  </Button>
+                ))}
+            </Stack>
+          </>
+        )}
         <Button
           type="submit"
           variant="contained"
           sx={{ width: "220px", margin: "0 auto" }}
         >
-          {intl.formatMessage({ id: "payBtn" })}
+          {intl.formatMessage({ id: "bookLesson" })}
         </Button>
       </form>
     </Box>

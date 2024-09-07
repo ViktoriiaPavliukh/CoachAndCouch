@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button } from "@mui/material";
 
-
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
   const [selectedHour, setSelectedHour] = useState(null);
   const now = new Date();
