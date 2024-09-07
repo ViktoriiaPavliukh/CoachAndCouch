@@ -55,14 +55,12 @@ export default function FormTrial({
   const specializations = useSelector(specializationsSelector);
   const teacher = useSelector(advertByIdSelector);
   const formattedDateTime = useFormattedDate(selected);
-
   const [choosenLanguages, setChoosenLanguages] = useState([]);
   const [nativeLanguages, setNativeLanguages] = useState([]);
   const [teachingLevel, setTeachingLevel] = useState("");
   const [selectedCountry, setSelectedCountry] = useState(
     currentUser?.country?.alpha2 || ""
   );
-
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
 
   // useEffect(() => {
@@ -75,10 +73,10 @@ export default function FormTrial({
     event.preventDefault();
 
     const selectedLanguageObj = languages.find(
-      (lang) => lang.id === choosenLanguages[0].id
+      (lang) => lang.id === choosenLanguages.id
     );
     const selectedNativeObj = languages.find(
-      (lang) => lang.id === nativeLanguages[0].id
+      (lang) => lang.id === nativeLanguages[0]?.id
     );
     const selectedCountryObj = countries.find(
       (country) => country.alpha2 === selectedCountry
@@ -100,10 +98,9 @@ export default function FormTrial({
           : selectedNativeObj.languageUa
         : "",
     };
-
     const dataToPost = {
       bookingId: bookingDetails.id,
-      languageId: choosenLanguages[0].id,
+      languageId: choosenLanguages.id,
       info,
     };
 
@@ -111,7 +108,7 @@ export default function FormTrial({
       .unwrap()
       .then((response) => {
         console.log("Booking successful:", response);
-        // onClose();
+        onClose();
       })
       .catch((error) => {
         console.error("Booking failed:", error);
@@ -219,36 +216,31 @@ export default function FormTrial({
           {intl.formatMessage({ id: "priceSchedule" })}: {teacher?.price} USD
         </Typography>
         <Divider sx={{ marginTop: "4px", marginBottom: "8px" }} />
+        <Typography>{intl.formatMessage({ id: "formDetails" })}</Typography>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel>
+            {intl.formatMessage({ id: "chooseLanguage" })}
+          </InputLabel>
+          <Select
+            id="choosenLanguages"
+            name="choosenLanguages"
+            label={intl.formatMessage({ id: "chooseLanguage" })}
+            value={choosenLanguages}
+            onChange={handleChoosenLanguagesChange}
+            renderValue={(language) =>
+              en === "en" ? language.languageEn : language.languageUa
+            }
+          >
+            {teacher?.teachingLanguages &&
+              teacher.teachingLanguages.map((language) => (
+                <MenuItem key={uuidv4()} value={language}>
+                  {en === "en" ? language.languageEn : language.languageUa}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
         {isFirstTimeBooking && (
           <>
-            <Typography>{intl.formatMessage({ id: "formDetails" })}</Typography>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>
-                {intl.formatMessage({ id: "chooseLanguage" })}
-              </InputLabel>
-              <Select
-                id="choosenLanguages"
-                name="choosenLanguages"
-                label={intl.formatMessage({ id: "chooseLanguage" })}
-                multiple
-                value={choosenLanguages}
-                onChange={handleChoosenLanguagesChange}
-                renderValue={(selected) =>
-                  selected
-                    .map((language) =>
-                      en === "en" ? language.languageEn : language.languageUa
-                    )
-                    .join(", ")
-                }
-              >
-                {teacher?.teachingLanguages &&
-                  teacher.teachingLanguages.map((language) => (
-                    <MenuItem key={uuidv4()} value={language}>
-                      {en === "en" ? language.languageEn : language.languageUa}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
             <FormControl fullWidth variant="outlined">
               <InputLabel>
                 {intl.formatMessage({ id: "chooseLevel" })}
