@@ -66,10 +66,6 @@ export function TeacherCard({ teacher }) {
     }
   };
 
-  // const setBg = () => {
-  //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
-  // };
-
   return (
     <>
       <Card
@@ -100,171 +96,174 @@ export function TeacherCard({ teacher }) {
               right: "20px",
             }}
           />
-        </CardActionArea>
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "24px",
-              mb: "8px",
-            }}
-          >
+          <CardContent sx={{ flexGrow: 1 }}>
             <Stack
               direction="row"
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                gap: "10px",
+                gap: "24px",
+                mb: "8px",
               }}
             >
-              <Typography
-                // gutterBottom
-                // variant="posterDescription"
-                sx={{ fontWeight: "700", letterSpacing: "-0.003px" }}
+              <Stack
+                direction="row"
+                sx={{
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
               >
-                {teacher.user.firstName + " " + teacher.user.lastName}
-              </Typography>
-            </Stack>
+                <Typography
+                  // gutterBottom
+                  // variant="posterDescription"
+                  sx={{ fontWeight: "700", letterSpacing: "-0.003px" }}
+                >
+                  {teacher.user.firstName + " " + teacher.user.lastName}
+                </Typography>
+              </Stack>
 
-            <Typography>ID:&nbsp;{teacher.id}</Typography>
-          </Stack>
-          <Typography
-            variant="posterItem"
-            sx={{ color: (theme) => theme.palette.textColor.grey }}
-          >
-            {intl.formatMessage({ id: "languagesTeaching" })}:
-          </Typography>
-          {Boolean(teacher.teachingLanguages.length) && (
-            <CategoryList
-              elements={
-                teacher.teachingLanguages &&
-                teacher.teachingLanguages.map((el) =>
-                  en == "en" ? el.languageEn : el.languageUa
-                )
-              }
-            />
-          )}
-          <Stack
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              flexDirection: "row",
-              marginBottom: "20px",
-            }}
-          >
+              <Typography>ID:&nbsp;{teacher.id}</Typography>
+            </Stack>
             <Typography
               variant="posterItem"
               sx={{ color: (theme) => theme.palette.textColor.grey }}
             >
-              {intl.formatMessage({ id: "country" })}:&nbsp;
-              {en == "en"
-                ? countriesCase(
-                    countries.find(
-                      (el) => el.alpha2 == teacher.user?.country?.alpha2
-                    ).nameEng
-                  )
-                : countriesCase(
-                    countries.find(
-                      (el) => el.alpha2 == teacher.user?.country?.alpha2
-                    ).nameShort
-                  )}
+              {intl.formatMessage({ id: "languagesTeaching" })}:
             </Typography>
-          </Stack>
+            {Boolean(teacher.teachingLanguages.length) && (
+              <CategoryList
+                elements={
+                  teacher.teachingLanguages &&
+                  teacher.teachingLanguages.map((el) =>
+                    en == "en" ? el.languageEn : el.languageUa
+                  )
+                }
+              />
+            )}
+            <Stack
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                flexDirection: "row",
+                marginBottom: "20px",
+              }}
+            >
+              <Typography
+                variant="posterItem"
+                sx={{ color: (theme) => theme.palette.textColor.grey }}
+              >
+                {intl.formatMessage({ id: "country" })}:&nbsp;
+                {en == "en"
+                  ? countriesCase(
+                      countries.find(
+                        (el) => el.alpha2 == teacher.user?.country?.alpha2
+                      ).nameEng
+                    )
+                  : countriesCase(
+                      countries.find(
+                        (el) => el.alpha2 == teacher.user?.country?.alpha2
+                      ).nameShort
+                    )}
+              </Typography>
+            </Stack>
 
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "21px",
-            }}
-          >
-            <Box style={{ display: "flex", gap: "12px", pt: "4px" }}>
-              <Box sx={{ display: "flex", gap: "4px" }}>
-                <StarBorderPurple500OutlinedIcon
-                  sx={{
-                    fontSize: "16px",
-                    color: (theme) => theme.palette.textColor.darkGrey,
-                  }}
-                />
-                <Typography variant="posterItem">
-                  {roundRating(teacher.user.rating)}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", gap: "4px" }}>
-                <Button
-                  disableTouchRipple
-                  onClick={() => handleFavoriteAdd(teacher.id)}
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    border: "none",
-                    backgroundColor: "transparent",
-                    padding: 0,
-                    gap: "4px",
-                  }}
-                >
-                  {!isFavorite && (
-                    <FavoriteBorderOutlinedIcon
-                      sx={{
-                        fontSize: "16px",
-                        color: (theme) => theme.palette.textColor.darkGrey,
-                      }}
-                    />
-                  )}
-                  {isFavorite && (
-                    <FavoriteIcon
-                      sx={{
-                        fontSize: "16px",
-                        fill: "#7ab02e",
-                      }}
-                    />
-                  )}
-                  <Typography
-                    variant="posterItem"
+            <Stack
+              direction="row"
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+                height: "21px",
+              }}
+            >
+              <Box style={{ display: "flex", gap: "12px", pt: "4px" }}>
+                <Box sx={{ display: "flex", gap: "4px" }}>
+                  <StarBorderPurple500OutlinedIcon
                     sx={{
-                      color: "rgba(0, 0, 0, 0.87)",
+                      fontSize: "16px",
+                      color: (theme) => theme.palette.textColor.darkGrey,
+                    }}
+                  />
+                  <Typography variant="posterItem">
+                    {roundRating(teacher.user.rating)}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", gap: "4px" }}>
+                  <Button
+                    disableTouchRipple
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleFavoriteAdd(teacher.id);
+                    }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      border: "none",
+                      backgroundColor: "transparent",
+                      padding: 0,
+                      gap: "4px",
                     }}
                   >
-                    {teacher.likes.length}
+                    {!isFavorite && (
+                      <FavoriteBorderOutlinedIcon
+                        sx={{
+                          fontSize: "16px",
+                          color: (theme) => theme.palette.textColor.darkGrey,
+                        }}
+                      />
+                    )}
+                    {isFavorite && (
+                      <FavoriteIcon
+                        sx={{
+                          fontSize: "16px",
+                          fill: "#7ab02e",
+                        }}
+                      />
+                    )}
+                    <Typography
+                      variant="posterItem"
+                      sx={{
+                        color: "rgba(0, 0, 0, 0.87)",
+                      }}
+                    >
+                      {teacher.likes.length}
+                    </Typography>
+                  </Button>
+                </Box>
+                {/* <Box sx={{ display: "flex", gap: "4px" }}>
+                  <Typography
+                    variant="posterItem"
+                    sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
+                  >
+                    {intl.formatMessage({ id: "lessons" })}:
                   </Typography>
-                </Button>
+                  <Typography variant="posterItem">156</Typography>
+                </Box> */}
               </Box>
-              <Box sx={{ display: "flex", gap: "4px" }}>
+              <Box>
                 <Typography
-                  variant="posterItem"
-                  sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
+                  color="grey.700"
+                  variant="posterStatus"
+                  sx={{ display: "inline-block" }}
                 >
-                  {intl.formatMessage({ id: "lessons" })}:
+                  <Box
+                    component="span"
+                    sx={{
+                      display: "inline-block",
+                      width: "6px",
+                      height: "6px",
+                      borderRadius: "50%",
+                      backgroundColor: "#0E5B1D",
+                      mr: "4px",
+                    }}
+                  />
+                  {intl.formatMessage({ id: "online" })}
                 </Typography>
-                <Typography variant="posterItem">156</Typography>
               </Box>
-            </Box>
-            <Box>
-              <Typography
-                color="grey.700"
-                variant="posterStatus"
-                sx={{ display: "inline-block" }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    display: "inline-block",
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    backgroundColor: "#0E5B1D",
-                    mr: "4px",
-                  }}
-                />
-                {intl.formatMessage({ id: "online" })}
-              </Typography>
-            </Box>
-          </Stack>
-        </CardContent>
+            </Stack>
+          </CardContent>
+        </CardActionArea>
         <CardActions>
           <Button
             onClick={() => onShowModalClick("trialLesson")}
