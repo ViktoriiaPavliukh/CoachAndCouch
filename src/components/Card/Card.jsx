@@ -1,6 +1,7 @@
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   advertByIdSelector,
   selectAdvertsIsLoading,
@@ -41,6 +42,7 @@ import { fetchTeacherSlots } from "@/redux/marketplace/bookings/operations";
 
 export function Card() {
   const intl = useIntl();
+  const location = useLocation();
   const en = useSelector(selectCurrentLanguage);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
@@ -83,6 +85,13 @@ export function Card() {
       setIsFirstTimeBooking(!hasBookedBefore);
     }
   }, [studentBookings, teacherId, currentUser]);
+
+  useEffect(() => {
+    if (location.state?.showModal) {
+      setModalContentType(location.state.modalContentType);
+      setShowModal(true);
+    }
+  }, [location]);
 
   const handleFavoriteAdd = async (id) => {
     try {

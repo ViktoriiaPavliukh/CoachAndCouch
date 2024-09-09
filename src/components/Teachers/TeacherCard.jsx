@@ -17,7 +17,6 @@ import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import { Modal } from "../Modal/Modal";
 import countries from "../../defaults/countries/countries.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -31,39 +30,26 @@ import { selectUser } from "@/redux/auth/selectors";
 
 export function TeacherCard({ teacher }) {
   const user = useSelector(selectUser);
-  console.log(user);
-  console.log(teacher);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalContentType, setModalContentType] = useState(null);
-
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
-
-  const onShowModalClick = (contentType) => {
-    setModalContentType(contentType);
-    setShowModal(true);
-  };
-
-  const onBackdropClose = () => {
-    setShowModal(false);
-    setModalContentType(null);
-  };
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // e.preventDefault();
-
     navigate(`/teachers/${teacher.id}`);
   };
 
   const handleBookLessonClick = () => {
-    if (!user || Object.keys(user).length === 0) {
-      onShowModalClick("signInOrRegister");
-    } else {
-      onShowModalClick("trialLesson");
-    }
+    navigate(`/teachers/${teacher.id}`, {
+      state: {
+        showModal: true,
+        modalContentType:
+          !user || Object.keys(user).length === 0
+            ? "signInOrRegister"
+            : "trialLesson",
+      },
+    });
   };
 
   const handleFavoriteAdd = async (id) => {
@@ -298,13 +284,6 @@ export function TeacherCard({ teacher }) {
           </Button>
         </CardActions>
       </Card>
-      {showModal && (
-        <Modal
-          onBackdropClose={onBackdropClose}
-          contentType={modalContentType}
-          isOpen={showModal}
-        />
-      )}
     </>
   );
 }
