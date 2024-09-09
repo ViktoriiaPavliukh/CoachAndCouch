@@ -54,7 +54,7 @@ const createThemeTemplate = (themeColor) => ({
             card: "#FFF",
             language: "#f3f4f6",
             yellow: "#EEC700",
-            languagBg: "#F3F4F6",
+            languageBg: "#F3F4F6",
           },
           buttonColor: {
             header: "#7AB02E",

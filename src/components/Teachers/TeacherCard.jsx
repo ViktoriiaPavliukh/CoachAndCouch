@@ -13,10 +13,12 @@ import {
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CircleIcon from "@mui/icons-material/Circle";
 import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import useStatus from "@/hooks/useStatus";
 import countries from "../../defaults/countries/countries.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -35,7 +37,8 @@ export function TeacherCard({ teacher }) {
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const lastVisit = teacher?.user?.lastVisit;
+  const status = useStatus(lastVisit);
   const handleClick = () => {
     navigate(`/teachers/${teacher.id}`);
   };
@@ -93,7 +96,6 @@ export function TeacherCard({ teacher }) {
           />
           <CardContent
             sx={{
-              // flexGrow: 1,
               display: "flex",
               flexDirection: "column",
               px: "16px",
@@ -127,28 +129,34 @@ export function TeacherCard({ teacher }) {
                   {teacher.user.lastName}
                 </Typography>
               </Box>
-              <Box>
-                <Typography
-                  variant="posterStatus"
+              <Stack
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+              >
+                <CircleIcon
+                  fontSize="12px"
                   sx={{
-                    display: "inline-block",
+                    color:
+                      status === intl.formatMessage({ id: "online" })
+                        ? (theme) => theme.palette.buttonColor.listItem
+                        : (theme) => theme.palette.textColor.grey,
+                  }}
+                />
+                <Typography
+                  variant="posterItem"
+                  sx={{
+                    textWrap: "nowrap",
                     color: (theme) => theme.palette.textColor.greyCard,
                   }}
                 >
-                  <Box
-                    component="span"
-                    sx={{
-                      display: "inline-block",
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
-                      backgroundColor: "#0E5B1D",
-                      mr: "4px",
-                    }}
-                  />
-                  {intl.formatMessage({ id: "online" })}
+                  {status}
                 </Typography>
-              </Box>
+              </Stack>
             </Stack>
             {Boolean(teacher.teachingLanguages.length) && (
               <CategoryList
@@ -193,11 +201,11 @@ export function TeacherCard({ teacher }) {
                 alignItems: "center",
               }}
             >
-              <Box sx={{ display: "flex", gap: "12px" }}>
+              <Box sx={{ display: "flex", gap: "16px", pb: "12px" }}>
                 <Box
                   sx={{
                     display: "flex",
-                    gap: "4px",
+                    gap: "10px",
                     justifyContent: "space-between",
                     alignItems: "center",
                   }}
@@ -226,7 +234,7 @@ export function TeacherCard({ teacher }) {
                       border: "none",
                       backgroundColor: "transparent",
                       padding: 0,
-                      gap: "4px",
+                      gap: "10px",
                     }}
                   >
                     {!isFavorite && (
@@ -276,7 +284,7 @@ export function TeacherCard({ teacher }) {
               width: "100vw",
               py: "12px",
               m: "8px",
-              mt: "12px",
+              mt: "0",
               borderRadius: "8px",
               color: (theme) => theme.palette.buttonColor.fontColor,
               fontSize: "14px",
