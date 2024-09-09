@@ -236,6 +236,9 @@ const messages = {
     loginSendMessageTitle: "Register to write to the teacher",
     loginSendMessageSubject:
       "To be able to write to the teacher, register or log in to your personal account",
+    bookSendMessageTitle: "Register to book a lesson",
+    bookLessonFailure:
+      "To be able to book a lesson, please register or log in to your account",
 
     //img
     imgAdvise:
@@ -505,9 +508,12 @@ const messages = {
     messageSubject: "Тема повідомлення",
     messageEnterBody: "Введіть текст",
     messageBody: "Текст повідомлення",
-    loginSendMessageTitle: "Зареєструйтеся щоб написати викладачу",
+    loginSendMessageTitle: "Зареєструйтеся, щоб написати викладачу",
     loginSendMessageSubject:
       "Щоб мати можливість написати викладачу, зареєструйтеся або увійдіть у особистий кабінет",
+    bookSendMessageTitle: "Зареєструйтеся, щоб забронювати заняття",
+    bookLessonFailure:
+      "Щоб мати можливість забронювати заняття, зареєструйтеся або увійдіть у особистий кабінет",
 
     //img
     imgAdvise:

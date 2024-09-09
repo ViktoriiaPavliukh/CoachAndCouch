@@ -27,12 +27,12 @@ import {
   favoriteAdvert,
   getAdverts,
 } from "@/redux/marketplace/adverts/operations";
-// import { selectUser } from "@/redux/auth/selectors";
+import { selectUser } from "@/redux/auth/selectors";
 
 export function TeacherCard({ teacher }) {
-  // const user = useSelector(selectUser);
-  // console.log(user);
-
+  const user = useSelector(selectUser);
+  console.log(user);
+  console.log(teacher);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
@@ -57,6 +57,15 @@ export function TeacherCard({ teacher }) {
 
     navigate(`/teachers/${teacher.id}`);
   };
+
+  const handleBookLessonClick = () => {
+    if (!user || Object.keys(user).length === 0) {
+      onShowModalClick("signInOrRegister");
+    } else {
+      onShowModalClick("trialLesson");
+    }
+  };
+
   const handleFavoriteAdd = async (id) => {
     try {
       await dispatch(favoriteAdvert(id));
@@ -266,7 +275,7 @@ export function TeacherCard({ teacher }) {
         </CardActionArea>
         <CardActions>
           <Button
-            onClick={() => onShowModalClick("trialLesson")}
+            onClick={handleBookLessonClick}
             variant="contained"
             sx={{
               width: "100vw",
@@ -285,7 +294,7 @@ export function TeacherCard({ teacher }) {
               },
             }}
           >
-            {intl.formatMessage({ id: "trialLessonBtn" })}
+            {intl.formatMessage({ id: "bookLesson" })}
           </Button>
         </CardActions>
       </Card>
