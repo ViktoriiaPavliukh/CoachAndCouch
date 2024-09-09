@@ -8,9 +8,8 @@ export function CategoryList({ elements }) {
       sx={{
         display: "flex",
         flexWrap: "wrap",
-        mb: "18px",
-        mt: "8px",
-        gap: "5px",
+        my: "12px",
+        gap: "10px",
         p: 0,
       }}
     >
@@ -19,7 +18,7 @@ export function CategoryList({ elements }) {
           key={uuidv4()}
           sx={{
             padding: "6px 14px",
-            backgroundColor: (theme) => theme.palette.background.messagesDate,
+            backgroundColor: (theme) => theme.palette.background.languageBg,
             borderRadius: "16px",
             fontSize: "16px",
             fontStyle: "normal",

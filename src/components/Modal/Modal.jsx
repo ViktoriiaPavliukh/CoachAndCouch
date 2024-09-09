@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import { TrialLessonWrapper } from "./TrialLessonWrapper/TrialLessonWrapper";
 import { SendMessageWrapper } from "./SendMessageWrapper";
+import RequestToSignIn from "./ReguestToSignIn";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
 
@@ -17,7 +18,7 @@ export const Modal = ({
     const handleNoScroll = () => {
       document.body.style.overflow = isOpen ? "hidden" : "auto";
     };
-console.log(isFirstTimeBooking)
+    console.log(isFirstTimeBooking);
     const handlePressEsc = (e) => {
       if (e.code === "Escape") {
         onBackdropClose();
@@ -47,7 +48,15 @@ console.log(isFirstTimeBooking)
       case "sendMessage":
         return <SendMessageWrapper id={id} onBackdropClose={onBackdropClose} />;
       case "trialLesson":
-        return <TrialLessonWrapper id={id} teacherBookings={teacherBookings} isFirstTimeBooking={isFirstTimeBooking}/>;
+        return (
+          <TrialLessonWrapper
+            id={id}
+            teacherBookings={teacherBookings || []}
+            isFirstTimeBooking={isFirstTimeBooking || false}
+          />
+        );
+      case "signInOrRegister":
+        return <RequestToSignIn onBackdropClose={onBackdropClose} />;
       default:
         return null;
     }
