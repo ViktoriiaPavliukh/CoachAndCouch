@@ -9,7 +9,10 @@ import {
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography, Stack, Divider } from "@mui/material";
+import { X } from "react-feather";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import FormTrial from "./FormTrial";
 import { ukDayAbbreviations } from "@/defaults";
@@ -28,6 +31,7 @@ export const TrialLessonWrapper = ({
   id,
   teacherBookings,
   isFirstTimeBooking,
+  onBackdropClose,
 }) => {
   const intl = useIntl();
   const currentLanguage = useSelector(selectCurrentLanguage);
@@ -176,21 +180,75 @@ export const TrialLessonWrapper = ({
       )}
       <Box
         sx={{
-          width: "800px",
-          height: "80vh",
+          width: { xs: "87%", md: "84%", lg: "1208px" },
+          height: "auto",
+          maxHeight: "90vh",
           position: "absolute",
-          top: "55%",
+          top: "50%",
           left: "50%",
           backgroundColor: (theme) => theme.palette.background.paper,
           transform: "translate(-50%,-50%)",
           display: isFormModalVisible ? "none" : "flex",
           justifyContent: "center",
-          alignItems: "flex-start",
-          padding: "48px 48px 134px 48px",
+          alignItems: "center",
+          flexDirection: "column",
+          pt: { xs: "1300px", md: "550px" },
+          pb: "134px",
           overflowY: "auto",
           zIndex: 1,
+          px: { xs: "8px", md: "24px" },
         }}
       >
+        <Stack
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "end",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              width: { xs: "100%", md: "58%" },
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: { xs: "column-reverse", md: "row" },
+            }}
+          >
+            <Typography
+              sx={{
+                display: { md: "flex" },
+                fontSize: { xs: "24px", md: "30px" },
+                textAlign: "center",
+              }}
+            >
+              {intl.formatMessage({ id: "chooseDate" })}
+            </Typography>
+            <Button
+              sx={{
+                display: { xs: "flex", md: "flex" },
+                justifyContent: "center",
+                alignSelf: { xs: "end", md: "unset" },
+                alignItems: "center",
+                color: (theme) => theme.palette.textColor.fontColor,
+                p: 0,
+                mt: "5px",
+              }}
+              onClick={onBackdropClose}
+            >
+              <CloseIcon />
+            </Button>
+          </Box>
+        </Stack>
+        <Divider
+          sx={{
+            my: { xs: "24px", md: "28px" },
+            borderColor: (theme) => theme.palette.textColor.listItem,
+            width: "100%",
+          }}
+        />
         <Box
           sx={{
             display: "flex",
@@ -215,15 +273,29 @@ export const TrialLessonWrapper = ({
             >
               <ChevronLeft />
             </Button>
-            <Box>{formattedRange}</Box>
+            <Typography sx={{ fontSize: { xs: "20px", md: "24px" } }}>
+              {formattedRange}
+            </Typography>
             <Button sx={btnArrow} onClick={() => shiftWeek(+1)}>
               <ChevronRight />
             </Button>
-            <Box>{currentYear}</Box>
+            <Typography sx={{ fontSize: { xs: "20px", md: "24px" } }}>
+              {currentYear}
+            </Typography>
           </Box>
-          <Grid container justifyContent="space-between" sx={{ width: "100%" }}>
+          <Grid
+            container
+            justifyContent="space-between"
+            sx={{
+              width: "100%",
+            }}
+          >
             {week.map((el, idx) => (
-              <Grid item key={idx}>
+              <Grid
+                item
+                key={idx}
+                sx={{ justifyContent: "center", textAlign: "center" }}
+              >
                 <Button
                   variant="text"
                   sx={{
@@ -233,24 +305,35 @@ export const TrialLessonWrapper = ({
                       ? (theme) => theme.palette.primary.main
                       : (theme) => theme.palette.textColor.scheduleDay,
                     padding: 0,
-                    minWidth: 0,
-                    width: "50px",
+                    minWidth: { xs: "40px", md: "50px", lg: "60px" },
+                    maxWidth: { xs: "fit-content", md: "50px" },
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    justifyContent: "center",
+                    gap: "12px",
                   }}
                 >
-                  <Typography sx={{ textTransform: "capitalize" }}>
+                  <Typography
+                    sx={{
+                      textTransform: "capitalize",
+                      fontSize: { xs: "18px", md: "20px" },
+                    }}
+                  >
                     {getDayAbbreviation(el)}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: { xs: "18px", md: "20px" } }}>
                     {format(el, "dd", { locale: getLocale() })}
                   </Typography>
                 </Button>
               </Grid>
             ))}
           </Grid>
-          <Grid container justifyContent="space-between" spacing={5}>
+          <Grid
+            container
+            justifyContent="space-between"
+            sx={{ gap: { xs: "2px", md: "40px" } }}
+          >
             {week.map((el, idx) => (
               <Grid item key={idx}>
                 <Box sx={{ display: "block" }}>

@@ -220,7 +220,7 @@ export function Card() {
                     width: { xs: "100%", lg: "463px" },
                   }}
                 >
-                  <Stack
+                  {/* <Stack
                     sx={{
                       display: "flex",
                       justifyContent: "center",
@@ -238,7 +238,7 @@ export function Card() {
                       {intl.formatMessage({ id: "lessons" })}
                     </Typography>
                     <Typography variant="fontHeader">156</Typography>
-                  </Stack>
+                  </Stack> */}
                   <Stack
                     sx={{
                       display: "flex",

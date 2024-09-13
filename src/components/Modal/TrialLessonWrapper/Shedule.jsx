@@ -25,7 +25,8 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "20px",
+        gap: { xs: "12px", md: "20px" },
+        flexWrap: "nowrap",
       }}
     >
       {shedule.map((sh, idx) => (
@@ -35,8 +36,9 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
             handlerSheduleClick(sh);
           }}
           sx={{
-            minWidth: "50px",
-            border: "none",
+            minWidth: { xs: "40px", md: "57px", lg: "69px" },
+            fontSize: { xs: "14px", md: "20px" },
+            borderRadius: "4px",
             backgroundColor:
               selectedHour === sh
                 ? (theme) => theme.palette.primary.main
@@ -44,7 +46,7 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
                 ? (theme) => theme.palette.buttonColor.disabled
                 : "transparent",
             padding: 0,
-            maxWidth: "50px",
+            maxWidth: { md: "50px" },
             color:
               selectedHour === sh
                 ? (theme) => theme.palette.textColor.header
@@ -53,7 +55,6 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
                 : (theme) => theme.palette.textColor.title,
             "&:hover": {
               backgroundColor: (theme) => theme.palette.primary.main,
-              color: "white",
             },
           }}
           key={idx}

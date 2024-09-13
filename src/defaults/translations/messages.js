@@ -264,6 +264,7 @@ const messages = {
     confirmSlot: "Confirm slot",
     addSlot: "Do you want to add this slot: ",
     bookLesson: "Book lesson",
+    chooseDate: "Select a date",
 
     //Admin
     avatar: "Image",
@@ -539,6 +540,7 @@ const messages = {
     confirmSlot: "Підтвердити слот",
     addSlot: "Ви хочете додати цей слот: ",
     bookLesson: "Забронювати урок",
+    chooseDate: "Оберіть дату",
 
     //Admin
     avatar: "Аватарка",

@@ -9,6 +9,7 @@ import {
   CardActionArea,
   CardActions,
   Stack,
+  Divider
 } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";

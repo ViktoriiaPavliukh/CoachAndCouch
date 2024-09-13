@@ -18,7 +18,6 @@ export const Modal = ({
     const handleNoScroll = () => {
       document.body.style.overflow = isOpen ? "hidden" : "auto";
     };
-    console.log(isFirstTimeBooking);
     const handlePressEsc = (e) => {
       if (e.code === "Escape") {
         onBackdropClose();
@@ -53,6 +52,7 @@ export const Modal = ({
             id={id}
             teacherBookings={teacherBookings || []}
             isFirstTimeBooking={isFirstTimeBooking || false}
+            onBackdropClose={onBackdropClose}
           />
         );
       case "signInOrRegister":
@@ -65,7 +65,7 @@ export const Modal = ({
     <Box
       onClick={onBackdrop}
       id="Overlay"
-      style={{
+      sx={{
         backgroundColor: "#808080c7",
         position: "fixed",
         width: "100%",
