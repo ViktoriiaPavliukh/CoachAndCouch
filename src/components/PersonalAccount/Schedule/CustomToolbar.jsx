@@ -5,7 +5,6 @@ import moment from "moment";
 import "moment/locale/uk";
 import {
   Box,
-  Divider,
   FormControl,
   MenuItem,
   Select,
@@ -39,10 +38,12 @@ export const CustomToolbar = ({
   };
 
   const onHandleYearFilterChange = (event) => {
-    const newYearFilter = event.target.value;
-    setYearFilter(newYearFilter);
-    console.log("Selected Year:", newYearFilter);
-    handleYearFilterChange(newYearFilter);
+    const newYear = event.target.value;
+    setYearFilter(newYear);
+    const newDate = new Date(date);
+    newDate.setFullYear(newYear);
+    onNavigate("DATE", newDate);
+    handleYearFilterChange(newYear);
   };
 
   useEffect(() => {

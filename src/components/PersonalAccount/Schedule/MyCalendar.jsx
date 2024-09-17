@@ -56,6 +56,7 @@ export const MyCalendar = () => {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(moment().year());
 
   const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
@@ -67,6 +68,10 @@ export const MyCalendar = () => {
     ),
     student: booking.student || booking.teacher,
   }));
+
+  const handleYearFilterChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
 
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
