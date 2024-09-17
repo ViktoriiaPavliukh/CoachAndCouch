@@ -9,7 +9,7 @@ import "moment/locale/uk";
 import "moment/locale/en-gb";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Box, Typography, Modal, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Clock } from "react-feather";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -174,6 +174,7 @@ export const MyCalendar = () => {
         pointerEvents: isPast ? "none" : "auto",
         opacity: isPast ? 0.5 : 1,
         backgroundColor: isPast ? "#aaaaaa" : "transparent",
+        cursor: isPast ? "pointer" : "cell",
       },
     };
   };
@@ -191,7 +192,7 @@ export const MyCalendar = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Calendar
         localizer={localizer}
         formats={formats}
@@ -234,7 +235,7 @@ export const MyCalendar = () => {
         slot={selectedSlots[0]}
       />
       <TeacherOnlyModal open={openWarningModal} onClose={handleCloseModal} />
-    </div>
+    </Box>
   );
 };
 
