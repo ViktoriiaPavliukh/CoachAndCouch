@@ -232,6 +232,7 @@ export const MyCalendar = () => {
         eventPropGetter={eventPropGetter}
         dayPropGetter={dayPropGetter}
         onSelecting={(slotInfo) => handleSlotSelection(slotInfo)}
+        min={new Date(0, 0, 0, 7, 0)}
       />
       <ConfirmModal
         open={openConfirmModal}
