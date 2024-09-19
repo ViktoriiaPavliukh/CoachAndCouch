@@ -9,7 +9,7 @@ import "moment/locale/uk";
 import "moment/locale/en-gb";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { Clock } from "react-feather";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -32,8 +32,9 @@ import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
-
-// const eventsList = [];
+import { Stack } from "@mui/system";
+import { CancelModal } from "./CancelModal";
+import CloseIcon from "@mui/icons-material/Close";
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -162,8 +163,9 @@ export const MyCalendar = () => {
 
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
+    const now = moment();
     const isToday = moment(date).isSame(today, "day");
-    const isPast = moment(date).isBefore(today, "day");
+    const isPast = moment(date).isBefore(now);
 
     let color = "inherit";
 
@@ -263,7 +265,12 @@ const eventPropGetter = (event) => {
 const TimeGutterHeader = () => {
   const intl = useIntl();
   return (
-    <Typography sx={(theme) => ({ ...theme.typography.text })}>
+    <Typography
+      sx={(theme) => ({
+        ...theme.typography.text,
+        display: { xs: "none", md: "flex" },
+      })}
+    >
       {intl.formatMessage({ id: "schedule.week" })}
     </Typography>
   );
@@ -271,7 +278,7 @@ const TimeGutterHeader = () => {
 
 const CustomDayComponent = ({ date }) => {
   return (
-    <div
+    <Stack
       style={{
         display: "flex",
         flexDirection: "column",
@@ -280,21 +287,45 @@ const CustomDayComponent = ({ date }) => {
         marginBottom: "12px",
       }}
     >
-      <div>{moment(date).format("DD")}</div>
-      <div>{moment(date).format("ddd").toUpperCase()}</div>
-    </div>
+      <Box>{moment(date).format("DD")}</Box>
+      <Box>{moment(date).format("ddd").toUpperCase()}</Box>
+    </Stack>
   );
 };
 
 const CustomEventComponent = ({ event }) => {
   const { start, end, student } = event;
+  const intl = useIntl();
+  const [openCancelModal, setOpenCancelModal] = useState(false);
+  const [eventToCancel, setEventToCancel] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
 
   const studentInfo = student
-    ? `${student.firstName} ${student.lastName}`
-    : null;
+    ? `${student.firstName}${student.lastName ? " " + student.lastName : ""}`
+    : "No student info";
 
-  return studentInfo ? (
+  const handleCancelEvent = (e) => {
+    alert("Need action on Backend side");
+    setEventToCancel(event);
+  };
+
+  const onBackdropClose = () => {
+    setOpenCancelModal(false);
+    console.log(openCancelModal);
+    console.log("Closing cancel modal");
+  };
+
+  return student ? (
     <Box
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -307,11 +338,29 @@ const CustomEventComponent = ({ event }) => {
       }}
     >
       <Typography sx={{ fontWeight: "bold" }}>{studentInfo}</Typography>
-      <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
-        <Clock color="#e6e7eb" />
-        <Typography sx={{ color: "#f3f4f6" }}>{`${moment(start).format(
-          "HH:mm"
-        )} - ${moment(end).format("HH:mm")}`}</Typography>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        {isHovered ? (
+          <Button
+            onClick={handleCancelEvent}
+            sx={{
+              color: "#fff",
+              "&:hover": {
+                color: "#ff0000",
+              },
+            }}
+          >
+            {intl.formatMessage({ id: "cancelBtn" })}
+          </Button>
+        ) : (
+          <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+            <Clock color="#e6e7eb" />
+            <Typography sx={{ color: "#f3f4f6" }}>
+              {`${moment(start).format("HH:mm")} - ${moment(end).format(
+                "HH:mm"
+              )}`}
+            </Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   ) : null;
@@ -327,6 +376,5 @@ CustomEventComponent.propTypes = {
     }),
   }).isRequired,
 };
-CustomDayComponent.propTypes = {
-  date: PropTypes.object.isRequired,
-};
+
+export default CustomEventComponent;
