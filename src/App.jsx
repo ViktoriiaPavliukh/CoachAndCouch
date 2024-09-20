@@ -27,7 +27,6 @@ import {
   ProfileData,
   Advertisements,
   LikesPages,
-  Feedback,
 } from "./components/PersonalAccount/index";
 import Loader from "./components/Loader/Loader";
 
@@ -84,7 +83,6 @@ export default function App() {
             <Route path="profile" element={<ProfileData />} />
             <Route path="lessons" element={<Lessons />} />
             <Route path="likes" element={<LikesPages />} />
-            <Route path="feedback" element={<Feedback />} />
             <Route path="dashboard" element={<MainPage />} />
             <Route path="schedule" element={<Schedule />} />
             <Route path="messages" element={<Messages />} />

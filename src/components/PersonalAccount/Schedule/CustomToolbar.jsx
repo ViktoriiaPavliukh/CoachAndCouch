@@ -3,8 +3,15 @@ import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
 import moment from "moment";
 import "moment/locale/uk";
-import { Divider, FormControl, MenuItem, Select } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "react-feather";
+import {
+  Box,
+  FormControl,
+  MenuItem,
+  Select,
+  IconButton,
+  Typography,
+} from "@mui/material";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectTheme } from "@/redux/theme/selectors";
@@ -25,25 +32,27 @@ export const CustomToolbar = ({
   );
   const intl = useIntl();
   const btnArrow = {
-    border: "none",
-    padding: "0px",
     color: !theme
       ? lightTheme.palette.textColor.fontColor
       : darkTheme.palette.textColor.fontColor,
   };
 
   const onHandleYearFilterChange = (event) => {
-    const newYearFilter = event.target.value;
-    setYearFilter(newYearFilter);
-    handleYearFilterChange(newYearFilter);
+    const newYear = event.target.value;
+    setYearFilter(newYear);
+    const newDate = new Date(date);
+    newDate.setFullYear(newYear);
+    onNavigate("DATE", newDate);
+    handleYearFilterChange(newYear);
   };
+
   useEffect(() => {
     setYearFilter(yearCurrent);
   }, [yearCurrent]);
 
   const formatLabel = () => {
     moment.locale("uk");
-    const view = onView.name; 
+    const view = onView.name;
     if (view === "month") {
       return moment(date).format("MMMM YYYY");
     } else if (view === "week") {
@@ -51,42 +60,41 @@ export const CustomToolbar = ({
       const endOfWeek = moment(date).endOf("week").format("D MMM YYYY");
       return `${startOfWeek} - ${endOfWeek}`;
     } else {
-      return label; // Default to the provided label for other views
+      return label;
     }
   };
+
   return (
-    <div className="rbc-toolbar ">
-      <div className="rbc-btn-group rbc-btn-group-flex">
-        <div className="rbc-btn-group-arrows">
-          <button
-            type="button"
-            onClick={() => onNavigate("PREV")}
-            style={btnArrow}
-          >
+    <Box sx={{ display: "flex", mb: "46px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "20px",
+        }}
+      >
+        <Box sx={{ display: "flex", gap: "20px" }}>
+          <IconButton onClick={() => onNavigate("PREV")} sx={btnArrow}>
             <ChevronLeft />
-          </button>
-          <button
-            type="button"
-            onClick={() => onNavigate("NEXT")}
-            style={btnArrow}
-          >
+          </IconButton>
+          <IconButton onClick={() => onNavigate("NEXT")} sx={btnArrow}>
             <ChevronRight />
-          </button>
-        </div>
-        <span
-          className="rbc-toolbar-label"
-          style={{
+          </IconButton>
+        </Box>
+        <Typography
+          sx={{
             color: !theme
               ? lightTheme.palette.textColor.fontColor
               : darkTheme.palette.textColor.fontColor,
           }}
         >
           {formatLabel()}
-        </span>
+        </Typography>
         <FormControl sx={{ width: "80px", marginLeft: "20px" }}>
           <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="year-select-label"
+            id="year-select"
             value={yearFilter}
             onChange={onHandleYearFilterChange}
             sx={{
@@ -109,31 +117,11 @@ export const CustomToolbar = ({
             ))}
           </Select>
         </FormControl>
-      </div>
-      <div className="rbc-btn-group rbc-btn-group-flex">
-        <button
-          type="button"
-          onClick={() => onNavigate("TODAY")}
-          style={btnArrow}
-        >
-          {intl.formatMessage({ id: "schedule.today" })}
-        </button>
-        <Divider
-          orientation="vertical"
-          flexItem
-          style={{
-            backgroundColor: !theme
-              ? lightTheme.palette.textColor.fontColor
-              : darkTheme.palette.textColor.fontColor,
-          }}
-        />
-        <button type="button" onClick={() => onView("week")} style={btnArrow}>
-          {intl.formatMessage({ id: "schedule.week" })}
-        </button>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
+
 CustomToolbar.propTypes = {
   date: PropTypes.instanceOf(Date),
   label: PropTypes.string,

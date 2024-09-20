@@ -6,7 +6,7 @@ export const Schedule = () => {
     <Box
       sx={{
         width: "100%",
-        p: { xs: "24px 60px", lg: "40px 48px" },
+        p: { xs: "24px 20px", md: "24px 60px", lg: "40px 48px" },
         display: "flex",
         flexDirection: "column",
       }}

@@ -9,7 +9,7 @@ import "moment/locale/uk";
 import "moment/locale/en-gb";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Box, Typography, Modal, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { Clock } from "react-feather";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -32,8 +32,10 @@ import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
-
-// const eventsList = [];
+import { Stack } from "@mui/system";
+import { CancelModal } from "./CancelModal";
+import CloseIcon from "@mui/icons-material/Close";
+import CustomEventComponent from "./CustomEventComponent"
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -56,6 +58,7 @@ export const MyCalendar = () => {
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(moment().year());
 
   const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
@@ -67,6 +70,10 @@ export const MyCalendar = () => {
     ),
     student: booking.student || booking.teacher,
   }));
+
+  const handleYearFilterChange = (event) => {
+    setSelectedYear(event.target.value);
+  };
 
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
@@ -157,8 +164,9 @@ export const MyCalendar = () => {
 
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
+    const now = moment();
     const isToday = moment(date).isSame(today, "day");
-    const isPast = moment(date).isBefore(today, "day");
+    const isPast = moment(date).isBefore(now);
 
     let color = "inherit";
 
@@ -174,6 +182,7 @@ export const MyCalendar = () => {
         pointerEvents: isPast ? "none" : "auto",
         opacity: isPast ? 0.5 : 1,
         backgroundColor: isPast ? "#aaaaaa" : "transparent",
+        cursor: isPast ? "pointer" : "cell",
       },
     };
   };
@@ -191,7 +200,7 @@ export const MyCalendar = () => {
   };
 
   return (
-    <div>
+    <Box>
       <Calendar
         localizer={localizer}
         formats={formats}
@@ -226,6 +235,7 @@ export const MyCalendar = () => {
         eventPropGetter={eventPropGetter}
         dayPropGetter={dayPropGetter}
         onSelecting={(slotInfo) => handleSlotSelection(slotInfo)}
+        min={new Date(0, 0, 0, 7, 0)}
       />
       <ConfirmModal
         open={openConfirmModal}
@@ -234,7 +244,7 @@ export const MyCalendar = () => {
         slot={selectedSlots[0]}
       />
       <TeacherOnlyModal open={openWarningModal} onClose={handleCloseModal} />
-    </div>
+    </Box>
   );
 };
 
@@ -256,7 +266,12 @@ const eventPropGetter = (event) => {
 const TimeGutterHeader = () => {
   const intl = useIntl();
   return (
-    <Typography sx={(theme) => ({ ...theme.typography.text })}>
+    <Typography
+      sx={(theme) => ({
+        ...theme.typography.text,
+        display: { xs: "none", md: "flex" },
+      })}
+    >
       {intl.formatMessage({ id: "schedule.week" })}
     </Typography>
   );
@@ -264,7 +279,7 @@ const TimeGutterHeader = () => {
 
 const CustomDayComponent = ({ date }) => {
   return (
-    <div
+    <Stack
       style={{
         display: "flex",
         flexDirection: "column",
@@ -273,53 +288,10 @@ const CustomDayComponent = ({ date }) => {
         marginBottom: "12px",
       }}
     >
-      <div>{moment(date).format("DD")}</div>
-      <div>{moment(date).format("ddd").toUpperCase()}</div>
-    </div>
+      <Box>{moment(date).format("DD")}</Box>
+      <Box>{moment(date).format("ddd").toUpperCase()}</Box>
+    </Stack>
   );
 };
 
-const CustomEventComponent = ({ event }) => {
-  const { start, end, student } = event;
 
-  const studentInfo = student
-    ? `${student.firstName} ${student.lastName}`
-    : null;
-
-  return studentInfo ? (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "5px",
-        backgroundColor: "#4185f4",
-        color: "#fff",
-        borderRadius: "4px",
-        padding: "0px",
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <Typography sx={{ fontWeight: "bold" }}>{studentInfo}</Typography>
-      <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
-        <Clock color="#e6e7eb" />
-        <Typography sx={{ color: "#f3f4f6" }}>{`${moment(start).format(
-          "HH:mm"
-        )} - ${moment(end).format("HH:mm")}`}</Typography>
-      </Box>
-    </Box>
-  ) : null;
-};
-
-CustomEventComponent.propTypes = {
-  event: PropTypes.shape({
-    start: PropTypes.instanceOf(Date).isRequired,
-    end: PropTypes.instanceOf(Date).isRequired,
-    student: PropTypes.shape({
-      firstName: PropTypes.string,
-      lastName: PropTypes.string,
-    }),
-  }).isRequired,
-};
-CustomDayComponent.propTypes = {
-  date: PropTypes.object.isRequired,
-};

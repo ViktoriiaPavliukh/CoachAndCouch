@@ -14,9 +14,6 @@ import {
   Paper,
 } from "@mui/material";
 import { Menu as MenuIcon } from "@mui/icons-material";
-// import InstagramIcon from "@mui/icons-material/Instagram";
-// import TelegramIcon from "@mui/icons-material/Telegram";
-// import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutUser } from "../../redux/auth/operations";
@@ -31,9 +28,6 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import Logo from "./../Logo";
 
 const MenuMobItem = styled(MenuItem)(() => ({
-  "& :hover": {
-    color: "white",
-  },
   "& .MuiMenuItem-root": {
     color: "white",
   },
@@ -125,12 +119,11 @@ export function Header() {
           <Logo width="130px" />
           <Box
             sx={{
-              // flexGrow: 1,
               display: { xs: "none", lg: "flex" },
               gap: "56px",
             }}
           >
-            {pages.slice(7, 10).map(({ title, link }) =>
+            {pages.slice(6, 9).map(({ title, link }) =>
               !user.advert || link !== "teacherform" ? (
                 <Button
                   key={title.props.id}
@@ -165,45 +158,6 @@ export function Header() {
               ) : null
             )}
           </Box>
-          {/* <Stack
-            direction="row"
-            sx={{
-              display: { xs: "none", lg: "flex" },
-              gap: "0",
-            }}
-          >
-            <ExternalLink to="https://www.instagram.com" aria-label="Instagram">
-              <InstagramIcon
-                sx={{
-                  color: (theme) => theme.palette.textColor.header,
-                  "&:hover": {
-                    color: (theme) => theme.palette.primary.accent,
-                  },
-                }}
-              />
-            </ExternalLink>
-            <ExternalLink to="https://www.telegram.org" aria-label="Telegram">
-              <TelegramIcon
-                sx={{
-                  padding: "0px",
-                  color: (theme) => theme.palette.textColor.header,
-                  "&:hover": {
-                    color: (theme) => theme.palette.primary.accent,
-                  },
-                }}
-              />
-            </ExternalLink>
-            <ExternalLink to="https://www.facebook.com" aria-label="Facebook">
-              <FacebookRoundedIcon
-                sx={{
-                  color: (theme) => theme.palette.textColor.header,
-                  "&:hover": {
-                    color: (theme) => theme.palette.primary.accent,
-                  },
-                }}
-              />
-            </ExternalLink>
-          </Stack> */}
           <Stack direction="row" sx={{ display: { xs: "none", lg: "flex" } }}>
             <GreenSwitch
               checked={checked}
@@ -247,7 +201,7 @@ export function Header() {
                 </MenuItem>
               </Box>
             ) : (
-              pages.slice(10, 11).map(({ title, link }) => (
+              pages.slice(9, 10).map(({ title, link }) => (
                 <MenuItem
                   sx={{
                     px: "12px",
@@ -281,7 +235,7 @@ export function Header() {
             )}
             {!isLoggedIn && (
               <Box>
-                {pages.slice(11).map(({ title, link }) => (
+                {pages.slice(10).map(({ title, link }) => (
                   <MenuItem
                     key={title}
                     onClick={() => {
@@ -312,18 +266,12 @@ export function Header() {
               </Box>
             )}
           </Stack>
-
           <Box
             sx={{
               display: { xs: "flex", lg: "none" },
               alignItems: "center",
             }}
           >
-            {/* <GreenSwitch
-              checked={checked}
-              onChange={handleChange}
-              inputProps={{ "aria-label": "controlled" }}
-            /> */}
             <LanguageSwitcher />
             <Menu
               id="menu-appbar"
@@ -345,7 +293,6 @@ export function Header() {
                 "& .MuiMenu-list": {
                   padding: "0",
                 },
-                // "& .MuiPopover-paper": { top: "0" },
               }}
             >
               <Paper
@@ -355,7 +302,7 @@ export function Header() {
                   padding: "40px 60px",
                 }}
               >
-                {pages.slice(7, 10).map(({ title, link }) =>
+                {pages.slice(6, 9).map(({ title, link }) =>
                   !user.advert || link !== "teacherform" ? (
                     <MenuMobItem
                       key={title.props.id}
@@ -389,13 +336,12 @@ export function Header() {
                   ) : null
                 )}
                 {isLoggedIn && (
-                  <div>
+                  <Box>
                     <Box
                       sx={{ borderTop: "1px solid #4B5563", margin: "28px 0" }}
                     />
                     {pages.slice(0, 6).map(({ title, link }) => (
                       <MenuMobItem
-                        // disableGutters={true}
                         key={title.props.id}
                         onClick={() => {
                           handleCloseNavMenu(`/user/${user.id}/${link}`);
@@ -425,7 +371,7 @@ export function Header() {
                         </Typography>
                       </MenuMobItem>
                     ))}
-                  </div>
+                  </Box>
                 )}
                 <Box
                   sx={{ borderTop: "1px solid #4B5563", margin: "28px 0" }}
@@ -433,7 +379,7 @@ export function Header() {
 
                 {isLoggedIn ? (
                   <Box>
-                    {pages.slice(6, 7).map(({ title, link }) => (
+                    {pages.slice(7, 8).map(({ title, link }) => (
                       <MenuMobItem
                         key={title.props.id}
                         onClick={() => {
@@ -442,6 +388,10 @@ export function Header() {
                         sx={{
                           padding: 0,
                           backgroundColor: (theme) => theme.palette.background,
+                          "&:hover": {
+                            color: (theme) =>
+                              theme.palette.textColor.greenYellowHover,
+                          },
                         }}
                       >
                         <Typography
@@ -467,6 +417,10 @@ export function Header() {
                       sx={{
                         padding: 0,
                         backgroundColor: (theme) => theme.palette.background,
+                        "&:hover": {
+                          color: (theme) =>
+                            theme.palette.textColor.greenYellowHover,
+                        },
                       }}
                     >
                       <Typography
@@ -494,6 +448,10 @@ export function Header() {
                       sx={{
                         padding: 0,
                         backgroundColor: (theme) => theme.palette.background,
+                        "&:hover": {
+                          color: (theme) =>
+                            theme.palette.textColor.greenYellowHover,
+                        },
                       }}
                     >
                       <Typography
@@ -502,6 +460,10 @@ export function Header() {
                         sx={{
                           mr: 0,
                           padding: "6px 16px",
+                          "&:hover": {
+                            color: (theme) =>
+                              theme.palette.textColor.greenYellowHover,
+                          },
                         }}
                       >
                         {intl.formatMessage({ id: "header.login" })}
@@ -515,15 +477,22 @@ export function Header() {
                       sx={{
                         padding: 0,
                         backgroundColor: (theme) => theme.palette.background,
+                        "&:hover": {
+                          color: (theme) =>
+                            theme.palette.textColor.greenYellowHover,
+                        },
                       }}
                     >
                       <Typography
-                        // disableGutters={true}
                         textAlign="left"
                         variant="fontHeader"
                         sx={{
                           mr: 0,
                           padding: "6px 16px",
+                          "&:hover": {
+                            color: (theme) =>
+                              theme.palette.textColor.greenYellowHover,
+                          },
                         }}
                       >
                         {intl.formatMessage({ id: "header.registration" })}
