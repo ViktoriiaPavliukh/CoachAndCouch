@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import moment from "moment";
@@ -8,6 +8,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Box, Typography, Button } from "@mui/material";
 import { Clock } from "react-feather";
 import { CancelModal } from "./CancelModal";
+import { X } from "react-feather";
 import CloseIcon from "@mui/icons-material/Close";
 
 const CustomEventComponent = ({ event }) => {
@@ -29,15 +30,24 @@ const CustomEventComponent = ({ event }) => {
     : "No student info";
 
   const handleCancelEvent = (e) => {
-    alert("Need action on Backend side");
+    e.stopPropagation();
     setEventToCancel(event);
+    setOpenCancelModal(true);
   };
 
   const onBackdropClose = () => {
     setOpenCancelModal(false);
-    console.log(openCancelModal);
-    console.log("Closing cancel modal");
   };
+
+  const onConfirm = () => {
+    alert("need backend action");
+    setOpenCancelModal(false);
+  };
+
+  const lesson = () => {
+    return `${moment(start).format("HH:mm")} - ${moment(end).format("HH:mm")}`;
+  };
+
 
   return student ? (
     <Box
@@ -52,33 +62,47 @@ const CustomEventComponent = ({ event }) => {
         borderRadius: "4px",
         padding: "0px",
         boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+        cursor: "default",
       }}
     >
-      <Typography sx={{ fontWeight: "bold" }}>{studentInfo}</Typography>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        {isHovered ? (
-          <Button
-            onClick={handleCancelEvent}
-            sx={{
-              color: "#fff",
-              "&:hover": {
-                color: "#ff0000",
-              },
-            }}
-          >
-            {intl.formatMessage({ id: "cancelBtn" })}
-          </Button>
-        ) : (
-          <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
-            <Clock color="#e6e7eb" />
-            <Typography sx={{ color: "#f3f4f6" }}>
-              {`${moment(start).format("HH:mm")} - ${moment(end).format(
-                "HH:mm"
-              )}`}
-            </Typography>
-          </Box>
-        )}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography sx={{ fontSize: "12px" }}>{studentInfo}</Typography>
+        <Button
+          sx={{
+            border: "none",
+            backgroundColor: "transparent",
+            minWidth: "24px",
+            height: "24px",
+            borderRadius: "50%",
+            ml: "auto",
+            p: "4px",
+            "&:hover": { backgroundColor: "#9CA3AF" },
+          }}
+          onClick={handleCancelEvent}
+        >
+          <X style={{ color: "#fff", width: "16px", height: "16px" }} />
+        </Button>
       </Box>
+      <Box sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
+        <Clock color="#e6e7eb" style={{ width: "12px" }} />
+        <Typography sx={{ color: "#f3f4f6", fontSize: "12px" }}>
+          {lesson()}
+        </Typography>
+      </Box>
+      <CancelModal
+        open={openCancelModal}
+        onClose={onBackdropClose}
+        event={eventToCancel}
+        student={student}
+        onConfirm={onConfirm}
+        lesson={lesson()}
+      />
     </Box>
   ) : null;
 };

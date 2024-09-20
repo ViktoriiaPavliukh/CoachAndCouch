@@ -56,7 +56,6 @@ const RequestToSignIn = ({ onBackdropClose }) => {
           }}
         />
       </Button>
-
       <Typography
         variant="posterPopupTitle"
         sx={{

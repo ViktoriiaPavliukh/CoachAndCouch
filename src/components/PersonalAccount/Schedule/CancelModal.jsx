@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import { Modal, Box, Button, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
 
-export const CancelModal = ({ student, open, onClose, onConfirm }) => {
+export const CancelModal = ({ lesson, student, open, onClose, onConfirm }) => {
   const intl = useIntl();
 
   const studentName = student
     ? `${student.firstName} ${student.lastName ? student.lastName : ""}`
     : "Unknown";
-
+  console.log(student);
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -22,18 +22,18 @@ export const CancelModal = ({ student, open, onClose, onConfirm }) => {
           borderRadius: "8px",
           boxShadow: 24,
           p: 4,
-          textAlign: "center",
+          textAlign: "start",
         }}
       >
-        <Typography variant="h6">
-          {`Do you want to cancel the booking with ${studentName}?`}
+        <Typography sx={{ fontSize: "16px" }}>
+          {`${intl.formatMessage({
+            id: "confirmCancel",
+          })} ${studentName} ${intl.formatMessage({ id: "at" })} ${lesson}?`}
         </Typography>
-        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={onClose} // Close modal when clicked
-          >
+        <Box
+          sx={{ display: "flex", justifyContent: "end", mt: 2, gap: "16px" }}
+        >
+          <Button type="button" variant="outlined" onClick={onClose}>
             <Typography
               variant="posterButton"
               sx={{ color: (theme) => theme.palette.textColor.fontColor }}
@@ -45,8 +45,8 @@ export const CancelModal = ({ student, open, onClose, onConfirm }) => {
             type="button"
             variant="contained"
             onClick={() => {
-              onConfirm(); // Confirm action
-              onClose(); // Close modal
+              onConfirm();
+              onClose();
             }}
           >
             {intl.formatMessage({ id: "confirmBtn" })}
