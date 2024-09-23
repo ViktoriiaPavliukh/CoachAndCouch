@@ -54,7 +54,9 @@ export const MyCalendar = () => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
   const [selectedYear, setSelectedYear] = useState(moment().year());
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery((theme) =>
+    theme.breakpoints.down("sm" && "md")
+  );
 
   const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
@@ -203,7 +205,7 @@ export const MyCalendar = () => {
         culture={culture}
         components={{
           toolbar: (props) => <CustomToolbar {...props} />,
-          timeGutterHeader: TimeGutterHeader,
+          timeGutterHeader: !isSmallScreen ? TimeGutterHeader : undefined,
           event: CustomEventComponent,
           week: {
             header: CustomDayComponent,
