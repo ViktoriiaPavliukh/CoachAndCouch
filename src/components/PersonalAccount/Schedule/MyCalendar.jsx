@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import { lightTheme, darkTheme } from "../../../styles/theme";
 import { Calendar, Views, momentLocalizer } from "react-big-calendar";
@@ -9,8 +8,7 @@ import "moment/locale/uk";
 import "moment/locale/en-gb";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { CustomToolbar } from "./CustomToolbar";
-import { Box, Typography, Button } from "@mui/material";
-import { Clock } from "react-feather";
+import { Box, Stack, Typography, useMediaQuery } from "@mui/material";
 import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { selectCurrentUser } from "@/redux/users/selectors";
@@ -32,10 +30,7 @@ import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
-import { Stack } from "@mui/system";
-import { CancelModal } from "./CancelModal";
-import CloseIcon from "@mui/icons-material/Close";
-import CustomEventComponent from "./CustomEventComponent"
+import CustomEventComponent from "./CustomEventComponent";
 
 let formats = {
   timeGutterFormat: "HH:mm",
@@ -59,6 +54,7 @@ export const MyCalendar = () => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
   const [selectedYear, setSelectedYear] = useState(moment().year());
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
@@ -213,7 +209,7 @@ export const MyCalendar = () => {
             header: CustomDayComponent,
           },
         }}
-        defaultView={Views.WEEK}
+        defaultView={isSmallScreen ? Views.DAY : Views.WEEK}
         defaultDate={new Date()}
         scrollToTime={defaultDate}
         events={eventsList}
@@ -293,5 +289,3 @@ const CustomDayComponent = ({ date }) => {
     </Stack>
   );
 };
-
-
