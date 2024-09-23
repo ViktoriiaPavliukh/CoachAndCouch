@@ -38,6 +38,7 @@ import {
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
+import { validationSchema } from "@/defaults";
 
 const initialValues = {
   price: 0,
@@ -54,23 +55,6 @@ const initialValues = {
     sex: "",
   },
 };
-
-const validationSchema = Yup.object({
-  price: Yup.number().integer().min(0).required("Price is required"),
-  description: Yup.string().required("Description is required"),
-  spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
-  teachingLanguages: Yup.array().min(
-    1,
-    "Select at least one teaching language"
-  ),
-  specializations: Yup.array().required("Specialization is required"),
-  image: Yup.mixed().required("Select image for your advert"),
-  updateUser: Yup.object()
-    .shape({
-      birthday: Yup.date().required("Birthday is required").nullable(),
-    })
-    .required("All fields are required"),
-});
 
 export const TeacherFormPage = () => {
   const intl = useIntl();
@@ -164,9 +148,7 @@ export const TeacherFormPage = () => {
         }}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Typography
-            style={{ textTransform: "uppercase", marginBottom: "40px" }}
-          >
+          <Typography sx={{ textTransform: "uppercase", marginBottom: "40px" }}>
             {intl.formatMessage({ id: "teacherForm" })}
           </Typography>
           <Stack
@@ -269,36 +251,13 @@ export const TeacherFormPage = () => {
                   })}
               </Select>
             </FormControl>
-            {/* <TextField
-              type="date"
-              label={intl.formatMessage({ id: "birthday" })}
-              fullWidth
-              sx={{ flex: "1 1 auto" }}
-              multiline
-              variant="outlined"
-              InputLabelProps={{ shrink: true }}
-              InputProps={{
-                placeholder: intl.formatMessage({ id: "datePlaceholder" }),
-              }}
-              name="updateUser.birthday"
-              value={formik.values.updateUser.birthday}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.updateUser?.birthday &&
-                Boolean(formik.errors.updateUser?.birthday)
-              }
-              helperText={
-                formik.touched.updateUser?.birthday &&
-                formik.errors.updateUser?.birthday
-              }
-            /> */}
             <TextField
               type="date"
               label={intl.formatMessage({ id: "birthday" })}
               fullWidth
-              sx={{ flex: "1 1 auto" }}
-              // multiline
+              sx={{
+                flex: "1 1 auto",
+              }}
               variant="outlined"
               InputLabelProps={{ shrink: true }}
               InputProps={{
@@ -447,7 +406,7 @@ export const TeacherFormPage = () => {
             </FormControl>
           </Stack>
           <Stack
-            style={{
+            sx={{
               display: "flex",
               gap: "24px",
               marginBottom: "24px",
@@ -473,14 +432,14 @@ export const TeacherFormPage = () => {
             />
           </Stack>
           <FormControl
-            style={{
+            sx={{
               display: "flex",
               marginBottom: "20px",
             }}
           >
             <FormLabel>{intl.formatMessage({ id: "sex" })}</FormLabel>
             <RadioGroup
-              style={{
+              sx={{
                 flexDirection: "row",
               }}
             >
@@ -488,7 +447,7 @@ export const TeacherFormPage = () => {
                 value="male"
                 control={
                   <Radio
-                    style={{
+                    sx={{
                       border: "none",
                     }}
                     id="sexMale"
@@ -541,13 +500,13 @@ export const TeacherFormPage = () => {
           </FormControl>
           <FormControl
             fullWidth
-            style={{
+            sx={{
               justifyContent: "center",
               alignItems: "center",
             }}
           >
             <Typography
-              style={{
+              sx={{
                 alignSelf: "flex-start",
                 marginBottom: "20px",
               }}
@@ -587,7 +546,7 @@ export const TeacherFormPage = () => {
                 }}
               >
                 <TextField
-                  style={{
+                  sx={{
                     display: "none",
                   }}
                   fullWidth
@@ -608,7 +567,7 @@ export const TeacherFormPage = () => {
               </label>
               {!image && (
                 <Typography
-                  style={{
+                  sx={{
                     position: "absolute",
                     top: "50%",
                     left: "50%",
