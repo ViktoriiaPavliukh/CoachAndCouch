@@ -126,7 +126,7 @@ export function VerticalTabs() {
         }}
       >
         <Tab
-          label="Adverts"
+          label={intl.formatMessage({ id: "advert" })}
           {...a11yProps(0)}
           sx={{
             alignItems: "flex-start",
@@ -135,7 +135,7 @@ export function VerticalTabs() {
           }}
         />
         <Tab
-          label="Users"
+          label={intl.formatMessage({ id: "usersAdmin" })}
           {...a11yProps(1)}
           sx={{
             alignItems: "flex-start",
@@ -144,7 +144,7 @@ export function VerticalTabs() {
           }}
         />
         <Tab
-          label="Settings"
+          label={intl.formatMessage({ id: "personalAccount.settings" })}
           {...a11yProps(2)}
           sx={{
             alignItems: "flex-start",
@@ -159,32 +159,34 @@ export function VerticalTabs() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Box>
-          <h2>Adverts</h2>
-          <TableContainer component={Paper}>
+          <Typography sx={{ fontSize: { lg: "48px" } }}>
+            {intl.formatMessage({ id: "advert" })}
+          </Typography>
+          <TableContainer sx={{ mt: "36px" }}>
             <Table
-              sx={{
-                "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root":
-                  {
-                    backgroundColor: "#546658",
-                    color: "white",
-                    "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
-                      backgroundColor: "white",
-                    },
-                  },
-              }}
-              style={{
-                "& td": { fontSize: "16px" },
-              }}
+            // sx={{
+            //   "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root":
+            //     {
+            //       backgroundColor: "#546658",
+            //       color: "white",
+            //       "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
+            //         backgroundColor: "white",
+            //       },
+            //     },
+            // }}
+            // style={{
+            //   "& td": { fontSize: "16px" },
+            // }}
             >
               <TableHead>
                 <TableRow>
                   <TableCell
                     align="center"
                     sx={{
-                      border: "1px solid #e0e0e0",
-                      padding: "6px 0",
-                      fontSize: "18px",
-                      fontWeight: "500",
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
                     ID
@@ -192,122 +194,89 @@ export function VerticalTabs() {
                   <TableCell
                     align="center"
                     sx={{
-                      border: "1px solid #e0e0e0",
-                      padding: "6px 6px",
-                      fontSize: "18px",
-                      fontWeight: "500",
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Image
+                    {intl.formatMessage({ id: "avatar" })}
                   </TableCell>
                   <TableCell
                     align="center"
                     sx={{
-                      border: "1px solid #e0e0e0",
-                      padding: "6px 0",
-                      fontSize: "18px",
-                      fontWeight: "500",
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Advert
+                    {intl.formatMessage({ id: "advert" })}
                   </TableCell>
-
                   <TableCell
                     align="center"
                     sx={{
-                      border: "1px solid #e0e0e0",
-                      padding: "6px 10px",
-                      fontSize: "18px",
-                      fontWeight: "500",
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Price
+                    {intl.formatMessage({ id: "price" })}
                   </TableCell>
-
                   <TableCell
                     align="center"
                     sx={{
-                      border: "1px solid #e0e0e0",
-                      width: "200px",
-                      padding: "6px 0",
-                      fontSize: "18px",
-                      fontWeight: "500",
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
                     }}
                   >
-                    Description
+                    {intl.formatMessage({ id: "description" })}
                   </TableCell>
-                  <TableCell
-                    sx={{
-                      width: "200px",
-                      padding: 0,
-                      border: "1px solid #e0e0e0",
-                      fontSize: "18px",
-                      fontWeight: "500",
-                    }}
-                  >
-                    <TableRow>
-                      <TableCell
-                        align="center"
-                        style={{
-                          width: "260px",
-                          fontSize: "18px",
-                          fontWeight: "500",
-                        }}
-                      >
-                        Languages
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell
-                        sx={{
-                          padding: 0,
-                          borderBottom: "none",
-                          fontSize: "18px",
-                          fontWeight: "500",
-                        }}
-                      >
-                        <TableRow>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              border: "none",
-                              borderRight: "1px solid #e0e0e0",
-                              width: "110px",
-                              padding: "6px",
-                              fontSize: "18px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            Teaching
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{
-                              border: "none",
-                              width: "110px",
-                              padding: "6px",
-                              fontSize: "18px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            Spoken
-                          </TableCell>
-                        </TableRow>
-                      </TableCell>
-                    </TableRow>
-                  </TableCell>
-
                   <TableCell
                     align="center"
                     sx={{
-                      border: "1px solid #e0e0e0",
-                      padding: "6px 0",
-                      fontSize: "18px",
-                      fontWeight: "500",
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
+                      p: 0,
+                      display: "flex",
+                      justifyContent: "space-between",
                     }}
                   >
-                    Edit
+                    <TableCell
+                      align="center"
+                      sx={{
+                        color: (theme) => theme.palette.textColor.listColor,
+                        border: "none",
+                        fontSize: "16px",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "languageTeach" })}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        color: (theme) => theme.palette.textColor.listColor,
+                        border: "none",
+                        fontSize: "16px",
+                      }}
+                    >
+                      {intl.formatMessage({ id: "languageNative" })}
+                    </TableCell>
                   </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{
+                      borderBottom: "1px solid",
+                      color: (theme) => theme.palette.textColor.listColor,
+                      borderX: "none",
+                      fontSize: "16px",
+                    }}
+                  ></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -315,25 +284,32 @@ export function VerticalTabs() {
                   adverts.map((advert) => (
                     <TableRow
                       key={uuidv4()}
-                      style={{
+                      sx={{
                         backgroundColor: advert.isDeleted
                           ? "rgba(175, 186, 202, 0.3)"
-                          : "none",
+                          : "transparent",
                       }}
                     >
                       <TableCell
                         align="center"
                         sx={{
                           width: "50px",
-                          border: "1px solid #e0e0e0",
-                          padding: "10px",
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
+                          fontSize: "18px",
+                          fontWeight: "500",
                         }}
                       >
                         {advert.id}
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ border: "1px solid #e0e0e0", padding: "10px" }}
+                        sx={{
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
+                        }}
                       >
                         <img
                           src={advert.imagePath}
@@ -342,101 +318,83 @@ export function VerticalTabs() {
                             width: "70px",
                             height: "70px",
                             objectFit: "cover",
-                            // maxHeight: "100px",
                           }}
                         />
                       </TableCell>
                       <TableCell
                         align="left"
                         sx={{
-                          border: "1px solid #e0e0e0",
-                          width: "250px",
-                          padding: "10px",
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
+                          fontSize: "16px",
                         }}
                       >
-                        <Typography sx={{ fontWeight: "600" }}>
+                        <Typography>
                           {advert.user.firstName}&nbsp;
                           {advert.user.lastName ? advert.user.lastName : ""}
                         </Typography>
                         <Typography sx={{ marginBottom: "20px" }}>
                           {advert.user.email}
                         </Typography>
-
-                        <p>
-                          Create at:
-                          <br />
-                          <Typography sx={{ fontWeight: "600" }}>
+                        <Typography>
+                          {intl.formatMessage({ id: "registrationDate" })}:
+                          <Typography>
                             {format(
                               new Date(advert.createdAt),
                               "dd.MM.yyyy HH:mm"
                             )}
                           </Typography>
-                        </p>
+                        </Typography>
                       </TableCell>
-
                       <TableCell
                         align="center"
-                        sx={{ border: "1px solid #e0e0e0", padding: "10px" }}
+                        sx={{
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
+                          fontSize: "16px",
+                        }}
                       >
                         {advert.price}
                         {"$"}
                       </TableCell>
-
                       <TableCell
                         align="left"
-                        sx={{ padding: "10px", paddingRight: 0 }}
+                        sx={{
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
+                          fontSize: "16px",
+                        }}
                       >
-                        <Box
-                          sx={{
-                            maxHeight: "100px",
-                            width: "200px",
-                            wordBreak: "break-all",
-                            maxWidth: "200px",
-                            overflowY: "auto",
-                            overflowX: "hidden",
-                            paddingRight: "5px",
-                            scrollbarWidth: "thin",
-                            "&::-webkit-scrollbar": {
-                              width: "0.4em",
-                            },
-                            "&::-webkit-scrollbar-track": {
-                              background: "transparent",
-                            },
-                            "&::-webkit-scrollbar-thumb": {
-                              backgroundColor: "#888",
-                              borderRadius: "5px",
-                            },
-                            "&::-webkit-scrollbar-thumb:hover": {
-                              background: "#555",
-                            },
-                            "&.MuiTableCell-root:hover::-webkit-scrollbar-thumb ":
-                              {
-                                background: "white",
-                              },
-                          }}
-                        >
-                          {advert.description}
-                        </Box>
+                        {advert.description}
                       </TableCell>
-                      <TableCell sx={{ padding: 0, maxWidth: "220px" }}>
-                        <div
+                      <TableCell
+                        sx={{
+                          padding: 0,
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
+                          fontSize: "16px",
+                        }}
+                      >
+                        <TableCell
                           style={{
                             display: "flex",
                             width: "100%",
                             padding: 0,
                             justifyContent: "center",
+                            border: "none",
                           }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              padding: "6px 6px",
-                              borderRight: " 1px solid #e0e0e0",
-                              width: "110px",
-                              alignItems: "center",
-                              overflowY: "auto",
-                              height: "151px",
+                          <TableCell
+                            align="center"
+                            sx={{
+                              color: (theme) =>
+                                theme.palette.textColor.listColor,
+                              border: "none",
+                              fontSize: "16px",
                             }}
                           >
                             {advert.teachingLanguages
@@ -446,17 +404,14 @@ export function VerticalTabs() {
                                   : language.languageUa
                               )
                               .join(", ")}
-                          </div>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "flex-start",
-                              alignItems: "center",
-                              padding: "6px 6px",
-                              width: "110px",
-                              overflowY: "auto",
-                              height: "151px",
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{
+                              color: (theme) =>
+                                theme.palette.textColor.listColor,
+                              border: "none",
+                              fontSize: "16px",
                             }}
                           >
                             {advert.spokenLanguages
@@ -466,100 +421,51 @@ export function VerticalTabs() {
                                   : language.languageUa
                               )
                               .join(", ")}
-                          </div>
-                        </div>
+                          </TableCell>
+                        </TableCell>
                       </TableCell>
-
                       <TableCell
                         align="center"
                         sx={{
-                          border: "1px solid #e0e0e0",
-                          padding: "10px",
+                          borderBottom: "1px solid",
+                          color: (theme) => theme.palette.textColor.listColor,
+                          borderX: "none",
                         }}
                       >
-                        <Button
+                        <Box
                           sx={{
-                            mb: "15px",
-                            border: "1px solid",
-                            borderColor: (theme) =>
-                              theme.palette.buttonColor.fontColor,
-
-                            color: (theme) =>
-                              theme.palette.buttonColor.fontColor,
-                            fontSize: "14px",
-                            fontWeight: "700",
-                            transition: "background-color 0.3s",
-                            backgroundColor: (theme) =>
-                              theme.palette.buttonColor.main,
-                            "&:hover": {
-                              backgroundColor: (theme) =>
-                                theme.palette.buttonColor.darkHover,
-                              // borderColor: (theme) => theme.palette.buttonColor.fontColor,
-                            },
-
-                            width: "95px",
-                            "& svg": {
-                              fill: "white",
-                            },
-                          }}
-                          style={{}}
-                          onClick={() => {
-                            setDeleteState(
-                              deleteState === "delete" ? "undo" : "delete"
-                            );
-                            dispatch(deleteAdvertsAsAdmin(advert.id));
-                          }}
-                        >
-                          <SvgIcon
-                            component={DeleteForeverSharpIcon}
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              marginRight: "5px",
-                            }}
-                          />
-                          {advert.isDeleted ? "undo" : "delete"}
-                        </Button>
-                        <Button
-                          sx={{
-                            color: (theme) => theme.palette.buttonColor.main,
-                            fontSize: "14px",
-                            fontWeight: "700",
-                            transition: "background-color 0.3s",
-                            "&:hover": {
-                              backgroundColor: (theme) =>
-                                theme.palette.buttonColor.darkHover,
-                              borderColor: (theme) =>
-                                theme.palette.buttonColor.fontColor,
-                              color: (theme) =>
-                                theme.palette.buttonColor.fontColor,
-                              "& svg": {
-                                fill: "white",
-                              },
-                            },
-                            "& svg": {
-                              fill: (theme) => theme.palette.buttonColor.main,
-                            },
                             display: "flex",
+                            flexDirection: "row",
                             justifyContent: "center",
                             alignItems: "center",
-                            width: "95px",
-                            border: "1px solid",
-                            borderColor: (theme) =>
-                              theme.palette.buttonColor.main,
-                            backgroundColor: "white",
+                            gap: "5px",
                           }}
                         >
-                          <SvgIcon
-                            component={EditNoteIcon}
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              marginRight: "5px",
+                          <EditNoteIcon
+                            sx={{
+                              width: "24px",
+                              height: "24px",
+                              color: (theme) => theme.palette.textColor.grey,
+                              border: "none",
+                            }}
+                            disabled={
+                              advert.user.role !== "admin" ? true : false
+                            }
+                          />
+                          <DeleteOutlineIcon
+                            sx={{
+                              width: "24px",
+                              height: "24px",
+                              color: (theme) => theme.palette.textColor.grey,
+                            }}
+                            onClick={() => {
+                              setDeleteState(
+                                deleteState === "delete" ? "undo" : "delete"
+                              );
+                              dispatch(deleteAdvertsAsAdmin(advert.id));
                             }}
                           />
-                          Edit
-                        </Button>
+                        </Box>
                       </TableCell>
                     </TableRow>
                   ))

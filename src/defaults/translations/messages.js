@@ -273,9 +273,11 @@ const messages = {
     avatar: "Image",
     usersAdmin: "Users",
     username: "User name",
-    advert: "Advert",
+    advert: "Adverts",
     registeredAt: "Registered At",
     lastVisit: "Last visit",
+    languageTeach: "Teaching languages",
+    languageNative: "Languages spoken",
   },
 
   uk: {
@@ -555,6 +557,8 @@ const messages = {
     advert: "Оголошення",
     registeredAt: "Дата реєстраціЇ",
     lastVisit: "Востаннє на сайті",
+    languageTeach: "Мови викладання",
+    languageNative: "Рідні мови",
   },
 };
 
