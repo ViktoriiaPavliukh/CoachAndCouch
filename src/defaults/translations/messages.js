@@ -267,6 +267,7 @@ const messages = {
     chooseDate: "Select a date",
     confirmCancel: "Do you want to cancel the booking with ",
     at: "at",
+    noData: "No data to display",
 
     //Admin
     avatar: "Image",
@@ -544,7 +545,8 @@ const messages = {
     bookLesson: "Забронювати урок",
     chooseDate: "Оберіть дату",
     confirmCancel: "Ви хочете скасувати бронювання з ",
-    at: "o", 
+    at: "o",
+    noData: "Нема данних для відображення",
 
     //Admin
     avatar: "Аватарка",

@@ -63,6 +63,24 @@ export const passwordSchema = (intl) => {
   });
 };
 
+export const validationSchema = Yup.object({
+  price: Yup.number().integer().min(0).required("Price is required"),
+  description: Yup.string().required("Description is required"),
+  spokenLanguages: Yup.array().min(1, "Select at least one spoken language"),
+  teachingLanguages: Yup.array().min(
+    1,
+    "Select at least one teaching language"
+  ),
+  specializations: Yup.array().required("Specialization is required"),
+  image: Yup.mixed().required("Select image for your advert"),
+  updateUser: Yup.object()
+    .shape({
+      birthday: Yup.date().required("Birthday is required").nullable(),
+    })
+    .required("All fields are required"),
+});
+
+
 export const teacherFormSchema = Yup.object({
   price: Yup.number().integer().min(0).required("Price is required"),
   description: Yup.string().required("Description is required"),

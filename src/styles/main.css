@@ -155,3 +155,14 @@ img {
 .modal-hide {
   display: none;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(2);
+  padding: 0;
+  border-radius: 2px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+  display: none;
+}

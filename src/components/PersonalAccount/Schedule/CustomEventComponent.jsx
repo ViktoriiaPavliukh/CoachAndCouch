@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useIntl } from "react-intl";
 import moment from "moment";
@@ -9,25 +9,16 @@ import { Box, Typography, Button } from "@mui/material";
 import { Clock } from "react-feather";
 import { CancelModal } from "./CancelModal";
 import { X } from "react-feather";
-import CloseIcon from "@mui/icons-material/Close";
 
 const CustomEventComponent = ({ event }) => {
   const { start, end, student } = event;
   const intl = useIntl();
   const [openCancelModal, setOpenCancelModal] = useState(false);
   const [eventToCancel, setEventToCancel] = useState(null);
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
 
   const studentInfo = student
     ? `${student.firstName}${student.lastName ? " " + student.lastName : ""}`
-    : "No student info";
+    : intl.formatMessage({ id: "noData" });
 
   const handleCancelEvent = (e) => {
     e.stopPropagation();
@@ -48,20 +39,14 @@ const CustomEventComponent = ({ event }) => {
     return `${moment(start).format("HH:mm")} - ${moment(end).format("HH:mm")}`;
   };
 
-
   return student ? (
     <Box
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "5px",
         backgroundColor: "#4185f4",
         color: "#fff",
-        borderRadius: "4px",
         padding: "0px",
-        boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
         cursor: "default",
       }}
     >
