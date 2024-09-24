@@ -1,6 +1,7 @@
 import { useIntl } from "react-intl";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import {
   advertByIdSelector,
   selectAdvertsIsLoading,
@@ -25,28 +26,72 @@ import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import useStatus from "@/hooks/useStatus";
 import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
+import {
+  fetchBookings,
+  fetchTeacherBookings,
+  fetchStudentBookings,
+  createBooking,
+} from "@/redux/marketplace/bookings/operations";
+import {
+  selectTeacherBookings,
+  selectStudentBookings,
+  selectTeacherBookingsError,
+  selectTeacherBookingsLoading,
+} from "@/redux/marketplace/bookings/selectors";
+import { fetchTeacherSlots } from "@/redux/marketplace/bookings/operations";
 
 export function Card() {
   const intl = useIntl();
+  const location = useLocation();
   const en = useSelector(selectCurrentLanguage);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
+  const [isFirstTimeBooking, setIsFirstTimeBooking] = useState(true);
   const currentUser = useSelector(selectCurrentUser);
   const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
   const isLoading = useSelector(selectAdvertsIsLoading);
+  const teacherBookings = useSelector(selectTeacherBookings);
+  const studentBookings = useSelector(selectStudentBookings);
+
   const lastVisit = teacher?.user?.lastVisit;
   const userLike = teacher?.likes?.some(
     (like) => like.user.id === currentUser.id
   );
   const status = useStatus(lastVisit);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getCurrentUser());
     if (teacherId) {
       dispatch(getAdvertById(teacherId));
+      dispatch(fetchTeacherSlots(teacherId));
     }
   }, [dispatch, teacherId]);
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      dispatch(fetchStudentBookings(currentUser.id));
+    }
+  }, [dispatch, currentUser?.id]);
+
+  useEffect(() => {
+    if (studentBookings.length > 0 && teacherId) {
+      const hasBookedBefore = studentBookings.some(
+        (booking) => booking.advert.id.toString() === teacherId
+      );
+
+      console.log(hasBookedBefore);
+      setIsFirstTimeBooking(!hasBookedBefore);
+    }
+  }, [studentBookings, teacherId, currentUser]);
+
+  useEffect(() => {
+    if (location.state?.showModal) {
+      setModalContentType(location.state.modalContentType);
+      setShowModal(true);
+    }
+  }, [location]);
 
   const handleFavoriteAdd = async (id) => {
     try {
@@ -175,7 +220,7 @@ export function Card() {
                     width: { xs: "100%", lg: "463px" },
                   }}
                 >
-                  <Stack
+                  {/* <Stack
                     sx={{
                       display: "flex",
                       justifyContent: "center",
@@ -193,7 +238,7 @@ export function Card() {
                       {intl.formatMessage({ id: "lessons" })}
                     </Typography>
                     <Typography variant="fontHeader">156</Typography>
-                  </Stack>
+                  </Stack> */}
                   <Stack
                     sx={{
                       display: "flex",
@@ -301,7 +346,9 @@ export function Card() {
                     }}
                   >
                     <Typography variant="posterButton">
-                      {intl.formatMessage({ id: "trialLessonBtn" })}
+                      {isFirstTimeBooking
+                        ? intl.formatMessage({ id: "trialLessonBtn" })
+                        : intl.formatMessage({ id: "bookLesson" })}
                     </Typography>
                   </Button>
                   <MessageBtn
@@ -349,9 +396,12 @@ export function Card() {
             </Box>
             {showModal && (
               <Modal
+                user={teacher.user.id}
                 id={teacher.id}
                 onBackdropClose={onBackdropClose}
                 contentType={modalContentType}
+                teacherBookings={teacherBookings}
+                isFirstTimeBooking={isFirstTimeBooking}
               />
             )}
           </>

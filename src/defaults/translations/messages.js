@@ -176,6 +176,9 @@ const messages = {
     saveChanges: "Save changes",
     goBack: "Go back",
     fillAdv: "Fill out the form",
+    payBtn: "Pay",
+    closeBtn: "Close",
+    confirmBtn: "Confirm",
 
     //Status
     online: "Online",
@@ -233,6 +236,9 @@ const messages = {
     loginSendMessageTitle: "Register to write to the teacher",
     loginSendMessageSubject:
       "To be able to write to the teacher, register or log in to your personal account",
+    bookSendMessageTitle: "Register to book a lesson",
+    bookLessonFailure:
+      "To be able to book a lesson, please register or log in to your account",
 
     //img
     imgAdvise:
@@ -242,6 +248,25 @@ const messages = {
     //schedule
     "schedule.today": "Today",
     "schedule.week": "Week",
+    fillForm: "Fill in the details",
+    formDetails: "Tell the teacher about yourself",
+    booking: ", you are booking",
+    yourTeacher: "Your teacher",
+    dateTime: "Date and time",
+    priceSchedule: "Price",
+    chooseLanguage: "Select the language to learn",
+    chooseLevel: "Select your language proficiency level",
+    whereFrom: "Where are you from?",
+    nativeLanguage: "What is your native language?",
+    learningGoal: "What is your purpose for learning this language?",
+    next: "Continue",
+    onlyTeachers: "Only teachers can add slots",
+    confirmSlot: "Confirm slot",
+    addSlot: "Do you want to add this slot: ",
+    bookLesson: "Book lesson",
+    chooseDate: "Select a date",
+    confirmCancel: "Do you want to cancel the booking with ",
+    at: "at",
 
     //Admin
     avatar: "Image",
@@ -409,7 +434,6 @@ const messages = {
     errorSubtitle: "Перевірте URL адресу сторінки або поверніться на головну",
 
     // Setings
-
     theme: "Тема",
     darkTheme: "Темна тема",
     lightTheme: "Світла тема",
@@ -430,6 +454,9 @@ const messages = {
     saveChanges: "Зберегти зміни",
     goBack: "Повернутись назад",
     fillAdv: "Заповнити анкету",
+    payBtn: "Сплатити",
+    closeBtn: "Закрити",
+    confirmBtn: "Підтвердити",
 
     //Status
     online: "У мережі",
@@ -484,9 +511,12 @@ const messages = {
     messageSubject: "Тема повідомлення",
     messageEnterBody: "Введіть текст",
     messageBody: "Текст повідомлення",
-    loginSendMessageTitle: "Зареєструйтеся щоб написати викладачу",
+    loginSendMessageTitle: "Зареєструйтеся, щоб написати викладачу",
     loginSendMessageSubject:
       "Щоб мати можливість написати викладачу, зареєструйтеся або увійдіть у особистий кабінет",
+    bookSendMessageTitle: "Зареєструйтеся, щоб забронювати заняття",
+    bookLessonFailure:
+      "Щоб мати можливість забронювати заняття, зареєструйтеся або увійдіть у особистий кабінет",
 
     //img
     imgAdvise:
@@ -496,6 +526,25 @@ const messages = {
     //schedule
     "schedule.today": "Сьогодні",
     "schedule.week": "Тиждень",
+    fillForm: "Заповніть інформацію",
+    formDetails: "Розкажіть викладачу про себе",
+    dateTime: "Дата і час",
+    priceSchedule: "Вартість",
+    booking: ", ви бронюєте",
+    yourTeacher: "Ваш викладач",
+    chooseLanguage: "Оберіть мову для вивчення",
+    chooseLevel: "Оберіть ваш рівень володіння мовою",
+    whereFrom: "Звідки ви?",
+    nativeLanguage: "Яка ваша рідна мова?",
+    learningGoal: "Яка ваша мета вивчення цієї мови?",
+    next: "Продовжити",
+    onlyTeachers: "Тільки викладачі можуть додавати слоти",
+    confirmSlot: "Підтвердити слот",
+    addSlot: "Ви хочете додати цей слот: ",
+    bookLesson: "Забронювати урок",
+    chooseDate: "Оберіть дату",
+    confirmCancel: "Ви хочете скасувати бронювання з ",
+    at: "o", 
 
     //Admin
     avatar: "Аватарка",

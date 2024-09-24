@@ -1,16 +1,19 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
+  const [selectedHour, setSelectedHour] = useState(null);
   const now = new Date();
   let shedule = [];
-  for (let i = 10; i < 19; i++) {
+  for (let i = 7; i < 24; i++) {
     shedule.push(i);
   }
 
   const handlerSheduleClick = (h) => {
     const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), h);
     scheduleChanged(date);
+    setSelectedHour(h);
   };
 
   const isDisabled = (h) => {
@@ -18,7 +21,14 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
     return date <= now || !availableHours.has(h);
   };
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: { xs: "12px", md: "20px" },
+        flexWrap: "nowrap",
+      }}
+    >
       {shedule.map((sh, idx) => (
         <Button
           disabled={isDisabled(sh)}
@@ -26,21 +36,31 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
             handlerSheduleClick(sh);
           }}
           sx={{
-            minWidth: "50px",
-            border: "none",
-            backgroundColor: sh === hour ? "transparent" : "#e5e5e5",
+            minWidth: { xs: "40px", md: "57px", lg: "69px" },
+            fontSize: { xs: "14px", md: "20px" },
+            borderRadius: "4px",
+            backgroundColor:
+              selectedHour === sh
+                ? (theme) => theme.palette.primary.main
+                : isDisabled(sh)
+                ? (theme) => theme.palette.buttonColor.disabled
+                : "transparent",
             padding: 0,
-            maxWidth: "50px",
-            color: sh === hour ? "#000" : "#6b7280",
+            maxWidth: { md: "50px" },
+            color:
+              selectedHour === sh
+                ? (theme) => theme.palette.textColor.header
+                : isDisabled(sh)
+                ? (theme) => theme.palette.textColor.disabled
+                : (theme) => theme.palette.textColor.title,
             "&:hover": {
-              backgroundColor: "red",
-              color: "white",
+              backgroundColor: (theme) => theme.palette.primary.main,
             },
           }}
           key={idx}
         >{`${sh.toString().padStart(2, "0")}:00`}</Button>
       ))}
-    </div>
+    </Box>
   );
 };
 Shedule.propTypes = {

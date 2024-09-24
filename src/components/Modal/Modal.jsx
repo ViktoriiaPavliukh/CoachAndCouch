@@ -2,15 +2,22 @@ import PropTypes from "prop-types";
 import { createPortal } from "react-dom";
 import { TrialLessonWrapper } from "./TrialLessonWrapper/TrialLessonWrapper";
 import { SendMessageWrapper } from "./SendMessageWrapper";
+import RequestToSignIn from "./ReguestToSignIn";
 import { Box } from "@mui/material";
 import { useEffect } from "react";
 
-export const Modal = ({ onBackdropClose, contentType, id, isOpen }) => {
+export const Modal = ({
+  onBackdropClose,
+  contentType,
+  id,
+  isOpen,
+  teacherBookings,
+  isFirstTimeBooking,
+}) => {
   useEffect(() => {
     const handleNoScroll = () => {
       document.body.style.overflow = isOpen ? "hidden" : "auto";
     };
-
     const handlePressEsc = (e) => {
       if (e.code === "Escape") {
         onBackdropClose();
@@ -40,7 +47,16 @@ export const Modal = ({ onBackdropClose, contentType, id, isOpen }) => {
       case "sendMessage":
         return <SendMessageWrapper id={id} onBackdropClose={onBackdropClose} />;
       case "trialLesson":
-        return <TrialLessonWrapper />;
+        return (
+          <TrialLessonWrapper
+            id={id}
+            teacherBookings={teacherBookings || []}
+            isFirstTimeBooking={isFirstTimeBooking || false}
+            onBackdropClose={onBackdropClose}
+          />
+        );
+      case "signInOrRegister":
+        return <RequestToSignIn onBackdropClose={onBackdropClose} />;
       default:
         return null;
     }
@@ -49,7 +65,7 @@ export const Modal = ({ onBackdropClose, contentType, id, isOpen }) => {
     <Box
       onClick={onBackdrop}
       id="Overlay"
-      style={{
+      sx={{
         backgroundColor: "#808080c7",
         position: "fixed",
         width: "100%",

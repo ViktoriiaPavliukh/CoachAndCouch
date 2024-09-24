@@ -1,49 +1,101 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useIntl } from "react-intl";
+import { uk, enUS } from "date-fns/locale";
+import {
+  selectTeacherBookingsError,
+  selectTeacherBookingsLoading,
+} from "@/redux/marketplace/bookings/selectors";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
-import { Button } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Grid, Typography, Stack, Divider } from "@mui/material";
+import { X } from "react-feather";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CloseIcon from "@mui/icons-material/Close";
 import { ChevronLeft, ChevronRight } from "react-feather";
+import FormTrial from "./FormTrial";
+import { ukDayAbbreviations } from "@/defaults";
 
 function getCurrentMonday() {
   const now = new Date();
   const currentDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   let mon = new Date(currentDay);
-  mon.setDate(mon.getDate() - (mon.getDay() == 0 ? 7 : mon.getDay()) + 1);
+  mon.setDate(mon.getDate() - (mon.getDay() === 0 ? 7 : mon.getDay()) + 1);
 
   return mon;
 }
 
-// api/teacher/<id>/get-free-schedule/<week> <- monday
-const response = [
-  "2024-04-11 17:00",
-  "2024-04-14 18:00",
-  "2024-04-12 19:00",
-  "2024-04-11 21:00",
-];
-
-export const TrialLessonWrapper = () => {
-  const [selected, setSelected] = useState();
+export const TrialLessonWrapper = ({
+  id,
+  teacherBookings,
+  isFirstTimeBooking,
+  onBackdropClose,
+}) => {
+  const intl = useIntl();
+  const currentLanguage = useSelector(selectCurrentLanguage);
+  const loading = useSelector(selectTeacherBookingsLoading);
+  const error = useSelector(selectTeacherBookingsError);
+  const [selected, setSelected] = useState(null);
   const [monday, setMonday] = useState(getCurrentMonday());
+  const [schedule, setSchedule] = useState(new Map());
+  const [isFormModalVisible, setFormModalVisible] = useState(false);
 
-  // request...
-  const schedule = new Map();
-  for (const d of response) {
-    const date = new Date(d);
-    const day = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate()
-    ).getTime();
+  const getLocale = () => {
+    return currentLanguage === "uk" ? uk : enUS;
+  };
 
-    let hours = schedule.get(day);
-    if (!hours) {
-      hours = new Set();
-      schedule.set(day, hours);
+  const getDayAbbreviation = (day) => {
+    const formattedDay = format(day, "EEE", { locale: getLocale() });
+    if (currentLanguage === "uk") {
+      const abbreviation = ukDayAbbreviations[formattedDay];
+      return abbreviation || formattedDay;
+    } else {
+      return formattedDay;
     }
+  };
 
-    hours.add(date.getHours());
-  }
+  const getSelectedSlotId = () => {
+    if (!selected) return null;
+
+    const selectedSlot = teacherBookings.find((slot) => {
+      const slotDate = new Date(slot.date);
+      return (
+        slotDate.getFullYear() === selected.getFullYear() &&
+        slotDate.getMonth() === selected.getMonth() &&
+        slotDate.getDate() === selected.getDate() &&
+        slotDate.getHours() === selected.getHours()
+      );
+    });
+
+    return selectedSlot;
+  };
+
+  useEffect(() => {
+    if (teacherBookings.length > 0) {
+      const newSchedule = new Map();
+      teacherBookings.forEach((slot) => {
+        if (!slot.isBooked) {
+          const date = new Date(slot.date);
+          if (!isNaN(date)) {
+            const day = new Date(
+              date.getFullYear(),
+              date.getMonth(),
+              date.getDate()
+            ).getTime();
+            let hours = newSchedule.get(day);
+            if (!hours) {
+              hours = new Set();
+              newSchedule.set(day, hours);
+            }
+            hours.add(date.getHours());
+          }
+        }
+      });
+      setSchedule(newSchedule);
+    }
+  }, [teacherBookings]);
 
   const now = new Date();
   let week = [];
@@ -55,9 +107,19 @@ export const TrialLessonWrapper = () => {
   }
 
   const shiftWeek = (value) => {
-    const date = new Date(monday);
-    date.setDate(date.getDate() + 7 * value);
-    setMonday(date);
+    const newMonday = new Date(monday);
+    newMonday.setDate(newMonday.getDate() + 7 * value);
+    setMonday(newMonday);
+  };
+
+  const getFormattedYear = () => {
+    const sunday = endOfWeek(monday, { weekStartsOn: 1 });
+    const mondayYear = monday.getFullYear();
+    const sundayYear = sunday.getFullYear();
+
+    return mondayYear === sundayYear
+      ? mondayYear
+      : `${mondayYear} - ${sundayYear}`;
   };
 
   const getSelectedHour = (d) => {
@@ -67,7 +129,8 @@ export const TrialLessonWrapper = () => {
   };
 
   const getAvailableHours = (d) => {
-    return schedule.get(d.getTime()) ?? new Set();
+    const availableHours = schedule.get(d.getTime()) ?? new Set();
+    return availableHours;
   };
 
   const isSameDay = (a, b) => {
@@ -78,132 +141,226 @@ export const TrialLessonWrapper = () => {
     );
   };
 
+  const handleNextClick = () => {
+    if (selected) {
+      setFormModalVisible(true);
+    } else {
+      alert("Please select a date and time before proceeding.");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setFormModalVisible(false);
+  };
+
   const sunday = endOfWeek(monday, { weekStartsOn: 1 });
   const formattedRange = `${format(monday, "dd")} - ${format(
-    sunday,
+    endOfWeek(monday, { weekStartsOn: 1 }),
     "dd"
-  )} ${format(monday, "MMMM").toLowerCase()}`;
+  )} ${format(monday, "MMMM", { locale: getLocale() }).toLowerCase()}`;
+
+  const currentYear = getFormattedYear();
 
   const btnArrow = {
     border: "none",
     padding: "0px",
     backgroundColor: "transparent",
-    // color: !theme
-    //   ? lightTheme.palette.textColor.fontColor
-    //   : darkTheme.palette.textColor.fontColor,
+    color: (theme) => theme.palette.textColor.fontColor,
   };
 
-  console.log(week);
-
   return (
-    <div
-      style={{
-        width: "800px",
-        height: "600px",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        backgroundColor: "white",
-        transform: "translate(-50%,-50%)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        padding: "48px 48px 134px 48px",
-        overflow: "hidden",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
+    <Box>
+      {isFormModalVisible && (
+        <FormTrial
+          selected={selected}
+          onClose={handleCloseModal}
+          bookingDetails={getSelectedSlotId()}
+          isFirstTimeBooking={isFirstTimeBooking}
+        />
+      )}
+      <Box
+        sx={{
+          width: { xs: "87%", md: "84%", lg: "1208px" },
+          height: "auto",
+          maxHeight: "90vh",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          backgroundColor: (theme) => theme.palette.background.paper,
+          transform: "translate(-50%,-50%)",
+          display: isFormModalVisible ? "none" : "flex",
+          justifyContent: "center",
+          alignItems: "center",
           flexDirection: "column",
-          gap: "30px",
-          alignItems: "flex-start",
+          pt: { xs: "1300px", md: "550px" },
+          pb: "134px",
+          overflowY: "auto",
+          zIndex: 1,
+          px: { xs: "8px", md: "24px" },
         }}
       >
-        <div
-          style={{
+        <Stack
+          sx={{
             display: "flex",
+            width: "100%",
+            justifyContent: "end",
+            alignItems: "center",
             flexDirection: "row",
-            flexWrap: "nowrap",
-            gap: "20px",
-            alignSelf: "center",
           }}
         >
-          <button
-            style={btnArrow}
-            onClick={() => shiftWeek(-1)}
-            disabled={monday <= now}
+          <Box
+            sx={{
+              display: "flex",
+              width: { xs: "100%", md: "58%" },
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: { xs: "column-reverse", md: "row" },
+            }}
           >
-            <ChevronLeft color="#000" />
-          </button>
-          <div>{formattedRange}</div>
-          <button style={btnArrow} onClick={() => shiftWeek(+1)}>
-            {" "}
-            <ChevronRight color="#000" />
-          </button>
-          <div>{format(now, "yyyy")}</div>
-        </div>
-
-        <ul
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
+            <Typography
+              sx={{
+                display: { md: "flex" },
+                fontSize: { xs: "24px", md: "30px" },
+                textAlign: "center",
+              }}
+            >
+              {intl.formatMessage({ id: "chooseDate" })}
+            </Typography>
+            <Button
+              sx={{
+                display: { xs: "flex", md: "flex" },
+                justifyContent: "center",
+                alignSelf: { xs: "end", md: "unset" },
+                alignItems: "center",
+                color: (theme) => theme.palette.textColor.fontColor,
+                p: 0,
+                mt: "5px",
+              }}
+              onClick={onBackdropClose}
+            >
+              <CloseIcon />
+            </Button>
+          </Box>
+        </Stack>
+        <Divider
+          sx={{
+            my: { xs: "24px", md: "28px" },
+            borderColor: (theme) => theme.palette.textColor.listItem,
             width: "100%",
           }}
-        >
-          {week.map((el, idx) => (
-            <li key={idx}>
-              <button
-                style={{
-                  border: "none",
-                  borderRadius: "4px",
-                  backgroundColor: "transparent",
-                  // backgroundColor: isSameDay(now, el) ? "green" : "transparent",
-                  color: isSameDay(now, el) ? "#0E5B1D" : "#4b5563",
-                  padding: 0,
-                  width: "50px",
-                }}
-              >
-                <p>{format(el, "EE")}</p>
-                <p>{format(el, "dd")}</p>
-              </button>
-            </li>
-          ))}
-        </ul>
-        <ul
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            // width: "450px",
-            justifyContent: "space-between",
-            gap: "39px",
-            // height: "250px",
-            // overflowY: "scroll",
-          }}
-        >
-          {week.map((el, idx) => (
-            <li key={idx} style={{ display: "block" }}>
-              <Shedule
-                day={el}
-                hour={getSelectedHour(el)}
-                availableHours={getAvailableHours(el)}
-                scheduleChanged={setSelected}
-              />
-            </li>
-          ))}
-        </ul>
-        <Button
-          type="button"
-          variant="contained"
+        />
+        <Box
           sx={{
-            p: "12px 24px",
-            alignSelf: "center",
-            width: { xs: "100%", md: "fit-content" },
+            display: "flex",
+            flexDirection: "column",
+            gap: "30px",
+            alignItems: "flex-start",
           }}
         >
-          Далі
-        </Button>
-      </div>
-    </div>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "nowrap",
+              gap: "20px",
+              alignSelf: "center",
+            }}
+          >
+            <Button
+              sx={btnArrow}
+              onClick={() => shiftWeek(-1)}
+              disabled={monday <= now}
+            >
+              <ChevronLeft />
+            </Button>
+            <Typography sx={{ fontSize: { xs: "20px", md: "24px" } }}>
+              {formattedRange}
+            </Typography>
+            <Button sx={btnArrow} onClick={() => shiftWeek(+1)}>
+              <ChevronRight />
+            </Button>
+            <Typography sx={{ fontSize: { xs: "20px", md: "24px" } }}>
+              {currentYear}
+            </Typography>
+          </Box>
+          <Grid
+            container
+            justifyContent="space-between"
+            sx={{
+              width: "100%",
+            }}
+          >
+            {week.map((el, idx) => (
+              <Grid
+                item
+                key={idx}
+                sx={{ justifyContent: "center", textAlign: "center" }}
+              >
+                <Button
+                  variant="text"
+                  sx={{
+                    borderRadius: "4px",
+                    backgroundColor: "transparent",
+                    color: isSameDay(now, el)
+                      ? (theme) => theme.palette.primary.main
+                      : (theme) => theme.palette.textColor.scheduleDay,
+                    padding: 0,
+                    minWidth: { xs: "40px", md: "50px", lg: "60px" },
+                    maxWidth: { xs: "fit-content", md: "50px" },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "12px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      textTransform: "capitalize",
+                      fontSize: { xs: "18px", md: "20px" },
+                    }}
+                  >
+                    {getDayAbbreviation(el)}
+                  </Typography>
+                  <Typography sx={{ fontSize: { xs: "18px", md: "20px" } }}>
+                    {format(el, "dd", { locale: getLocale() })}
+                  </Typography>
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+          <Grid
+            container
+            justifyContent="space-between"
+            sx={{ gap: { xs: "2px", md: "40px" } }}
+          >
+            {week.map((el, idx) => (
+              <Grid item key={idx}>
+                <Box sx={{ display: "block" }}>
+                  <Shedule
+                    day={el}
+                    hour={getSelectedHour(el)}
+                    availableHours={getAvailableHours(el)}
+                    scheduleChanged={setSelected}
+                  />
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          <Button
+            type="button"
+            variant="contained"
+            sx={{
+              p: "12px 24px",
+              alignSelf: "center",
+              width: { xs: "100%", md: "fit-content" },
+            }}
+            onClick={handleNextClick}
+          >
+            {intl.formatMessage({ id: "next" })}
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };

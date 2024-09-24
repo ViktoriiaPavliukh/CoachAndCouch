@@ -126,8 +126,10 @@ img {
 }
 .rbc-time-header-gutter,
 .rbc-time-gutter {
-  min-width: 100px !important;
+  min-width: 80px !important;
   padding: 0 !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .rbc-row-segment {
   padding: 0 !important;
@@ -142,8 +144,6 @@ img {
 }
 .rbc-time-content {
   border-top: none !important;
-
-  /* border-top: 1px solid #ddd !important; */
 }
 .rbc-timeslot-group {
   min-height: 71px !important;

@@ -9,15 +9,17 @@ import {
   CardActionArea,
   CardActions,
   Stack,
+  Divider
 } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CircleIcon from "@mui/icons-material/Circle";
 import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import { Modal } from "../Modal/Modal";
+import useStatus from "@/hooks/useStatus";
 import countries from "../../defaults/countries/countries.json";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -27,36 +29,33 @@ import {
   favoriteAdvert,
   getAdverts,
 } from "@/redux/marketplace/adverts/operations";
-// import { selectUser } from "@/redux/auth/selectors";
+import { selectUser } from "@/redux/auth/selectors";
 
 export function TeacherCard({ teacher }) {
-  // const user = useSelector(selectUser);
-  // console.log(user);
-
+  const user = useSelector(selectUser);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalContentType, setModalContentType] = useState(null);
-
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
-
-  const onShowModalClick = (contentType) => {
-    setModalContentType(contentType);
-    setShowModal(true);
-  };
-
-  const onBackdropClose = () => {
-    setShowModal(false);
-    setModalContentType(null);
-  };
   const navigate = useNavigate();
-
+  const lastVisit = teacher?.user?.lastVisit;
+  const status = useStatus(lastVisit);
   const handleClick = () => {
-    // e.preventDefault();
-
     navigate(`/teachers/${teacher.id}`);
   };
+
+  const handleBookLessonClick = () => {
+    navigate(`/teachers/${teacher.id}`, {
+      state: {
+        showModal: true,
+        modalContentType:
+          !user || Object.keys(user).length === 0
+            ? "signInOrRegister"
+            : "trialLesson",
+      },
+    });
+  };
+
   const handleFavoriteAdd = async (id) => {
     try {
       await dispatch(favoriteAdvert(id));
@@ -65,10 +64,6 @@ export function TeacherCard({ teacher }) {
       console.error("Failed to update favorite and fetch adverts:", error);
     }
   };
-
-  // const setBg = () => {
-  //   return "#" + Math.floor(Math.random() * 16777215).toString(16);
-  // };
 
   return (
     <>
@@ -100,15 +95,12 @@ export function TeacherCard({ teacher }) {
               right: "20px",
             }}
           />
-        </CardActionArea>
-        <CardContent sx={{ flexGrow: 1 }}>
-          <Stack
-            direction="row"
+          <CardContent
             sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: "24px",
-              mb: "8px",
+              display: "flex",
+              flexDirection: "column",
+              px: "16px",
+              py: 0,
             }}
           >
             <Stack
@@ -116,158 +108,178 @@ export function TeacherCard({ teacher }) {
               sx={{
                 justifyContent: "space-between",
                 alignItems: "center",
-                gap: "10px",
+              }}
+            >
+              <Box direction="column">
+                <Typography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "18px",
+                    lineHeight: "156%",
+                  }}
+                >
+                  {teacher.user.firstName}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: "400",
+                    fontSize: "18px",
+                    lineHeight: "156%",
+                  }}
+                >
+                  {teacher.user.lastName}
+                </Typography>
+              </Box>
+              <Stack
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "5px",
+                }}
+              >
+                <CircleIcon
+                  fontSize="12px"
+                  sx={{
+                    color:
+                      status === intl.formatMessage({ id: "online" })
+                        ? (theme) => theme.palette.buttonColor.listItem
+                        : (theme) => theme.palette.textColor.grey,
+                  }}
+                />
+                <Typography
+                  variant="posterItem"
+                  sx={{
+                    textWrap: "nowrap",
+                    color: (theme) => theme.palette.textColor.greyCard,
+                  }}
+                >
+                  {status}
+                </Typography>
+              </Stack>
+            </Stack>
+            {Boolean(teacher.teachingLanguages.length) && (
+              <CategoryList
+                elements={
+                  teacher.teachingLanguages &&
+                  teacher.teachingLanguages.map((el) =>
+                    en == "en" ? el.languageEn : el.languageUa
+                  )
+                }
+              />
+            )}
+            <Stack
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                flexDirection: "row",
+                marginBottom: "12px",
               }}
             >
               <Typography
-                // gutterBottom
-                // variant="posterDescription"
-                sx={{ fontWeight: "700", letterSpacing: "-0.003px" }}
+                variant="posterItem"
+                sx={{ color: (theme) => theme.palette.textColor.greyCard }}
               >
-                {teacher.user.firstName + " " + teacher.user.lastName}
+                {intl.formatMessage({ id: "country" })}:&nbsp;
+                {en == "en"
+                  ? countriesCase(
+                      countries.find(
+                        (el) => el.alpha2 == teacher.user?.country?.alpha2
+                      ).nameEng
+                    )
+                  : countriesCase(
+                      countries.find(
+                        (el) => el.alpha2 == teacher.user?.country?.alpha2
+                      ).nameShort
+                    )}
               </Typography>
             </Stack>
-
-            <Typography>ID:&nbsp;{teacher.id}</Typography>
-          </Stack>
-          <Typography
-            variant="posterItem"
-            sx={{ color: (theme) => theme.palette.textColor.grey }}
-          >
-            {intl.formatMessage({ id: "languagesTeaching" })}:
-          </Typography>
-          {Boolean(teacher.teachingLanguages.length) && (
-            <CategoryList
-              elements={
-                teacher.teachingLanguages &&
-                teacher.teachingLanguages.map((el) =>
-                  en == "en" ? el.languageEn : el.languageUa
-                )
-              }
-            />
-          )}
-          <Stack
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              flexDirection: "row",
-              marginBottom: "20px",
-            }}
-          >
-            <Typography
-              variant="posterItem"
-              sx={{ color: (theme) => theme.palette.textColor.grey }}
+            <Stack
+              direction="row"
+              sx={{
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
             >
-              {intl.formatMessage({ id: "country" })}:&nbsp;
-              {en == "en"
-                ? countriesCase(
-                    countries.find(
-                      (el) => el.alpha2 == teacher.user?.country?.alpha2
-                    ).nameEng
-                  )
-                : countriesCase(
-                    countries.find(
-                      (el) => el.alpha2 == teacher.user?.country?.alpha2
-                    ).nameShort
-                  )}
-            </Typography>
-          </Stack>
-
-          <Stack
-            direction="row"
-            sx={{
-              justifyContent: "space-between",
-              alignItems: "center",
-              height: "21px",
-            }}
-          >
-            <Box style={{ display: "flex", gap: "12px", pt: "4px" }}>
-              <Box sx={{ display: "flex", gap: "4px" }}>
-                <StarBorderPurple500OutlinedIcon
-                  sx={{
-                    fontSize: "16px",
-                    color: (theme) => theme.palette.textColor.darkGrey,
-                  }}
-                />
-                <Typography variant="posterItem">
-                  {roundRating(teacher.user.rating)}
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", gap: "4px" }}>
-                <Button
-                  disableTouchRipple
-                  onClick={() => handleFavoriteAdd(teacher.id)}
+              <Box sx={{ display: "flex", gap: "16px", pb: "12px" }}>
+                <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    gap: "10px",
+                    justifyContent: "space-between",
                     alignItems: "center",
-                    border: "none",
-                    backgroundColor: "transparent",
-                    padding: 0,
-                    gap: "4px",
                   }}
                 >
-                  {!isFavorite && (
-                    <FavoriteBorderOutlinedIcon
-                      sx={{
-                        fontSize: "16px",
-                        color: (theme) => theme.palette.textColor.darkGrey,
-                      }}
-                    />
-                  )}
-                  {isFavorite && (
-                    <FavoriteIcon
-                      sx={{
-                        fontSize: "16px",
-                        fill: "#7ab02e",
-                      }}
-                    />
-                  )}
-                  <Typography
-                    variant="posterItem"
+                  <StarBorderPurple500OutlinedIcon
                     sx={{
-                      color: "rgba(0, 0, 0, 0.87)",
+                      fontSize: "18px",
+                      color: (theme) => theme.palette.textColor.fontColor,
+                    }}
+                  />
+                  <Typography variant="posterDescription">
+                    {roundRating(teacher.user.rating)}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", gap: "4px" }}>
+                  <Button
+                    disableTouchRipple
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleFavoriteAdd(teacher.id);
+                    }}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      border: "none",
+                      backgroundColor: "transparent",
+                      padding: 0,
+                      gap: "10px",
                     }}
                   >
-                    {teacher.likes.length}
+                    {!isFavorite && (
+                      <FavoriteBorderOutlinedIcon
+                        sx={{
+                          fontSize: "16px",
+                          color: (theme) => theme.palette.textColor.fontColor,
+                        }}
+                      />
+                    )}
+                    {isFavorite && (
+                      <FavoriteIcon
+                        sx={{
+                          fontSize: "16px",
+                          fill: "#7ab02e",
+                        }}
+                      />
+                    )}
+                    <Typography
+                      variant="posterDescription"
+                      sx={{
+                        color: (theme) => theme.palette.textColor.fontColor,
+                      }}
+                    >
+                      {teacher.likes.length}
+                    </Typography>
+                  </Button>
+                </Box>
+                {/* <Box sx={{ display: "flex", gap: "4px" }}>
+                  <Typography
+                    variant="posterItem"
+                    sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
+                  >
+                    {intl.formatMessage({ id: "lessons" })}:
                   </Typography>
-                </Button>
+                  <Typography variant="posterItem">156</Typography>
+                </Box> */}
               </Box>
-              <Box sx={{ display: "flex", gap: "4px" }}>
-                <Typography
-                  variant="posterItem"
-                  sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
-                >
-                  {intl.formatMessage({ id: "lessons" })}:
-                </Typography>
-                <Typography variant="posterItem">156</Typography>
-              </Box>
-            </Box>
-            <Box>
-              <Typography
-                color="grey.700"
-                variant="posterStatus"
-                sx={{ display: "inline-block" }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    display: "inline-block",
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
-                    backgroundColor: "#0E5B1D",
-                    mr: "4px",
-                  }}
-                />
-                {intl.formatMessage({ id: "online" })}
-              </Typography>
-            </Box>
-          </Stack>
-        </CardContent>
+            </Stack>
+          </CardContent>
+        </CardActionArea>
         <CardActions>
           <Button
-            onClick={() => onShowModalClick("trialLesson")}
+            onClick={handleBookLessonClick}
             variant="contained"
             sx={{
               width: "100vw",
@@ -286,17 +298,10 @@ export function TeacherCard({ teacher }) {
               },
             }}
           >
-            {intl.formatMessage({ id: "trialLessonBtn" })}
+            {intl.formatMessage({ id: "bookLesson" })}
           </Button>
         </CardActions>
       </Card>
-      {showModal && (
-        <Modal
-          onBackdropClose={onBackdropClose}
-          contentType={modalContentType}
-          isOpen={showModal}
-        />
-      )}
     </>
   );
 }

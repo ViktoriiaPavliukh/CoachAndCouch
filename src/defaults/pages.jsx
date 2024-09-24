@@ -6,11 +6,6 @@ export const pages = [
     link: "profile",
     iconFeatherName: "FileText",
   },
-  // {
-  //   title: <FormattedMessage id="personalAccount.lessons" />,
-  //   link: "lessons",
-  //   iconFeatherName: "Edit2",
-  // },
   {
     title: <FormattedMessage id="personalAccount.schedule" />,
     link: "schedule",
@@ -30,11 +25,6 @@ export const pages = [
     title: <FormattedMessage id="personalAccount.advertisements" />,
     link: "advertisements",
     iconFeatherName: "Tablet",
-  },
-  {
-    title: <FormattedMessage id="personalAccount.feedback" />,
-    link: "feedback",
-    iconFeatherName: "Smile",
   },
   {
     title: <FormattedMessage id="personalAccount.settings" />,

@@ -54,6 +54,7 @@ const createThemeTemplate = (themeColor) => ({
             card: "#FFF",
             language: "#f3f4f6",
             yellow: "#EEC700",
+            languageBg: "#F3F4F6",
           },
           buttonColor: {
             header: "#7AB02E",
@@ -73,6 +74,7 @@ const createThemeTemplate = (themeColor) => ({
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
             send: "#1F2937",
+            disabled: "#E5E5E5",
           },
           buttonColorComponentFigma: {
             defaultGreen: "#0E5B1D",
@@ -92,6 +94,7 @@ const createThemeTemplate = (themeColor) => ({
             greenYellowHover: "#004305",
             iconsGrey: "#7D7D7D",
             menuHover: "#A4E941",
+            greyCard: "6A7280",
             greyWhite: "#030904",
             black: "#FFF",
             fontError: "#000",
@@ -101,6 +104,8 @@ const createThemeTemplate = (themeColor) => ({
             linkHover: "#004305",
             red: "#b91c1b",
             listColor: "#1f2937",
+            disabled: "#6A7280",
+            scheduleDay: "#4B5563",
           },
         }
       : {
@@ -123,7 +128,8 @@ const createThemeTemplate = (themeColor) => ({
             messagesUsers: "#737373",
             card: "#262626",
             language: "#171717",
-            yellow: "EEC700",
+            yellow: "#EEC700",
+            languageBg: "#171717",
           },
           buttonColor: {
             header: "#EEC700",
@@ -144,6 +150,7 @@ const createThemeTemplate = (themeColor) => ({
             fontColorSecondary: "#FFF",
             themeSwitch: "#ffffff",
             send: "#9CA3AF",
+            disabled: "#A1A1AA",
           },
           buttonColorComponentFigma: {
             defaultGreen: "#387024",
@@ -164,6 +171,7 @@ const createThemeTemplate = (themeColor) => ({
             iconsGrey: "#7D7D7D",
             menuHover: "#030904",
             greyWhite: "#FFFFFF",
+            greyCard: "E4E7EB",
             black: "#000",
             fontError: "#FBFDF6",
             sidebar: "#FBFDF6",
@@ -172,6 +180,8 @@ const createThemeTemplate = (themeColor) => ({
             linkHover: "#CFAC00",
             red: "#b91c1b",
             listColor: "#FFFFFF",
+            disabled: "#6C7280",
+            scheduleDay: "#d1d5db",
           },
         },
   typography: {
