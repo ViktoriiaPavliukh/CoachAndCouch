@@ -103,7 +103,6 @@ export const TeacherFormPage = () => {
         lastName: values.updateUser.lastName,
       };
 
-      console.log(updateUser);
       transformedData.append("description", values.description);
       transformedData.append("price", values.price);
       transformedData.append(
