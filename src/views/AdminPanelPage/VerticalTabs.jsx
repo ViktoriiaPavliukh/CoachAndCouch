@@ -1,12 +1,13 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { format, parseJSON } from "date-fns";
 import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteForeverSharpIcon from "@mui/icons-material/DeleteForeverSharp";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { LogOut, Settings } from "react-feather";
 import {
   Box,
   Button,
@@ -45,7 +46,9 @@ import {
   specializationsSelector,
   usersAsAdminSelector,
   feedbacksAsAdminSelector,
+  usersSelector,
 } from "@/redux/admin/adminSelector";
+import { pages } from "@/defaults";
 import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
 import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
 import Loader from "@/components/Loader/Loader";
@@ -58,6 +61,17 @@ function a11yProps(index) {
   };
 }
 
+const linkStyles = {
+  display: "flex",
+  gap: "16px",
+  padding: "8px 12px",
+  textDecoration: "none",
+  color: (theme) => theme.palette.textColor.sidebar,
+  "&:hover": { color: (theme) => theme.palette.textColor.linkHover },
+  fontSize: "18px",
+  flexGrow: 1,
+};
+
 export function VerticalTabs() {
   // const formik = useFormik({
   //   initialValues,
@@ -69,16 +83,30 @@ export function VerticalTabs() {
   // });
   const en = useSelector(selectCurrentLanguage);
   const intl = useIntl();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [deleteState, setDeleteState] = React.useState("delete");
+  const [sortConfig, setSortConfig] = useState({
+    id: "ASC",
+    // email: "DESC",
+    // country: "ASC",
+  });
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    navigate("/", { replace: true });
   };
 
   const dispatch = useDispatch();
   const adverts = useSelector(advertsAsAdminSelector);
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
+  const usersAdmin = useSelector(usersSelector);
+  console.log(usersAdmin);
   const feedbacks = useSelector(feedbacksAsAdminSelector);
   const formatDate = (dateString) => {
     const date = parseJSON(dateString);
@@ -86,6 +114,26 @@ export function VerticalTabs() {
     const month = String(date.getUTCMonth() + 1).padStart(2, "0");
     const year = date.getUTCFullYear();
     return `${day}.${month}.${year}`;
+  };
+
+  const handleSort = (column) => {
+    let direction = "ASC";
+    if (sortConfig[column] === "ASC") {
+      direction = "DESC";
+    }
+    setSortConfig((prevSort) => ({
+      ...prevSort,
+      [column]: direction,
+    }));
+
+    dispatch(
+      getUsersAsAdmin({
+        sort: { ...sortConfig, [column]: direction },
+        // filter: { photoPath: true, advert: true, countryId: 3 }, // Example filter
+        // limit: 10,
+        // page: 2,
+      })
+    );
   };
 
   useEffect(() => {
@@ -113,48 +161,109 @@ export function VerticalTabs() {
         border: "1px solid red",
       }}
     >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs"
+      <Stack
         sx={{
-          borderRight: 1,
-          borderColor: "divider",
-          alignItems: "flex-start",
-          minWidth: "105px",
-          width: "105px",
+          display: "flex",
+          flexDirection: "column",
+          background: (theme) => theme.palette.background.sidebar,
+          height: "100vh",
+          pt: "40px",
         }}
       >
-        <Tab
-          label={intl.formatMessage({ id: "advert" })}
-          {...a11yProps(0)}
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs"
           sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
             alignItems: "flex-start",
-            paddingLeft: "0px",
-            paddingRight: "20px",
+            height: "80vh",
+            "& .MuiTabs-indicator": {
+              backgroundColor: (theme) => theme.palette.background.sidebar,
+            },
           }}
-        />
-        <Tab
-          label={intl.formatMessage({ id: "usersAdmin" })}
-          {...a11yProps(1)}
+        >
+          <Tab
+            label={intl.formatMessage({ id: "advert" })}
+            {...a11yProps(0)}
+            sx={{
+              alignItems: "flex-start",
+              paddingLeft: "0px",
+              textTransform: "capitalize",
+              fontSize: "18px",
+              px: "62px",
+              color: (theme) => theme.palette.textColor.sidebar,
+              "&:hover": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
+            }}
+          />
+          <Tab
+            label={intl.formatMessage({ id: "usersAdmin" })}
+            {...a11yProps(1)}
+            sx={{
+              alignItems: "flex-start",
+              paddingLeft: "0px",
+              textTransform: "capitalize",
+              fontSize: "18px",
+              px: "62px",
+              color: (theme) => theme.palette.textColor.sidebar,
+              "&:hover": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
+            }}
+          />
+          <Tab
+            label={intl.formatMessage({ id: "personalAccount.settings" })}
+            {...a11yProps(2)}
+            sx={{
+              alignItems: "flex-start",
+              textTransform: "capitalize",
+              fontSize: "18px",
+              px: "62px",
+              color: (theme) => theme.palette.textColor.sidebar,
+              "&:hover": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
+            }}
+          />
+          <Tab
+            label={intl.formatMessage({ id: "feedback" })}
+            {...a11yProps(2)}
+            sx={{
+              alignItems: "flex-start",
+              px: "62px",
+              textTransform: "capitalize",
+              fontSize: "18px",
+              color: (theme) => theme.palette.textColor.sidebar,
+              "&:hover": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
+            }}
+          />
+        </Tabs>
+        <Box
+          component={Link}
+          to="/"
           sx={{
-            alignItems: "flex-start",
-            paddingLeft: "0px",
-            paddingRight: "20px",
+            ...linkStyles,
+            display: "flex",
+            alignItems: "center",
+            pl: "62px",
+            alignSelf: "flex-start",
           }}
-        />
-        <Tab
-          label={intl.formatMessage({ id: "personalAccount.settings" })}
-          {...a11yProps(2)}
-          sx={{
-            alignItems: "flex-start",
-            paddingLeft: "0px",
-            paddingRight: "20px",
-          }}
-        />
-      </Tabs>
+          onClick={handleLogout}
+        >
+          <LogOut />
+          <Typography variant="posterSubtitle" noWrap>
+            {intl.formatMessage({ id: "personalAccount.logout" })}
+          </Typography>
+        </Box>
+      </Stack>
       <TabPanel
         value={value}
         index={0}
