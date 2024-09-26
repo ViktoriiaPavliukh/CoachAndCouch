@@ -23,6 +23,7 @@ export const getUsersAsAdmin = createAsyncThunk(
   }
 );
 
+
 export const getAdvertsAsAdmin = createAsyncThunk(
   "admin/getAdvertsAsAdmin",
   async (_, thunkAPI) => {

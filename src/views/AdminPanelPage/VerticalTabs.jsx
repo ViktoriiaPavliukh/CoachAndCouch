@@ -25,6 +25,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import {
   deleteAdvertsAsAdmin,
@@ -163,21 +165,7 @@ export function VerticalTabs() {
             {intl.formatMessage({ id: "advert" })}
           </Typography>
           <TableContainer sx={{ mt: "36px" }}>
-            <Table
-            // sx={{
-            //   "& .MuiTableRow-root.MuiTableRow-root:hover .MuiTableCell-root":
-            //     {
-            //       backgroundColor: "#546658",
-            //       color: "white",
-            //       "&.MuiTableCell-root:hover ::-webkit-scrollbar-thumb": {
-            //         backgroundColor: "white",
-            //       },
-            //     },
-            // }}
-            // style={{
-            //   "& td": { fontSize: "16px" },
-            // }}
-            >
+            <Table>
               <TableHead>
                 <TableRow>
                   <TableCell
@@ -186,10 +174,22 @@ export function VerticalTabs() {
                       borderBottom: "1px solid",
                       color: (theme) => theme.palette.textColor.listColor,
                       borderX: "none",
-                      fontSize: "16px",
                     }}
                   >
-                    ID
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "16px" }}>ID</Typography>
+                      <Stack sx={{ cursor: "pointer" }}>
+                        <ExpandLessOutlinedIcon />
+                        <ExpandMoreOutlinedIcon />
+                      </Stack>
+                    </Box>
                   </TableCell>
                   <TableCell
                     align="center"
@@ -439,6 +439,7 @@ export function VerticalTabs() {
                             justifyContent: "center",
                             alignItems: "center",
                             gap: "5px",
+                            cursor: "pointer",
                           }}
                         >
                           <EditNoteIcon
@@ -495,7 +496,20 @@ export function VerticalTabs() {
                       fontSize: "16px",
                     }}
                   >
-                    ID
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "16px" }}>ID</Typography>
+                      <Stack sx={{ cursor: "pointer" }}>
+                        <ExpandLessOutlinedIcon />
+                        <ExpandMoreOutlinedIcon />
+                      </Stack>
+                    </Box>
                   </TableCell>
                   <TableCell
                     align="center"
@@ -517,7 +531,20 @@ export function VerticalTabs() {
                       fontSize: "16px",
                     }}
                   >
-                    E-mail
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: "1px",
+                      }}
+                    >
+                      <Typography sx={{ fontSize: "16px" }}> E-mail</Typography>
+                      <Stack sx={{ cursor: "pointer" }}>
+                        <ExpandLessOutlinedIcon />
+                        <ExpandMoreOutlinedIcon />
+                      </Stack>
+                    </Box>
                   </TableCell>
                   <TableCell
                     align="center"
