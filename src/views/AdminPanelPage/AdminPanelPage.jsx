@@ -13,7 +13,7 @@ export const AdminPanelPage = () => {
         width: "100%",
       }}
     >
-      <Link
+      {/* <Link
         className="custom-link"
         to="/"
         style={{
@@ -33,7 +33,7 @@ export const AdminPanelPage = () => {
           />
           Back to the Home page
         </Box>
-      </Link>
+      </Link> */}
       <VerticalTabs />
     </Box>
   );

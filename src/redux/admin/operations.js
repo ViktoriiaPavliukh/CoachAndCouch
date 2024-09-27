@@ -23,6 +23,32 @@ export const getUsersAsAdmin = createAsyncThunk(
   }
 );
 
+// export const getUsersAsAdmin = createAsyncThunk(
+//   "admin/getUsersAsAdmin",
+//   async ({ sort, filter, limit, page }, thunkAPI) => {
+//     try {
+//       const persistToken = thunkAPI.getState().auth.accessToken;
+//       token.set(persistToken);
+//       console.log(persistToken);
+//       console.log(sort);
+//       const { data } = await privateAPI.get("/admin/users", {
+//         headers: { Authorization: `Bearer ${persistToken}` },
+//         params: {
+//           sort: JSON.stringify(sort),
+//           // filter: JSON.stringify(filter),
+//           // limit,
+//           // page,
+//         },
+//       });
+
+//       return data;
+//     } catch (error) {
+//       console.log(error.message);
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 export const getAdvertsAsAdmin = createAsyncThunk(
   "admin/getAdvertsAsAdmin",
   async (_, thunkAPI) => {

@@ -1,16 +1,25 @@
 import PropTypes from "prop-types";
+import { useIntl } from "react-intl";
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import {
-  //   addLanguagesAsAdmin,
   addSpecializationsAsAdmin,
-  //   deleteLanguageAsAdmin,
   deleteSpecializationAsAdmin,
   getSpecializations,
-  //   getLanguages,
 } from "@/redux/admin/operations";
-import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import * as Yup from "yup";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  Button,
+} from "@mui/material";
+import { specializationsSchema } from "@/defaults";
 
 const initialValues = {
   specializationUa: "",
@@ -18,16 +27,14 @@ const initialValues = {
 
   specializationBD: "",
 };
-const validationSchema = Yup.object({
-  specializationUa: Yup.string().required("This field id required"),
-  specializationEn: Yup.string().required("This field id required"),
-});
 
 export function AddSpecializationForm({ specializations }) {
+  const en = useSelector(selectCurrentLanguage);
+  const intl = useIntl();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues,
-    validationSchema,
+     validationSchema: specializationsSchema(intl),
     onSubmit: async (values) => {
       dispatch(
         addSpecializationsAsAdmin({
@@ -40,20 +47,36 @@ export function AddSpecializationForm({ specializations }) {
     },
   });
   return (
-    <Box style={{ display: "flex", flexDirection: "column", flexWrap: "nowrap" }}>
-      <h2>Додати cпеціалізацію</h2>
-      <FormControl variant="outlined" sx={{ width: "300px" }}>
-        <InputLabel>Спеціалізації в базі даних:</InputLabel>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        flexWrap: "nowrap",
+        gap: "20px",
+        width: "100%",
+      }}
+    >
+      <Typography sx={{ fontSize: "30px" }}>
+        {intl.formatMessage({ id: "specialization" })}
+      </Typography>
+      <FormControl variant="outlined" sx={{ minWidth: "375px" }}>
+        <InputLabel>
+          {" "}
+          {intl.formatMessage({ id: "specializationInDB" })}
+        </InputLabel>
         <Select
           id="specializationBD"
           name="specializationBD"
-          label="Specializations"
+          label={intl.formatMessage({ id: "specializationInDB" })}
           // value={formik.values.languagesBD || ""}
           // onChange={(event) => {
           //   formik.setFieldValue("languagesBD", event.target.value);
           // }}
           onBlur={formik.handleBlur}
-          error={formik.touched.specializationBD && Boolean(formik.errors.specializationBD)}
+          error={
+            formik.touched.specializationBD &&
+            Boolean(formik.errors.specializationBD)
+          }
           // renderValue={(selected) =>
           //   selected.map((language) => {
           //     language;
@@ -62,49 +85,78 @@ export function AddSpecializationForm({ specializations }) {
         >
           {specializations &&
             specializations?.map((specialization) => (
-              <MenuItem key={specialization.id} value={specialization}>
-                {specialization.id + " " + specialization.specializationUa + " " + specialization.specializationEn}
-                <button
+              <MenuItem
+                key={specialization.id}
+                value={specialization}
+                sx={{ display: "flex" }}
+              >
+                <Typography>
+                  {specialization.specializationUa +
+                    " | " +
+                    specialization.specializationEn}
+                </Typography>
+                <Button
+                  sx={{
+                    justifySelf: "flex-end",
+                    justifyItems: "flex-end",
+                    ml: "auto",
+                  }}
                   onClick={() => {
                     dispatch(deleteSpecializationAsAdmin(specialization.id));
                     dispatch(getSpecializations());
                   }}
                 >
                   D
-                </button>
+                </Button>
               </MenuItem>
             ))}
         </Select>
       </FormControl>
       <form onSubmit={formik.handleSubmit} id="addSpecializationForm">
-        <label>
-          Українською:
+        <FormControl
+          sx={{
+            minWidth: "375px",
+            width: "100%",
+            display: "flex",
+            gap: "20px",
+          }}
+        >
           <TextField
             id="addspecializationUa"
             name="specializationUa"
+            label={intl.formatMessage({ id: "inUkr" })}
             value={formik.values.specializationUa}
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.specializationUa && Boolean(formik.errors.specializationUa)}
-            helperText={formik.touched.specializationUa && formik.errors.specializationUa}
+            error={
+              formik.touched.specializationUa &&
+              Boolean(formik.errors.specializationUa)
+            }
+            helperText={
+              formik.touched.specializationUa && formik.errors.specializationUa
+            }
           />
-        </label>
-        <br />
-        <label>
-          Англійською:
           <TextField
             id="addspecializationEn"
             name="specializationEn"
+            label={intl.formatMessage({ id: "inEnglish" })}
             value={formik.values.specializationEn}
             type="text"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.specializationEn && Boolean(formik.errors.specializationEn)}
-            helperText={formik.touched.specializationEn && formik.errors.specializationEn}
+            error={
+              formik.touched.specializationEn &&
+              Boolean(formik.errors.specializationEn)
+            }
+            helperText={
+              formik.touched.specializationEn && formik.errors.specializationEn
+            }
           />
-        </label>
-        <button type="submit">Add</button>
+          <Button variant="contained" type="submit">
+            {intl.formatMessage({ id: "addBtn" })}
+          </Button>
+        </FormControl>
       </form>
     </Box>
   );
