@@ -179,6 +179,7 @@ const messages = {
     payBtn: "Pay",
     closeBtn: "Close",
     confirmBtn: "Confirm",
+    addBtn: "Add",
 
     //Status
     online: "Online",
@@ -278,6 +279,10 @@ const messages = {
     lastVisit: "Last visit",
     languageTeach: "Teaching languages",
     languageNative: "Languages spoken",
+    inEnglish: "In English",
+    inUkr: "In Ukrainian",
+    specializationInDB: "Specializations in the database",
+    requredField: "This field is required",
   },
 
   uk: {
@@ -460,6 +465,7 @@ const messages = {
     payBtn: "Сплатити",
     closeBtn: "Закрити",
     confirmBtn: "Підтвердити",
+    addBtn: "Додати",
 
     //Status
     online: "У мережі",
@@ -559,6 +565,10 @@ const messages = {
     lastVisit: "Востаннє на сайті",
     languageTeach: "Мови викладання",
     languageNative: "Рідні мови",
+    inEnglish: "Англійською",
+    inUkr: "Українською",
+    specializationInDB: "Спеціалізації в базі даних",
+    requredField: "Це поле є обов'язковим",
   },
 };
 

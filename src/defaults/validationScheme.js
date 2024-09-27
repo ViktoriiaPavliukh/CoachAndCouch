@@ -19,6 +19,17 @@ export const loginSchema = (intl) => {
   });
 };
 
+export const specializationsSchema = (intl) => {
+  return Yup.object().shape({
+    specializationUa: Yup.string().required(
+      intl.formatMessage({ id: "requredField" })
+    ),
+    specializationEn: Yup.string().required(
+      intl.formatMessage({ id: "requredField" })
+    ),
+  });
+};
+
 export const registrationSchema = (intl) => {
   return Yup.object().shape({
     firstName: Yup.string()

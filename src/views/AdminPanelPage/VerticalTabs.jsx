@@ -279,7 +279,7 @@ export function VerticalTabs() {
         style={{ display: "flex", justifyContent: "center" }}
       >
         <Box>
-          <Typography sx={{ fontSize: { lg: "48px" } }}>
+          <Typography sx={{ fontSize: { xs: "40px", md: "48px" } }}>
             {intl.formatMessage({ id: "advert" })}
           </Typography>
           <TableContainer sx={{ mt: "36px" }}>
@@ -598,7 +598,7 @@ export function VerticalTabs() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Box>
-          <Typography sx={{ fontSize: { lg: "48px" } }}>
+          <Typography sx={{ fontSize: { xs: "40px", md: "48px" } }}>
             {intl.formatMessage({ id: "usersAdmin" })}
           </Typography>
           <TableContainer sx={{ mt: "36px" }}>
@@ -708,15 +708,6 @@ export function VerticalTabs() {
                   >
                     {intl.formatMessage({ id: "lastVisit" })}
                   </TableCell>
-                  {/* <TableCell align="center" sx={{ border: "1px solid #e0e0e0" }}>
-                    IsDeleted ?
-                  </TableCell> */}
-                  {/* <TableCell
-                    align="center"
-                    sx={{ border: "1px solid #e0e0e0" }}
-                  >
-                    Feedbacks
-                  </TableCell> */}
                   <TableCell
                     align="center"
                     sx={{
@@ -908,6 +899,22 @@ export function VerticalTabs() {
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>
+        <Typography sx={{ fontSize: { xs: "40px", md: "48px" } }}>
+          {intl.formatMessage({ id: "personalAccount.settings" })}
+        </Typography>
+        <TableContainer sx={{ mt: "36px" }}>
+          <Stack
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "50px",
+            }}
+          >
+            {/* <AddLanguageForm languages={languages} /> */}
+            <AddSpecializationForm specializations={specializations} />
+          </Stack>
+        </TableContainer>
         {/* <h2>Додати Мову</h2>
         <FormControl variant="outlined" sx={{ width: "300px" }}>
           <InputLabel>Мови в базі даних:</InputLabel>
@@ -973,17 +980,6 @@ export function VerticalTabs() {
           </label>
           <button type="submit">Add</button>
         </form> */}
-        <Stack
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: "50px",
-          }}
-        >
-          <AddLanguageForm languages={languages} />
-          <AddSpecializationForm specializations={specializations} />
-        </Stack>
       </TabPanel>
       <TabPanel value={value} index={3}>
         Item Four
