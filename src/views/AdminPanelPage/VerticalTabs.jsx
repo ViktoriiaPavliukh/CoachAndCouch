@@ -10,10 +10,7 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { LogOut, Settings } from "react-feather";
 import {
   Box,
-  Button,
-  Paper,
   Stack,
-  SvgIcon,
   Table,
   TableBody,
   TableCell,
@@ -21,9 +18,9 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Tabs,
+  Tab,
 } from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
@@ -146,11 +143,6 @@ export function VerticalTabs() {
   }, [dispatch]);
 
   const users = useSelector(usersAsAdminSelector);
-  const teacherUserIds = adverts.map((advert) => advert.user.id);
-
-  const getFeedbacksForTeacher = (teacherId) => {
-    return feedbacks.filter((feedback) => feedback.toUser.id === teacherId);
-  };
   return (
     <Box
       sx={{
@@ -826,41 +818,6 @@ export function VerticalTabs() {
                     >
                       {formatDate(user.lastVisit)}
                     </TableCell>
-
-                    {/* <TableCell align="center" sx={{ width: "400px" }}>
-                      {`${user.isDeleted}`}
-                    </TableCell> */}
-                    {/* <TableCell
-                      align="center"
-                      sx={{ border: "1px solid #e0e0e0" }}
-                    >
-                      {getFeedbacksForTeacher(user.id).map((feedback) => (
-                        <Stack
-                          key={feedback.id}
-                          direction="row"
-                          sx={{
-                            border: "1px solid grey",
-                            display: "flex",
-                            gap: "5px",
-                          }}
-                        >
-                          <Box>
-                            <Typography>
-                              {feedback.message} from{" "}
-                              {feedback.fromUser.firstName}{" "}
-                              {feedback.fromUser.lastName}
-                            </Typography>
-                            <Typography>
-                              {format(
-                                parseJSON(feedback.createdAt),
-                                "dd/MM/yyyy HH:mm"
-                              )}
-                            </Typography>
-                          </Box>
-                        </Stack>
-                      ))}
-                    </TableCell> */}
-
                     <TableCell
                       align="center"
                       sx={{
@@ -915,74 +872,109 @@ export function VerticalTabs() {
             <AddSpecializationForm specializations={specializations} />
           </Stack>
         </TableContainer>
-        {/* <h2>Додати Мову</h2>
-        <FormControl variant="outlined" sx={{ width: "300px" }}>
-          <InputLabel>Мови в базі даних:</InputLabel>
-          <Select
-            id="languagesBD"
-            name="languagesBD"
-            label="Languages"
-            // value={formik.values.languagesBD || ""}
-            // onChange={(event) => {
-            //   formik.setFieldValue("languagesBD", event.target.value);
-            // }}
-            onBlur={formik.handleBlur}
-            error={formik.touched.languagesBD && Boolean(formik.errors.languagesBD)}
-            // renderValue={(selected) =>
-            //   selected.map((language) => {
-            //     language;
-            //   })
-            // }
-          >
-            {languages &&
-              languages?.map((language) => (
-                <MenuItem key={language.id} value={language}>
-                  {language.id + " " + language.languageUa + " " + language.languageEn}
-                  <button
-                    onClick={() => {
-                      dispatch(deleteLanguageAsAdmin(language.id));
-                      dispatch(getLanguages());
-                    }}
-                  >
-                    D
-                  </button>
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-        <form onSubmit={formik.handleSubmit} id="addLanguageForm">
-          <label>
-            Українською:
-            <TextField
-              id="addLanguageUa"
-              name="languageUa"
-              value={formik.values.languageUa}
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.languageUa && Boolean(formik.errors.languageUa)}
-              helperText={formik.touched.languageUa && formik.errors.languageUa}
-            />
-          </label>
-          <br />
-          <label>
-            Англійською:
-            <TextField
-              id="addLanguageEn"
-              name="languageEn"
-              value={formik.values.languageEn}
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.languageEn && Boolean(formik.errors.languageEn)}
-              helperText={formik.touched.languageEn && formik.errors.languageEn}
-            />
-          </label>
-          <button type="submit">Add</button>
-        </form> */}
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Item Four
+        <Typography sx={{ fontSize: { xs: "40px", md: "48px" } }}>
+          {intl.formatMessage({ id: "feedback" })}
+        </Typography>
+        <Box sx={{ display: "flex", width: "100%" }}>
+          {" "}
+          <TableContainer sx={{ mt: "36px", width: "100%" }}>
+            <Table
+              sx={{ width: "100%", minWidth: { md: "700px", lg: "1200px" } }}
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    align="center"
+                    sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                  >
+                    <Typography sx={{ fontSize: "16px" }}>ID</Typography>
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                  >
+                    {intl.formatMessage({ id: "teacherName" })}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                  >
+                    {intl.formatMessage({ id: "feedback" })}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                  >
+                    {intl.formatMessage({ id: "fromUser" })}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                  >
+                    {intl.formatMessage({ id: "feadbackAdded" })}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                  />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {feedbacks.map((feedback) => (
+                  <TableRow key={feedback.id}>
+                    <TableCell
+                      align="center"
+                      sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                    >
+                      {feedback.id}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                    >
+                      {feedback.toUser?.firstName || "Unknown"}
+                    </TableCell>
+                    <TableCell
+                      align="left"
+                      sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                    >
+                      {feedback.message}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                    >
+                      {feedback.fromUser?.firstName || "Unknown"}{" "}
+                      {feedback.fromUser?.lastName || ""}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ borderBottom: "1px solid", fontSize: "16px" }}
+                    >
+                      {format(new Date(feedback.createdAt), "dd.MM.yyyy")}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ borderBottom: "1px solid" }}
+                    >
+                      <DeleteOutlineIcon
+                        sx={{
+                          width: "24px",
+                          height: "24px",
+                          cursor: "pointer",
+                          color: (theme) => theme.palette.textColor.grey,
+                        }}
+                        onClick={() => handleDeleteFeedback(feedback.id)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </TabPanel>
     </Box>
   );

@@ -283,6 +283,9 @@ const messages = {
     inUkr: "In Ukrainian",
     specializationInDB: "Specializations in the database",
     requredField: "This field is required",
+    teacherName: "Teacher's name",
+    fromUser: "From user",
+    feadbackAdded: "Feedback added",
   },
 
   uk: {
@@ -569,6 +572,9 @@ const messages = {
     inUkr: "Українською",
     specializationInDB: "Спеціалізації в базі даних",
     requredField: "Це поле є обов'язковим",
+    teacherName: "Ім'я викладача",
+    fromUser: "Від користувача",
+    feadbackAdded: "Відгук додано",
   },
 };
 
