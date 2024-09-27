@@ -182,9 +182,6 @@ export function VerticalTabs() {
             justifyContent: "space-between",
             alignItems: "flex-start",
             height: "80vh",
-            "& .MuiTabs-indicator": {
-              backgroundColor: (theme) => theme.palette.background.sidebar,
-            },
           }}
         >
           <Tab
@@ -198,6 +195,9 @@ export function VerticalTabs() {
               px: "62px",
               color: (theme) => theme.palette.textColor.sidebar,
               "&:hover": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
+              "&.Mui-selected": {
                 color: (theme) => theme.palette.textColor.linkHover,
               },
             }}
@@ -215,6 +215,9 @@ export function VerticalTabs() {
               "&:hover": {
                 color: (theme) => theme.palette.textColor.linkHover,
               },
+              "&.Mui-selected": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
             }}
           />
           <Tab
@@ -229,6 +232,9 @@ export function VerticalTabs() {
               "&:hover": {
                 color: (theme) => theme.palette.textColor.linkHover,
               },
+              "&.Mui-selected": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
             }}
           />
           <Tab
@@ -241,6 +247,9 @@ export function VerticalTabs() {
               fontSize: "18px",
               color: (theme) => theme.palette.textColor.sidebar,
               "&:hover": {
+                color: (theme) => theme.palette.textColor.linkHover,
+              },
+              "&.Mui-selected": {
                 color: (theme) => theme.palette.textColor.linkHover,
               },
             }}
