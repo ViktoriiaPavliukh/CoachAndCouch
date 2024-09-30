@@ -129,3 +129,28 @@ export const acceptBooking = createAsyncThunk(
     }
   }
 );
+
+export const markBookingInactive = createAsyncThunk(
+  "bookings/markBookingInactive",
+  async (bookingId, thunkAPI) => {
+    try {
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      privateAPI.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${persistToken}`;
+      const { data } = await privateAPI.patch(`/booking/${bookingId}`, {
+        isActive: false,
+      });
+
+      return data;
+    } catch (error) {
+      console.error(
+        "Error marking booking as inactive:",
+        error.response ? error.response.data : error.message
+      );
+      return thunkAPI.rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);

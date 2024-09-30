@@ -269,6 +269,8 @@ const messages = {
     confirmCancel: "Do you want to cancel the booking with ",
     at: "at",
     noData: "No data to display",
+    confirmRemoveSlot: "Confirm slot removal",
+    removeSlot: "Are you sure you want to remove the slot ",
 
     //Admin
     avatar: "Image",
@@ -558,6 +560,8 @@ const messages = {
     confirmCancel: "Ви хочете скасувати бронювання з ",
     at: "o",
     noData: "Нема данних для відображення",
+    confirmRemoveSlot: "Підтвердіть видалення слота",
+    removeSlot: "Ви впевнені, що хочете видалити слот ",
 
     //Admin
     avatar: "Аватарка",
