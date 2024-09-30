@@ -76,7 +76,7 @@ export const TrialLessonWrapper = ({
     if (teacherBookings.length > 0) {
       const newSchedule = new Map();
       teacherBookings.forEach((slot) => {
-        if (!slot.isBooked) {
+        if (!slot.isBooked && slot.isActive) {
           const date = new Date(slot.date);
           if (!isNaN(date)) {
             const day = new Date(
