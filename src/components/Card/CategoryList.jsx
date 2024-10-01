@@ -8,12 +8,10 @@ export function CategoryList({ elements }) {
       <List
         sx={{
           display: "flex",
-          flexWrap: "wrap",
           my: "12px",
           gap: "10px",
           p: 0,
-          flexWrap: "nowrap",
-          overflow: "auto",
+          overflowX: "auto",
           whiteSpace: "nowrap",
           "&::-webkit-scrollbar": {
             display: "none",
