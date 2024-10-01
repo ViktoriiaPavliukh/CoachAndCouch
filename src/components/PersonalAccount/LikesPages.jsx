@@ -6,12 +6,10 @@ import { Box, Grid, Typography } from "@mui/material";
 import { getCurrentUser } from "@/redux/users/operations";
 import { fetchLikedAdverts } from "@/redux/marketplace/adverts/operations";
 import {
-  selectAdvertsIsLoading,
   advertsSelector,
 } from "@/redux/marketplace/adverts/advertsSelector";
 import {
   selectCurrentUser,
-  selectUserIsLoading,
 } from "@/redux/users/selectors";
 import { TeacherCard } from "../Teachers/TeacherCard";
 

@@ -52,7 +52,7 @@ export const Sidebar = () => {
       }}
     >
       <Box>
-        {pages.slice(0, 6).map((item, index) => {
+        {pages.slice(0, 5).map((item, index) => {
           const IconComponent = FeatherIcons[item.iconFeatherName];
           return (
             <Box

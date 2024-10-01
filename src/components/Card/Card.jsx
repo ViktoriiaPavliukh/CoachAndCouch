@@ -27,16 +27,11 @@ import { Stack } from "@mui/system";
 import useStatus from "@/hooks/useStatus";
 import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
 import {
-  fetchBookings,
-  fetchTeacherBookings,
   fetchStudentBookings,
-  createBooking,
 } from "@/redux/marketplace/bookings/operations";
 import {
   selectTeacherBookings,
   selectStudentBookings,
-  selectTeacherBookingsError,
-  selectTeacherBookingsLoading,
 } from "@/redux/marketplace/bookings/selectors";
 import { fetchTeacherSlots } from "@/redux/marketplace/bookings/operations";
 
