@@ -18,8 +18,6 @@ export default function Layout() {
           backgroundColor: "background",
           display: "flex",
           justifyContent: "center",
-          border: "1px solid green",
-          // maxWidth: "100vw",
           minHeight: "100vh",
         }}
         component="div"
