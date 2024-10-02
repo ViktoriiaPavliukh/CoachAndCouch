@@ -17,6 +17,7 @@ import {
   fetchTeacherBookings,
   fetchStudentBookings,
   createBooking,
+  markBookingInactive,
 } from "@/redux/marketplace/bookings/operations";
 import {
   selectBookings,
@@ -28,6 +29,7 @@ import {
 } from "@/redux/marketplace/bookings/selectors";
 import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
+import ConfirmRemoveSlotModal from "./ConfirmRemoveSlotModal";
 import TeacherOnlyModal from "./TeacherOnlyModal";
 import momentLocale from "@/helpers/momentLocale";
 import CustomEventComponent from "./CustomEventComponent";
@@ -48,15 +50,16 @@ export const MyCalendar = () => {
   const defaultDate = new Date();
   defaultDate.setHours(7, 0, 0);
   const studentBookings = useSelector(selectStudentBookings);
+
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedSlot, setSelectedSlot] = useState(null);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [openConfirmModal, setOpenConfirmModal] = useState(false);
   const [openWarningModal, setOpenWarningModal] = useState(false);
+  const [openRemoveSlotModal, setOpenRemoveSlotModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
   const [selectedYear, setSelectedYear] = useState(moment().year());
-  const isSmallScreen = useMediaQuery((theme) =>
-    theme.breakpoints.down("sm" && "md")
-  );
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
 
   const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
@@ -69,10 +72,6 @@ export const MyCalendar = () => {
     student: booking.student || booking.teacher,
   }));
 
-  const handleYearFilterChange = (event) => {
-    setSelectedYear(event.target.value);
-  };
-
   useEffect(() => {
     dispatch(fetchTeacherBookings()).then((action) => {
       if (action.payload) {
@@ -80,6 +79,7 @@ export const MyCalendar = () => {
       }
     });
   }, [dispatch]);
+
   useEffect(() => {
     dispatch(fetchStudentBookings(currentUser.id));
   }, [dispatch, currentUser.id]);
@@ -108,22 +108,41 @@ export const MyCalendar = () => {
   }, [dispatch]);
 
   const handleSlotSelection = ({ start, end }) => {
-    const now = moment();
-
-    if (moment(start).isBefore(now)) {
-      return;
-    }
-
-    if (!currentUser.advert) {
-      setOpenWarningModal(true);
-      return;
-    }
-
     const formattedStart = moment(start).toISOString();
     const formattedEnd = moment(end).toISOString();
-    setSelectedSlots([{ start: formattedStart, end: formattedEnd }]);
 
-    setOpenConfirmModal(true);
+    const existingSlot = teacherSlots.find(
+      (slot) => moment(slot.date).isSame(start) && slot.isActive
+    );
+
+    if (existingSlot) {
+      setSelectedSlot(existingSlot);
+      setOpenRemoveSlotModal(true);
+    } else {
+      if (!currentUser.advert) {
+        setOpenWarningModal(true);
+        return;
+      }
+
+      setSelectedSlots([{ start: formattedStart, end: formattedEnd }]);
+      setOpenConfirmModal(true);
+    }
+  };
+
+  const handleRemoveSlot = () => {
+    if (selectedSlot) {
+      dispatch(markBookingInactive(selectedSlot.id))
+        .then(() => {
+          dispatch(fetchTeacherBookings());
+        })
+        .catch((error) => {
+          console.error("Error removing slot:", error);
+        });
+      setOpenRemoveSlotModal(false);
+      setSelectedSlot(null);
+    } else {
+      console.error("No selected slot to remove.");
+    }
   };
 
   const handleSelectEvent = (event, e) => {
@@ -186,17 +205,26 @@ export const MyCalendar = () => {
   };
 
   const slotPropGetter = (date) => {
-    const isTeacherBooking = teacherSlots.some((slot) =>
+    const existingSlot = teacherSlots.find((slot) =>
       moment(slot.date).isSame(date, "minute")
     );
 
+    let backgroundColor = "transparent"; // Default to transparent
+
+    if (existingSlot) {
+      if (existingSlot.isActive && !existingSlot.isBooked) {
+        backgroundColor = "#e7f1d3"; // Green for active, unbooked slot
+      } else if (!existingSlot.isActive) {
+        backgroundColor = "#aaaaaa"; // Grey for inactive slots
+      }
+    }
+
     return {
       style: {
-        backgroundColor: isTeacherBooking ? "#e7f1d3" : "transparent",
+        backgroundColor: backgroundColor,
       },
     };
   };
-
   return (
     <Box>
       <Calendar
@@ -241,6 +269,12 @@ export const MyCalendar = () => {
         onConfirm={handleCreateBooking}
         slot={selectedSlots[0]}
       />
+      <ConfirmRemoveSlotModal
+        open={openRemoveSlotModal}
+        onClose={() => setOpenRemoveSlotModal(false)}
+        onConfirm={handleRemoveSlot}
+        slot={selectedSlot}
+      />
       <TeacherOnlyModal open={openWarningModal} onClose={handleCloseModal} />
     </Box>
   );
@@ -278,7 +312,7 @@ const TimeGutterHeader = () => {
 const CustomDayComponent = ({ date }) => {
   return (
     <Stack
-      style={{
+      sx={{
         display: "flex",
         flexDirection: "column",
         height: "34px",
@@ -291,3 +325,4 @@ const CustomDayComponent = ({ date }) => {
     </Stack>
   );
 };
+

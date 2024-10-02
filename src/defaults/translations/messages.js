@@ -134,7 +134,7 @@ const messages = {
     "signup.password": "Create a password",
     "signup.confirmPassword": "Confirm your password",
     "signup.showPassword": "Show password",
-    "signup.createAccount": "Create an account",
+    "signup.createAccount": "Create new account",
     "signup.checking": "Checking...",
     "signup.termsAndConditions1": "By logging in, I accept ",
     "signup.termsLink": "Terms of Service",
@@ -269,6 +269,8 @@ const messages = {
     confirmCancel: "Do you want to cancel the booking with ",
     at: "at",
     noData: "No data to display",
+    confirmRemoveSlot: "Confirm slot removal",
+    removeSlot: "Are you sure you want to remove the slot ",
 
     //Admin
     avatar: "Image",
@@ -318,13 +320,13 @@ const messages = {
     "signup.password": "Створіть пароль",
     "signup.confirmPassword": "Підтвердіть пароль",
     "signup.showPassword": "Показати пароль",
-    "signup.createAccount": "Створити обліковий запис",
+    "signup.createAccount": "Створити новий аккаунт",
     "signup.checking": "Перевіряємо...",
     "signup.termsAndConditions1": "Входячи в систему, я приймаю ",
     "signup.termsLink": "Умови користування",
     "signup.termsAndConditions2": "та підтверджую, що мною прочитана ",
     "signup.privacyLink": "Політика конфіденційності",
-    "signup.alreadyHaveAccount": "Вже є обліковий запис?",
+    "signup.alreadyHaveAccount": "Уже маєш акаунт?",
     "signup.signIn": "Увійти",
     signIn: "Вхід",
     enterEmail: "Введіть e-mail",
@@ -558,6 +560,8 @@ const messages = {
     confirmCancel: "Ви хочете скасувати бронювання з ",
     at: "o",
     noData: "Нема данних для відображення",
+    confirmRemoveSlot: "Підтвердіть видалення слота",
+    removeSlot: "Ви впевнені, що хочете видалити слот ",
 
     //Admin
     avatar: "Аватарка",

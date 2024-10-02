@@ -9,7 +9,6 @@ import {
   CardActionArea,
   CardActions,
   Stack,
-  Divider
 } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -40,6 +39,12 @@ export function TeacherCard({ teacher }) {
   const navigate = useNavigate();
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
+  console.log(teacher);
+  const userLike =
+    teacher?.likes?.some(
+      (like) => like.user?.id === user?.id // Corrected here
+    ) || false;
+
   const handleClick = () => {
     navigate(`/teachers/${teacher.id}`);
   };
@@ -70,12 +75,16 @@ export function TeacherCard({ teacher }) {
       <Card
         teacher={teacher}
         sx={{
+          display: "flex",
+          flexDirection: "column",
           width: { xs: "343px", lg: "400px" },
           minWidth: "100wv",
           borderRadius: "8px",
           boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
           flexGrow: 1,
           height: "100%",
+          justifyContent: "space-between",
+          alignItems: "stretch",
         }}
       >
         <CardActionArea onClick={() => handleClick()}>
@@ -101,6 +110,7 @@ export function TeacherCard({ teacher }) {
               flexDirection: "column",
               px: "16px",
               py: 0,
+              flexGrow: 1,
             }}
           >
             <Stack
@@ -238,22 +248,12 @@ export function TeacherCard({ teacher }) {
                       gap: "10px",
                     }}
                   >
-                    {!isFavorite && (
-                      <FavoriteBorderOutlinedIcon
-                        sx={{
-                          fontSize: "16px",
-                          color: (theme) => theme.palette.textColor.fontColor,
-                        }}
-                      />
-                    )}
-                    {isFavorite && (
-                      <FavoriteIcon
-                        sx={{
-                          fontSize: "16px",
-                          fill: "#7ab02e",
-                        }}
-                      />
-                    )}
+                    <FavoriteBorderOutlinedIcon
+                      sx={{
+                        fontSize: "16px",
+                        color: (theme) => theme.palette.textColor.fontColor,
+                      }}
+                    />
                     <Typography
                       variant="posterDescription"
                       sx={{
@@ -264,15 +264,6 @@ export function TeacherCard({ teacher }) {
                     </Typography>
                   </Button>
                 </Box>
-                {/* <Box sx={{ display: "flex", gap: "4px" }}>
-                  <Typography
-                    variant="posterItem"
-                    sx={{ color: (theme) => theme.palette.textColor.darkGrey }}
-                  >
-                    {intl.formatMessage({ id: "lessons" })}:
-                  </Typography>
-                  <Typography variant="posterItem">156</Typography>
-                </Box> */}
               </Box>
             </Stack>
           </CardContent>
