@@ -17,12 +17,14 @@ import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectTheme } from "@/redux/theme/selectors";
 
 export function SignUp() {
   const intl = useIntl();
   const validationSchema = registrationSchema(intl);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
+  const theme = useSelector(selectTheme);
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -36,6 +38,7 @@ export function SignUp() {
       dispatch(registerUser({ firstName, email, password }));
     },
   });
+
   return (
     <Box
       sx={{
@@ -48,24 +51,39 @@ export function SignUp() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        backgroundAttachment: "fixed",
+        position: "relative",
       }}
     >
+      {theme && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            zIndex: 1,
+          }}
+        />
+      )}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "left",
           backgroundColor: (theme) => theme.palette.background.paper,
-          backgroundSize: "cover",
-          maxWidth: "440px",
-          padding: "40px 56px",
+          maxWidth: { xl: "478px", md: "458px", xs: "91%" },
+          padding: {
+            xs: "26px 28px 28px",
+            md: "38px 65px 40px",
+            xl: "48px 75px 50px",
+          },
           borderRadius: "16px",
-          marginTop: "2%",
-          marginBottom: "20px",
+          zIndex: 2,
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography sx={{ fontSize: { xs: "30px", md: "36px" } }}>
           <FormattedMessage
             id="signup.registration"
             defaultMessage="Registration"
@@ -75,7 +93,9 @@ export function SignUp() {
           component="form"
           noValidate
           onSubmit={formik.handleSubmit}
-          sx={{ mt: 3 }}
+          sx={{
+            mt: { xs: "30px", md: "36px" },
+          }}
         >
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -199,14 +219,16 @@ export function SignUp() {
             variant="contained"
             disabled={isLoggedIn}
             sx={{
-              mt: 3,
-              mb: 2,
-              textTransform: "upperCase",
-              backgroundColor: (theme) => theme.palette.buttonColor.secondary,
+              borderRadius: "8px",
+              p: "12px 24px",
+              mt: "24px",
+              mb: "40px",
+              color: (theme) => theme.palette.buttonColor.fontColor,
+              backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
               "&:hover": {
-                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.greenYellowHover,
               },
-              color: (theme) => theme.palette.textColor.black,
             }}
           >
             {isLoggedIn ? (
@@ -215,20 +237,50 @@ export function SignUp() {
                 defaultMessage="Checking..."
               />
             ) : (
-              <FormattedMessage id="signup.createAccount" />
+              <Typography variant="posterButton">
+                {intl.formatMessage({ id: "signup.createAccount" })}
+              </Typography>
             )}
           </Button>
           <Typography
             component="p"
             variant="h6"
-            sx={{ fontSize: "14px", textAlign: "center" }}
+            sx={{
+              fontSize: "14px",
+              textAlign: "center",
+              color: (theme) => theme.palette.textColor.greyBoth,
+            }}
           >
             {<FormattedMessage id="signup.termsAndConditions1" />}
-            <Link component={ReactLink} to="/" variant="body2">
+            <Link
+              component={ReactLink}
+              to="/"
+              variant="body2"
+              sx={{
+                color: (theme) => theme.palette.buttonColor.greenYellow,
+                textDecorationColor: (theme) =>
+                  theme.palette.buttonColor.greenYellow,
+                "&:hover": {
+                  color: (theme) => theme.palette.buttonColor.greenYellowHover,
+                },
+              }}
+            >
               {<FormattedMessage id="signup.termsLink" />}
             </Link>{" "}
             {<FormattedMessage id="signup.termsAndConditions2" />}
-            <Link component={ReactLink} to="/" variant="body2">
+            <Link
+              component={ReactLink}
+              to="/"
+              variant="body2"
+              sx={{
+                color: (theme) => theme.palette.buttonColor.greenYellow,
+                textDecorationColor: (theme) =>
+                  theme.palette.buttonColor.greenYellow,
+                "&:hover": {
+                  color: (theme) => theme.palette.buttonColor.greenYellowHover,
+                },
+              }}
+            >
               {<FormattedMessage id="signup.privacyLink" />}
             </Link>
           </Typography>
@@ -240,9 +292,18 @@ export function SignUp() {
               component={ReactLink}
               to="/login"
               variant="body2"
-              style={{ marginTop: "2px", marginLeft: "15px" }}
+              sx={{
+                marginTop: "2px",
+                marginLeft: "15px",
+                color: (theme) => theme.palette.buttonColor.greenYellow,
+                textDecorationColor: (theme) =>
+                  theme.palette.buttonColor.greenYellow,
+                "&:hover": {
+                  color: (theme) => theme.palette.buttonColor.greenYellowHover,
+                },
+              }}
             >
-              {<FormattedMessage id="signup.signIn" />}
+              {<FormattedMessage id="signIn" />}
             </Link>
           </Grid>
         </Box>

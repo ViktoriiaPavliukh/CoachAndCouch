@@ -73,7 +73,7 @@ export function SignIn() {
           flexDirection: "column",
           alignItems: "left",
           backgroundColor: (theme) => theme.palette.background.paper,
-          maxWidth: "458px",
+          maxWidth: { xl: "478px", md: "458px", xs: "91%" },
           padding: {
             xs: "26px 28px 28px",
             md: "38px 65px 40px",
@@ -91,7 +91,7 @@ export function SignIn() {
           noValidate
           onSubmit={formik.handleSubmit}
           sx={{
-            mt: "36px",
+            mt: { xs: "30px", md: "36px" },
           }}
         >
           <Grid container>
@@ -188,6 +188,7 @@ export function SignIn() {
               borderRadius: "8px",
               mt: "24px",
               mb: "40px",
+              p: "12px 24px",
               color: (theme) => theme.palette.buttonColor.fontColor,
               backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
               "&:hover": {
@@ -198,7 +199,9 @@ export function SignIn() {
           >
             {isLoggedIn
               ? intl.formatMessage({ id: "loading" })
-              : intl.formatMessage({ id: "signInButton" })}
+              : <Typography variant="posterButton">
+                {intl.formatMessage({ id: "signInButton" })}
+              </Typography>}
           </Button>
           <Box justifyContent="center">
             <Typography
