@@ -39,6 +39,12 @@ export function TeacherCard({ teacher }) {
   const navigate = useNavigate();
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
+  console.log(teacher);
+  const userLike =
+    teacher?.likes?.some(
+      (like) => like.user?.id === user?.id // Corrected here
+    ) || false;
+
   const handleClick = () => {
     navigate(`/teachers/${teacher.id}`);
   };
@@ -69,8 +75,8 @@ export function TeacherCard({ teacher }) {
       <Card
         teacher={teacher}
         sx={{
-          display: "flex", 
-          flexDirection: "column", 
+          display: "flex",
+          flexDirection: "column",
           width: { xs: "343px", lg: "400px" },
           minWidth: "100wv",
           borderRadius: "8px",
@@ -78,7 +84,7 @@ export function TeacherCard({ teacher }) {
           flexGrow: 1,
           height: "100%",
           justifyContent: "space-between",
-          alignItems: "stretch"
+          alignItems: "stretch",
         }}
       >
         <CardActionArea onClick={() => handleClick()}>
@@ -242,22 +248,12 @@ export function TeacherCard({ teacher }) {
                       gap: "10px",
                     }}
                   >
-                    {!isFavorite && (
-                      <FavoriteBorderOutlinedIcon
-                        sx={{
-                          fontSize: "16px",
-                          color: (theme) => theme.palette.textColor.fontColor,
-                        }}
-                      />
-                    )}
-                    {isFavorite && (
-                      <FavoriteIcon
-                        sx={{
-                          fontSize: "16px",
-                          fill: "#7ab02e",
-                        }}
-                      />
-                    )}
+                    <FavoriteBorderOutlinedIcon
+                      sx={{
+                        fontSize: "16px",
+                        color: (theme) => theme.palette.textColor.fontColor,
+                      }}
+                    />
                     <Typography
                       variant="posterDescription"
                       sx={{

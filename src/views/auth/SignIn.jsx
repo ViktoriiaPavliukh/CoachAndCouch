@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Button,
   TextField,
@@ -18,12 +18,14 @@ import mainBg from "@assets/images/bg.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
+import { selectTheme } from "@/redux/theme/selectors";
 
 export function SignIn() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const intl = useIntl();
   const validationSchema = loginSchema(intl);
+  const theme = useSelector(selectTheme);
 
   const formik = useFormik({
     initialValues: {
@@ -34,9 +36,9 @@ export function SignIn() {
     validationSchema,
     onSubmit: ({ email, password }) => {
       dispatch(loginUser({ email, password }));
-      // formik.resetForm();
     },
   });
+
   return (
     <Box
       sx={{
@@ -49,20 +51,39 @@ export function SignIn() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        position: "relative",
       }}
     >
+      {theme && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            zIndex: 1,
+          }}
+        />
+      )}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "left",
           backgroundColor: (theme) => theme.palette.background.paper,
-          maxWidth: "440px",
-          padding: "40px 56px",
+          maxWidth: "458px",
+          padding: {
+            xs: "26px 28px 28px",
+            md: "38px 65px 40px",
+            xl: "48px 75px 50px",
+          },
           borderRadius: "16px",
+          zIndex: 2,
         }}
       >
-        <Typography component="h1" variant="h5">
+        <Typography sx={{ fontSize: { xs: "30px", md: "36px" } }}>
           {intl.formatMessage({ id: "signIn" })}
         </Typography>
         <Box
@@ -70,14 +91,14 @@ export function SignIn() {
           noValidate
           onSubmit={formik.handleSubmit}
           sx={{
-            mt: 3,
+            mt: "36px",
           }}
         >
           <Grid container>
             <Grid item xs={12}>
               <TextField
                 sx={{
-                  mb: "40px",
+                  mb: "36px",
                 }}
                 size="small"
                 fullWidth
@@ -100,7 +121,7 @@ export function SignIn() {
             <Grid item xs={12}>
               <TextField
                 sx={{
-                  mb: "28px",
+                  mb: "24px",
                 }}
                 fullWidth
                 size="small"
@@ -149,16 +170,12 @@ export function SignIn() {
             }}
           >
             <Typography
-              variant="posterItem"
+              variant="posterUnderline"
               sx={{
-                color: (theme) => theme.palette.textColor.greyWhite,
+                color: (theme) => theme.palette.textColor.greyBoth,
                 textDecoration: "underline",
-                // paddingBottom: "1px",
-                // borderBottom:
-                //   "1px solid"
               }}
             >
-              {" "}
               {intl.formatMessage({ id: "forgotPassword" })}
             </Typography>
           </Link>
@@ -168,14 +185,15 @@ export function SignIn() {
             variant="contained"
             disabled={isLoggedIn}
             sx={{
-              mt: "28px",
-              mb: "44px",
-              textTransform: "upperCase",
-              backgroundColor: (theme) => theme.palette.buttonColor.secondary,
+              borderRadius: "8px",
+              mt: "24px",
+              mb: "40px",
+              color: (theme) => theme.palette.buttonColor.fontColor,
+              backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
               "&:hover": {
-                backgroundColor: (theme) => theme.palette.buttonColor.hover,
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.greenYellowHover,
               },
-              color: (theme) => theme.palette.textColor.header,
             }}
           >
             {isLoggedIn
@@ -183,7 +201,14 @@ export function SignIn() {
               : intl.formatMessage({ id: "signInButton" })}
           </Button>
           <Box justifyContent="center">
-            <Typography sx={{ textAlign: "center", display: "block" }}>
+            <Typography
+              variant="posterUnderline"
+              sx={{
+                textAlign: "center",
+                display: "block",
+                color: (theme) => theme.palette.textColor.greyBoth,
+              }}
+            >
               {intl.formatMessage({ id: "newUser" })}
             </Typography>
             <Link
@@ -191,7 +216,13 @@ export function SignIn() {
               to="/registration"
               variant="body2"
               align="center"
-              sx={{ textAlign: "center", mt: 2, display: "block" }}
+              sx={{
+                textAlign: "center",
+                mt: "6px",
+                display: "block",
+                textDecoration: "none",
+                color: (theme) => theme.palette.textColor.listColor,
+              }}
             >
               {intl.formatMessage({ id: "createAccount" })}
             </Link>
