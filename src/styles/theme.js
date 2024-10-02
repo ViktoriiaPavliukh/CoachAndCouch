@@ -46,6 +46,7 @@ const createThemeTemplate = (themeColor) => ({
           background: {
             paper: "#FFF",
             default: "#FFF",
+            form: "#FAFAFA",
             sidebar: "#FAFAFA",
             mainPage: "#FAFAFA",
             messages: "#ffffff",
@@ -122,6 +123,7 @@ const createThemeTemplate = (themeColor) => ({
           background: {
             paper: "#292A2A",
             default: "#292A2A",
+            form: "#292A2A",
             sidebar: "#3C3D3D",
             mainPage: "#262626",
             messages: "#404040",

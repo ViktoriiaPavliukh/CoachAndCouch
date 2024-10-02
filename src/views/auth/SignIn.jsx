@@ -72,7 +72,7 @@ export function SignIn() {
           display: "flex",
           flexDirection: "column",
           alignItems: "left",
-          backgroundColor: (theme) => theme.palette.background.paper,
+          backgroundColor: (theme) => theme.palette.background.form,
           maxWidth: { xl: "478px", md: "458px", xs: "91%" },
           padding: {
             xs: "26px 28px 28px",

@@ -35,6 +35,7 @@ import {
   languagesSelector,
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
+import { selectTheme } from "@/redux/theme/selectors";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
@@ -59,10 +60,10 @@ const initialValues = {
 export const TeacherFormPage = () => {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
+  const theme = useSelector(selectTheme);
   const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
-  console.log(token);
   const user = useSelector(selectUser);
   const navigate = useNavigate();
   const adverts = useSelector(advertsSelector)?.adverts;
@@ -137,13 +138,28 @@ export const TeacherFormPage = () => {
         alignItems: "center",
         justifyContent: "center",
         paddingY: { sm: "47px", lg: "57px", xl: "47px" },
+        position: "relative",
       }}
     >
+      {theme && (
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            zIndex: 1,
+          }}
+        />
+      )}
       <Box
         sx={{
-          backgroundColor: (theme) => theme.palette.background.paper,
+          backgroundColor: (theme) => theme.palette.background.form,
           p: { md: "40px", xs: "40px 20px" },
           width: { xs: "89%", md: "80%", lg: "71%", xl: "70%" },
+          zIndex: 2,
         }}
       >
         <form onSubmit={formik.handleSubmit}>
