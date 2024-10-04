@@ -92,8 +92,9 @@ export const sendMessageFromUser = createAsyncThunk(
   "users/sendMessage",
   async ({ id, message }, thunkAPI) => {
     try {
+      console.log(id, message);
       const userToken = thunkAPI.getState().auth.accessToken;
-
+      console.log(userToken);
       await privateAPI.post(
         `/users/${id}/conversation`,
         { message },

@@ -26,7 +26,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
   }
 
   const result = Array.from(uniqueIds);
-  console.log("Unique User IDs:", result);
+
 
   const sortedChats = [...fetchMessages].sort((a, b) => {
     const lastMessageA = a.messages[a.messages.length - 1];
@@ -38,18 +38,18 @@ export const Messages = ({ currentUser, fetchMessages }) => {
       );
     }
     if (lastMessageA) {
-      return -1; // lastMessageA exists and lastMessageB doesn't
+      return -1; 
     } else if (lastMessageB) {
-      return 1; // lastMessageB exists and lastMessageA doesn't
+      return 1; 
     }
-    return 0; // both messages are empty
+    return 0; 
   });
 
   const [userChat, setUserChat] = useState(
     sortedChats.length > 0 ? sortedChats[0] : null
   );
 
-  // Function to get the last message
+
   const getLastMessage = (messages) => {
     return messages.length > 0 ? messages[messages.length - 1] : null;
   };
@@ -69,8 +69,8 @@ export const Messages = ({ currentUser, fetchMessages }) => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      {/* {sortedChats.length !== 0 ? (
+    <Box sx={{ width: "100%", height: "100vh" }}>
+      {sortedChats.length !== 0 ? (
         <Stack
           sx={{
             display: { xs: "flex", md: "none" },
@@ -85,6 +85,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
               user={userActive}
               onOpenChat={onOpenChat}
               setUserChat={setUserChat}
+              messages={fetchMessages}
             />
           )}
           <ChatList
@@ -97,7 +98,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
         </Stack>
       ) : (
         <p> у вас ще немає повідомлень</p>
-      )} */}
+      )}
       {sortedChats.length !== 0 ? (
         <Stack
           sx={{
@@ -112,7 +113,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
             setUserChat={setUserChat}
             messages={fetchMessages}
           />
-          {userChat && <ChatWithUser user={userChat} />}
+          {userChat && <ChatWithUser user={userChat} currentUser={currentUser} />}
         </Stack>
       ) : (
         <p> у вас ще немає повідомлень</p>
@@ -120,7 +121,6 @@ export const Messages = ({ currentUser, fetchMessages }) => {
     </Box>
   );
 };
-
 
 // import { useDispatch, useSelector } from "react-redux";
 // import { getCurrentUser, getUserMessages } from "@/redux/users/operations";

@@ -50,6 +50,8 @@ export const ChatList = ({
   return (
     <Box
       sx={{
+        width: "40%",
+        
         p: {
           sm: "32px 16px",
           md: "32px 12px 32px 60px",

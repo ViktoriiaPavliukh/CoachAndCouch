@@ -10,7 +10,7 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Aperture, ChevronLeft, MapPin, Send } from "react-feather";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
@@ -47,25 +47,45 @@ const userMessages = {
   ...messageItem,
   ...userMessageItem,
 };
-export const ChatWithUser = ({ user, onClose }) => {
-  // const [message, setMessage] = useState("");
+export const ChatWithUser = ({ user, onClose, currentUser }) => {
+  const [message, setMessage] = useState("");
   const theme = useSelector(selectTheme);
   console.log(user);
-  // const [sentMessage, setSentMessage] = useState(null);
-  // const dispatch = useDispatch;
+  const [sentMessage, setSentMessage] = useState(null);
+  const dispatch = useDispatch();
   const intl = useIntl();
   // const correspondenceName = user.userCorrespondenceId.name;
   const correspondenceId = user.id;
   // const correspondenceCountry = user.userCorrespondenceId.country;
-  const messages = user.messages;
+  const messages = user.messages || [];
+
+  const messagesEndRef = useRef(null);
 
   const sendBtnColor = !theme
     ? lightTheme.palette.buttonColor.send
     : darkTheme.palette.buttonColor.send;
+  console.log(currentUser);
+  const userId = currentUser.advert.id;
+  console.log(user);
+
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
+
+    try {
+      console.log(userId);
+      dispatch(sendMessageFromUser({ id: userId, message }));
+      setSentMessage("Your message has been sent.");
+      setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
 
   // const handleSendMessage = async () => {
   //   try {
-  //     await dispatch(sendMessageFromUser({ correspondenceId, message }));
+  //     if (!message.trim()) return;
+  //     const userId = currentUser.id;
+  //     dispatch(sendMessageFromUser({ userId, message }));
   //     setSentMessage({ message: "Your message has been sent." });
   //     setMessage("");
   //   } catch (error) {
@@ -73,22 +93,29 @@ export const ChatWithUser = ({ user, onClose }) => {
   //   }
   // };
 
-  // const groupedMessages = messages.reduce((acc, curr) => {
-  //   const messageDate = new Date(curr.writtedAt).toLocaleDateString();
-  //   if (!acc[messageDate]) {
-  //     acc[messageDate] = [];
-  //   }
-  //   acc[messageDate].push(curr);
-  //   return acc;
-  // }, {});
+  const groupedMessages = messages.reduce((acc, curr) => {
+    const messageDate = new Date(curr.writtedAt).toLocaleDateString();
+    if (!acc[messageDate]) {
+      acc[messageDate] = [];
+    }
+    acc[messageDate].push(curr);
+    return acc;
+  }, {});
+
+  console.log(groupedMessages);
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <Box
       sx={{
-        display: "block",
+        display: "flex",
         m: { lg: "32px 55px 0 2px", xl: "26px 90px 32px 32px" },
         width: "100%",
-        height: "100vh",
+        maxHeight: "90vh",
         boxSizing: "border-box",
       }}
     >
@@ -97,14 +124,22 @@ export const ChatWithUser = ({ user, onClose }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          minHeight: "100%",
+          height: "100%",
+          overflowY: "auto",
           p: { xs: "32px 16px", md: "32px 8px", lg: "8px" },
           boxShadow:
             "0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.04)",
         }}
       >
-        {/* <Box>
-          <Box sx={{ display: { xs: "block", md: "none" } }}>
+        <Box>
+          <Box
+            sx={{
+              display: {
+                xs: "block",
+                md: "none",
+              },
+            }}
+          >
             <button
               type="button"
               onClick={onClose}
@@ -130,7 +165,13 @@ export const ChatWithUser = ({ user, onClose }) => {
               </p>
             </button>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px", mb: "12px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "20px",
+              mb: "12px",
+            }}
+          >
             <Avatar
               sx={{
                 border: "3px solid #498E4C",
@@ -141,13 +182,14 @@ export const ChatWithUser = ({ user, onClose }) => {
               <Aperture />
             </Avatar>
             <Box>
-              <Typography> {correspondenceName}</Typography>
+              {/* <Typography> {correspondenceName}</Typography> */}
               <Box sx={{ display: "flex", gap: "8px", mt: "8px" }}>
                 <MapPin />
                 <Typography
                   sx={{ color: (theme) => theme.palette.textColor.remarks }}
                 >
-                  {correspondenceCountry}
+                 {/* {user.id.message.senderId} */}
+                 {console.log(user)}
                 </Typography>
               </Box>
             </Box>
@@ -155,7 +197,13 @@ export const ChatWithUser = ({ user, onClose }) => {
           <Divider />
         </Box>
         {Object.entries(groupedMessages).map(([date, messages]) => (
-          <Box key={date}>
+          <Box
+            key={date}
+            // sx={{
+            //   overflowY: "auto",
+            //   maxHeight: "800px",
+            // }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -193,7 +241,7 @@ export const ChatWithUser = ({ user, onClose }) => {
                     }
                   >
                     <ListItemText
-                      primary={message.message}
+                      primary={message.text}
                       sx={{
                         mr: "auto",
                         mt: "0",
@@ -224,6 +272,7 @@ export const ChatWithUser = ({ user, onClose }) => {
             </List>
           </Box>
         ))}
+        <Box ref={messagesEndRef} />
         <Box
           sx={{
             display: "flex",
@@ -262,7 +311,7 @@ export const ChatWithUser = ({ user, onClose }) => {
           >
             <Send color={sendBtnColor} />
           </IconButton>
-        </Box> */}
+        </Box>
       </Box>
     </Box>
   );
