@@ -33,12 +33,20 @@ const usersSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       })
+      // .addCase(getUserById.fulfilled, (state, action) => {
+      //   state.user = action.payload;
+      //   state.isLoggedIn = true;
+      //   state.isLoading = false;
+      //   state.error = null;
+      // })
       .addCase(getUserById.fulfilled, (state, action) => {
+        console.log("Fetched User:", action.payload); // Debugging
         state.user = action.payload;
         state.isLoggedIn = true;
         state.isLoading = false;
         state.error = null;
       })
+
       .addCase(addFeedback.fulfilled, (state, action) => {
         state.feedbacks.push(action.payload);
         state.isLoading = false;

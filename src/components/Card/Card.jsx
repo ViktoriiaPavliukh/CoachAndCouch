@@ -75,8 +75,6 @@ export function Card() {
       const hasBookedBefore = studentBookings.some(
         (booking) => booking.advert.id.toString() === teacherId
       );
-
-      console.log(hasBookedBefore);
       setIsFirstTimeBooking(!hasBookedBefore);
     }
   }, [studentBookings, teacherId, currentUser]);

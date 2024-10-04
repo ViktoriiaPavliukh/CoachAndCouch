@@ -6,13 +6,14 @@ export const getUserById = createAsyncThunk(
   "users/getUserById",
   async (id, thunkAPI) => {
     try {
+      console.log(id, "id");
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
       console.log(persistToken);
       const { data } = await privateAPI.get(`/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-
+      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);

@@ -1,5 +1,4 @@
-import React from "react";
-import messages from "../../../defaults/conversations.json";
+import React, { useEffect } from "react";
 import {
   Box,
   List,
@@ -8,18 +7,40 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserById } from "@/redux/users/operations";
+import { selectUserById } from "@/redux/users/selectors";
 import { selectTheme } from "@/redux/theme/selectors";
 import { lightTheme, darkTheme } from "../../../styles/theme";
 import { Aperture } from "react-feather";
 import { PropTypes } from "prop-types";
 
-export const ChatList = ({ isMob, user, onOpenChat, setUserChat }) => {
+export const ChatList = ({
+  isMob,
+  user,
+  onOpenChat,
+  setUserChat,
+  messages,
+}) => {
+  const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
-
+  console.log(user);
   const bckgrColor = !theme
     ? lightTheme.palette.background.messagesUsers
     : darkTheme.palette.background.messagesUsers;
+
+  const senderData = useSelector(selectUserById);
+  console.log(senderData, "sender");
+
+  // useEffect(() => {
+  //   if (messages) {
+  //     dispatch(getUserById(user));
+  //   }
+  // }, [dispatch, messages]);
+
+  useEffect(() => {
+    dispatch(getUserById(user));
+  }, [dispatch]);
 
   const handleSidebarChatClick = (chat) => {
     setUserChat(chat);
@@ -39,18 +60,20 @@ export const ChatList = ({ isMob, user, onOpenChat, setUserChat }) => {
     >
       <List>
         {messages.map((chat) => {
+          console.log(chat, "chat");
           const sortedMessages = [...chat.messages].sort((a, b) => {
             return new Date(b.writtedAt) - new Date(a.writtedAt);
           });
-          const lastMessage = sortedMessages[0];
-          const isSelected = user === chat.userCorrespondenceId.id;
+          console.log(sortedMessages);
+          const lastMessage = chat.messages[chat.messages.length - 1];
+          console.log(lastMessage);
+          const isSelected = user === lastMessage.senderId;
           return (
-            <React.Fragment key={chat.userCorrespondenceId.id}>
+            <React.Fragment key={chat.id}>
               <ListItem
                 onClick={() => handleSidebarChatClick(chat)}
                 sx={{
                   m: "12px 0",
-
                   backgroundColor: isSelected ? bckgrColor : "transparent",
                   "&:hover": { background: bckgrColor },
                 }}
@@ -61,14 +84,15 @@ export const ChatList = ({ isMob, user, onOpenChat, setUserChat }) => {
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={chat.userCorrespondenceId.name}
+                  primary={lastMessage.senderId
+                  }
                   primaryTypographyProps={{
                     fontWeight: !lastMessage.isReaded ? "700" : "400",
                     overflow: "hidden",
                     whiteSpace: "nowrap",
                     textOverflow: "ellipsis",
                   }}
-                  secondary={lastMessage.message}
+                  secondary={lastMessage.text}
                   secondaryTypographyProps={{
                     fontWeight: !lastMessage.isReaded ? "700" : "400",
                     overflow: "hidden",

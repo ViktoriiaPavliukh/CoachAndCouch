@@ -48,38 +48,38 @@ const userMessages = {
   ...userMessageItem,
 };
 export const ChatWithUser = ({ user, onClose }) => {
-  const [message, setMessage] = useState("");
-  const theme = useSelector(selectTheme);
-  const [sentMessage, setSentMessage] = useState(null);
-  const dispatch = useDispatch;
-  const intl = useIntl();
-  const correspondenceName = user.userCorrespondenceId.name;
-  const correspondenceId = user.userCorrespondenceId.id;
-  const correspondenceCountry = user.userCorrespondenceId.country;
-  const messages = user.messages;
+  // const [message, setMessage] = useState("");
+  // const theme = useSelector(selectTheme);
+  // const [sentMessage, setSentMessage] = useState(null);
+  // const dispatch = useDispatch;
+  // const intl = useIntl();
+  // const correspondenceName = user.userCorrespondenceId.name;
+  // const correspondenceId = user.userCorrespondenceId.id;
+  // const correspondenceCountry = user.userCorrespondenceId.country;
+  // const messages = user.messages;
 
-  const sendBtnColor = !theme
-    ? lightTheme.palette.buttonColor.send
-    : darkTheme.palette.buttonColor.send;
+  // const sendBtnColor = !theme
+  //   ? lightTheme.palette.buttonColor.send
+  //   : darkTheme.palette.buttonColor.send;
 
-  const handleSendMessage = async () => {
-    try {
-      await dispatch(sendMessageFromUser({ correspondenceId, message }));
-      setSentMessage({ message: "Your message has been sent." });
-      setMessage("");
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-  };
+  // const handleSendMessage = async () => {
+  //   try {
+  //     await dispatch(sendMessageFromUser({ correspondenceId, message }));
+  //     setSentMessage({ message: "Your message has been sent." });
+  //     setMessage("");
+  //   } catch (error) {
+  //     console.error("Error sending message:", error);
+  //   }
+  // };
 
-  const groupedMessages = messages.reduce((acc, curr) => {
-    const messageDate = new Date(curr.writtedAt).toLocaleDateString();
-    if (!acc[messageDate]) {
-      acc[messageDate] = [];
-    }
-    acc[messageDate].push(curr);
-    return acc;
-  }, {});
+  // const groupedMessages = messages.reduce((acc, curr) => {
+  //   const messageDate = new Date(curr.writtedAt).toLocaleDateString();
+  //   if (!acc[messageDate]) {
+  //     acc[messageDate] = [];
+  //   }
+  //   acc[messageDate].push(curr);
+  //   return acc;
+  // }, {});
 
   return (
     <Box
@@ -102,7 +102,7 @@ export const ChatWithUser = ({ user, onClose }) => {
             "0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.04)",
         }}
       >
-        <Box>
+        {/* <Box>
           <Box sx={{ display: { xs: "block", md: "none" } }}>
             <button
               type="button"
@@ -261,7 +261,7 @@ export const ChatWithUser = ({ user, onClose }) => {
           >
             <Send color={sendBtnColor} />
           </IconButton>
-        </Box>
+        </Box> */}
       </Box>
     </Box>
   );
