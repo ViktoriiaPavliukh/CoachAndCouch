@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, getUserMessages } from "@/redux/users/operations";
-import messages from "../../../defaults/conversations.json";
 import { selectMessages } from "@/redux/users/selectors";
 import { Box, Stack } from "@mui/material";
 
@@ -18,39 +17,47 @@ export const Messages = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const uniqueIds = new Set();
+  console.log(uniqueIds)
 
-  fetchMessages.forEach((conversation) => {
-    conversation.messages.forEach((message) => {
-      if (message.senderId !== 12) {
-        uniqueIds.add(message.senderId);
-      }
-      if (message.receiverId !== 12) {
-        uniqueIds.add(message.receiverId);
-      }
+  if (fetchMessages) {
+    fetchMessages.forEach((conversation) => {
+      console.log(conversation);
+      conversation.messages.forEach((message) => {
+        console.log(message)
+        if (message.senderId !== message.receiverId) {
+          uniqueIds.add(message.senderId);
+        }
+      });
     });
-  });
+  }
 
+
+ 
   const result = Array.from(uniqueIds);
   console.log(result);
 
   console.log(fetchMessages);
 
-  const sortedChats2 = [...fetchMessages].sort((a, b) => {
-    const lastMessageA = a.messages[a.messages.length - 1];
-    const lastMessageB = b.messages[b.messages.length - 1];
 
-    if (lastMessageA && lastMessageB) {
-      return (
-        new Date(lastMessageB.writtedAt) - new Date(lastMessageA.writtedAt)
-      );
-    }
-    if (lastMessageA) {
-      return -1; // lastMessageA exists and lastMessageB doesn't
-    } else if (lastMessageB) {
-      return 1; // lastMessageB exists and lastMessageA doesn't
-    }
-    return 0; // both messages are empty
-  });
+    const sortedChats2 = [...fetchMessages].sort((a, b) => {
+      const lastMessageA = a.messages[a.messages.length - 1];
+      const lastMessageB = b.messages[b.messages.length - 1];
+
+      if (lastMessageA && lastMessageB) {
+        return (
+          new Date(lastMessageB.writtedAt) - new Date(lastMessageA.writtedAt)
+        );
+      }
+      if (lastMessageA) {
+        return -1; // lastMessageA exists and lastMessageB doesn't
+      } else if (lastMessageB) {
+        return 1; // lastMessageB exists and lastMessageA doesn't
+      }
+      return 0; // both messages are empty
+    });
+    
+
+  
 
   const [userChat, setUserChat] = useState(
     sortedChats2.length > 0 ? sortedChats2[0] : null
@@ -84,7 +91,7 @@ export const Messages = () => {
   const userActive = lastMessage.senderId;
   console.log(userActive, "userActive");
 
-  // console.log(sortedChats2[0].messages, "sorted");
+  console.log(sortedChats2[0].messages, "sorted");
 
   const onGoBack = () => {
     setIsChatOpen(false);
