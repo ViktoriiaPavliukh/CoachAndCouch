@@ -49,18 +49,19 @@ const userMessages = {
 };
 export const ChatWithUser = ({ user, onClose }) => {
   // const [message, setMessage] = useState("");
-  // const theme = useSelector(selectTheme);
+  const theme = useSelector(selectTheme);
+  console.log(user);
   // const [sentMessage, setSentMessage] = useState(null);
   // const dispatch = useDispatch;
-  // const intl = useIntl();
+  const intl = useIntl();
   // const correspondenceName = user.userCorrespondenceId.name;
-  // const correspondenceId = user.userCorrespondenceId.id;
+  const correspondenceId = user.id;
   // const correspondenceCountry = user.userCorrespondenceId.country;
-  // const messages = user.messages;
+  const messages = user.messages;
 
-  // const sendBtnColor = !theme
-  //   ? lightTheme.palette.buttonColor.send
-  //   : darkTheme.palette.buttonColor.send;
+  const sendBtnColor = !theme
+    ? lightTheme.palette.buttonColor.send
+    : darkTheme.palette.buttonColor.send;
 
   // const handleSendMessage = async () => {
   //   try {

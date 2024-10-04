@@ -38,9 +38,9 @@ export const ChatList = ({
   //   }
   // }, [dispatch, messages]);
 
-  useEffect(() => {
-    dispatch(getUserById(user));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUserById(user));
+  // }, [dispatch]);
 
   const handleSidebarChatClick = (chat) => {
     setUserChat(chat);

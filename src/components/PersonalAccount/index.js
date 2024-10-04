@@ -3,7 +3,7 @@ export * from "./MainPage";
 export * from "./Profile";
 export * from "./Profile/ProfileData";
 export * from "./Schedule/Schedule";
-export * from "./Messages/Messages";
+export * from "./Messages/ChatData";
 export * from "./Settings";
 export * from "./Advertisements";
 export * from "./LikesPages";

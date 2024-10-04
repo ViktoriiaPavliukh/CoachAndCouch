@@ -123,6 +123,7 @@ export const getUserMessages = createAsyncThunk(
         headers: { Authorization: `Bearer ${userToken}` },
       });
       const messages = response.data;
+      console.log(messages);
       return messages;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

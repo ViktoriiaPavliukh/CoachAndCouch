@@ -22,7 +22,7 @@ import {
   MainPage,
   Lessons,
   Schedule,
-  Messages,
+  ChatData,
   Settings,
   ProfileData,
   Advertisements,
@@ -85,7 +85,7 @@ export default function App() {
             <Route path="likes" element={<LikesPages />} />
             <Route path="dashboard" element={<MainPage />} />
             <Route path="schedule" element={<Schedule />} />
-            <Route path="messages" element={<Messages />} />
+            <Route path="messages" element={<ChatData />} />
             <Route path="settings" element={<Settings />} />
           </Route>
         </Route>
