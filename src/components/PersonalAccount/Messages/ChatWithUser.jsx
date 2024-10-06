@@ -93,7 +93,11 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
   //   }
   // };
 
-  const groupedMessages = messages.reduce((acc, curr) => {
+  const sortedMessages = [...messages].sort(
+    (a, b) => new Date(a.writtedAt) - new Date(b.writtedAt)
+  );
+
+  const groupedMessages = sortedMessages.reduce((acc, curr) => {
     const messageDate = new Date(curr.writtedAt).toLocaleDateString();
     if (!acc[messageDate]) {
       acc[messageDate] = [];

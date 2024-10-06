@@ -24,23 +24,30 @@ export const ChatList = ({
 }) => {
   const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
-  console.log(user);
+
   const bckgrColor = !theme
     ? lightTheme.palette.background.messagesUsers
     : darkTheme.palette.background.messagesUsers;
 
-  const senderData = useSelector(selectUserById);
-  console.log(senderData, "sender");
+     const fetchSenderName = (senderId) => {
+       dispatch(getUserById(senderId));
+       const user = useSelector((state) => selectUserById(state, senderId));
+       return user ? user.name : "Unknown"; // Fallback if user is not found
+     };
 
-  // useEffect(() => {
-  //   if (messages) {
-  //     dispatch(getUserById(user));
-  //   }
-  // }, [dispatch, messages]);
-
-  // useEffect(() => {
-  //   dispatch(getUserById(user));
-  // }, [dispatch]);
+  const extractSenderName = (messageText) => {
+    const greeting = "Hi I am ";
+    const startIndex = messageText.indexOf(greeting);
+    if (startIndex !== -1) {
+      const startOfName = startIndex + greeting.length;
+      const endOfName = messageText.indexOf(",", startOfName);
+      if (endOfName !== -1) {
+        const name = messageText.substring(startOfName, endOfName).trim();
+        return name.split(" ")[0]; // Return only the first name
+      }
+    }
+    return null; // Return null or a fallback value if the name isn't found
+  };
 
   const handleSidebarChatClick = (chat) => {
     setUserChat(chat);
@@ -51,7 +58,7 @@ export const ChatList = ({
     <Box
       sx={{
         width: "40%",
-        
+
         p: {
           sm: "32px 16px",
           md: "32px 12px 32px 60px",
@@ -66,9 +73,9 @@ export const ChatList = ({
           const sortedMessages = [...chat.messages].sort((a, b) => {
             return new Date(b.writtedAt) - new Date(a.writtedAt);
           });
-          console.log(sortedMessages);
+          const initialSender = chat.messages[0].text;
+          const senderName = extractSenderName(initialSender);
           const lastMessage = chat.messages[chat.messages.length - 1];
-          console.log(lastMessage);
           const isSelected = user === lastMessage.senderId;
           return (
             <React.Fragment key={chat.id}>
@@ -86,8 +93,7 @@ export const ChatList = ({
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={lastMessage.senderId
-                  }
+                  primary={senderName}
                   primaryTypographyProps={{
                     fontWeight: !lastMessage.isReaded ? "700" : "400",
                     overflow: "hidden",
