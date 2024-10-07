@@ -23,35 +23,10 @@ export const ChatList = ({
   messages,
   currentUser,
 }) => {
-  const dispatch = useDispatch();
   const theme = useSelector(selectTheme);
-  console.log(currentUser);
   const bckgrColor = !theme
     ? lightTheme.palette.background.messagesUsers
     : darkTheme.palette.background.messagesUsers;
-
-  // const fetchSenderName = (correspondenceId) => {
-  //   // Dispatch to fetch user data based on correspondenceId
-  //   dispatch(getUserById(correspondenceId));
-  //   const user = useSelector((state) =>
-  //     selectUserById(state, correspondenceId)
-  //   );
-  //   return user ? user.name : "Unknown"; // Fallback if user is not found
-  // };
-
-  const extractSenderName = (messageText) => {
-    const greeting = "Hi I am ";
-    const startIndex = messageText.indexOf(greeting);
-    if (startIndex !== -1) {
-      const startOfName = startIndex + greeting.length;
-      const endOfName = messageText.indexOf(",", startOfName);
-      if (endOfName !== -1) {
-        const name = messageText.substring(startOfName, endOfName).trim();
-        return name.split(" ")[0]; // Return only the first name
-      }
-    }
-    return null; // Return null or a fallback value if the name isn't found
-  };
 
   const handleSidebarChatClick = (chat) => {
     setUserChat(chat);
@@ -73,21 +48,25 @@ export const ChatList = ({
     >
       <List>
         {messages.map((chat) => {
+          console.log(chat);
           const sortedMessages = [...chat.messages].sort((a, b) => {
             return new Date(b.writtedAt) - new Date(a.writtedAt);
           });
-          console.log(chat);
-          const initialSender = sortedMessages[sortedMessages.length-1].text;
-          const senderName = extractSenderName(initialSender);
           const correspondenceId =
             sortedMessages[0].senderId === currentUser.id
               ? sortedMessages[0].receiverId
               : sortedMessages[0].senderId;
-          console.log(correspondenceId);
-
-          // const senderName = fetchSenderName(correspondenceId);
+          const correspondenceName =
+            correspondenceId === chat.user1.id
+              ? chat.user1.firstName || "Unknown"
+              : chat.user2.firstName || "Unknown";
+          const correspondencePhoto =
+            correspondenceId === chat.user1.id
+              ? chat.user1.photoPath || null
+              : chat.user2.photoPath || null;
           const lastMessage = sortedMessages[0];
           const isSelected = user === lastMessage;
+
           return (
             <React.Fragment key={chat.id}>
               <ListItem
@@ -99,12 +78,29 @@ export const ChatList = ({
                 }}
               >
                 <ListItemAvatar>
-                  <Avatar>
-                    <Aperture />
-                  </Avatar>
+                  {correspondencePhoto ? (
+                    <Avatar
+                      src={correspondencePhoto}
+                      alt="Preview"
+                      style={{
+                        display: "flex",
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "cover",
+                        borderRadius: "50px",
+                        justifySelf: "center",
+                        alignSelf: "center",
+                        maxWidth: "263px",
+                      }}
+                    />
+                  ) : (
+                    <Avatar>
+                      <Aperture />
+                    </Avatar>
+                  )}
                 </ListItemAvatar>
                 <ListItemText
-                  primary={senderName}
+                  primary={correspondenceName}
                   primaryTypographyProps={{
                     fontWeight: !lastMessage.isReaded ? "700" : "400",
                     overflow: "hidden",
