@@ -22,6 +22,35 @@ export const getUserById = createAsyncThunk(
   }
 );
 
+export const fetchUsersById = createAsyncThunk(
+  "users/getUserById",
+  async (id, thunkAPI) => {
+    try {
+      // Retrieve the access token from the Redux state
+      const persistToken = thunkAPI.getState().auth.accessToken;
+
+      // Set the token for future requests
+      token.set(persistToken);
+
+      // Make the API call to fetch user by ID
+      const { data } = await privateAPI.get(`/users/${id}`, {
+        headers: { Authorization: `Bearer ${persistToken}` },
+      });
+
+      // Return the user data from the response
+      return data;
+    } catch (error) {
+      // Improved error handling to check for response and set a meaningful message
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to fetch user data.";
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
+
 export const getCurrentUser = createAsyncThunk(
   "users/getCurrentUser",
   async (_, thunkAPI) => {
@@ -94,7 +123,6 @@ export const sendMessageFromUser = createAsyncThunk(
     try {
       console.log(id, message);
       const userToken = thunkAPI.getState().auth.accessToken;
-      console.log(userToken);
       await privateAPI.post(
         `/users/${id}/conversation`,
         { message },

@@ -9,12 +9,14 @@ import {
   editUser,
   updateUserPhoto,
   getLikedAdverts,
+  fetchUsersById
 } from "./operations";
 
 const usersSlice = createSlice({
   name: "users",
   initialState: {
     user: {},
+    users: [],
     currentUser: {},
     feedbacks: [],
     isLoading: true,
@@ -33,19 +35,27 @@ const usersSlice = createSlice({
         state.isLoading = false;
         state.error = null;
       })
+      .addCase(fetchUsersById.pending, (state) => {
+        state.isLoading = true; // Set loading to true
+        state.error = null; // Reset error state
+      })
+      .addCase(fetchUsersById.fulfilled, (state, action) => {
+        // Assuming action.payload is an array of users
+        state.users = action.payload; // Store fetched users in state
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(fetchUsersById.rejected, (state, action) => {
+        state.isLoading = false; // Set loading to false
+        state.error = action.payload; // Set error from the action
+      })
       // .addCase(getUserById.fulfilled, (state, action) => {
+      //   console.log("Fetched User:", action.payload); // Debugging
       //   state.user = action.payload;
       //   state.isLoggedIn = true;
       //   state.isLoading = false;
       //   state.error = null;
       // })
-      .addCase(getUserById.fulfilled, (state, action) => {
-        console.log("Fetched User:", action.payload); // Debugging
-        state.user = action.payload;
-        state.isLoggedIn = true;
-        state.isLoading = false;
-        state.error = null;
-      })
 
       .addCase(addFeedback.fulfilled, (state, action) => {
         state.feedbacks.push(action.payload);

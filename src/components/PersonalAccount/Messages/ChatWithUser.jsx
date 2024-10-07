@@ -55,8 +55,11 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
   const dispatch = useDispatch();
   const intl = useIntl();
   // const correspondenceName = user.userCorrespondenceId.name;
-  const correspondenceId = user.id;
-  // const correspondenceCountry = user.userCorrespondenceId.country;
+  const correspondenceId =
+    user.messages[0].senderId === currentUser.id
+      ? user.messages[0].receiverId
+      : user.messages[0].senderId;
+  console.log(correspondenceId);
   const messages = user.messages || [];
 
   const messagesEndRef = useRef(null);
@@ -64,34 +67,18 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
   const sendBtnColor = !theme
     ? lightTheme.palette.buttonColor.send
     : darkTheme.palette.buttonColor.send;
-  console.log(currentUser);
-  const userId = currentUser.advert.id;
-  console.log(user);
 
   const handleSendMessage = async () => {
     if (!message.trim()) return;
 
     try {
-      console.log(userId);
-      dispatch(sendMessageFromUser({ id: userId, message }));
+      dispatch(sendMessageFromUser({ id: correspondenceId, message }));
       setSentMessage("Your message has been sent.");
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
-
-  // const handleSendMessage = async () => {
-  //   try {
-  //     if (!message.trim()) return;
-  //     const userId = currentUser.id;
-  //     dispatch(sendMessageFromUser({ userId, message }));
-  //     setSentMessage({ message: "Your message has been sent." });
-  //     setMessage("");
-  //   } catch (error) {
-  //     console.error("Error sending message:", error);
-  //   }
-  // };
 
   const sortedMessages = [...messages].sort(
     (a, b) => new Date(a.writtedAt) - new Date(b.writtedAt)
@@ -188,12 +175,10 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
             <Box>
               {/* <Typography> {correspondenceName}</Typography> */}
               <Box sx={{ display: "flex", gap: "8px", mt: "8px" }}>
-                <MapPin />
                 <Typography
                   sx={{ color: (theme) => theme.palette.textColor.remarks }}
                 >
-                 {/* {user.id.message.senderId} */}
-                 {console.log(user)}
+                  {correspondenceId}
                 </Typography>
               </Box>
             </Box>
@@ -231,6 +216,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
             </Box>
             <List>
               {messages.map((message) => {
+                console.log(message)
                 const date = new Date(message.writtedAt);
                 const hours = date.getUTCHours();
                 const minutes = date.getUTCMinutes();
@@ -239,7 +225,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
                   <ListItem
                     key={message.id}
                     sx={
-                      message.userSender === correspondenceId
+                      message.senderId === correspondenceId
                         ? correspondenceMessages
                         : userMessages
                     }
