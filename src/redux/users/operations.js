@@ -152,7 +152,6 @@ export const getUserMessages = createAsyncThunk(
         headers: { Authorization: `Bearer ${userToken}` },
       });
       const messages = response.data;
-      console.log(messages);
       return messages;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -223,11 +222,7 @@ export const getLikedAdverts = createAsyncThunk(
   async (currentUser, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      console.log("Current User ID:", currentUser);
-      console.log("Persist Token:", persistToken);
-
       token.set(persistToken);
-
       const response = await privateAPI.get(`/users/${currentUser}/favorite`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });

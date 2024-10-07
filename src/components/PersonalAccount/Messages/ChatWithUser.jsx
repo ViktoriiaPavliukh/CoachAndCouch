@@ -50,7 +50,6 @@ const userMessages = {
 export const ChatWithUser = ({ user, onClose, currentUser }) => {
   const [message, setMessage] = useState("");
   const theme = useSelector(selectTheme);
-  console.log(user);
   const [sentMessage, setSentMessage] = useState(null);
   const dispatch = useDispatch();
   const intl = useIntl();
@@ -59,7 +58,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
     user.messages[0].senderId === currentUser.id
       ? user.messages[0].receiverId
       : user.messages[0].senderId;
-  console.log(correspondenceId);
+  
   const messages = user.messages || [];
 
   const messagesEndRef = useRef(null);
@@ -93,7 +92,6 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
     return acc;
   }, {});
 
-  console.log(groupedMessages);
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -216,7 +214,6 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
             </Box>
             <List>
               {messages.map((message) => {
-                console.log(message)
                 const date = new Date(message.writtedAt);
                 const hours = date.getUTCHours();
                 const minutes = date.getUTCMinutes();
@@ -225,9 +222,9 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
                   <ListItem
                     key={message.id}
                     sx={
-                      message.senderId === correspondenceId
-                        ? correspondenceMessages
-                        : userMessages
+                      message.senderId === currentUser.id
+                        ? userMessages
+                        : correspondenceMessages
                     }
                   >
                     <ListItemText

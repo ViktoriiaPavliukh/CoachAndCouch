@@ -32,7 +32,6 @@ export const ChatList = ({
   const fetchSenderName = (senderId) => {
     dispatch(getUserById(senderId));
     const user = useSelector((state) => selectUserById(state, senderId));
-    console.log(user.name);
     return user ? user.name : "Unknown"; // Fallback if user is not found
   };
 
@@ -70,7 +69,6 @@ export const ChatList = ({
     >
       <List>
         {messages.map((chat) => {
-          console.log(chat, "chat");
           const sortedMessages = [...chat.messages].sort((a, b) => {
             return new Date(b.writtedAt) - new Date(a.writtedAt);
           });

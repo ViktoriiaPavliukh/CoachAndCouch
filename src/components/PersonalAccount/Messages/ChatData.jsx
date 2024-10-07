@@ -15,8 +15,6 @@ export function ChatData() {
   const currentUser = useSelector(selectCurrentUser);
   const isLoading = useSelector(selectUserIsLoading);
 
-  console.log(currentUser);
-
   useEffect(() => {
     if (!currentUser) {
       dispatch(getCurrentUser());
@@ -30,7 +28,6 @@ export function ChatData() {
   }, [dispatch, currentUser]);
 
   const fetchMessages = useSelector(selectMessages);
-  console.log(fetchMessages);
 
   return isLoading ? (
     <Loader />

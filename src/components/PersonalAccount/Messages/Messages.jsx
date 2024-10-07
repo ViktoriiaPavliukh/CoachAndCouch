@@ -10,14 +10,10 @@ import { selectUser } from "@/redux/auth/selectors";
 export const Messages = ({ currentUser, fetchMessages }) => {
   const dispatch = useDispatch();
   const [isChatOpen, setIsChatOpen] = useState(false);
-  console.log(currentUser);
-  console.log(fetchMessages);
   const uniqueIds = new Set();
   if (fetchMessages) {
     fetchMessages.forEach((conversation) => {
-      console.log(conversation);
       conversation.messages.forEach((message) => {
-        console.log(message);
         if (message.senderId !== message.receiverId) {
           uniqueIds.add(message.senderId);
         }
@@ -55,7 +51,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
        ? userChat.messages[userChat.messages.length - 1]
        : null;
    }, [userChat]);
-   
+
   const userActive = lastMessage ? lastMessage.senderId : null;
 
   const onGoBack = () => {
