@@ -11,17 +11,16 @@ export const Messages = ({ currentUser, fetchMessages }) => {
   const dispatch = useDispatch();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const uniqueIds = new Set();
-  if (fetchMessages) {
-    fetchMessages.forEach((conversation) => {
-      conversation.messages.forEach((message) => {
-        if (message.senderId !== message.receiverId) {
-          uniqueIds.add(message.senderId);
-        }
-      });
-    });
-  }
-
-  const result = Array.from(uniqueIds);
+  // if (fetchMessages) {
+  //   fetchMessages.forEach((conversation) => {
+  //     conversation.messages.forEach((message) => {
+  //       // if (message.senderId !== message.receiverId) {
+  //       //   uniqueIds.add(message.senderId);
+  //       // }
+  //       console.log(message);
+  //     });
+  //   });
+  // }
 
   const sortedChats = useMemo(() => {
     return [...fetchMessages].sort((a, b) => {
@@ -46,11 +45,11 @@ export const Messages = ({ currentUser, fetchMessages }) => {
     return messages.length > 0 ? messages[messages.length - 1] : null;
   };
 
-   const lastMessage = useMemo(() => {
-     return userChat?.messages?.length > 0
-       ? userChat.messages[userChat.messages.length - 1]
-       : null;
-   }, [userChat]);
+  const lastMessage = useMemo(() => {
+    return userChat?.messages?.length > 0
+      ? userChat.messages[userChat.messages.length - 1]
+      : null;
+  }, [userChat]);
 
   const userActive = lastMessage ? lastMessage.senderId : null;
 
@@ -71,7 +70,11 @@ export const Messages = ({ currentUser, fetchMessages }) => {
           }}
         >
           {isChatOpen && userChat ? (
-            <ChatWithUser user={userChat} onClose={onGoBack} />
+            <ChatWithUser
+              user={userChat}
+              onClose={onGoBack}
+              currentUser={currentUser}
+            />
           ) : (
             <ChatList
               isMob
@@ -79,6 +82,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
               onOpenChat={onOpenChat}
               setUserChat={setUserChat}
               messages={fetchMessages}
+              currentUser={currentUser}
             />
           )}
           <ChatList
@@ -87,6 +91,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
             onOpenChat={onOpenChat}
             setUserChat={setUserChat}
             messages={fetchMessages}
+            currentUser={currentUser}
           />
         </Stack>
       ) : (
@@ -105,6 +110,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
             onOpenChat={onOpenChat}
             setUserChat={setUserChat}
             messages={fetchMessages}
+            currentUser={currentUser}
           />
           {userChat && (
             <ChatWithUser user={userChat} currentUser={currentUser} />

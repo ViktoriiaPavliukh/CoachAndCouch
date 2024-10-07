@@ -53,7 +53,6 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
   const [sentMessage, setSentMessage] = useState(null);
   const dispatch = useDispatch();
   const intl = useIntl();
-  // const correspondenceName = user.userCorrespondenceId.name;
   const correspondenceId =
     user.messages[0].senderId === currentUser.id
       ? user.messages[0].receiverId
