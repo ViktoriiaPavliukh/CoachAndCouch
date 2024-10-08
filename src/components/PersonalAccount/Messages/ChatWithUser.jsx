@@ -57,7 +57,15 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
     user.messages[0].senderId === currentUser.id
       ? user.messages[0].receiverId
       : user.messages[0].senderId;
-  
+  const correspondenceName =
+    correspondenceId === user.user1.id
+      ? user.user1.firstName || "Unknown"
+      : user.user2.firstName || "Unknown";
+  const correspondencePhoto =
+    correspondenceId === user.user1.id
+      ? user.user1.photoPath || null
+      : user.user2.photoPath || null;
+
   const messages = user.messages || [];
 
   const messagesEndRef = useRef(null);
@@ -158,27 +166,30 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
               display: "flex",
               gap: "20px",
               mb: "12px",
+              alignItems: "center",
             }}
           >
-            <Avatar
-              sx={{
-                border: "3px solid #498E4C",
-                width: "60px",
-                height: "60px",
-              }}
-            >
-              <Aperture />
-            </Avatar>
-            <Box>
-              {/* <Typography> {correspondenceName}</Typography> */}
-              <Box sx={{ display: "flex", gap: "8px", mt: "8px" }}>
-                <Typography
-                  sx={{ color: (theme) => theme.palette.textColor.remarks }}
-                >
-                  {correspondenceId}
-                </Typography>
-              </Box>
-            </Box>
+            {correspondencePhoto ? (
+              <Avatar
+                src={correspondencePhoto}
+                alt="Preview"
+                style={{
+                  display: "flex",
+                  width: "50px",
+                  height: "50px",
+                  objectFit: "cover",
+                  borderRadius: "50px",
+                  justifySelf: "center",
+                  alignSelf: "center",
+                  maxWidth: "263px",
+                }}
+              />
+            ) : (
+              <Avatar>
+                <Aperture />
+              </Avatar>
+            )}
+            <Typography>{correspondenceName}</Typography>
           </Box>
           <Divider />
         </Box>
