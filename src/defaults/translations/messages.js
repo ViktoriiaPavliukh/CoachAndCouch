@@ -224,6 +224,8 @@ const messages = {
     more: "More...",
     datePlaceholder: "dd.mm.yyyy",
     remove: "Remove",
+    noMessage: "You have no messages yet",
+    writeMessage: "Write a message",
 
     //validation
     priceValidation: "Price is required",
@@ -515,6 +517,8 @@ const messages = {
     more: "Більше...",
     datePlaceholder: "дд.мм.рррр",
     remove: "Видалити",
+    noMessage: "У вас ще немає повідомлень",
+    writeMessage: "Напишіть повідомлення",
 
     //validation
     priceValidation: "Вкажіть ціну",

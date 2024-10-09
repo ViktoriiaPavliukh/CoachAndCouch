@@ -51,6 +51,7 @@ const createThemeTemplate = (themeColor) => ({
             mainPage: "#FAFAFA",
             messages: "#ffffff",
             messagesDate: "#f3f4f6",
+            messagesTime: "#4b5563",
             messagesUsers: "#d1d5db",
             card: "#FFF",
             language: "#f3f4f6",
@@ -108,6 +109,7 @@ const createThemeTemplate = (themeColor) => ({
             listColor: "#1f2937",
             disabled: "#6A7280",
             scheduleDay: "#4B5563",
+            messagesTime: "#4b5563",
           },
         }
       : {
@@ -128,6 +130,7 @@ const createThemeTemplate = (themeColor) => ({
             mainPage: "#262626",
             messages: "#404040",
             messagesDate: "#737373",
+            messagesTime: "#4b5563",
             messagesUsers: "#737373",
             card: "#262626",
             language: "#171717",
@@ -186,6 +189,7 @@ const createThemeTemplate = (themeColor) => ({
             listColor: "#FFFFFF",
             disabled: "#6C7280",
             scheduleDay: "#d1d5db",
+            messagesTime: "#9da3af",
           },
         },
   typography: {

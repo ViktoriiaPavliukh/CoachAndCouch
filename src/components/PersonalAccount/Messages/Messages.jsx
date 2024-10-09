@@ -1,26 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { getUserMessages } from "@/redux/users/operations";
-import { selectMessages } from "@/redux/users/selectors";
-import { Box, Stack } from "@mui/material";
+import { useIntl } from "react-intl";
+import { Box, Stack, Typography } from "@mui/material";
 import { ChatWithUser } from "./ChatWithUser";
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { ChatList } from "./ChatList";
-import { selectUser } from "@/redux/auth/selectors";
 
 export const Messages = ({ currentUser, fetchMessages }) => {
-  const dispatch = useDispatch();
+  const intl = useIntl();
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const uniqueIds = new Set();
-  // if (fetchMessages) {
-  //   fetchMessages.forEach((conversation) => {
-  //     conversation.messages.forEach((message) => {
-  //       // if (message.senderId !== message.receiverId) {
-  //       //   uniqueIds.add(message.senderId);
-  //       // }
-  //       console.log(message);
-  //     });
-  //   });
-  // }
 
   const sortedChats = useMemo(() => {
     return [...fetchMessages].sort((a, b) => {
@@ -37,13 +23,10 @@ export const Messages = ({ currentUser, fetchMessages }) => {
       return 0;
     });
   }, [fetchMessages]);
+
   const [userChat, setUserChat] = useState(
     sortedChats.length > 0 ? sortedChats[0] : null
   );
-
-  const getLastMessage = (messages) => {
-    return messages.length > 0 ? messages[messages.length - 1] : null;
-  };
 
   const lastMessage = useMemo(() => {
     return userChat?.messages?.length > 0
@@ -61,7 +44,12 @@ export const Messages = ({ currentUser, fetchMessages }) => {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "100vh" }}>
+    <Box
+      sx={{
+        height: "100%",
+        width: { xs: "100%", lg: "1124px", xl: "1604px" },
+      }}
+    >
       {sortedChats.length !== 0 ? (
         <Stack
           sx={{
@@ -80,22 +68,32 @@ export const Messages = ({ currentUser, fetchMessages }) => {
               isMob
               user={userActive}
               onOpenChat={onOpenChat}
+              isChatOpen={isChatOpen}
               setUserChat={setUserChat}
               messages={fetchMessages}
               currentUser={currentUser}
             />
           )}
-          <ChatList
+          {/* <ChatList
             isMob
             user={userActive}
             onOpenChat={onOpenChat}
             setUserChat={setUserChat}
             messages={fetchMessages}
             currentUser={currentUser}
-          />
+          /> */}
         </Stack>
       ) : (
-        <p> у вас ще немає повідомлень</p>
+        <Box
+          sx={{
+            height: "50%",
+            display: { xs: "flex", md: "none" },
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography>{intl.formatMessage({ id: "noMessage" })}</Typography>
+        </Box>
       )}
       {sortedChats.length !== 0 ? (
         <Stack
@@ -108,6 +106,7 @@ export const Messages = ({ currentUser, fetchMessages }) => {
           <ChatList
             user={userActive}
             onOpenChat={onOpenChat}
+            isChatOpen={isChatOpen}
             setUserChat={setUserChat}
             messages={fetchMessages}
             currentUser={currentUser}
@@ -117,7 +116,16 @@ export const Messages = ({ currentUser, fetchMessages }) => {
           )}
         </Stack>
       ) : (
-        <p> у вас ще немає повідомлень</p>
+        <Box
+          sx={{
+            height: "50%",
+            display: { xs: "none", md: "flex" },
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Typography>{intl.formatMessage({ id: "noMessage" })}</Typography>
+        </Box>
       )}
     </Box>
   );

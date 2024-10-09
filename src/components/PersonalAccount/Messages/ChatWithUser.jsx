@@ -9,9 +9,10 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Button,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
-import { Aperture, ChevronLeft, MapPin, Send } from "react-feather";
+import { Aperture, ChevronLeft, Send } from "react-feather";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { lightTheme, darkTheme } from "../../../styles/theme";
@@ -19,33 +20,31 @@ import { selectTheme } from "@/redux/theme/selectors";
 import { PropTypes } from "prop-types";
 
 const messageItem = {
-  width: { xs: "300px", md: "350px", lg: "466px" },
-  maxWidth: "629px",
+  maxWidth: "70%",
   borderRadius: "10px",
   mb: "40px",
   p: "8px 12px",
   display: "flex",
   flexDirection: "column",
   gap: "10px",
-};
-const correspondenceMessageItem = {
-  border: "1px solid #498E4C",
-  background: (theme) => theme.palette.background.messages,
-  mr: "auto",
-};
-const userMessageItem = {
-  background: "#498E4C",
-  ml: "auto",
-  color: "#FFF",
+  display: "flex",
 };
 
 const correspondenceMessages = {
   ...messageItem,
-  ...correspondenceMessageItem,
+  background: (theme) => theme.palette.background.messages,
+  justifyContent: "flex-start",
+  alignItems: "flex-end",
+  border: "1px solid #498E4C",
+  marginRight: "auto",
 };
 const userMessages = {
   ...messageItem,
-  ...userMessageItem,
+  background: "#498E4C",
+  justifyContent: "flex-end",
+  alignItems: "flex-end",
+  color: "#FFF",
+  marginLeft: "auto",
 };
 export const ChatWithUser = ({ user, onClose, currentUser }) => {
   const [message, setMessage] = useState("");
@@ -59,8 +58,12 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
       : user.messages[0].senderId;
   const correspondenceName =
     correspondenceId === user.user1.id
-      ? user.user1.firstName || "Unknown"
-      : user.user2.firstName || "Unknown";
+      ? `${user.user1.firstName}${
+          user.user1.lastName ? " " + user.user1.lastName : ""
+        }` || "Unknown"
+      : `${user.user2.firstName}${
+          user.user2.lastName ? " " + user.user2.lastName : ""
+        }` || "Unknown";
   const correspondencePhoto =
     correspondenceId === user.user1.id
       ? user.user1.photoPath || null
@@ -109,9 +112,9 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
     <Box
       sx={{
         display: "flex",
-        m: { lg: "32px 55px 0 2px", xl: "26px 90px 32px 32px" },
-        width: "100%",
-        maxHeight: "90vh",
+        m: { lg: "0 55px 0 2px", xl: "0 90px 0 32px" },
+        width: { xs: "100%", md: "100%", lg: "855px", xl: "1142px" },
+        height: "100vh",
         boxSizing: "border-box",
       }}
     >
@@ -136,21 +139,25 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
               },
             }}
           >
-            <button
-              type="button"
+            <Button
               onClick={onClose}
-              style={{
+              sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: "12px",
-                background: "transparent",
+                backgroundColor: "transparent",
                 border: "none",
                 marginBottom: "16px",
                 color: "inherit",
+                textTransform: "none",
+                padding: 0,
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
               }}
             >
               <ChevronLeft />
-              <p
+              <Typography
                 style={{
                   textDecoration: "underline",
                   fontSize: "16px",
@@ -158,8 +165,8 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
                 }}
               >
                 {intl.formatMessage({ id: "goBack" })}
-              </p>
-            </button>
+              </Typography>
+            </Button>
           </Box>
           <Box
             sx={{
@@ -175,17 +182,24 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
                 alt="Preview"
                 style={{
                   display: "flex",
-                  width: "50px",
-                  height: "50px",
+                  width: "60px",
+                  height: "60px",
                   objectFit: "cover",
                   borderRadius: "50px",
+                  border: "3px solid #498E4C",
                   justifySelf: "center",
                   alignSelf: "center",
                   maxWidth: "263px",
                 }}
               />
             ) : (
-              <Avatar>
+              <Avatar
+                sx={{
+                  border: "3px solid #498E4C",
+                  width: "60px",
+                  height: "60px",
+                }}
+              >
                 <Aperture />
               </Avatar>
             )}
@@ -194,13 +208,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
           <Divider />
         </Box>
         {Object.entries(groupedMessages).map(([date, messages]) => (
-          <Box
-            key={date}
-            // sx={{
-            //   overflowY: "auto",
-            //   maxHeight: "800px",
-            // }}
-          >
+          <Box key={date}>
             <Box
               sx={{
                 display: "flex",
@@ -225,8 +233,11 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
             <List>
               {messages.map((message) => {
                 const date = new Date(message.writtedAt);
-                const hours = date.getUTCHours();
-                const minutes = date.getUTCMinutes();
+                const hours = date.getUTCHours().toString().padStart(2, "0");
+                const minutes = date
+                  .getUTCMinutes()
+                  .toString()
+                  .padStart(2, "0");
                 const messageTime = `${hours}:${minutes}`;
                 return (
                   <ListItem
@@ -256,6 +267,10 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
                         ml: "auto",
                         mt: "0",
                         mb: "0",
+                        color:
+                          message.senderId === currentUser.id
+                            ? "#FFF"
+                            : (theme) => theme.palette.textColor.messagesTime,
                       }}
                       primaryTypographyProps={{
                         fontWeight: "400",
@@ -278,11 +293,12 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
             borderRadius: "12px",
             border: "1px solid #498E4C",
             padding: "8px 25px",
+            mb: "32px",
           }}
         >
           <Input
             variant="text"
-            placeholder="Напишіть повідомлення"
+            placeholder={intl.formatMessage({ id: "writeMessage" })}
             disableUnderline
             fullWidth
             value={message}

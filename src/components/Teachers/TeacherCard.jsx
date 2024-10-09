@@ -39,10 +39,9 @@ export function TeacherCard({ teacher }) {
   const navigate = useNavigate();
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
-  console.log(teacher);
   const userLike =
     teacher?.likes?.some(
-      (like) => like.user?.id === user?.id // Corrected here
+      (like) => like.user?.id === user?.id 
     ) || false;
 
   const handleClick = () => {
