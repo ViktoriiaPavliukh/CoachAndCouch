@@ -1,12 +1,26 @@
 import { useIntl } from "react-intl";
 import { Box, Stack, Typography } from "@mui/material";
 import { ChatWithUser } from "./ChatWithUser";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ChatList } from "./ChatList";
 
 export const Messages = ({ currentUser, fetchMessages }) => {
   const intl = useIntl();
+  const [hasReloaded, setHasReloaded] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  useEffect(() => {
+    if (
+      Array.isArray(fetchMessages) &&
+      fetchMessages.length === 0 &&
+      !hasReloaded
+    ) {
+      // Only reload if messages array is empty and the page hasn't been reloaded yet
+      setHasReloaded(true); // Set reload flag to true
+      window.location.reload(); // Reload the page
+    }
+  }, [fetchMessages, hasReloaded]);
+
 
   const sortedChats = useMemo(() => {
     return [...fetchMessages].sort((a, b) => {

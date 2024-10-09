@@ -50,7 +50,6 @@ export const fetchUsersById = createAsyncThunk(
   }
 );
 
-
 export const getCurrentUser = createAsyncThunk(
   "users/getCurrentUser",
   async (_, thunkAPI) => {

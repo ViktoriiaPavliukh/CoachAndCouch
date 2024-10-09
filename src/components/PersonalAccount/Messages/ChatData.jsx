@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCurrentUser,
-  getUserMessages,
-} from "@/redux/users/operations";
+import { getCurrentUser, getUserMessages } from "@/redux/users/operations";
 import {
   selectCurrentUser,
   selectUserIsLoading,
@@ -39,6 +36,9 @@ export function ChatData() {
   ) : !currentUser ? (
     <Typography>{intl.formatMessage({ id: "noData" })}</Typography>
   ) : (
-    <Messages currentUser={currentUser} fetchMessages={fetchMessages} />
+    <Messages
+      currentUser={currentUser}
+      fetchMessages={Array.isArray(fetchMessages) ? fetchMessages : []}
+    />
   );
 }
