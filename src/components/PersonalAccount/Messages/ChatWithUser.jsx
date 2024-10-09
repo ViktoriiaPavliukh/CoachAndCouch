@@ -231,7 +231,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
               </Typography>
             </Box>
             <List>
-              {messages.map((message) => {
+              {messages.map((message, index) => {
                 const date = new Date(message.writtedAt);
                 const hours = date.getUTCHours().toString().padStart(2, "0");
                 const minutes = date
@@ -241,7 +241,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
                 const messageTime = `${hours}:${minutes}`;
                 return (
                   <ListItem
-                    key={message.id}
+                    key={message.id || index}
                     sx={
                       message.senderId === currentUser.id
                         ? userMessages
