@@ -1,4 +1,6 @@
 import { useIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser, getUserMessages } from "@/redux/users/operations";
 import { Box, Stack, Typography } from "@mui/material";
 import { ChatWithUser } from "./ChatWithUser";
 import { useState, useMemo, useEffect } from "react";
@@ -6,8 +8,15 @@ import { ChatList } from "./ChatList";
 
 export const Messages = ({ currentUser, fetchMessages }) => {
   const intl = useIntl();
+  const dispatch = useDispatch();
   const [hasReloaded, setHasReloaded] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  useEffect(() => {
+    if (currentUser === {}) {
+      dispatch(getCurrentUser());
+    }
+  }, [dispatch, currentUser]);
 
   useEffect(() => {
     if (
@@ -15,12 +24,10 @@ export const Messages = ({ currentUser, fetchMessages }) => {
       fetchMessages.length === 0 &&
       !hasReloaded
     ) {
-      // Only reload if messages array is empty and the page hasn't been reloaded yet
-      setHasReloaded(true); // Set reload flag to true
-      window.location.reload(); // Reload the page
+      setHasReloaded(true);
+      window.location.reload();
     }
   }, [fetchMessages, hasReloaded]);
-
 
   const sortedChats = useMemo(() => {
     return [...fetchMessages].sort((a, b) => {
