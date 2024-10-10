@@ -9,9 +9,10 @@ import {
   ListItem,
   ListItemText,
   Typography,
+  Button,
 } from "@mui/material";
-import { useState } from "react";
-import { Aperture, ChevronLeft, MapPin, Send } from "react-feather";
+import { useState, useEffect, useRef } from "react";
+import { Aperture, ChevronLeft, Send } from "react-feather";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { lightTheme, darkTheme } from "../../../styles/theme";
@@ -19,60 +20,81 @@ import { selectTheme } from "@/redux/theme/selectors";
 import { PropTypes } from "prop-types";
 
 const messageItem = {
-  width: { xs: "300px", md: "350px", lg: "466px" },
-  maxWidth: "629px",
+  maxWidth: "70%",
   borderRadius: "10px",
   mb: "40px",
   p: "8px 12px",
   display: "flex",
   flexDirection: "column",
   gap: "10px",
-};
-const correspondenceMessageItem = {
-  border: "1px solid #498E4C",
-  background: (theme) => theme.palette.background.messages,
-  mr: "auto",
-};
-const userMessageItem = {
-  background: "#498E4C",
-  ml: "auto",
-  color: "#FFF",
+  display: "flex",
 };
 
 const correspondenceMessages = {
   ...messageItem,
-  ...correspondenceMessageItem,
+  background: (theme) => theme.palette.background.messages,
+  justifyContent: "flex-start",
+  alignItems: "flex-end",
+  border: "1px solid #498E4C",
+  marginRight: "auto",
 };
 const userMessages = {
   ...messageItem,
-  ...userMessageItem,
+  background: "#498E4C",
+  justifyContent: "flex-end",
+  alignItems: "flex-end",
+  color: "#FFF",
+  marginLeft: "auto",
 };
-export const ChatWithUser = ({ user, onClose }) => {
+export const ChatWithUser = ({ user, onClose, currentUser }) => {
   const [message, setMessage] = useState("");
   const theme = useSelector(selectTheme);
   const [sentMessage, setSentMessage] = useState(null);
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
   const intl = useIntl();
-  const correspondenceName = user.userCorrespondenceId.name;
-  const correspondenceId = user.userCorrespondenceId.id;
-  const correspondenceCountry = user.userCorrespondenceId.country;
-  const messages = user.messages;
+  const correspondenceId =
+    user.messages[0].senderId === currentUser.id
+      ? user.messages[0].receiverId
+      : user.messages[0].senderId;
+  const correspondenceName =
+    correspondenceId === user.user1.id
+      ? `${user.user1.firstName}${
+          user.user1.lastName ? " " + user.user1.lastName : ""
+        }` || "Unknown"
+      : `${user.user2.firstName}${
+          user.user2.lastName ? " " + user.user2.lastName : ""
+        }` || "Unknown";
+  const correspondencePhoto =
+    correspondenceId === user.user1.id
+      ? user.user1.photoPath || null
+      : user.user2.photoPath || null;
+
+  const messages = user.messages || [];
+  console.log(messages);
+  console.log(currentUser);
+  const messagesEndRef = useRef(null);
 
   const sendBtnColor = !theme
     ? lightTheme.palette.buttonColor.send
     : darkTheme.palette.buttonColor.send;
 
   const handleSendMessage = async () => {
+    if (!message.trim()) return;
+
     try {
-      await dispatch(sendMessageFromUser({ correspondenceId, message }));
-      setSentMessage({ message: "Your message has been sent." });
+      dispatch(sendMessageFromUser({ id: correspondenceId, message }));
+      setSentMessage("Your message has been sent.");
       setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
 
-  const groupedMessages = messages.reduce((acc, curr) => {
+  const sortedMessages = [...messages].sort(
+    (a, b) => new Date(a.writtedAt) - new Date(b.writtedAt)
+  );
+
+  const groupedMessages = sortedMessages.reduce((acc, curr) => {
     const messageDate = new Date(curr.writtedAt).toLocaleDateString();
     if (!acc[messageDate]) {
       acc[messageDate] = [];
@@ -81,12 +103,18 @@ export const ChatWithUser = ({ user, onClose }) => {
     return acc;
   }, {});
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
     <Box
       sx={{
-        display: "block",
-        m: { lg: "32px 55px 0 2px", xl: "26px 90px 32px 32px" },
-        width: "100%",
+        display: "flex",
+        m: { lg: "0 55px 0 2px", xl: "0 90px 0 32px" },
+        width: { xs: "100%", md: "100%", lg: "855px", xl: "1142px" },
         height: "100vh",
         boxSizing: "border-box",
       }}
@@ -96,29 +124,41 @@ export const ChatWithUser = ({ user, onClose }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          minHeight: "100%",
+          height: "100%",
+          overflowY: "auto",
           p: { xs: "32px 16px", md: "32px 8px", lg: "8px" },
           boxShadow:
             "0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 4px 0 rgba(0, 0, 0, 0.04)",
         }}
       >
         <Box>
-          <Box sx={{ display: { xs: "block", md: "none" } }}>
-            <button
-              type="button"
+          <Box
+            sx={{
+              display: {
+                xs: "block",
+                md: "none",
+              },
+            }}
+          >
+            <Button
               onClick={onClose}
-              style={{
+              sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: "12px",
-                background: "transparent",
+                backgroundColor: "transparent",
                 border: "none",
                 marginBottom: "16px",
                 color: "inherit",
+                textTransform: "none",
+                padding: 0,
+                "&:hover": {
+                  backgroundColor: "transparent",
+                },
               }}
             >
               <ChevronLeft />
-              <p
+              <Typography
                 style={{
                   textDecoration: "underline",
                   fontSize: "16px",
@@ -126,30 +166,45 @@ export const ChatWithUser = ({ user, onClose }) => {
                 }}
               >
                 {intl.formatMessage({ id: "goBack" })}
-              </p>
-            </button>
+              </Typography>
+            </Button>
           </Box>
-          <Box sx={{ display: "flex", gap: "20px", mb: "12px" }}>
-            <Avatar
-              sx={{
-                border: "3px solid #498E4C",
-                width: "60px",
-                height: "60px",
-              }}
-            >
-              <Aperture />
-            </Avatar>
-            <Box>
-              <Typography> {correspondenceName}</Typography>
-              <Box sx={{ display: "flex", gap: "8px", mt: "8px" }}>
-                <MapPin />
-                <Typography
-                  sx={{ color: (theme) => theme.palette.textColor.remarks }}
-                >
-                  {correspondenceCountry}
-                </Typography>
-              </Box>
-            </Box>
+          <Box
+            sx={{
+              display: "flex",
+              gap: "20px",
+              mb: "12px",
+              alignItems: "center",
+            }}
+          >
+            {correspondencePhoto ? (
+              <Avatar
+                src={correspondencePhoto}
+                alt="Preview"
+                style={{
+                  display: "flex",
+                  width: "60px",
+                  height: "60px",
+                  objectFit: "cover",
+                  borderRadius: "50px",
+                  border: "3px solid #498E4C",
+                  justifySelf: "center",
+                  alignSelf: "center",
+                  maxWidth: "263px",
+                }}
+              />
+            ) : (
+              <Avatar
+                sx={{
+                  border: "3px solid #498E4C",
+                  width: "60px",
+                  height: "60px",
+                }}
+              >
+                <Aperture />
+              </Avatar>
+            )}
+            <Typography>{correspondenceName}</Typography>
           </Box>
           <Divider />
         </Box>
@@ -177,22 +232,25 @@ export const ChatWithUser = ({ user, onClose }) => {
               </Typography>
             </Box>
             <List>
-              {messages.map((message) => {
+              {messages.map((message, index) => {
                 const date = new Date(message.writtedAt);
-                const hours = date.getUTCHours();
-                const minutes = date.getUTCMinutes();
+                const hours = date.getUTCHours().toString().padStart(2, "0");
+                const minutes = date
+                  .getUTCMinutes()
+                  .toString()
+                  .padStart(2, "0");
                 const messageTime = `${hours}:${minutes}`;
                 return (
                   <ListItem
-                    key={message.id}
+                    key={message.id || index}
                     sx={
-                      message.userSender === correspondenceId
-                        ? correspondenceMessages
-                        : userMessages
+                      message.senderId === currentUser.id
+                        ? userMessages
+                        : correspondenceMessages
                     }
                   >
                     <ListItemText
-                      primary={message.message}
+                      primary={message.text}
                       sx={{
                         mr: "auto",
                         mt: "0",
@@ -210,6 +268,10 @@ export const ChatWithUser = ({ user, onClose }) => {
                         ml: "auto",
                         mt: "0",
                         mb: "0",
+                        color:
+                          message.senderId === currentUser.id
+                            ? "#FFF"
+                            : (theme) => theme.palette.textColor.messagesTime,
                       }}
                       primaryTypographyProps={{
                         fontWeight: "400",
@@ -223,6 +285,7 @@ export const ChatWithUser = ({ user, onClose }) => {
             </List>
           </Box>
         ))}
+        <Box ref={messagesEndRef} />
         <Box
           sx={{
             display: "flex",
@@ -231,11 +294,12 @@ export const ChatWithUser = ({ user, onClose }) => {
             borderRadius: "12px",
             border: "1px solid #498E4C",
             padding: "8px 25px",
+            mb: "32px",
           }}
         >
           <Input
             variant="text"
-            placeholder="Напишіть повідомлення"
+            placeholder={intl.formatMessage({ id: "writeMessage" })}
             disableUnderline
             fullWidth
             value={message}

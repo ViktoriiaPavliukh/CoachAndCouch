@@ -6,17 +6,46 @@ export const getUserById = createAsyncThunk(
   "users/getUserById",
   async (id, thunkAPI) => {
     try {
+      console.log(id, "id");
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
       console.log(persistToken);
       const { data } = await privateAPI.get(`/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-
+      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchUsersById = createAsyncThunk(
+  "users/getUserById",
+  async (id, thunkAPI) => {
+    try {
+      // Retrieve the access token from the Redux state
+      const persistToken = thunkAPI.getState().auth.accessToken;
+
+      // Set the token for future requests
+      token.set(persistToken);
+
+      // Make the API call to fetch user by ID
+      const { data } = await privateAPI.get(`/users/${id}`, {
+        headers: { Authorization: `Bearer ${persistToken}` },
+      });
+
+      // Return the user data from the response
+      return data;
+    } catch (error) {
+      // Improved error handling to check for response and set a meaningful message
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to fetch user data.";
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -91,8 +120,8 @@ export const sendMessageFromUser = createAsyncThunk(
   "users/sendMessage",
   async ({ id, message }, thunkAPI) => {
     try {
+      console.log(id, message);
       const userToken = thunkAPI.getState().auth.accessToken;
-
       await privateAPI.post(
         `/users/${id}/conversation`,
         { message },
@@ -192,11 +221,7 @@ export const getLikedAdverts = createAsyncThunk(
   async (currentUser, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      console.log("Current User ID:", currentUser);
-      console.log("Persist Token:", persistToken);
-
       token.set(persistToken);
-
       const response = await privateAPI.get(`/users/${currentUser}/favorite`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
