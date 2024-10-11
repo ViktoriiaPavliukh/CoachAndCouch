@@ -5,6 +5,7 @@ import {
   fetchStudentBookings,
   createBooking,
   acceptBooking,
+  deleteBooking,
 } from "./operations";
 
 const bookingSlice = createSlice({
@@ -76,6 +77,20 @@ const bookingSlice = createSlice({
         state.studentBookings = action.payload;
       })
       .addCase(fetchStudentBookings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteBooking.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteBooking.fulfilled, (state, action) => {
+        state.loading = false;
+        state.bookings = state.bookings.filter(
+          (booking) => booking.id !== action.meta.arg.bookingId
+        );
+      })
+      .addCase(deleteBooking.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

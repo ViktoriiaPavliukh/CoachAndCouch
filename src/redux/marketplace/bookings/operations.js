@@ -154,3 +154,35 @@ export const markBookingInactive = createAsyncThunk(
     }
   }
 );
+
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { privateAPI } from "../../../services/privateAPI";
+
+export const deleteBooking = createAsyncThunk(
+  "bookings/deleteBooking",
+  async ({ bookingId, reason }, thunkAPI) => {
+    try {
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      privateAPI.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${persistToken}`;
+
+      const requestBody = { reason };
+
+      const { data } = await privateAPI.post(
+        `/delete/${bookingId}`,
+        requestBody
+      );
+
+      return data;
+    } catch (error) {
+      console.error(
+        "Error deleting booking:",
+        error.response ? error.response.data : error.message
+      );
+      return thunkAPI.rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
