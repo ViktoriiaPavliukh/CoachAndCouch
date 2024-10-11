@@ -167,7 +167,7 @@ export const deleteBooking = createAsyncThunk(
       const requestBody = { reason };
 
       const { data } = await privateAPI.post(
-        `/delete/${bookingId}`,
+        `booking/delete/${bookingId}`,
         requestBody
       );
 
