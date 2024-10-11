@@ -11,7 +11,7 @@ import { CancelModal } from "./CancelModal";
 import { X } from "react-feather";
 
 const CustomEventComponent = ({ event }) => {
-  const { start, end, student } = event;
+  const { start, end, student, bookingId } = event;
   const intl = useIntl();
   const [openCancelModal, setOpenCancelModal] = useState(false);
   const [eventToCancel, setEventToCancel] = useState(null);
@@ -27,11 +27,6 @@ const CustomEventComponent = ({ event }) => {
   };
 
   const onBackdropClose = () => {
-    setOpenCancelModal(false);
-  };
-
-  const onConfirm = () => {
-    alert("need backend action");
     setOpenCancelModal(false);
   };
 
@@ -85,8 +80,9 @@ const CustomEventComponent = ({ event }) => {
         onClose={onBackdropClose}
         event={eventToCancel}
         student={student}
-        onConfirm={onConfirm}
+        bookingId={bookingId}
         lesson={lesson()}
+        setOpenCancelModal={setOpenCancelModal}
       />
     </Box>
   ) : null;

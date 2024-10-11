@@ -70,6 +70,7 @@ export const MyCalendar = () => {
         .toISOString()
     ),
     student: booking.student || booking.teacher,
+    bookingId: booking.id,
   }));
 
   useEffect(() => {

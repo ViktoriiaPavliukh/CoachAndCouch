@@ -1,15 +1,39 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { Modal, Box, Button, Typography } from "@mui/material";
 import { useIntl } from "react-intl";
+import { deleteBooking } from "../../../redux/marketplace/bookings/operations";
 
-export const CancelModal = ({ lesson, student, open, onClose, onConfirm }) => {
+export const CancelModal = ({
+  lesson,
+  student,
+  open,
+  onClose,
+  setOpenCancelModal,
+  bookingId,
+}) => {
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const reason = "Just Cancel";
+  const onConfirm = () => {
+    dispatch(deleteBooking({ bookingId }, reason))
+      .unwrap()
+      .then(() => {
+        // Handle successful deletion (optional)
+        console.log("Booking deleted successfully");
+      })
+      .catch((error) => {
+        // Handle error (optional)
+        console.error("Error deleting booking:", error);
+      });
+    setOpenCancelModal(false);
+  };
 
   const studentName = student
     ? `${student.firstName} ${student.lastName ? student.lastName : ""}`
     : "Unknown";
-  console.log(student);
+
   return (
     <Modal open={open} onClose={onClose}>
       <Box

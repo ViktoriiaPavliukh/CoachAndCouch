@@ -155,9 +155,6 @@ export const markBookingInactive = createAsyncThunk(
   }
 );
 
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { privateAPI } from "../../../services/privateAPI";
-
 export const deleteBooking = createAsyncThunk(
   "bookings/deleteBooking",
   async ({ bookingId, reason }, thunkAPI) => {
@@ -166,7 +163,7 @@ export const deleteBooking = createAsyncThunk(
       privateAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${persistToken}`;
-
+      console.log(persistToken);
       const requestBody = { reason };
 
       const { data } = await privateAPI.post(
