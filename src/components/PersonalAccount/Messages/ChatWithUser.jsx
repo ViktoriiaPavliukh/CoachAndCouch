@@ -124,6 +124,7 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          width: "100%",
           height: "100%",
           overflowY: "auto",
           p: { xs: "32px 16px", md: "32px 8px", lg: "8px" },

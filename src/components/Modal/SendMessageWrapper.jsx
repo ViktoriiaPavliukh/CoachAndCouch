@@ -26,7 +26,10 @@ const textInputStyle = {
     opacity: "1",
   },
 };
-export const SendMessageWrapper = ({ id, onBackdropClose }) => {
+export const SendMessageWrapper = ({
+  teacher,
+  onBackdropClose,
+}) => {
   const [message, setMessage] = useState("");
   const [sentMessage, setSentMessage] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -37,11 +40,11 @@ export const SendMessageWrapper = ({ id, onBackdropClose }) => {
 
   const handleSendMessage = async () => {
     try {
-      await dispatch(sendMessageFromUser({ id, message }));
+      dispatch(sendMessageFromUser({ id: teacher, message }));
       setSentMessage({ message: "Your message has been sent." });
       setMessage("");
       setSnackbarOpen(true);
-      navigate(`/teachers/${id}`);
+      window.location.reload();
       onBackdropClose();
     } catch (error) {
       console.error("Error sending message:", error);

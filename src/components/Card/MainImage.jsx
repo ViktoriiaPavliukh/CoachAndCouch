@@ -11,9 +11,9 @@ export function MainImage({ src }) {
       alt="Teacher's profile"
       sx={{
         display: "flex",
-        alignSelf: "center",
+        alignSelf: { xs: "center", lg: "flex-start" },
         width: { xl: "570px", lg: "473px", xs: "100%", md: "385px" },
-        // height: { xl: "421px", lg: "362px", xs: "263px", md: "483px" },
+        manHeight: { xl: "421px", lg: "362px", xs: "263px", md: "483px" },
         borderRadius: "8px",
         maxWidth: "100%",
       }}
@@ -23,4 +23,3 @@ export function MainImage({ src }) {
 MainImage.propTypes = {
   src: PropTypes.string,
 };
-

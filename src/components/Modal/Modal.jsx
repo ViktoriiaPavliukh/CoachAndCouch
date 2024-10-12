@@ -13,6 +13,8 @@ export const Modal = ({
   isOpen,
   teacherBookings,
   isFirstTimeBooking,
+  user,
+  currentUser,
 }) => {
   useEffect(() => {
     const handleNoScroll = () => {
@@ -45,7 +47,12 @@ export const Modal = ({
   const renderContent = () => {
     switch (contentType) {
       case "sendMessage":
-        return <SendMessageWrapper id={id} onBackdropClose={onBackdropClose} />;
+        return (
+          <SendMessageWrapper
+            onBackdropClose={onBackdropClose}
+            teacher={user}
+          />
+        );
       case "trialLesson":
         return (
           <TrialLessonWrapper

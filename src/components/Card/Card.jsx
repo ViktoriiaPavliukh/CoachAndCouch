@@ -43,14 +43,10 @@ export function Card() {
   const currentUser = useSelector(selectCurrentUser);
   const { id: teacherId } = useParams();
   const teacher = useSelector(advertByIdSelector);
-  console.log(currentUser);
-  console.log(teacherId);
   const isLoading = useSelector(selectAdvertsIsLoading);
   const teacherBookings = useSelector(selectTeacherBookings);
   const studentBookings = useSelector(selectStudentBookings);
   const isCurrentTeacher = currentUser?.advert?.id === Number(teacherId);
-  const isUserUnregistered = !currentUser?.id; 
-
   const lastVisit = teacher?.user?.lastVisit;
   const userLike = teacher?.likes?.some(
     (like) => like.user.id === currentUser.id
@@ -371,6 +367,7 @@ export function Card() {
             </Box>
             {showModal && (
               <Modal
+                currentUser={currentUser}
                 user={teacher.user.id}
                 id={teacher.id}
                 onBackdropClose={onBackdropClose}
