@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Box, Button } from "@mui/material";
 
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
   const [selectedHour, setSelectedHour] = useState(null);
   const now = new Date();
-  let shedule = [];
-  for (let i = 7; i < 24; i++) {
-    shedule.push(i);
-  }
+  const shedule = Array.from({ length: 17 }, (_, i) => i + 7); //
+  console.log(selectedHour);
+  // const handlerSheduleClick = (h) => {
+  //   const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), h);
+  //   scheduleChanged(date);
+  //   setSelectedHour(h);
+  // };
 
   const handlerSheduleClick = (h) => {
-    const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), h);
-    scheduleChanged(date);
-    setSelectedHour(h);
+    // Deselect the previously selected hour if it exists
+    if (selectedHour === h) {
+      setSelectedHour(null); // Deselect if the same hour is clicked
+      scheduleChanged(null); // Reset the selected schedule
+    } else {
+      setSelectedHour(h);
+      const date = new Date(
+        day.getFullYear(),
+        day.getMonth(),
+        day.getDate(),
+        h
+      );
+      scheduleChanged(date); // Update the schedule with the new selected time
+    }
   };
 
   const isDisabled = (h) => {
@@ -41,7 +55,7 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
             borderRadius: "4px",
             backgroundColor:
               selectedHour === sh
-                ? (theme) => theme.palette.primary.main
+                ? (theme) => theme.palette.buttonColor.header
                 : isDisabled(sh)
                 ? (theme) => theme.palette.buttonColor.disabled
                 : "transparent",
@@ -49,12 +63,14 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
             maxWidth: { md: "50px" },
             color:
               selectedHour === sh
-                ? (theme) => theme.palette.textColor.header
+                ? (theme) => theme.palette.textColor.black
                 : isDisabled(sh)
                 ? (theme) => theme.palette.textColor.disabled
                 : (theme) => theme.palette.textColor.title,
             "&:hover": {
-              backgroundColor: (theme) => theme.palette.primary.main,
+              backgroundColor: (theme) =>
+                theme.palette.buttonColor.lightYellowHover,
+              color: (theme) => theme.palette.textColor.black,
             },
           }}
           key={idx}

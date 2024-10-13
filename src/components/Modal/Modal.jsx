@@ -76,7 +76,7 @@ export const Modal = ({
         backgroundColor: "#808080c7",
         position: "fixed",
         width: "100%",
-        height: "100%",
+        height: "100vh",
         zIndex: "100",
         top: 0,
         left: 0,

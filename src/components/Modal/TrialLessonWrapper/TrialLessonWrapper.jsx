@@ -10,8 +10,6 @@ import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSli
 import { endOfWeek, format } from "date-fns";
 import { Shedule } from "./Shedule";
 import { Box, Button, Grid, Typography, Stack, Divider } from "@mui/material";
-import { X } from "react-feather";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CloseIcon from "@mui/icons-material/Close";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import FormTrial from "./FormTrial";
@@ -153,11 +151,11 @@ export const TrialLessonWrapper = ({
     setFormModalVisible(false);
   };
 
-  const sunday = endOfWeek(monday, { weekStartsOn: 1 });
-  const formattedRange = `${format(monday, "dd")} - ${format(
+  // const sunday = endOfWeek(monday, { weekStartsOn: 1 });
+  let formattedRange = `${format(monday, "dd")} - ${format(
     endOfWeek(monday, { weekStartsOn: 1 }),
     "dd"
-  )} ${format(monday, "MMMM", { locale: getLocale() }).toLowerCase()}`;
+  )} ${format(monday, "MMMM", { locale: getLocale() })}`;
 
   const currentYear = getFormattedYear();
 
@@ -180,11 +178,11 @@ export const TrialLessonWrapper = ({
       )}
       <Box
         sx={{
-          width: { xs: "87%", md: "84%", lg: "1208px" },
+          width: { xs: "87%", md: "93%", lg: "1208px" },
           height: "auto",
-          maxHeight: "90vh",
+          maxHeight: { xs: "90vh", md: "60vh" },
           position: "absolute",
-          top: "50%",
+          top: { xs: "55%", md: "50%" },
           left: "50%",
           backgroundColor: (theme) => theme.palette.background.paper,
           transform: "translate(-50%,-50%)",
@@ -192,10 +190,10 @@ export const TrialLessonWrapper = ({
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          pt: { xs: "1300px", md: "550px" },
-          pb: "134px",
+          pt: { xs: "200px", md: "700px" },
+          py: "32px",
           overflowY: "auto",
-          zIndex: 1,
+          zIndex: 150,
           px: { xs: "8px", md: "24px" },
         }}
       >
@@ -253,7 +251,7 @@ export const TrialLessonWrapper = ({
           sx={{
             display: "flex",
             flexDirection: "column",
-            gap: "30px",
+            gap: { xs: "10px", md: "30px" },
             alignItems: "flex-start",
           }}
         >
@@ -262,8 +260,10 @@ export const TrialLessonWrapper = ({
               display: "flex",
               flexDirection: "row",
               flexWrap: "nowrap",
-              gap: "20px",
+              gap: { xs: "2px", md: "20px" },
               alignSelf: "center",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
             <Button
@@ -273,7 +273,9 @@ export const TrialLessonWrapper = ({
             >
               <ChevronLeft />
             </Button>
-            <Typography sx={{ fontSize: { xs: "20px", md: "24px" } }}>
+            <Typography
+              sx={{ fontSize: { xs: "20px", md: "24px", textAlign: "center" } }}
+            >
               {formattedRange}
             </Typography>
             <Button sx={btnArrow} onClick={() => shiftWeek(+1)}>
@@ -302,7 +304,7 @@ export const TrialLessonWrapper = ({
                     borderRadius: "4px",
                     backgroundColor: "transparent",
                     color: isSameDay(now, el)
-                      ? (theme) => theme.palette.primary.main
+                      ? (theme) => theme.palette.buttonColor.listItem
                       : (theme) => theme.palette.textColor.scheduleDay,
                     padding: 0,
                     minWidth: { xs: "40px", md: "50px", lg: "60px" },
@@ -349,13 +351,21 @@ export const TrialLessonWrapper = ({
           </Grid>
           <Button
             type="button"
-            variant="contained"
-            sx={{
-              p: "12px 24px",
-              alignSelf: "center",
-              width: { xs: "100%", md: "fit-content" },
-            }}
+            variant="button"
             onClick={handleNextClick}
+            sx={{
+              borderRadius: "6px",
+              mt: "24px",
+              mb: "40px",
+              p: "12px 32px",
+              alignSelf: "center",
+              color: (theme) => theme.palette.buttonColor.fontColor,
+              backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
+              "&:hover": {
+                backgroundColor: (theme) =>
+                  theme.palette.buttonColor.greenYellowHover,
+              },
+            }}
           >
             {intl.formatMessage({ id: "next" })}
           </Button>

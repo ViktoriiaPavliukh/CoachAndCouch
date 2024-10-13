@@ -67,7 +67,7 @@ const createThemeTemplate = (themeColor) => ({
             listItem: "#0d5b1c",
             greenDarkHover: "#004305",
             lightYellow: "#87B925",
-            lightYellowHover: "#6B9E00",
+            lightYellowHover: "#6A9E00",
             greenYellow: "#0E5B1D",
             greenYellowHover: "#004305",
             hover: "#1D570A",
@@ -341,7 +341,7 @@ const createThemeTemplate = (themeColor) => ({
     },
   },
   button: {
-    width: "200px",
+    minWidth: "200px",
     p: "12px 32px",
     borderRadius: "6px",
     buttonPopup: { minWidth: "200px", p: "12px 32px", borderRadius: "6px" },
