@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "@/redux/users/selectors";
 import {
@@ -45,9 +45,9 @@ export default function FormTrial({
   isFirstTimeBooking,
 }) {
   const intl = useIntl();
-  console.log(isFirstTimeBooking);
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id: teacherId } = useParams();
   const currentUser = useSelector(selectCurrentUser);
   const languages = useSelector(languagesSelector);
@@ -107,8 +107,8 @@ export default function FormTrial({
     dispatch(acceptBooking(dataToPost))
       .unwrap()
       .then((response) => {
-        console.log("Booking successful:", response);
         onClose();
+        navigate(`/user/${currentUser.id}/messages`, { replace: true });
       })
       .catch((error) => {
         console.error("Booking failed:", error);
@@ -146,14 +146,14 @@ export default function FormTrial({
     <Box
       sx={{
         width: { xs: "91%", md: "84%", lg: "1208px" },
-        height: "100%",
+        height: "auto",
+        maxHeight: { xs: "90vh", md: "60vh" },
         position: "absolute",
-        top: "30%",
+        top: { xs: "55%", md: "50%" },
         left: "50%",
         transform: "translate(-50%,-50%)",
         paddingX: { xs: "8px", md: "48px" },
-        paddingTop: { lg: "30%" },
-        pb: { xs: "24px", md: "48px" },
+        py: { xs: "24px", md: "48px" },
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -376,8 +376,19 @@ export default function FormTrial({
         )}
         <Button
           type="submit"
-          variant="contained"
-          sx={{ width: "220px", margin: "0 auto" }}
+          variant="button"
+          sx={{
+            borderRadius: "6px",
+            mt: "24px",
+            p: "12px 32px",
+            alignSelf: "center",
+            color: (theme) => theme.palette.buttonColor.fontColor,
+            backgroundColor: (theme) => theme.palette.buttonColor.greenYellow,
+            "&:hover": {
+              backgroundColor: (theme) =>
+                theme.palette.buttonColor.greenYellowHover,
+            },
+          }}
         >
           {intl.formatMessage({ id: "bookLesson" })}
         </Button>

@@ -191,7 +191,7 @@ export const TrialLessonWrapper = ({
           alignItems: "center",
           flexDirection: "column",
           pt: { xs: "200px", md: "700px" },
-          py: "32px",
+          pb: "48px",
           overflowY: "auto",
           zIndex: 150,
           px: { xs: "8px", md: "24px" },
