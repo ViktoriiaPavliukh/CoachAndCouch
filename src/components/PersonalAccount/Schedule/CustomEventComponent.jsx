@@ -41,7 +41,7 @@ const CustomEventComponent = ({ event }) => {
         flexDirection: "column",
         backgroundColor: "#4185f4",
         color: "#fff",
-        padding: "0px",
+        padding: "0",
         cursor: "default",
       }}
     >

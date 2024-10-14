@@ -21,8 +21,6 @@ import {
 } from "@/redux/marketplace/bookings/operations";
 import {
   selectBookings,
-  selectBookingLoading,
-  selectBookingError,
   selectStudentBookings,
 } from "@/redux/marketplace/bookings/selectors";
 import { getCurrentUser } from "@/redux/users/operations";
@@ -166,16 +164,6 @@ export const MyCalendar = () => {
     document.body.style.overflow = selectedEvent ? "hidden" : "auto";
   }, [selectedEvent]);
 
-  // const handleClosePopup = () => {
-  //   setSelectedEvent(null);
-  // };
-
-  // const handleOverlayClick = (e) => {
-  //   if (e.target === e.currentTarget) {
-  //     setSelectedEvent(null);
-  //   }
-  // };
-
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
     const now = moment();
@@ -206,13 +194,13 @@ export const MyCalendar = () => {
       moment(slot.date).isSame(date, "minute")
     );
 
-    let backgroundColor = "transparent"; 
+    let backgroundColor = "transparent";
 
     if (existingSlot) {
       if (existingSlot.isActive && !existingSlot.isBooked) {
-        backgroundColor = "#e7f1d3"; 
+        backgroundColor = "#e7f1d3";
       } else if (!existingSlot.isActive) {
-        backgroundColor = "#aaaaaa"; 
+        backgroundColor = "#aaaaaa";
       }
     }
 

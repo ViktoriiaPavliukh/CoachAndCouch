@@ -15,16 +15,11 @@ export const CancelModal = ({
 }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const reason = "Just Cancel";
+  const reason = "Cancel";
   const onConfirm = () => {
     dispatch(deleteBooking({ bookingId }, reason))
       .unwrap()
-      .then(() => {
-        // Handle successful deletion (optional)
-        console.log("Booking deleted successfully");
-      })
       .catch((error) => {
-        // Handle error (optional)
         console.error("Error deleting booking:", error);
       });
     setOpenCancelModal(false);

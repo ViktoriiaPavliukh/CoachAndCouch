@@ -47,7 +47,6 @@ export const fetchStudentBookings = createAsyncThunk(
         "Authorization"
       ] = `Bearer ${persistToken}`;
       const { data } = await privateAPI.get(`/booking/${studentId}`);
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -103,7 +102,6 @@ export const acceptBooking = createAsyncThunk(
   async ({ bookingId, languageId, info }, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      console.log(persistToken);
       privateAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${persistToken}`;
@@ -114,7 +112,6 @@ export const acceptBooking = createAsyncThunk(
         info,
       };
 
-      // Make the POST request to /booking/accept
       const { data } = await privateAPI.post("/booking/accept", requestBody);
 
       return data;
@@ -163,7 +160,6 @@ export const deleteBooking = createAsyncThunk(
       privateAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${persistToken}`;
-      console.log(persistToken);
       const requestBody = { reason };
 
       const { data } = await privateAPI.post(
