@@ -18,6 +18,7 @@ import { useIntl } from "react-intl";
 import { useNavigate } from "react-router-dom";
 import { changeTheme } from "@/redux/theme/slice";
 import { deleteUserAsUser } from "../../redux/users/operations";
+import { updatePassword } from "../../redux/auth/operations";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
 import { passwordSchema } from "@/defaults";
@@ -30,17 +31,24 @@ export const Settings = () => {
   const validationSchema = passwordSchema(intl);
   const navigate = useNavigate();
   const isDarkTheme = useSelector((state) => state.theme.value);
-
   const formik = useFormik({
     initialValues: {
-      password: "",
+      oldPassword: "",
+      newPassword: "",
       passwordConfirm: "",
       showPassword: false,
     },
     validationSchema: validationSchema,
-    onSubmit: ({ password }) => {
-      // dispatch(registerUser({ firstName, email, password }));
-      console.log("Entered password:", password);
+    onSubmit: async (values) => {
+      const { oldPassword, newPassword } = values;
+      try {
+        await dispatch(updatePassword({ oldPassword, newPassword })).unwrap();
+        alert("Password updated successfully");
+        formik.resetForm(); // Reset the form upon successful update
+      } catch (error) {
+        console.error("Failed to update password:", error);
+        alert(`Error: ${error.message || "Failed to update password"}`); // Display error message
+      }
     },
   });
 
@@ -122,6 +130,42 @@ export const Settings = () => {
           gap: { xs: "20px 0", lg: "0 36px" },
         }}
       >
+        <TextField
+          fullWidth
+          size="small"
+          name="oldPassword"
+          label={intl.formatMessage({ id: "oldPassword" })} // New label
+          type={formik.values.showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle old password visibility"
+                  onClick={() =>
+                    formik.setFieldValue(
+                      "showPassword",
+                      !formik.values.showPassword
+                    )
+                  }
+                  edge="end"
+                >
+                  {formik.values.showPassword ? (
+                    <VisibilityOff />
+                  ) : (
+                    <Visibility />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+          value={formik.values.oldPassword}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.oldPassword && Boolean(formik.errors.oldPassword)
+          }
+          helperText={formik.touched.oldPassword && formik.errors.oldPassword}
+          autoComplete="current-password" // Changed to reflect that this is the current password
+        />
         <TextField
           fullWidth
           size="small"

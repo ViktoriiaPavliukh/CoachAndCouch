@@ -37,3 +37,25 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
+
+export const updatePassword = createAsyncThunk(
+  "/users/password",
+  async ({ oldPassword, newPassword }, thunkAPI) => {
+    try {
+      const persistToken = thunkAPI.getState().auth.refreshToken;
+      console.log(persistToken);
+      token.set(persistToken);
+
+      const { data } = await privateAPI.patch("/users/password", {
+        oldPassword,
+        newPassword,
+      });
+
+      return data; 
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message); 
+    } finally {
+      token.unset(); 
+    }
+  }
+);

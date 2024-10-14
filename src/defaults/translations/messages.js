@@ -160,6 +160,7 @@ const messages = {
     darkTheme: "Dark Mode",
     lightTheme: "Light Mode",
     changePassword: "Change password",
+    oldPassword: "Current password",
     newPassword: "New password",
     repeatPassword: "Repeat password",
 
@@ -453,6 +454,7 @@ const messages = {
     darkTheme: "Темна тема",
     lightTheme: "Світла тема",
     changePassword: "Змінити пароль",
+    oldPassword: "Поточний пароль",
     newPassword: "Новий пароль",
     repeatPassword: "Повторіть пароль",
 

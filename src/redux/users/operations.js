@@ -6,14 +6,11 @@ export const getUserById = createAsyncThunk(
   "users/getUserById",
   async (id, thunkAPI) => {
     try {
-      console.log(id, "id");
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      console.log(persistToken);
       const { data } = await privateAPI.get(`/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error.message);
@@ -26,21 +23,13 @@ export const fetchUsersById = createAsyncThunk(
   "users/getUserById",
   async (id, thunkAPI) => {
     try {
-      // Retrieve the access token from the Redux state
       const persistToken = thunkAPI.getState().auth.accessToken;
-
-      // Set the token for future requests
       token.set(persistToken);
-
-      // Make the API call to fetch user by ID
       const { data } = await privateAPI.get(`/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-
-      // Return the user data from the response
       return data;
     } catch (error) {
-      // Improved error handling to check for response and set a meaningful message
       const errorMessage =
         error.response?.data?.message ||
         error.message ||
@@ -56,7 +45,6 @@ export const getCurrentUser = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      console.log(persistToken);
       const { data } = await privateAPI.get(`/users`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
@@ -120,7 +108,6 @@ export const sendMessageFromUser = createAsyncThunk(
   "users/sendMessage",
   async ({ id, message }, thunkAPI) => {
     try {
-      console.log(id, message);
       const userToken = thunkAPI.getState().auth.accessToken;
       await privateAPI.post(
         `/users/${id}/conversation`,
@@ -164,7 +151,6 @@ export const editUser = createAsyncThunk(
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
-      console.log(userToken);
       const userId = thunkAPI.getState().auth.user.id;
       const { data } = await privateAPI.patch(`/users`, editedData, {
         headers: { Authorization: `Bearer ${userToken}` },
@@ -225,8 +211,6 @@ export const getLikedAdverts = createAsyncThunk(
       const response = await privateAPI.get(`/users/${currentUser}/favorite`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-
-      console.log("Response Data:", response.data);
       return response.data;
     } catch (error) {
       console.error("Error fetching liked adverts:", error.message);

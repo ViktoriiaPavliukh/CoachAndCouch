@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser, refreshUser, registerUser } from "./operations";
+import {
+  loginUser,
+  logoutUser,
+  refreshUser,
+  registerUser,
+  updatePassword,
+} from "./operations";
 import { toast } from "react-toastify";
 
 const authSlice = createSlice({
@@ -25,7 +31,10 @@ const authSlice = createSlice({
       .addCase(refreshUser.rejected, handleRejected)
       .addCase(logoutUser.pending, handlePending)
       .addCase(logoutUser.fulfilled, handleLogoutFulfilled)
-      .addCase(logoutUser.rejected, handleRejected),
+      .addCase(logoutUser.rejected, handleRejected)
+      .addCase(updatePassword.pending, handlePending)
+      .addCase(updatePassword.fulfilled, handlePasswordUpdateFulfilled)
+      .addCase(updatePassword.rejected, handleRejected),
 });
 
 function handlePending(state) {
@@ -66,6 +75,11 @@ function handleRegisterFulfilled(state, { payload }) {
       icon: false,
     });
   }
+}
+
+function handlePasswordUpdateFulfilled(state) {
+  state.isLoading = false; 
+  toast.success("Password updated successfully"); 
 }
 
 function handleRefreshFulfilled(state, { payload }) {
