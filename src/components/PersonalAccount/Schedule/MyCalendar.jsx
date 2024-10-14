@@ -21,11 +21,7 @@ import {
 } from "@/redux/marketplace/bookings/operations";
 import {
   selectBookings,
-  selectBookingLoading,
-  selectBookingError,
   selectStudentBookings,
-  selectStudentBookingsLoading,
-  selectStudentBookingsError,
 } from "@/redux/marketplace/bookings/selectors";
 import { getCurrentUser } from "@/redux/users/operations";
 import ConfirmModal from "./ConfirmModal";
@@ -41,8 +37,6 @@ let formats = {
 export const MyCalendar = () => {
   const dispatch = useDispatch();
   const bookings = useSelector(selectBookings);
-  const loading = useSelector(selectBookingLoading);
-  const error = useSelector(selectBookingError);
   const theme = useSelector(selectTheme);
   const language = useSelector(selectCurrentLanguage);
   const currentUser = useSelector(selectCurrentUser);
@@ -58,8 +52,8 @@ export const MyCalendar = () => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openRemoveSlotModal, setOpenRemoveSlotModal] = useState(false);
   const [teacherSlots, setTeacherSlots] = useState([]);
-  const [selectedYear, setSelectedYear] = useState(moment().year());
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+
+  const isSmallScreen = useMediaQuery("(max-width:768px)");
 
   const eventsList = [...bookings, ...studentBookings].map((booking) => ({
     start: new Date(booking.date),
@@ -70,6 +64,7 @@ export const MyCalendar = () => {
         .toISOString()
     ),
     student: booking.student || booking.teacher,
+    bookingId: booking.id,
   }));
 
   useEffect(() => {
@@ -169,16 +164,6 @@ export const MyCalendar = () => {
     document.body.style.overflow = selectedEvent ? "hidden" : "auto";
   }, [selectedEvent]);
 
-  const handleClosePopup = () => {
-    setSelectedEvent(null);
-  };
-
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      setSelectedEvent(null);
-    }
-  };
-
   const dayPropGetter = (date) => {
     const today = moment().startOf("day");
     const now = moment();
@@ -209,13 +194,13 @@ export const MyCalendar = () => {
       moment(slot.date).isSame(date, "minute")
     );
 
-    let backgroundColor = "transparent"; // Default to transparent
+    let backgroundColor = "transparent";
 
     if (existingSlot) {
       if (existingSlot.isActive && !existingSlot.isBooked) {
-        backgroundColor = "#e7f1d3"; // Green for active, unbooked slot
+        backgroundColor = "#e7f1d3";
       } else if (!existingSlot.isActive) {
-        backgroundColor = "#aaaaaa"; // Grey for inactive slots
+        backgroundColor = "#aaaaaa";
       }
     }
 
@@ -227,42 +212,81 @@ export const MyCalendar = () => {
   };
   return (
     <Box>
-      <Calendar
-        localizer={localizer}
-        formats={formats}
-        culture={culture}
-        components={{
-          toolbar: (props) => <CustomToolbar {...props} />,
-          timeGutterHeader: !isSmallScreen ? TimeGutterHeader : undefined,
-          event: CustomEventComponent,
-          week: {
-            header: CustomDayComponent,
-          },
-        }}
-        defaultView={isSmallScreen ? Views.DAY : Views.WEEK}
-        defaultDate={new Date()}
-        scrollToTime={defaultDate}
-        events={eventsList}
-        startAccessor="start"
-        endAccessor="end"
-        style={{
-          width: "100%",
-          display: "flex",
-          height: "100%",
-          color: !theme ? "#6b7280" : "#9ca3af",
-        }}
-        timeslots={1}
-        selectable
-        popup={true}
-        step={60}
-        onSelectSlot={handleSlotSelection}
-        onSelectEvent={handleSelectEvent}
-        slotPropGetter={slotPropGetter}
-        eventPropGetter={eventPropGetter}
-        dayPropGetter={dayPropGetter}
-        onSelecting={(slotInfo) => handleSlotSelection(slotInfo)}
-        min={new Date(0, 0, 0, 7, 0)}
-      />
+      {!isSmallScreen ? (
+        <Calendar
+          localizer={localizer}
+          formats={formats}
+          culture={culture}
+          components={{
+            toolbar: (props) => <CustomToolbar {...props} />,
+            timeGutterHeader: TimeGutterHeader,
+            event: CustomEventComponent,
+            week: {
+              header: CustomDayComponent,
+            },
+          }}
+          defaultView={Views.WEEK}
+          defaultDate={new Date()}
+          scrollToTime={defaultDate}
+          events={eventsList}
+          startAccessor="start"
+          endAccessor="end"
+          style={{
+            width: "100%",
+            display: "flex",
+            height: "auto",
+            color: !theme ? "#6b7280" : "#9ca3af",
+          }}
+          timeslots={1}
+          selectable
+          popup={true}
+          step={60}
+          onSelectSlot={handleSlotSelection}
+          onSelectEvent={handleSelectEvent}
+          slotPropGetter={slotPropGetter}
+          eventPropGetter={eventPropGetter}
+          dayPropGetter={dayPropGetter}
+          onSelecting={(slotInfo) => handleSlotSelection(slotInfo)}
+          min={new Date(0, 0, 0, 7, 0)}
+        />
+      ) : (
+        <Calendar
+          localizer={localizer}
+          formats={formats}
+          culture={culture}
+          components={{
+            toolbar: (props) => <CustomToolbar {...props} />,
+            timeGutterHeader: undefined,
+            event: CustomEventComponent,
+            week: {
+              header: CustomDayComponent,
+            },
+          }}
+          defaultView={Views.DAY}
+          defaultDate={new Date()}
+          scrollToTime={defaultDate}
+          events={eventsList}
+          startAccessor="start"
+          endAccessor="end"
+          style={{
+            width: "100%",
+            display: "flex",
+            height: "auto",
+            color: !theme ? "#6b7280" : "#9ca3af",
+          }}
+          timeslots={1}
+          selectable
+          popup={true}
+          step={60}
+          onSelectSlot={handleSlotSelection}
+          onSelectEvent={handleSelectEvent}
+          slotPropGetter={slotPropGetter}
+          eventPropGetter={eventPropGetter}
+          dayPropGetter={dayPropGetter}
+          onSelecting={(slotInfo) => handleSlotSelection(slotInfo)}
+          min={new Date(0, 0, 0, 7, 0)}
+        />
+      )}
       <ConfirmModal
         open={openConfirmModal}
         onClose={() => setOpenConfirmModal(false)}
@@ -325,4 +349,3 @@ const CustomDayComponent = ({ date }) => {
     </Stack>
   );
 };
-

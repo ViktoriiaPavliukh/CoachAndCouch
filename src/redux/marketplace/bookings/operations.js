@@ -47,7 +47,6 @@ export const fetchStudentBookings = createAsyncThunk(
         "Authorization"
       ] = `Bearer ${persistToken}`;
       const { data } = await privateAPI.get(`/booking/${studentId}`);
-      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -103,7 +102,6 @@ export const acceptBooking = createAsyncThunk(
   async ({ bookingId, languageId, info }, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      console.log(persistToken);
       privateAPI.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${persistToken}`;
@@ -114,7 +112,6 @@ export const acceptBooking = createAsyncThunk(
         info,
       };
 
-      // Make the POST request to /booking/accept
       const { data } = await privateAPI.post("/booking/accept", requestBody);
 
       return data;
@@ -146,6 +143,34 @@ export const markBookingInactive = createAsyncThunk(
     } catch (error) {
       console.error(
         "Error marking booking as inactive:",
+        error.response ? error.response.data : error.message
+      );
+      return thunkAPI.rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
+
+export const deleteBooking = createAsyncThunk(
+  "bookings/deleteBooking",
+  async ({ bookingId, reason }, thunkAPI) => {
+    try {
+      const persistToken = thunkAPI.getState().auth.accessToken;
+      privateAPI.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${persistToken}`;
+      const requestBody = { reason };
+
+      const { data } = await privateAPI.post(
+        `booking/delete/${bookingId}`,
+        requestBody
+      );
+
+      return data;
+    } catch (error) {
+      console.error(
+        "Error deleting booking:",
         error.response ? error.response.data : error.message
       );
       return thunkAPI.rejectWithValue(

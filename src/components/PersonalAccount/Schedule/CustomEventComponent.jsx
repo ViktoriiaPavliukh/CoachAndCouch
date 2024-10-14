@@ -11,7 +11,7 @@ import { CancelModal } from "./CancelModal";
 import { X } from "react-feather";
 
 const CustomEventComponent = ({ event }) => {
-  const { start, end, student } = event;
+  const { start, end, student, bookingId } = event;
   const intl = useIntl();
   const [openCancelModal, setOpenCancelModal] = useState(false);
   const [eventToCancel, setEventToCancel] = useState(null);
@@ -30,11 +30,6 @@ const CustomEventComponent = ({ event }) => {
     setOpenCancelModal(false);
   };
 
-  const onConfirm = () => {
-    alert("need backend action");
-    setOpenCancelModal(false);
-  };
-
   const lesson = () => {
     return `${moment(start).format("HH:mm")} - ${moment(end).format("HH:mm")}`;
   };
@@ -46,7 +41,7 @@ const CustomEventComponent = ({ event }) => {
         flexDirection: "column",
         backgroundColor: "#4185f4",
         color: "#fff",
-        padding: "0px",
+        padding: "0",
         cursor: "default",
       }}
     >
@@ -85,8 +80,9 @@ const CustomEventComponent = ({ event }) => {
         onClose={onBackdropClose}
         event={eventToCancel}
         student={student}
-        onConfirm={onConfirm}
+        bookingId={bookingId}
         lesson={lesson()}
+        setOpenCancelModal={setOpenCancelModal}
       />
     </Box>
   ) : null;

@@ -26,9 +26,7 @@ import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import useStatus from "@/hooks/useStatus";
 import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
-import {
-  fetchStudentBookings,
-} from "@/redux/marketplace/bookings/operations";
+import { fetchStudentBookings } from "@/redux/marketplace/bookings/operations";
 import {
   selectTeacherBookings,
   selectStudentBookings,
@@ -48,7 +46,7 @@ export function Card() {
   const isLoading = useSelector(selectAdvertsIsLoading);
   const teacherBookings = useSelector(selectTeacherBookings);
   const studentBookings = useSelector(selectStudentBookings);
-
+  const isCurrentTeacher = currentUser?.advert?.id === Number(teacherId);
   const lastVisit = teacher?.user?.lastVisit;
   const userLike = teacher?.likes?.some(
     (like) => like.user.id === currentUser.id
@@ -123,14 +121,14 @@ export function Card() {
                 display: "flex",
                 gap: "56px",
                 mb: "57px",
-                flexDirection: { xs: "column", md: "row" },
+                flexDirection: { xs: "column", lg: "row" },
               }}
             >
               <MainImage src={teacher.imagePath} />
               <Box
                 sx={{
                   display: "flex",
-                  width: { xs: "100%", lg: "36%" },
+                  width: { xs: "100%", lg: "60%" },
                   flexDirection: "column",
                 }}
               >
@@ -213,25 +211,6 @@ export function Card() {
                     width: { xs: "100%", lg: "463px" },
                   }}
                 >
-                  {/* <Stack
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      p: "16px",
-                      backgroundColor: (theme) =>
-                        theme.palette.buttonColor.listItem,
-                      color: (theme) => theme.palette.textColor.black,
-                      borderRadius: "8px",
-                      gap: "10px",
-                      width: "100%",
-                    }}
-                  >
-                    <Typography variant="posterDescription">
-                      {intl.formatMessage({ id: "lessons" })}
-                    </Typography>
-                    <Typography variant="fontHeader">156</Typography>
-                  </Stack> */}
                   <Stack
                     sx={{
                       display: "flex",
@@ -304,7 +283,7 @@ export function Card() {
                     )
                   }
                 />
-                {/* <Typography variant="posterCategory">
+                <Typography variant="text">
                   {intl.formatMessage({ id: "specialization" })}
                 </Typography>
                 <CategoryList
@@ -314,40 +293,39 @@ export function Card() {
                       en == "en" ? el.specializationEn : el.specializationUa
                     )
                   }
-                /> */}
-                {/* <Typography variant="text">
-                  {intl.formatMessage({ id: "platforms" })}
-                </Typography> */}
-                <Box
-                  sx={{
-                    width: { xs: "100%" },
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "24px",
-                    mt: "20px",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Button
-                    onClick={() => onShowModalClick("trialLesson")}
-                    type="button"
-                    variant="contained"
+                />
+                {isCurrentTeacher ? null : (
+                  <Box
                     sx={{
-                      p: "12px 24px",
-                      borderRadius: "6px",
-                      flexGrow: 1,
+                      width: { xs: "100%", lg: "57%", xl: "41%" },
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "24px",
+                      mt: "20px",
+                      justifyContent: "space-between",
                     }}
                   >
-                    <Typography variant="posterButton">
-                      {isFirstTimeBooking
-                        ? intl.formatMessage({ id: "trialLessonBtn" })
-                        : intl.formatMessage({ id: "bookLesson" })}
-                    </Typography>
-                  </Button>
-                  <MessageBtn
-                    onShowModalClick={() => onShowModalClick("sendMessage")}
-                  />
-                </Box>
+                    <Button
+                      onClick={() => onShowModalClick("trialLesson")}
+                      type="button"
+                      variant="contained"
+                      sx={{
+                        p: "12px 24px",
+                        borderRadius: "6px",
+                        flexGrow: 1,
+                      }}
+                    >
+                      <Typography variant="posterButton">
+                        {isFirstTimeBooking
+                          ? intl.formatMessage({ id: "trialLessonBtn" })
+                          : intl.formatMessage({ id: "bookLesson" })}
+                      </Typography>
+                    </Button>
+                    <MessageBtn
+                      onShowModalClick={() => onShowModalClick("sendMessage")}
+                    />
+                  </Box>
+                )}
               </Box>
             </Box>
             <Box
@@ -389,6 +367,7 @@ export function Card() {
             </Box>
             {showModal && (
               <Modal
+                currentUser={currentUser}
                 user={teacher.user.id}
                 id={teacher.id}
                 onBackdropClose={onBackdropClose}

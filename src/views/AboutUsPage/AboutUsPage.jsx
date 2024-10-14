@@ -17,11 +17,13 @@ import {
   Modal,
 } from "@mui/material";
 import { fetchAdverts } from "@/redux/marketplace/adverts/operations.js";
+import { getCurrentUser } from "@/redux/users/operations";
 import CircleIcon from "@mui/icons-material/Circle";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CloseIcon from "@mui/icons-material/Close";
 import DoneIcon from "@mui/icons-material/Done";
 import { advertsSelector } from "@/redux/marketplace/adverts/advertsSelector";
+import { selectCurrentUser } from "@/redux/users/selectors";
 import { AboutUsImage } from "./AboutUsImage";
 import { ProfileImage } from "./ProfileImage";
 import { ChatImage } from "./ChatImage";
@@ -33,16 +35,14 @@ import { Line } from "./Line";
 import { ChatIcon } from "./ChatIcon";
 import { LargeLogoUp, LargeLogoDown } from "./LargeLogo";
 import { selectUser } from "../../redux/auth/selectors";
-import { logoutUser } from "../../redux/auth/operations";
 import { pages } from "@/defaults";
-import { themeReducer } from "@/redux/theme/slice";
 import imgUa from "@assets/images/imgUa.png";
 import imgGirl from "@assets/images/imgGirl.png";
-import formDark from "@assets/images/laptopDark.svg";
 
 export function AboutUsPage() {
   const intl = useIntl();
   const dispatch = useDispatch();
+  const currentUser = useSelector(selectCurrentUser);
   const adverts = useSelector(advertsSelector);
   const [pathname, setPathname] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -52,6 +52,7 @@ export function AboutUsPage() {
 
   useEffect(() => {
     dispatch(fetchAdverts());
+    dispatch(getCurrentUser());
   }, [dispatch]);
 
   const randomAdvert = useMemo(() => {
@@ -61,11 +62,6 @@ export function AboutUsPage() {
     }
     return null;
   }, [adverts.adverts]);
-
-  const onShowModalClick = (contentType) => {
-    setModalContentType(contentType);
-    setShowModal(true);
-  };
 
   const onBackdropClose = () => {
     setShowModal(false);
@@ -78,6 +74,18 @@ export function AboutUsPage() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const toHomePage = () => {
     navigate("/");
+  };
+
+  const handleBookLessonClick = () => {
+    navigate(`/teachers/${randomAdvert.id}`, {
+      state: {
+        showModal: true,
+        modalContentType:
+          !user || Object.keys(user).length === 0
+            ? "signInOrRegister"
+            : "trialLesson",
+      },
+    });
   };
 
   return (
@@ -1331,8 +1339,7 @@ export function AboutUsPage() {
                 }}
               >
                 {intl.formatMessage({ id: "with" })}{" "}
-                {randomAdvert.user.firstName} {randomAdvert.user.lastName}{" "}
-                {intl.formatMessage({ id: "for" })} 7$!
+                {randomAdvert.user.firstName} {randomAdvert.user.lastName}!
               </Typography>
             )}
           </Stack>
@@ -1344,26 +1351,31 @@ export function AboutUsPage() {
           >
             {intl.formatMessage({ id: "orderTrialText2" })}
           </Typography>
-          <Button
-            onClick={() => onShowModalClick("trialLesson")}
-            variant="contained"
-            sx={{
-              py: "12px",
-              px: "30px",
-              borderRadius: "6px",
-              color: (theme) => theme.palette.buttonColor.fontColor,
-              fontSize: "14px",
-              fontWeight: "400",
-              transition: "background-color 0.3s",
-              backgroundColor: (theme) => theme.palette.buttonColor.lightYellow,
-              "&:hover": {
+          {(!currentUser || currentUser?.advert?.id !== randomAdvert?.id) &&
+          randomAdvert ? (
+            <Button
+              onClick={handleBookLessonClick}
+              variant="contained"
+              sx={{
+                py: "12px",
+                px: "30px",
+                borderRadius: "6px",
+                color: (theme) => theme.palette.buttonColor.fontColor,
+                fontSize: "14px",
+                fontWeight: "400",
+                transition: "background-color 0.3s",
                 backgroundColor: (theme) =>
-                  theme.palette.buttonColor.lightYellowHover,
-              },
-            }}
-          >
-            {intl.formatMessage({ id: "orderTrialButton" })}
-          </Button>
+                  theme.palette.buttonColor.lightYellow,
+                "&:hover": {
+                  backgroundColor: (theme) =>
+                    theme.palette.buttonColor.lightYellowHover,
+                },
+              }}
+            >
+              {intl.formatMessage({ id: "orderTrialButton" })}
+            </Button>
+          ) : null}
+
           {showModal && (
             <Modal
               onBackdropClose={onBackdropClose}
@@ -1406,7 +1418,6 @@ export function AboutUsPage() {
             sx={{
               fontSize: { xs: "16px", md: "18px", xl: "24px" },
               lineHeight: { xs: "24px", xl: "34px" },
-              // width: { xs: "91%", md: "79%", lg: "52%", xl: "60%" },
             }}
           >
             {intl.formatMessage({ id: "aboutText4" })}

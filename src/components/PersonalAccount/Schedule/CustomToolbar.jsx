@@ -71,10 +71,10 @@ export const CustomToolbar = ({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "20px",
+          gap: { xs: "10px", md: "20px" },
         }}
       >
-        <Box sx={{ display: "flex", gap: "20px" }}>
+        <Box sx={{ display: "flex", gap: { xs: "4px", md: "20px" } }}>
           <IconButton onClick={() => onNavigate("PREV")} sx={btnArrow}>
             <ChevronLeft />
           </IconButton>
