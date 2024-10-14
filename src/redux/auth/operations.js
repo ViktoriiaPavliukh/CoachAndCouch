@@ -9,7 +9,6 @@ export const loginUser = createAsyncThunk(
     try {
       const res = await publicAPI.post("/auth/signin", credentials);
       token.set(res.data.tokens.accessToken);
-      console.log(res.data.tokens.accessToken);
       return res.data;
     } catch ({ request, response, message }) {
       return thunkAPI.rejectWithValue({ type: "request", message });
@@ -42,20 +41,21 @@ export const updatePassword = createAsyncThunk(
   "/users/password",
   async ({ oldPassword, newPassword }, thunkAPI) => {
     try {
-      const persistToken = thunkAPI.getState().auth.refreshToken;
-      console.log(persistToken);
-      token.set(persistToken);
-
-      const { data } = await privateAPI.patch("/users/password", {
-        oldPassword,
-        newPassword,
-      });
-
-      return data; 
+      const userToken = thunkAPI.getState().auth.accessToken;
+      token.set(userToken);
+      const { data } = await privateAPI.patch(
+        "/users/password",
+        {
+          oldPassword,
+          newPassword,
+        },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        }
+      );
+      return data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message); 
-    } finally {
-      token.unset(); 
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

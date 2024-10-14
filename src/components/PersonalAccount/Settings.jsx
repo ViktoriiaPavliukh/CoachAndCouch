@@ -22,7 +22,6 @@ import { updatePassword } from "../../redux/auth/operations";
 import { selectUser } from "../../redux/auth/selectors";
 import { logoutUser } from "../../redux/auth/operations";
 import { passwordSchema } from "@/defaults";
-import * as Yup from "yup";
 
 export const Settings = () => {
   const intl = useIntl();
@@ -31,6 +30,7 @@ export const Settings = () => {
   const validationSchema = passwordSchema(intl);
   const navigate = useNavigate();
   const isDarkTheme = useSelector((state) => state.theme.value);
+
   const formik = useFormik({
     initialValues: {
       oldPassword: "",
@@ -43,11 +43,9 @@ export const Settings = () => {
       const { oldPassword, newPassword } = values;
       try {
         await dispatch(updatePassword({ oldPassword, newPassword })).unwrap();
-        alert("Password updated successfully");
-        formik.resetForm(); // Reset the form upon successful update
+        formik.resetForm();
       } catch (error) {
         console.error("Failed to update password:", error);
-        alert(`Error: ${error.message || "Failed to update password"}`); // Display error message
       }
     },
   });
@@ -164,19 +162,19 @@ export const Settings = () => {
             formik.touched.oldPassword && Boolean(formik.errors.oldPassword)
           }
           helperText={formik.touched.oldPassword && formik.errors.oldPassword}
-          autoComplete="current-password" // Changed to reflect that this is the current password
+          autoComplete="current-password"
         />
         <TextField
           fullWidth
           size="small"
-          name="password"
+          name="newPassword"
           label={intl.formatMessage({ id: "newPassword" })}
           type={formik.values.showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  aria-label="toggle password visibility"
+                  aria-label="toggle new password visibility"
                   onClick={() =>
                     formik.setFieldValue(
                       "showPassword",
@@ -194,10 +192,12 @@ export const Settings = () => {
               </InputAdornment>
             ),
           }}
-          value={formik.values.password}
+          value={formik.values.newPassword}
           onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
+          error={
+            formik.touched.newPassword && Boolean(formik.errors.newPassword)
+          }
+          helperText={formik.touched.newPassword && formik.errors.newPassword}
           autoComplete="new-password"
         />
         <TextField
@@ -294,7 +294,7 @@ export const Settings = () => {
           <Typography
             variant="posterSubtitle"
             noWrap
-            sx={{ color: (theme) => theme.palette.textColor.red }}
+            sx={{ color: (theme) => theme.palette.textColor.red }}   
           >
             {intl.formatMessage({ id: "deleteAccount" })}
           </Typography>

@@ -60,16 +60,19 @@ export const registrationSchema = (intl) => {
 };
 
 export const passwordSchema = (intl) => {
-  Yup.object().shape({
-    password: Yup.string()
+  return Yup.object().shape({
+    oldPassword: Yup.string().required(
+      intl.formatMessage({ id: "oldPasswordRequired" })
+    ),
+    newPassword: Yup.string()
       .matches(
         /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
         intl.formatMessage({ id: "passwordRequirements" })
       )
       .max(16, "Password must be at most 16 characters")
-      .required("Password is required"),
+      .required(intl.formatMessage({ id: "newPasswordRequired" })),
     passwordConfirm: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .oneOf([Yup.ref("newPassword"), null], "Passwords must match")
       .required("Password confirmation is required"),
   });
 };
