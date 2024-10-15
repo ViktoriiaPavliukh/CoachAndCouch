@@ -6,6 +6,7 @@ import {
 } from "@/redux/admin/adminSelector";
 import { Filter } from "../../components/Teachers/Filter";
 import { Button, Stack, Box } from "@mui/material";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
@@ -21,7 +22,6 @@ const initialState = {
 };
 export function FilterTeacherPanel({ onFiltersChange }) {
   const [selectedFilters, setSelectedFilters] = useState(initialState);
-
   const intl = useIntl();
   const languages = useSelector(languagesSelector);
   const countries = useSelector(countriesSelector);
@@ -46,8 +46,10 @@ export function FilterTeacherPanel({ onFiltersChange }) {
     <Box
       sx={{
         display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        flexDirection: {xs: "column", lg:"row"},
+        gap: { xs: "16px", md: "20px" },
         mb: { lg: "43px", md: "58px", xs: "36px" },
       }}
     >
@@ -58,7 +60,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
           maxWidth: {
             xs: "100%",
           },
-          mb: { lg: "43px", md: "58px", xs: "36px" },
           justifyContent: "center",
           flexWrap: { xs: "wrap", lg: "wrap" },
           columnGap: { md: "40px", xl: "39px" },
@@ -81,9 +82,8 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         />
         <Filter
           options={countries.map((el) => {
-            const countryJSON = countriesJSON.find(
-              (elJSON) => elJSON.alpha2 === el.alpha2
-            ) || {};
+            const countryJSON =
+              countriesJSON.find((elJSON) => elJSON.alpha2 === el.alpha2) || {};
             return {
               id: el.id,
               alpha2: el.alpha2,
@@ -115,7 +115,6 @@ export function FilterTeacherPanel({ onFiltersChange }) {
           }
           currentInputId={selectedFilters.price}
         />
-
         <Filter
           options={specializations}
           typeoption={en == "en" ? "specializationEn" : "specializationUa"}
@@ -130,7 +129,18 @@ export function FilterTeacherPanel({ onFiltersChange }) {
           currentInputId={selectedFilters.specialization}
         />
       </Stack>
-      <Button onClick={handleResetFilter}>Reset filters</Button>
+      <Button onClick={handleResetFilter}>
+        <RestartAltIcon
+          fontSize="large"
+          sx={{
+            transition: "background-color 0.3s",
+            color: (theme) => theme.palette.buttonColor.greenYellow,
+            "&:hover": {
+              color: (theme) => theme.palette.buttonColor.greenYellowHover,
+            },
+          }}
+        />
+      </Button>
     </Box>
   );
 }
