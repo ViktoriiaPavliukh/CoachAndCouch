@@ -45,7 +45,7 @@ export const registrationSchema = (intl) => {
       .required(intl.formatMessage({ id: "emailRequired" })),
     password: Yup.string()
       .matches(
-        /^(?=.*[A-Z])(?=.*\d).{6,16}$/,
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+={};':"\\|,.<>?`~\-\/]).{6,16}$/,
         intl.formatMessage({ id: "passwordRequirements" })
       )
       .max(16, intl.formatMessage({ id: "passwordMaxCharacters" }))
