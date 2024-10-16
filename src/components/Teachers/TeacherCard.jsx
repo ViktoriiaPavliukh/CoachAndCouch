@@ -40,9 +40,7 @@ export function TeacherCard({ teacher }) {
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
   const userLike =
-    teacher?.likes?.some(
-      (like) => like.user?.id === user?.id 
-    ) || false;
+    teacher?.likes?.some((like) => like.user?.id === user?.id) || false;
 
   const handleClick = () => {
     navigate(`/teachers/${teacher.id}`);
@@ -230,39 +228,37 @@ export function TeacherCard({ teacher }) {
                     {roundRating(teacher.user.rating)}
                   </Typography>
                 </Box>
-                <Box sx={{ display: "flex", gap: "4px" }}>
-                  <Button
-                    disableTouchRipple
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      handleFavoriteAdd(teacher.id);
-                    }}
+                <Stack
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleFavoriteAdd(teacher.id);
+                  }}
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "none",
+                    backgroundColor: "transparent",
+                    padding: 0,
+                    gap: "10px",
+                  }}
+                >
+                  <FavoriteBorderOutlinedIcon
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      border: "none",
-                      backgroundColor: "transparent",
-                      padding: 0,
-                      gap: "10px",
+                      fontSize: "16px",
+                      color: (theme) => theme.palette.textColor.fontColor,
+                    }}
+                  />
+                  <Typography
+                    variant="posterDescription"
+                    sx={{
+                      color: (theme) => theme.palette.textColor.fontColor,
                     }}
                   >
-                    <FavoriteBorderOutlinedIcon
-                      sx={{
-                        fontSize: "16px",
-                        color: (theme) => theme.palette.textColor.fontColor,
-                      }}
-                    />
-                    <Typography
-                      variant="posterDescription"
-                      sx={{
-                        color: (theme) => theme.palette.textColor.fontColor,
-                      }}
-                    >
-                      {teacher.likes.length}
-                    </Typography>
-                  </Button>
-                </Box>
+                    {teacher.likes.length}
+                  </Typography>
+                </Stack>
               </Box>
             </Stack>
           </CardContent>

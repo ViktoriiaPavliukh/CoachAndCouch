@@ -5,7 +5,7 @@ import {
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
 import { Filter } from "../../components/Teachers/Filter";
-import { Button, Stack, Box } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
@@ -48,7 +48,7 @@ export function FilterTeacherPanel({ onFiltersChange }) {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        flexDirection: {xs: "column", lg:"row"},
+        flexDirection: { xs: "column", lg: "row" },
         gap: { xs: "16px", md: "20px" },
         mb: { lg: "43px", md: "58px", xs: "36px" },
       }}
@@ -129,18 +129,17 @@ export function FilterTeacherPanel({ onFiltersChange }) {
           currentInputId={selectedFilters.specialization}
         />
       </Stack>
-      <Button onClick={handleResetFilter}>
-        <RestartAltIcon
-          fontSize="large"
-          sx={{
-            transition: "background-color 0.3s",
-            color: (theme) => theme.palette.buttonColor.greenYellow,
-            "&:hover": {
-              color: (theme) => theme.palette.buttonColor.greenYellowHover,
-            },
-          }}
-        />
-      </Button>
+      <RestartAltIcon
+        onClick={handleResetFilter}
+        fontSize="large"
+        sx={{
+          transition: "background-color 0.3s",
+          color: (theme) => theme.palette.buttonColor.greenYellow,
+          "&:hover": {
+            color: (theme) => theme.palette.buttonColor.greenYellowHover,
+          },
+        }}
+      />
     </Box>
   );
 }
