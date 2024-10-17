@@ -340,7 +340,7 @@ export function Header() {
                     <Box
                       sx={{ borderTop: "1px solid #4B5563", margin: "28px 0" }}
                     />
-                    {pages.slice(0, 6).map(({ title, link }) => (
+                    {pages.slice(0, 5).map(({ title, link }) => (
                       <MenuMobItem
                         key={title.props.id}
                         onClick={() => {
@@ -379,7 +379,7 @@ export function Header() {
 
                 {isLoggedIn ? (
                   <Box>
-                    {pages.slice(7, 8).map(({ title, link }) => (
+                    {[pages[5]].map(({ title, link }) => (
                       <MenuMobItem
                         key={title.props.id}
                         onClick={() => {
