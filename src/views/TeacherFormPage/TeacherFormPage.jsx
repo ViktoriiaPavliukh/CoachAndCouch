@@ -75,13 +75,10 @@ export const TeacherFormPage = () => {
   const countriesList = useSelector(countriesSelector);
 
   useEffect(() => {
-    if (advertId) {
-      navigate(`/teachers/${advertId}`);
-    }
     dispatch(getLanguages());
     dispatch(getSpecializations());
     dispatch(getCountries());
-  }, [dispatch, advertId, navigate]);
+  }, [dispatch]);
 
   initialValues.updateUser.firstName = user.firstName;
   initialValues.updateUser.lastName = user.lastName ?? "";
@@ -120,8 +117,18 @@ export const TeacherFormPage = () => {
       );
       transformedData.append("updateUser", JSON.stringify(updateUser));
       transformedData.append("image", values.image);
-      console.log(transformedData);
-      dispatch(postAdvert(transformedData));
+
+      try {
+        const response = await dispatch(postAdvert(transformedData));
+
+        if (response.payload && response.payload.id) {
+          navigate(`/user/${user.id}/advertisements`, { replace: true });
+        } else {
+          console.error("Advert creation failed, no ID in response.");
+        }
+      } catch (error) {
+        console.error("Error creating advert:", error);
+      }
     },
   });
 

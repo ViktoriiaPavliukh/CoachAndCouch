@@ -13,7 +13,7 @@ export function TeacherListBox({ page, setPage }) {
   const count = adverts.totalPages;
   const intl = useIntl();
 
-  const handleChange = (p) => {
+  const handleChange = (event, p) => {
     setPage(p);
     items.jump(p);
   };

@@ -64,7 +64,6 @@ export const deleteAdvertsById = createAsyncThunk(
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
       const { data } = await privateAPI.put(`/adverts/${id}`);
-      console.log(`adverts id = ${id} was deleted`);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -78,7 +77,6 @@ export const postAdvert = createAsyncThunk(
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
-      console.log(advertData);
       const { data } = await privateAPI.post("/adverts", advertData);
       // if (thunkAPI.status === 201) {
       //   toast.success("You add the advert", {
@@ -153,7 +151,6 @@ export const editAdvert = createAsyncThunk(
         jsonData,
         { headers }
       );
-      console.log("Advertisement edited successfully:", data);
       return data;
     } catch (error) {
       console.error("Failed to edit advertisement:", error);
@@ -169,18 +166,13 @@ export const editAdvertImage = createAsyncThunk(
     try {
       const formData = new FormData();
       formData.append("image", imageFile);
-
       const userToken = thunkAPI.getState().auth.accessToken;
-      console.log("User Token:", userToken);
-
       const headers = { Authorization: `Bearer ${userToken}` };
       const { data } = await privateAPI.patch(
         `/adverts/${advertId}/image`,
         formData,
         { headers }
       );
-
-      console.log("Advertisement image edited successfully:", data);
       return data;
     } catch (error) {
       console.error("Failed to edit advertisement image:", error);

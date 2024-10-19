@@ -8,6 +8,7 @@ export const getUserById = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
+      console.log(persistToken);
       const { data } = await privateAPI.get(`/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
@@ -76,7 +77,6 @@ export const getAllFeedbacks = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
-
       token.set(userToken);
       const { data } = await privateAPI.get(`/users/${id}/feedback`);
 
@@ -168,7 +168,6 @@ export const updateUserPhoto = createAsyncThunk(
   async (photo, thunkAPI) => {
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
-      console.log(userToken);
       token.set(userToken);
       const { data } = await privateAPI.patch(`/users/photo`, photo, {
         headers: { Authorization: `Bearer ${userToken}` },
