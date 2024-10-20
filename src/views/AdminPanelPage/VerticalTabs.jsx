@@ -20,6 +20,7 @@ import {
   Typography,
   Tabs,
   Tab,
+  Pagination,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
@@ -45,7 +46,6 @@ import {
   feedbacksAsAdminSelector,
   usersSelector,
 } from "@/redux/admin/adminSelector";
-import { pages } from "@/defaults";
 import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
 import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
 import Loader from "@/components/Loader/Loader";
@@ -83,6 +83,8 @@ export function VerticalTabs() {
   const location = useLocation();
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
+  const [page, setPage] = useState(1);
+  const limit = 10;
   const [deleteState, setDeleteState] = React.useState("delete");
   const [sortConfig, setSortConfig] = useState({
     id: "ASC",
@@ -103,7 +105,6 @@ export function VerticalTabs() {
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const usersAdmin = useSelector(usersSelector);
-  console.log(usersAdmin);
   const feedbacks = useSelector(feedbacksAsAdminSelector);
   const formatDate = (dateString) => {
     const date = parseJSON(dateString);
@@ -126,23 +127,33 @@ export function VerticalTabs() {
     dispatch(
       getUsersAsAdmin({
         sort: { ...sortConfig, [column]: direction },
-        // filter: { photoPath: true, advert: true, countryId: 3 }, // Example filter
-        // limit: 10,
-        // page: 2,
+        filter: { photoPath: true, advert: true, countryId: 3 },
+        limit: 10,
+        page: 2,
       })
     );
   };
 
   useEffect(() => {
     dispatch(getAdvertsAsAdmin());
-    dispatch(getUsersAsAdmin());
     dispatch(getCountries());
     dispatch(getLanguages());
     dispatch(getSpecializations());
     dispatch(getFeedbacksAsAdmin());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getUsersAsAdmin(page));
+  }, [dispatch, page]);
+
   const users = useSelector(usersAsAdminSelector);
+
+  const handleChangePage = (event, value) => {
+    setPage(value);
+  };
+
+  const isLastPage = usersAdmin.length < limit;
+
   return (
     <Box
       sx={{
@@ -853,6 +864,33 @@ export function VerticalTabs() {
               </TableBody>
             </Table>
           </TableContainer>
+          <Pagination
+            sx={{
+              marginY: { xs: "34px", md: "36px" },
+              padding: "14px 41px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "15px",
+              background: (theme) => theme.palette.background,
+              backgroundImage:
+                "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))",
+              boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
+              "& .MuiPaginationItem-page.Mui-selected": {
+                color: "#FFF",
+              },
+              "& .MuiPagination-ul": {
+                gap: "24px",
+              },
+            }}
+            count={!isLastPage ? page + 1 : page}
+            color="buttonColor"
+            size="large"
+            page={page}
+            siblingCount={0}
+            boundaryCount={2}
+            onChange={handleChangePage}
+          />
         </Box>
       </TabPanel>
       <TabPanel value={value} index={2}>

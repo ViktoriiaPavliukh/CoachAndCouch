@@ -5,45 +5,42 @@ import { publicAPI } from "@/services/publicAPI";
 
 export const getUsersAsAdmin = createAsyncThunk(
   "admin/getUsersAsAdmin",
-  async (_, thunkAPI) => {
+  async (page, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
-      const { data } = await privateAPI.get("/admin/users", {
+      console.log(persistToken);
+      // Prepare the request query parameters
+      const response = await privateAPI.get(`/admin/users`, {
+        params: { page }, // Only pass the page parameter
         headers: { Authorization: `Bearer ${persistToken}` },
       });
 
-      return data;
+      return response.data; // Return the user data
     } catch (error) {
-      console.log(error.message);
-      //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
-      return thunkAPI.rejectWithValue(error.message);
+      console.error(
+        "Error fetching users:",
+        error.response?.data || error.message
+      );
+      return thunkAPI.rejectWithValue(error.response?.data || error.message); // Handle errors
     }
   }
 );
-
 // export const getUsersAsAdmin = createAsyncThunk(
 //   "admin/getUsersAsAdmin",
-//   async ({ sort, filter, limit, page }, thunkAPI) => {
+//   async (_, thunkAPI) => {
 //     try {
 //       const persistToken = thunkAPI.getState().auth.accessToken;
 //       token.set(persistToken);
-//       console.log(persistToken);
-//       console.log(sort);
+//       // console.log(persistToken);
 //       const { data } = await privateAPI.get("/admin/users", {
 //         headers: { Authorization: `Bearer ${persistToken}` },
-//         params: {
-//           sort: JSON.stringify(sort),
-//           // filter: JSON.stringify(filter),
-//           // limit,
-//           // page,
-//         },
 //       });
 
 //       return data;
 //     } catch (error) {
 //       console.log(error.message);
+//       //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
 //       return thunkAPI.rejectWithValue(error.message);
 //     }
 //   }
