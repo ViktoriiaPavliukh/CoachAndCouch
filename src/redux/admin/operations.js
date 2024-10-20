@@ -5,62 +5,38 @@ import { publicAPI } from "@/services/publicAPI";
 
 export const getUsersAsAdmin = createAsyncThunk(
   "admin/getUsersAsAdmin",
-  async (_, thunkAPI) => {
+  async (page, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
-      const { data } = await privateAPI.get("/admin/users", {
+      const response = await privateAPI.get(`/admin/users`, {
+        params: { page },
         headers: { Authorization: `Bearer ${persistToken}` },
       });
 
-      return data;
+      return response.data;
     } catch (error) {
-      console.log(error.message);
-      //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
-      return thunkAPI.rejectWithValue(error.message);
+      console.error(
+        "Error fetching users:",
+        error.response?.data || error.message
+      );
+      return thunkAPI.rejectWithValue(error.response?.data || error.message); 
     }
   }
 );
 
-// export const getUsersAsAdmin = createAsyncThunk(
-//   "admin/getUsersAsAdmin",
-//   async ({ sort, filter, limit, page }, thunkAPI) => {
-//     try {
-//       const persistToken = thunkAPI.getState().auth.accessToken;
-//       token.set(persistToken);
-//       console.log(persistToken);
-//       console.log(sort);
-//       const { data } = await privateAPI.get("/admin/users", {
-//         headers: { Authorization: `Bearer ${persistToken}` },
-//         params: {
-//           sort: JSON.stringify(sort),
-//           // filter: JSON.stringify(filter),
-//           // limit,
-//           // page,
-//         },
-//       });
-
-//       return data;
-//     } catch (error) {
-//       console.log(error.message);
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
 export const getAdvertsAsAdmin = createAsyncThunk(
   "admin/getAdvertsAsAdmin",
-  async (_, thunkAPI) => {
+  async (page, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
-      const { data } = await privateAPI.get("/admin/adverts", {
+      const response = await privateAPI.get(`/admin/adverts`, {
+        params: { page },
         headers: { Authorization: `Bearer ${persistToken}` },
       });
 
-      return data;
+      return response.data;
     } catch (error) {
       console.log(error.message);
       //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
