@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import { LogOut, Settings } from "react-feather";
+import { LogOut } from "react-feather";
 import {
   Box,
   Stack,
@@ -84,6 +84,7 @@ export function VerticalTabs() {
   const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const [page, setPage] = useState(1);
+  const [pageAdvert, setPageAdvert] = useState(1);
   const limit = 10;
   const [deleteState, setDeleteState] = React.useState("delete");
   const [sortConfig, setSortConfig] = useState({
@@ -135,12 +136,15 @@ export function VerticalTabs() {
   };
 
   useEffect(() => {
-    dispatch(getAdvertsAsAdmin());
     dispatch(getCountries());
     dispatch(getLanguages());
     dispatch(getSpecializations());
     dispatch(getFeedbacksAsAdmin());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getAdvertsAsAdmin(pageAdvert));
+  }, [dispatch, pageAdvert]);
 
   useEffect(() => {
     dispatch(getUsersAsAdmin(page));
@@ -152,7 +156,11 @@ export function VerticalTabs() {
     setPage(value);
   };
 
+  const handleChangePageAdvert = (event, value) => {
+    setPageAdvert(value);
+  };
   const isLastPage = usersAdmin.length < limit;
+  const isLastPageAdverts = adverts.length < limit;
 
   return (
     <Box
@@ -597,6 +605,33 @@ export function VerticalTabs() {
               </TableBody>
             </Table>
           </TableContainer>
+          <Pagination
+            sx={{
+              marginY: { xs: "34px", md: "36px" },
+              padding: "14px 41px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              borderRadius: "15px",
+              background: (theme) => theme.palette.background,
+              backgroundImage:
+                "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05))",
+              boxShadow: "0px 2px 5px 0px rgba(0, 0, 0, 0.15)",
+              "& .MuiPaginationItem-page.Mui-selected": {
+                color: "#FFF",
+              },
+              "& .MuiPagination-ul": {
+                gap: "24px",
+              },
+            }}
+            count={!isLastPageAdverts ? pageAdvert + 1 : pageAdvert}
+            color="buttonColor"
+            size="large"
+            page={pageAdvert}
+            siblingCount={0}
+            boundaryCount={2}
+            onChange={handleChangePageAdvert}
+          />
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>

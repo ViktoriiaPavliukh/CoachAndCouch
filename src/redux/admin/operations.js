@@ -9,55 +9,34 @@ export const getUsersAsAdmin = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      console.log(persistToken);
-      // Prepare the request query parameters
       const response = await privateAPI.get(`/admin/users`, {
-        params: { page }, // Only pass the page parameter
+        params: { page },
         headers: { Authorization: `Bearer ${persistToken}` },
       });
 
-      return response.data; // Return the user data
+      return response.data;
     } catch (error) {
       console.error(
         "Error fetching users:",
         error.response?.data || error.message
       );
-      return thunkAPI.rejectWithValue(error.response?.data || error.message); // Handle errors
+      return thunkAPI.rejectWithValue(error.response?.data || error.message); 
     }
   }
 );
-// export const getUsersAsAdmin = createAsyncThunk(
-//   "admin/getUsersAsAdmin",
-//   async (_, thunkAPI) => {
-//     try {
-//       const persistToken = thunkAPI.getState().auth.accessToken;
-//       token.set(persistToken);
-//       // console.log(persistToken);
-//       const { data } = await privateAPI.get("/admin/users", {
-//         headers: { Authorization: `Bearer ${persistToken}` },
-//       });
-
-//       return data;
-//     } catch (error) {
-//       console.log(error.message);
-//       //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
 
 export const getAdvertsAsAdmin = createAsyncThunk(
   "admin/getAdvertsAsAdmin",
-  async (_, thunkAPI) => {
+  async (page, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
-      const { data } = await privateAPI.get("/admin/adverts", {
+      const response = await privateAPI.get(`/admin/adverts`, {
+        params: { page },
         headers: { Authorization: `Bearer ${persistToken}` },
       });
 
-      return data;
+      return response.data;
     } catch (error) {
       console.log(error.message);
       //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
