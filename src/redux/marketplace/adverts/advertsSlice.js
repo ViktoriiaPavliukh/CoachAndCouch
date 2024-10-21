@@ -36,7 +36,14 @@ const advertsSlice = createSlice({
       .addCase(getAdvertById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.error = null;
-        state.adverts.advert = action.payload;
+        state.advert = action.payload;
+      })
+      .addCase(getAdvertById.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAdvertById.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
       })
       .addCase(getAdverts.fulfilled, (state, action) => {
         state.isLoading = false;
