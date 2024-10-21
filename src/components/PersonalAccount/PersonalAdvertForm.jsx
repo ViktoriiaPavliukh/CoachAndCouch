@@ -31,6 +31,12 @@ import {
   editAdvert,
   editAdvertImage,
 } from "@/redux/marketplace/adverts/operations";
+import { getCurrentUser } from "@/redux/users/operations";
+import {
+  getCountries,
+  getLanguages,
+  getSpecializations,
+} from "@/redux/admin/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
 import { v4 as uuidv4 } from "uuid";
@@ -39,12 +45,10 @@ import { teacherValidationSchema } from "@/defaults";
 
 export const PersonalAdvertForm = ({
   currentUser,
-  countriesList,
   languages,
   specializations,
   advertId,
   teacher,
-  dataChanged,
 }) => {
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
@@ -244,136 +248,6 @@ export const PersonalAdvertForm = ({
             </Stack>
           ) : null}
         </Box>
-        {/* <TextField
-          fullWidth
-          id="firstName"
-          name="firstName"
-          type="text"
-          label={intl.formatMessage({ id: "name" })}
-          disabled={true}
-          defaultValue={formik.values.firstName}
-          variant="outlined"
-          onChange={handleInputChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-          helperText={formik.touched.firstName && formik.errors.firstName}
-        />
-        <TextField
-          fullWidth
-          id="lastName"
-          name="lastName"
-          type="text"
-          label={intl.formatMessage({ id: "lastName" })}
-          defaultValue={formik.values.lastName || ""}
-          variant="outlined"
-          disabled={true}
-          onChange={handleInputChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-          helperText={formik.touched.lastName && formik.errors.lastName}
-        />
-        <TextField
-          label="Email"
-          name="email"
-          defaultValue={formik.values.email}
-          sx={{ width: { xs: "100%" } }}
-          variant="outlined"
-          disabled={true}
-          onChange={handleInputChange}
-          error={Boolean(formik.errors.email)}
-          helperText={formik.errors.email}
-        />
-        <Stack
-          sx={{
-            display: "flex",
-            width: "100%",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            gap: "24px 24px",
-            justifyContent: "space-between",
-          }}
-        >
-          <TextField
-            type="date"
-            label={intl.formatMessage({ id: "birthday" })}
-            sx={{
-              flex: "1 1 auto",
-              width: { xs: "100%", lg: "auto" },
-            }}
-            id="userBirthday"
-            name="birthday"
-            disabled={true}
-            defaultValue={formik.values.birthday}
-            onChange={handleInputChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.birthday && Boolean(formik.errors.birthday)}
-            helperText={formik.touched.birthday && formik.errors.birthday}
-            InputLabelProps={{ shrink: true }}
-          />
-
-          <FormControl
-            variant="outlined"
-            sx={{
-              flex: "1 1 auto",
-            }}
-          >
-            <InputLabel> {intl.formatMessage({ id: "sex" })}</InputLabel>
-            <Select
-              id="sex"
-              name="sex"
-              label={intl.formatMessage({ id: "sex" })}
-              disabled={true}
-              defaultValue={formik.values.sex}
-              onChange={handleInputChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.sex && Boolean(formik.errors.sex)}
-            >
-              <MenuItem value="male">
-                {intl.formatMessage({ id: "male" })}
-              </MenuItem>
-              <MenuItem value="female">
-                {intl.formatMessage({ id: "female" })}
-              </MenuItem>
-              <MenuItem value="other">
-                {intl.formatMessage({ id: "other" })}
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <TextField
-            sx={{
-              "&::placeholder": {
-                color: "red",
-              },
-              flex: "1 1 auto",
-            }}
-            id="price"
-            disabled={!editMode}
-            name="price"
-            label={intl.formatMessage({ id: "pricePerHour" })}
-            variant="outlined"
-            type="number"
-            defaultValue={formik.values.price}
-            onChange={handleInputChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.price && Boolean(formik.errors.price)}
-            helperText={formik.touched.price && formik.errors.price}
-            InputLabelProps={{ shrink: true }}
-            InputProps={{ placeholder: "" }}
-          />
-        </Stack>
-        <TextField
-          fullWidth
-          id="country"
-          name="country"
-          label={intl.formatMessage({ id: "country" })}
-          variant="outlined"
-          disabled={true}
-          defaultValue={formik.values.country}
-          onChange={handleInputChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.country && Boolean(formik.errors.country)}
-          helperText={formik.touched.country && formik.errors.country}
-        /> */}
         <FormControl fullWidth variant="outlined">
           <InputLabel>
             {intl.formatMessage({ id: "languagesSpoken" })}

@@ -31,7 +31,7 @@ export function Advertisements() {
   const languages = useSelector(languagesSelector);
   const specializations = useSelector(specializationsSelector);
   const [teacher, setTeacher] = useState(null);
-  const [dataChanged, setDataChanged] = useState(false);
+  const [isTeacherLoading, setIsTeacherLoading] = useState(true);
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -42,19 +42,23 @@ export function Advertisements() {
 
   useEffect(() => {
     if (advertId) {
+      setIsTeacherLoading(true);
       dispatch(getAdvertById(advertId))
         .then((data) => {
           setTeacher(data.payload);
         })
-        .catch((error) =>
-          console.error("Error fetching teacher data: ", error)
-        );
+        .catch((error) => {
+          console.error("Error fetching teacher data: ", error);
+        })
+        .finally(() => {
+          setIsTeacherLoading(false);
+        });
     }
   }, [dispatch, advertId]);
 
-  return isLoading ? (
+  return isLoading || isTeacherLoading ? (
     <Loader />
-  ) : advertId && currentUser ? (
+  ) : advertId && currentUser && teacher ? (
     <PersonalAdvertForm
       teacher={teacher || {}}
       currentUser={currentUser}
@@ -62,7 +66,6 @@ export function Advertisements() {
       countriesList={countriesList}
       languages={languages}
       specializations={specializations}
-      dataChanged={dataChanged}
     />
   ) : (
     <Typography
