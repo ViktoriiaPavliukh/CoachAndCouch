@@ -20,7 +20,7 @@ export const getUsersAsAdmin = createAsyncThunk(
         "Error fetching users:",
         error.response?.data || error.message
       );
-      return thunkAPI.rejectWithValue(error.response?.data || error.message); 
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -35,7 +35,7 @@ export const getAdvertsAsAdmin = createAsyncThunk(
         params: { page },
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(error.message);
@@ -69,7 +69,6 @@ export const deleteUserAsAdmin = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
       await privateAPI.put(`/admin/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
