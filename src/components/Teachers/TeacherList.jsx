@@ -10,6 +10,8 @@ export function TeacherListBox({ page, setPage }) {
   const adverts = useSelector(advertsSelector);
   const PER_PAGE = 9;
   const items = usePagination(adverts, PER_PAGE);
+   const filteredAdverts =
+     adverts.adverts?.filter((advert) => !advert.isDeleted) || [];
   const count = adverts.totalPages;
   const intl = useIntl();
 
@@ -29,8 +31,8 @@ export function TeacherListBox({ page, setPage }) {
             justifyContent: "center",
           }}
         >
-          {adverts.adverts?.length ? (
-            adverts.adverts?.map((teacher) => {
+          {filteredAdverts.length ? (
+            filteredAdverts.map((teacher) => {
               return (
                 <Grid item key={teacher.id}>
                   <TeacherCard teacher={teacher} />

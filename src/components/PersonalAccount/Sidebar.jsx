@@ -32,7 +32,7 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const navigate = useNavigate();
-
+  console.log(user);
   const handleLogout = () => {
     dispatch(logoutUser());
     navigate("/", { replace: true });
@@ -52,7 +52,7 @@ export const Sidebar = () => {
       }}
     >
       <Box>
-        {pages.slice(0, 5).map((item, index) => {
+        {pages.slice(0, 4).map((item, index) => {
           const IconComponent = FeatherIcons[item.iconFeatherName];
           return (
             <Box
@@ -76,6 +76,32 @@ export const Sidebar = () => {
             </Box>
           );
         })}
+        {user.advert ?
+        pages.slice(4, 5).map((item, index) => {
+          const IconComponent = FeatherIcons[item.iconFeatherName];
+          return (
+            <Box
+              component={Link}
+              to={item.link}
+              sx={
+                location.pathname === `/user/${user.id}/${item.link}`
+                  ? activeLinkStyles
+                  : linkStyles
+              }
+              key={index}
+            >
+              {IconComponent && <IconComponent />}
+              <Typography
+                variant="posterSubtitle"
+                noWrap
+                sx={{ textTransform: "none" }}
+              >
+                {item.title}
+              </Typography>
+            </Box>
+          );
+        })
+        : null}
       </Box>
       <Box sx={{ mb: "0px" }}>
         <Box
