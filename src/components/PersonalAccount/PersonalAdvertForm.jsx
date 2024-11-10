@@ -104,7 +104,6 @@ export const PersonalAdvertForm = ({
         "specializations",
         JSON.stringify(formik.values.specializations.map((spec) => spec.id))
       );
-      console.log("Form Data before dispatch:", formData);
       await dispatch(editAdvert({ advertId, formData }));
 
       setEditMode(false);
@@ -416,7 +415,6 @@ export const PersonalAdvertForm = ({
                   (spec) => spec.id === selected.id
                 )
               ) {
-                console.log(selected);
                 formik.setFieldValue("specializations", [
                   ...formik.values.specializations,
                   selected,

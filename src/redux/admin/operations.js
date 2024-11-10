@@ -35,10 +35,8 @@ export const getAdvertsAsAdmin = createAsyncThunk(
         params: { page },
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -55,7 +53,6 @@ export const deleteAdvertsAsAdmin = createAsyncThunk(
       });
       return id;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -71,7 +68,6 @@ export const deleteUserAsAdmin = createAsyncThunk(
       });
       return id;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -112,7 +108,6 @@ export const addLanguagesAsAdmin = createAsyncThunk(
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
       const { data } = await privateAPI.post("/admin/languages", Data);
-      console.log(Data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -137,7 +132,6 @@ export const deleteLanguageAsAdmin = createAsyncThunk(
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
       const { data } = await privateAPI.delete(`/admin/languages/${id}`);
-      console.log(`language id = ${id} was deleted`);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -162,7 +156,6 @@ export const addSpecializationsAsAdmin = createAsyncThunk(
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
       const { data } = await privateAPI.post("/admin/specializations", Data);
-      console.log(Data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -176,7 +169,6 @@ export const deleteSpecializationAsAdmin = createAsyncThunk(
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
       const { data } = await privateAPI.delete(`/admin/specializations/${id}`);
-      console.log(`specialization id = ${id} was deleted`);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -201,15 +193,12 @@ export const getFeedbacksAsAdmin = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      console.log("Persist token:", persistToken); 
       token.set(persistToken);
       const { data } = await privateAPI.get("/admin/feedbacks", {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-      console.log("Data fetched:", data);
       return data;
     } catch (error) {
-      console.log("Error fetching feedbacks:", error.message); 
       return thunkAPI.rejectWithValue(error.message);
     }
   }

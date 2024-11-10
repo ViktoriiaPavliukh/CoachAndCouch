@@ -15,8 +15,6 @@ export const PrivateRoute = ({ redirectTo = "/", role, component }) => {
 
   const valid = userLogged && role === userRole;
   if (valid) return component ? component : <Outlet />;
-
-  console.log("redirect to ", redirectTo);
   return <Navigate to={redirectTo} />;
 };
 

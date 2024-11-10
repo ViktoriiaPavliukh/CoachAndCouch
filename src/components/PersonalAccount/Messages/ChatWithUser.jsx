@@ -70,8 +70,6 @@ export const ChatWithUser = ({ user, onClose, currentUser }) => {
       : user.user2.photoPath || null;
 
   const messages = user.messages || [];
-  console.log(messages);
-  console.log(currentUser);
   const messagesEndRef = useRef(null);
 
   const sendBtnColor = !theme
