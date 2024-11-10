@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 import { v4 as uuidv4 } from "uuid";
 import { useParams, useNavigate } from "react-router-dom";
@@ -10,13 +10,7 @@ import {
   specializationsSelector,
 } from "@/redux/admin/adminSelector";
 import {
-  getCountries,
-  getLanguages,
-  getSpecializations,
-} from "@/redux/admin/operations";
-import {
-  advertByIdSelector,
-  selectAdvertsIsLoading,
+  advertByIdSelector
 } from "@/redux/marketplace/adverts/advertsSelector";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import {
@@ -48,7 +42,6 @@ export default function FormTrial({
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id: teacherId } = useParams();
   const currentUser = useSelector(selectCurrentUser);
   const languages = useSelector(languagesSelector);
   const countriesList = useSelector(countriesSelector);
@@ -62,12 +55,6 @@ export default function FormTrial({
     currentUser?.country?.alpha2 || ""
   );
   const [selectedSpecializations, setSelectedSpecializations] = useState([]);
-
-  // useEffect(() => {
-  //   dispatch(getLanguages());
-  //   dispatch(getSpecializations());
-  //   dispatch(getCountries());
-  // }, [dispatch]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

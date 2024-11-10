@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Box,
   List,
@@ -7,7 +7,7 @@ import {
   ListItemAvatar,
   Avatar,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectTheme } from "@/redux/theme/selectors";
 import { lightTheme, darkTheme } from "../../../styles/theme";
 import { Aperture } from "react-feather";
@@ -92,7 +92,6 @@ export const ChatList = ({
                         borderRadius: "50px",
                         justifySelf: "center",
                         alignSelf: "center",
-                        // maxWidth: "263px",
                       }}
                     />
                   ) : (

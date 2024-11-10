@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Typography, Box, Stack } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 import { useIntl } from "react-intl";
 import { X } from "react-feather";
 import PropTypes from "prop-types";

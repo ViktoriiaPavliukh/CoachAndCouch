@@ -1,6 +1,7 @@
 import { PropTypes } from "prop-types";
 import mainImage from "@assets/templates/profile_1.png";
 import { CardMedia } from "@mui/material";
+
 export function TeacherImage({ src }) {
   return (
     <CardMedia
@@ -18,6 +19,7 @@ export function TeacherImage({ src }) {
     />
   );
 }
+
 TeacherImage.propTypes = {
   src: PropTypes.string,
 };

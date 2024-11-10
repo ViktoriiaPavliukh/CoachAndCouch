@@ -23,7 +23,6 @@ export function TeacherFilterResult() {
 
   useEffect(() => {
     Object.keys(filters).length > 0 && dispatch(filterAdverts(filters));
-    // Object.keys(filters).length === 0 && dispatch(getAdverts(page));
   }, [dispatch, filters]);
 
   useEffect(() => {

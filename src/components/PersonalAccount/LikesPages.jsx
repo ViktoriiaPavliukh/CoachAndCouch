@@ -49,8 +49,6 @@ export function LikesPages() {
   }
 
   const handleClick = () => {
-    // e.preventDefault();
-
     navigate(`/teachers/${teacher.id}`);
   };
 

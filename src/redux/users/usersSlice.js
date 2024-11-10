@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   addFeedback,
-  getUserById,
   deleteUserAsUser,
   sendMessageFromUser,
   getUserMessages,
@@ -36,27 +35,18 @@ const usersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchUsersById.pending, (state) => {
-        state.isLoading = true; // Set loading to true
-        state.error = null; // Reset error state
+        state.isLoading = true; 
+        state.error = null; 
       })
       .addCase(fetchUsersById.fulfilled, (state, action) => {
-        // Assuming action.payload is an array of users
-        state.users = action.payload; // Store fetched users in state
+        state.users = action.payload;
         state.isLoading = false;
         state.error = null;
       })
       .addCase(fetchUsersById.rejected, (state, action) => {
-        state.isLoading = false; // Set loading to false
-        state.error = action.payload; // Set error from the action
+        state.isLoading = false;
+        state.error = action.payload;
       })
-      // .addCase(getUserById.fulfilled, (state, action) => {
-      //   console.log("Fetched User:", action.payload); // Debugging
-      //   state.user = action.payload;
-      //   state.isLoggedIn = true;
-      //   state.isLoading = false;
-      //   state.error = null;
-      // })
-
       .addCase(addFeedback.fulfilled, (state, action) => {
         state.feedbacks.push(action.payload);
         state.isLoading = false;

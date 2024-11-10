@@ -32,7 +32,6 @@ export const Sidebar = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const navigate = useNavigate();
-  console.log(user);
   const handleLogout = () => {
     dispatch(logoutUser());
     navigate("/", { replace: true });

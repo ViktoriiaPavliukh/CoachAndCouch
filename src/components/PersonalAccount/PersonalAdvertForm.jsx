@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { useIntl } from "react-intl";
-import * as Yup from "yup";
 import {
   Box,
   Button,
@@ -20,26 +18,12 @@ import {
 import { PersonalImage } from "./PersonalImage";
 import IconPlus from "../../assets/icons/IconPlus";
 import countriesCase from "@/helpers/countriesCase";
-import countriesJSON from "../../defaults/countries/countries.json";
-import {
-  advertByIdSelector,
-  selectAdvertsIsLoading,
-} from "@/redux/marketplace/adverts/advertsSelector";
-import { selectCurrentUser } from "@/redux/users/selectors";
-import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import {
   editAdvert,
   editAdvertImage,
 } from "@/redux/marketplace/adverts/operations";
-import { getCurrentUser } from "@/redux/users/operations";
-import {
-  getCountries,
-  getLanguages,
-  getSpecializations,
-} from "@/redux/admin/operations";
 import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice";
 import countries from "../../defaults/countries/countries.json";
-import { v4 as uuidv4 } from "uuid";
 import { format } from "date-fns";
 import { teacherValidationSchema } from "@/defaults";
 
@@ -120,7 +104,6 @@ export const PersonalAdvertForm = ({
         "specializations",
         JSON.stringify(formik.values.specializations.map((spec) => spec.id))
       );
-      console.log("Form Data before dispatch:", formData);
       await dispatch(editAdvert({ advertId, formData }));
 
       setEditMode(false);
@@ -196,7 +179,6 @@ export const PersonalAdvertForm = ({
                   }}
                   onBlur={formik.handleBlur}
                   error={formik.touched.image && Boolean(formik.errors.image)}
-                  // helperText={formik.touched.image && formik.errors.image}
                 />
                 <InputLabel
                   htmlFor="image"
@@ -425,9 +407,6 @@ export const PersonalAdvertForm = ({
             label={intl.formatMessage({ id: "specialization" })}
             disabled={!editMode}
             value={formik.values.specializations}
-            // onChange={(event) => {
-            //   formik.setFieldValue("specializations", event.target.value);
-            // }}
             onChange={(event) => {
               const selected =
                 event.target.value[event.target.value.length - 1];
@@ -436,7 +415,6 @@ export const PersonalAdvertForm = ({
                   (spec) => spec.id === selected.id
                 )
               ) {
-                console.log(selected);
                 formik.setFieldValue("specializations", [
                   ...formik.values.specializations,
                   selected,
@@ -521,16 +499,6 @@ export const PersonalAdvertForm = ({
           }
           helperText={formik.touched.description && formik.errors.description}
         />
-        {/* <TextField
-          label={intl.formatMessage({ id: "registrationDate" })}
-          variant="outlined"
-          name="registeredAt"
-          style={{
-            width: "100%",
-          }}
-          disabled={true}
-          defaultValue={formik.values.registeredAt}
-        /> */}
         {editMode ? (
           <Button
             type="button"

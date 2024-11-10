@@ -1,5 +1,4 @@
 import { Navigate, Outlet } from "react-router-dom";
-
 import { PropTypes } from "prop-types";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn, selectUser, selectIsLoading } from "../redux/auth/selectors";
@@ -16,8 +15,6 @@ export const PrivateRoute = ({ redirectTo = "/", role, component }) => {
 
   const valid = userLogged && role === userRole;
   if (valid) return component ? component : <Outlet />;
-
-  console.log("redirect to ", redirectTo);
   return <Navigate to={redirectTo} />;
 };
 

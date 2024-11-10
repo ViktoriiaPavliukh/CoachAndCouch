@@ -28,7 +28,6 @@ export const Filter = ({
       freeSolo
       options={options}
       clearOnBlur
-      // value={value}
       onChange={(event, newValue, reason) => {
         if (newValue && reason !== "reset") {
           onFilterChange(newValue.id);

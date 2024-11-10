@@ -3,7 +3,6 @@ import mainImage from "@assets/icons/noPhoto.png";
 import { CardMedia } from "@mui/material";
 
 export function PersonalImage({
-  src,
   advertImagePath,
   userImage,
   borderRadius,

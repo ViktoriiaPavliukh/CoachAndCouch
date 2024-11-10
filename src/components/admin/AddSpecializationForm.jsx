@@ -29,7 +29,6 @@ const initialValues = {
 };
 
 export function AddSpecializationForm({ specializations }) {
-  const en = useSelector(selectCurrentLanguage);
   const intl = useIntl();
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -68,20 +67,11 @@ export function AddSpecializationForm({ specializations }) {
           id="specializationBD"
           name="specializationBD"
           label={intl.formatMessage({ id: "specializationInDB" })}
-          // value={formik.values.languagesBD || ""}
-          // onChange={(event) => {
-          //   formik.setFieldValue("languagesBD", event.target.value);
-          // }}
           onBlur={formik.handleBlur}
           error={
             formik.touched.specializationBD &&
             Boolean(formik.errors.specializationBD)
           }
-          // renderValue={(selected) =>
-          //   selected.map((language) => {
-          //     language;
-          //   })
-          // }
         >
           {specializations &&
             specializations?.map((specialization) => (

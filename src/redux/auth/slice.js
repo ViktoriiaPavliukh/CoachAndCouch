@@ -106,7 +106,6 @@ function handleLogoutFulfilled(state) {
 }
 
 function handleRejected(state, { payload: { type, message }, error }) {
-  console.log("handleRejected", state, type, message, error);
   state.isLoading = false;
   state.isLoggedIn = false;
   state.en = JSON.parse(localStorage.getItem("persist:language"));

@@ -8,13 +8,11 @@ export const getUserById = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      console.log(persistToken);
       const { data } = await privateAPI.get(`/users/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
       return data;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -51,7 +49,6 @@ export const getCurrentUser = createAsyncThunk(
       });
       return data;
     } catch (error) {
-      console.log(error.message);
       return thunkAPI.rejectWithValue(error.message);
     }
   }

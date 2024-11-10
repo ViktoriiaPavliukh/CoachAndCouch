@@ -1,5 +1,4 @@
 import { Box, CircularProgress } from "@mui/material";
-import { palette } from "@mui/system";
 
 export default function Loader() {
   return (

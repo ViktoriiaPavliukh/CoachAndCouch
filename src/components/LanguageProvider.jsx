@@ -1,4 +1,3 @@
-// LanguageProvider.jsx
 import { PropTypes } from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { IntlProvider } from "react-intl";

@@ -1,5 +1,4 @@
 import { PropTypes } from "prop-types";
-
 import { CardMedia } from "@mui/material";
 import mainImage from "@assets/templates/Frame 868.webp";
 
