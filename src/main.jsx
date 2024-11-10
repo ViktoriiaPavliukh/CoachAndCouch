@@ -1,7 +1,5 @@
 import React from "react";
 import { IntlProvider } from "react-intl";
-// import { useSelector } from "react-redux";
-// import { selectCurrentLanguage } from "@/redux/marketplace/languages/languageSlice.js";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";

@@ -217,7 +217,6 @@ export const SendMessageWrapper = ({
           </Box>
         </>
       )}
-
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={6000}

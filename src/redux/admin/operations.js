@@ -39,7 +39,6 @@ export const getAdvertsAsAdmin = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log(error.message);
-      //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -51,14 +50,12 @@ export const deleteAdvertsAsAdmin = createAsyncThunk(
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
-      // console.log(persistToken);
       await privateAPI.put(`/admin/adverts/${id}`, {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
       return id;
     } catch (error) {
       console.log(error.message);
-      //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -75,7 +72,6 @@ export const deleteUserAsAdmin = createAsyncThunk(
       return id;
     } catch (error) {
       console.log(error.message);
-      //  services.Notify.failure("Sorry. We have some problem with a server. Please, reload the page");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -86,7 +82,6 @@ export const addCountryAsAdmin = createAsyncThunk(
   async (Data, thunkAPI) => {
     try {
       const userToken = thunkAPI.getState().auth.accessToken;
-
       token.set(userToken);
       const { data } = await privateAPI.post("/admin/countries", Data);
       return data;
@@ -131,7 +126,6 @@ export const getLanguages = createAsyncThunk(
       const { data } = await publicAPI.get("/languages");
       return data;
     } catch (error) {
-      // console.error("Error get languages:", error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -157,7 +151,6 @@ export const getSpecializations = createAsyncThunk(
       const { data } = await publicAPI.get("/specializations");
       return data;
     } catch (error) {
-      // console.error("Error get specializations:", error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -198,7 +191,6 @@ export const getCountries = createAsyncThunk(
       const { data } = await publicAPI.get("/countries");
       return data;
     } catch (error) {
-      // console.error("Error get countries:", error);
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -209,15 +201,15 @@ export const getFeedbacksAsAdmin = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const persistToken = thunkAPI.getState().auth.accessToken;
-      console.log("Persist token:", persistToken); // Debug statement
+      console.log("Persist token:", persistToken); 
       token.set(persistToken);
       const { data } = await privateAPI.get("/admin/feedbacks", {
         headers: { Authorization: `Bearer ${persistToken}` },
       });
-      console.log("Data fetched:", data); // Debug statement
+      console.log("Data fetched:", data);
       return data;
     } catch (error) {
-      console.log("Error fetching feedbacks:", error.message); // Debug statement
+      console.log("Error fetching feedbacks:", error.message); 
       return thunkAPI.rejectWithValue(error.message);
     }
   }

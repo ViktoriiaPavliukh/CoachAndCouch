@@ -14,12 +14,14 @@ import countriesJSON from "../../defaults/countries/countries.json";
 import countriesCase from "@/helpers/countriesCase";
 import { useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
+
 const initialState = {
   language: "",
   country: "",
   price: "",
   specialization: "",
 };
+
 export function FilterTeacherPanel({ onFiltersChange }) {
   const [selectedFilters, setSelectedFilters] = useState(initialState);
   const intl = useIntl();

@@ -1,4 +1,3 @@
-import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import logoImageUp from "@assets/icons/c.svg";
 import logoImageDown from "@assets/icons/cdown.svg";

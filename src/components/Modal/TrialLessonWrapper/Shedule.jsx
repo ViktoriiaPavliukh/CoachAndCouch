@@ -1,23 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Box, Button } from "@mui/material";
 
 export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
   const [selectedHour, setSelectedHour] = useState(null);
   const now = new Date();
-  const shedule = Array.from({ length: 17 }, (_, i) => i + 7); //
-  console.log(selectedHour);
-  // const handlerSheduleClick = (h) => {
-  //   const date = new Date(day.getFullYear(), day.getMonth(), day.getDate(), h);
-  //   scheduleChanged(date);
-  //   setSelectedHour(h);
-  // };
-
+  const shedule = Array.from({ length: 17 }, (_, i) => i + 7);
+ 
   const handlerSheduleClick = (h) => {
-    // Deselect the previously selected hour if it exists
     if (selectedHour === h) {
-      setSelectedHour(null); // Deselect if the same hour is clicked
-      scheduleChanged(null); // Reset the selected schedule
+      setSelectedHour(null);
+      scheduleChanged(null); 
     } else {
       setSelectedHour(h);
       const date = new Date(
@@ -26,7 +19,7 @@ export const Shedule = ({ day, hour, availableHours, scheduleChanged }) => {
         day.getDate(),
         h
       );
-      scheduleChanged(date); // Update the schedule with the new selected time
+      scheduleChanged(date);
     }
   };
 

@@ -12,7 +12,6 @@ import {
 } from "@mui/material/";
 import StarBorderPurple500OutlinedIcon from "@mui/icons-material/StarBorderPurple500Outlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import CircleIcon from "@mui/icons-material/Circle";
 import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
@@ -32,15 +31,12 @@ import { selectUser } from "@/redux/auth/selectors";
 
 export function TeacherCard({ teacher }) {
   const user = useSelector(selectUser);
-  const [isFavorite, setIsFavorite] = useState(false);
   const intl = useIntl();
   const en = useSelector(selectCurrentLanguage);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
-  const userLike =
-    teacher?.likes?.some((like) => like.user?.id === user?.id) || false;
 
   const handleClick = () => {
     navigate(`/teachers/${teacher.id}`);

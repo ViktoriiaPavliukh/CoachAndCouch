@@ -4,7 +4,6 @@ import {
   Button,
   List,
   ListItem,
-  Input,
   Typography,
   TextField,
   Stack,
@@ -340,22 +339,6 @@ export function ReviewList({ id, advertId, feedback }) {
             gap: 5,
           }}
         >
-          {/* <Input
-            disableUnderline
-            sx={{
-              height: "200px",
-              borderRadius: "4px",
-              padding: "12px 16px",
-              border: "1px solid #D1D5DB",
-              color: (theme) => theme.palette.textColor.fontColor,
-              backgroundColor: (theme) => theme.palette.background,
-              alignItems: "start",
-            }}
-            name="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            inputProps={{ style: { textAlign: "start" } }}
-          /> */}
           <TextField
             variant="outlined"
             multiline
@@ -408,9 +391,7 @@ ReviewList.propTypes = {
   elements: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
-      // name: PropTypes.string,
       message: PropTypes.string,
-      // image: PropTypes.string,
     })
   ),
   id: PropTypes.number,

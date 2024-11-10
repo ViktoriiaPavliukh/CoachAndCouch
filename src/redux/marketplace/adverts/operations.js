@@ -78,16 +78,6 @@ export const postAdvert = createAsyncThunk(
       const userToken = thunkAPI.getState().auth.accessToken;
       token.set(userToken);
       const { data } = await privateAPI.post("/adverts", advertData);
-      // if (thunkAPI.status === 201) {
-      //   toast.success("You add the advert", {
-      //     icon: "🚀",
-      //   });
-      // }
-      // if (thunkAPI.status === 404) {
-      //   toast.error("You entered incorrect data", {
-      //     icon: false,
-      //   });
-      // }
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

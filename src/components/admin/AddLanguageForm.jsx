@@ -8,7 +8,6 @@ import * as Yup from "yup";
 const initialValues = {
   languageUa: "",
   languageEn: "",
-
   languagesBD: "",
 };
 const validationSchema = Yup.object({
@@ -36,17 +35,8 @@ export function AddLanguageForm({ languages }) {
           id="languagesBD"
           name="languagesBD"
           label="Languages"
-          // value={formik.values.languagesBD || ""}
-          // onChange={(event) => {
-          //   formik.setFieldValue("languagesBD", event.target.value);
-          // }}
           onBlur={formik.handleBlur}
           error={formik.touched.languagesBD && Boolean(formik.errors.languagesBD)}
-          // renderValue={(selected) =>
-          //   selected.map((language) => {
-          //     language;
-          //   })
-          // }
         >
           {languages &&
             languages?.map((language) => (

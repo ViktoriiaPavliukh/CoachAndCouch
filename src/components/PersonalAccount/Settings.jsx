@@ -132,7 +132,7 @@ export const Settings = () => {
           fullWidth
           size="small"
           name="oldPassword"
-          label={intl.formatMessage({ id: "oldPassword" })} // New label
+          label={intl.formatMessage({ id: "oldPassword" })}
           type={formik.values.showPassword ? "text" : "password"}
           InputProps={{
             endAdornment: (

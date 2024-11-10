@@ -39,14 +39,12 @@ import {
 } from "@/redux/admin/operations";
 import {
   advertsAsAdminSelector,
-  countriesSelector,
   languagesSelector,
   specializationsSelector,
   usersAsAdminSelector,
   feedbacksAsAdminSelector,
   usersSelector,
 } from "@/redux/admin/adminSelector";
-import { AddLanguageForm } from "../../components/admin/AddLanguageForm";
 import { AddSpecializationForm } from "../../components/admin/AddSpecializationForm";
 import Loader from "@/components/Loader/Loader";
 import { TabPanel } from "./TabPanel";
@@ -70,14 +68,6 @@ const linkStyles = {
 };
 
 export function VerticalTabs() {
-  // const formik = useFormik({
-  //   initialValues,
-  //   validationSchema,
-  //   onSubmit: async (values) => {
-  //     dispatch(addLanguagesAsAdmin({ languageUa: values.languageUa, languageEn: values.languageEn }));
-  //     dispatch(getLanguages());
-  //   },
-  // });
   const en = useSelector(selectCurrentLanguage);
   const intl = useIntl();
   const location = useLocation();
@@ -89,8 +79,6 @@ export function VerticalTabs() {
   const [deleteState, setDeleteState] = React.useState("delete");
   const [sortConfig, setSortConfig] = useState({
     id: "ASC",
-    // email: "DESC",
-    // country: "ASC",
   });
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -941,7 +929,6 @@ export function VerticalTabs() {
               gap: "50px",
             }}
           >
-            {/* <AddLanguageForm languages={languages} /> */}
             <AddSpecializationForm specializations={specializations} />
           </Stack>
         </TableContainer>

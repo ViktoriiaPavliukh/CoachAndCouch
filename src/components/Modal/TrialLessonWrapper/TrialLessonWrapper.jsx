@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useIntl } from "react-intl";
 import { uk, enUS } from "date-fns/locale";
 import {
@@ -151,7 +151,6 @@ export const TrialLessonWrapper = ({
     setFormModalVisible(false);
   };
 
-  // const sunday = endOfWeek(monday, { weekStartsOn: 1 });
   let formattedRange = `${format(monday, "dd")} - ${format(
     endOfWeek(monday, { weekStartsOn: 1 }),
     "dd"

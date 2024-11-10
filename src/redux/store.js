@@ -13,7 +13,6 @@ import {
 import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slice";
 import { advertsReducer } from "./marketplace/adverts/advertsSlice";
-
 import { initReducer } from "./init/initSlice";
 import { adminReducer } from "./admin/adminSlice";
 import { usersReducer } from "./users/usersSlice";

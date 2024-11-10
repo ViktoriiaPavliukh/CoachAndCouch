@@ -15,7 +15,6 @@ export function ChatIcon() {
       sx={{
         display: "flex",
         width: { xs: "48px" },
-        // height: { xs: "440px", md: "398px", lg: "422px", xl: "474px" },
       }}
     />
   );

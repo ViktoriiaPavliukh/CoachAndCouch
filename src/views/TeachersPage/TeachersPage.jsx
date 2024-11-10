@@ -22,7 +22,6 @@ import { getAdverts } from "@/redux/marketplace/adverts/operations";
 export function TeachersPage() {
   const intl = useIntl();
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();

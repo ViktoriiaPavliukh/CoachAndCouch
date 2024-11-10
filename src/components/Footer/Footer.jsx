@@ -1,5 +1,4 @@
 import PhoneNumber from "./PhoneNumber";
-import { Link } from "react-router-dom";
 import { useIntl } from "react-intl";
 import {
   Box,
@@ -9,7 +8,6 @@ import {
   Stack,
   IconButton,
 } from "@mui/material";
-import LanguageSwitcher from "../Header/LanguageSwitcher";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import FacebookIcon from "@mui/icons-material/FacebookRounded";
@@ -81,10 +79,6 @@ export default function Footer() {
                 alignItems: "center",
               }}
             >
-              {/* <LanguageSwitcher /> */}
-              {/* <Typography>
-                {intl.formatMessage({ id: "footer.text" })}
-              </Typography> */}
               <Stack
                 sx={{
                   maxWidth: { md: "584px", lg: "100%" },
