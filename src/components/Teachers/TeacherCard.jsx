@@ -16,7 +16,6 @@ import CircleIcon from "@mui/icons-material/Circle";
 import { CategoryList } from "../Card/CategoryList";
 import { TeacherImage } from "./TeacherImage";
 import { useNavigate } from "react-router";
-import { useState } from "react";
 import useStatus from "@/hooks/useStatus";
 import countries from "../../defaults/countries/countries.json";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,7 +38,7 @@ export function TeacherCard({ teacher }) {
   const status = useStatus(lastVisit);
 
   const handleClick = () => {
-    navigate(`/teachers/${teacher.id}`);
+    navigate(`/teachers/${teacher.id}`, { state: { teacherData: teacher } });
   };
 
   const handleBookLessonClick = () => {
@@ -121,7 +120,7 @@ export function TeacherCard({ teacher }) {
                     lineHeight: "156%",
                   }}
                 >
-                  {teacher.user.firstName}
+                  {teacher.user?.firstName}
                 </Typography>
                 <Typography
                   sx={{
@@ -130,7 +129,7 @@ export function TeacherCard({ teacher }) {
                     lineHeight: "156%",
                   }}
                 >
-                  {teacher.user.lastName}
+                  {teacher.user?.lastName}
                 </Typography>
               </Box>
               <Stack

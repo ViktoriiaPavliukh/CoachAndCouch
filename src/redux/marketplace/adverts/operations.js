@@ -50,6 +50,7 @@ export const getAdvertById = createAsyncThunk(
   async (id, thunkAPI) => {
     try {
       const { data } = await publicAPI.get(`/adverts/${id}`);
+      console.log(data);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -89,12 +90,14 @@ export const favoriteAdvert = createAsyncThunk(
   "adverts/favoriteAdverts",
   async (advertId, thunkAPI) => {
     try {
+      console.log(advertId);
       const persistToken = thunkAPI.getState().auth.accessToken;
       token.set(persistToken);
       const response = await privateAPI.put(
         `/adverts/${advertId}/favorite`,
         {}
       );
+      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error("Error response:", error.response);

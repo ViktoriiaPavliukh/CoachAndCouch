@@ -25,7 +25,10 @@ import Loader from "../Loader/Loader";
 import { roundRating } from "@/helpers/roundRating";
 import { Stack } from "@mui/system";
 import useStatus from "@/hooks/useStatus";
-import { favoriteAdvert } from "@/redux/marketplace/adverts/operations";
+import {
+  favoriteAdvert,
+  getAdverts,
+} from "@/redux/marketplace/adverts/operations";
 import { fetchStudentBookings } from "@/redux/marketplace/bookings/operations";
 import {
   selectTeacherBookings,
@@ -37,22 +40,34 @@ export function Card() {
   const intl = useIntl();
   const location = useLocation();
   const en = useSelector(selectCurrentLanguage);
+  const teacher =
+    location.state?.teacherData || useSelector(advertByIdSelector);
   const [showModal, setShowModal] = useState(false);
   const [modalContentType, setModalContentType] = useState(null);
   const [isFirstTimeBooking, setIsFirstTimeBooking] = useState(true);
+  const [likesCount, setLikesCount] = useState(teacher?.likes?.length || 0);
   const currentUser = useSelector(selectCurrentUser);
   const { id: teacherId } = useParams();
-  const teacher = useSelector(advertByIdSelector);
+  console.log(likesCount);
+  // const teacher = useSelector(advertByIdSelector);
+  console.log(likesCount);
   const isLoading = useSelector(selectAdvertsIsLoading);
   const teacherBookings = useSelector(selectTeacherBookings);
   const studentBookings = useSelector(selectStudentBookings);
   const isCurrentTeacher = currentUser?.advert?.id === Number(teacherId);
   const lastVisit = teacher?.user?.lastVisit;
   const userLike = teacher?.likes?.some(
-    (like) => like.user.id === currentUser.id
+    (like) => like?.user?.id === currentUser.id
   );
   const status = useStatus(lastVisit);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("teacherId on first render:", teacherId);
+    if (Object.keys(teacher).length === 0) {
+      dispatch(getAdvertById(teacherId));
+    }
+  }, [dispatch, teacherId, teacher]);
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -60,7 +75,7 @@ export function Card() {
       dispatch(getAdvertById(teacherId));
       dispatch(fetchTeacherSlots(teacherId));
     }
-  }, [dispatch, teacherId]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (currentUser?.id) {
@@ -152,10 +167,10 @@ export function Card() {
                     }}
                   >
                     <Typography variant="fontHeader">
-                      {teacher.user.firstName}
+                      {teacher?.user.firstName}
                     </Typography>
                     <Typography variant="fontHeader">
-                      {teacher.user.lastName}
+                      {teacher?.user.lastName}
                     </Typography>
                   </Stack>
                   <Stack
@@ -169,10 +184,13 @@ export function Card() {
                   >
                     <LikeBtn
                       isLiked={userLike}
-                      onClick={() => handleFavoriteAdd(teacher.id)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleFavoriteAdd(teacher.id);
+                      }}
                     />
                     <Typography variant="posterDescription">
-                      {teacher.likes.length}
+                      {teacher?.likes?.length || 0}
                     </Typography>
                   </Stack>
                   <Stack
@@ -359,7 +377,7 @@ export function Card() {
                 }}
               >
                 <ReviewList
-                  feedback={teacher.user.feedbacksToMe.length}
+                  feedback={teacher?.user?.feedbacksToMe?.length}
                   id={teacher.user.id}
                   advertId={teacher.id}
                 />
