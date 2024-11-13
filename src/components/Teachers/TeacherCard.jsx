@@ -37,8 +37,12 @@ export function TeacherCard({ teacher }) {
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
 
+  // const handleClick = () => {
+  //   navigate(`/teachers/${teacher.id}`, { state: { teacherData: teacher } });
+  // };
+
   const handleClick = () => {
-    navigate(`/teachers/${teacher.id}`, { state: { teacherData: teacher } });
+    navigate(`/teachers/${teacher.id}`);
   };
 
   const handleBookLessonClick = () => {
