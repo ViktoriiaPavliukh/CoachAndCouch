@@ -26,7 +26,8 @@ export function ReviewList({ id, advertId, feedback }) {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const totalStars = 5;
-  const reviews = useSelector(advertByIdSelector).user.feedbacksToMe;
+  const reviews = useSelector(advertByIdSelector)?.user?.feedbacksToMe || [];
+
   const [showAll, setShowAll] = useState(false);
   const defaultShow = 3;
   const showAllByDefault = reviews.length <= defaultShow;
@@ -177,7 +178,7 @@ export function ReviewList({ id, advertId, feedback }) {
                       borderRadius: "50%",
                     }}
                   />
-                  <Box sx={{display: "flex", flexDirection: "column"}}>
+                  <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <Box
                       style={{
                         display: "flex",
@@ -332,8 +333,8 @@ export function ReviewList({ id, advertId, feedback }) {
             )}
           </div>
         </Box>
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "column",
             gap: 5,
@@ -371,7 +372,7 @@ export function ReviewList({ id, advertId, feedback }) {
             }}
             fullWidth
           />
-        </div>
+        </Box>
         <Button
           type="submit"
           sx={{ alignSelf: "start", p: "12px 32px" }}

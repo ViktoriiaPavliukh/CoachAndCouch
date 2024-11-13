@@ -1,3 +1,3 @@
 export const roundRating = (rating) => {
-  return rating.toFixed(2);
+  return rating ? rating.toFixed(2) : null;
 };
