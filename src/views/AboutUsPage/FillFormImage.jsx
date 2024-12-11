@@ -10,6 +10,7 @@ export function FillFormImage() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={formImage}
       alt="form fill"
       sx={{

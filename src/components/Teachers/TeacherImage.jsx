@@ -1,11 +1,12 @@
 import { PropTypes } from "prop-types";
-import mainImage from "@assets/templates/profile_1.png";
+import mainImage from "@assets/templates/profile_1.webp";
 import { CardMedia } from "@mui/material";
 
 export function TeacherImage({ src }) {
   return (
     <CardMedia
       component="img"
+      loading="lazy"
       src={src || mainImage}
       alt="Teacher's profile"
       sx={{

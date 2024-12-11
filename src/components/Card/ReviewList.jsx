@@ -20,7 +20,7 @@ import format from "date-fns/format";
 import { useState } from "react";
 import { getAdvertById } from "@/redux/marketplace/adverts/operations";
 import { advertByIdSelector } from "@/redux/marketplace/adverts/advertsSelector";
-import mainImage from "@assets/icons/noPhoto.png";
+import mainImage from "@assets/icons/noPhoto.webp";
 
 export function ReviewList({ id, advertId, feedback }) {
   const [rating, setRating] = useState(null);
@@ -172,6 +172,7 @@ export function ReviewList({ id, advertId, feedback }) {
                   <img
                     src={e.fromUser.photoPath || mainImage}
                     alt={e.fromUser.firstName + " " + e.fromUser.lastName}
+                    loading="lazy"
                     style={{
                       width: "85px",
                       height: "85px",

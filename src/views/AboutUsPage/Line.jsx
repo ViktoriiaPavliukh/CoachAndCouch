@@ -10,6 +10,7 @@ export function Line() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={lineImage}
       alt="vertical line"
       sx={{

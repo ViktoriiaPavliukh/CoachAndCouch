@@ -10,6 +10,7 @@ export function ChatIcon() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={chatImage}
       alt="chat image"
       sx={{

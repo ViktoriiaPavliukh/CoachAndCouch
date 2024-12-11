@@ -430,6 +430,7 @@ export function VerticalTabs() {
                       >
                         <img
                           src={advert.imagePath}
+                          loading="lazy"
                           style={{
                             borderRadius: "100px",
                             width: "70px",
@@ -777,6 +778,7 @@ export function VerticalTabs() {
                     >
                       <img
                         src={user.photoPath}
+                        loading="lazy"
                         style={{
                           borderRadius: "100px",
                           width: "70px",

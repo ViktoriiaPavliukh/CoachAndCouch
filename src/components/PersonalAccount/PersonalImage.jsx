@@ -1,5 +1,5 @@
 import { PropTypes } from "prop-types";
-import mainImage from "@assets/icons/noPhoto.png";
+import mainImage from "@assets/icons/noPhoto.webp";
 import { CardMedia } from "@mui/material";
 
 export function PersonalImage({
@@ -13,6 +13,7 @@ export function PersonalImage({
     <CardMedia
       component="img"
       src={userImage || advertImagePath || mainImage}
+      loading="lazy"
       alt="Teacher's profile"
       sx={{
         display: "flex",

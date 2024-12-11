@@ -6,6 +6,7 @@ export function LargeLogoUp() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={logoImageUp}
       alt="big logo"
       sx={{
@@ -21,6 +22,7 @@ export function LargeLogoDown() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={logoImageDown}
       alt="big logo"
       sx={{

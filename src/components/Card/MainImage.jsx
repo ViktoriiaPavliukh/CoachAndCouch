@@ -7,6 +7,7 @@ export function MainImage({ src }) {
     <CardMedia
       component="img"
       src={src || mainImage}
+      loading="lazy"
       alt="Teacher's profile"
       sx={{
         display: "flex",

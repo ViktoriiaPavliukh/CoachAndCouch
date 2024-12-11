@@ -16,6 +16,7 @@ export default function Logo({ width = "100%" }) {
       <img
         src={logo}
         alt="logo"
+        loading="lazy"
         style={{
           width: width,
         }}

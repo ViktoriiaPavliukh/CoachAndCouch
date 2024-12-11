@@ -11,6 +11,7 @@ export function PaymentImage() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={paymentImage}
       alt="payment options"
       sx={{

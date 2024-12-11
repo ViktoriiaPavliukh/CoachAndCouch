@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import teacherProfileImageLight from "@assets/images/teacherProfile_light.png";
-import teacherProfileImageDark from "@assets/images/teacherProfile_dark.png";
+import teacherProfileImageLight from "@assets/images/teacherProfile_light.webp";
+import teacherProfileImageDark from "@assets/images/teacherProfile_dark.webp";
 
 export function TeacherProfileImage() {
   const theme = useTheme();
@@ -14,6 +14,7 @@ export function TeacherProfileImage() {
     <Box
       component="img"
       src={teacherProfileImage}
+      loading="lazy"
       alt="teacher profile"
       sx={{
         width: "100%",

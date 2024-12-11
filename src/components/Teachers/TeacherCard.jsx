@@ -37,10 +37,6 @@ export function TeacherCard({ teacher }) {
   const lastVisit = teacher?.user?.lastVisit;
   const status = useStatus(lastVisit);
 
-  // const handleClick = () => {
-  //   navigate(`/teachers/${teacher.id}`, { state: { teacherData: teacher } });
-  // };
-
   const handleClick = () => {
     navigate(`/teachers/${teacher.id}`);
   };
@@ -90,6 +86,7 @@ export function TeacherCard({ teacher }) {
             srcSet={`https://flagcdn.com/w80/${teacher.user?.country?.alpha2.toLowerCase()}.png 2x`}
             width="40"
             height="36"
+            loading="lazy"
             alt="ua"
             style={{
               width: "52px",

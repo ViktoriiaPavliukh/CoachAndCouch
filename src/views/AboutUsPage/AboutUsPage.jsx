@@ -36,8 +36,8 @@ import { ChatIcon } from "./ChatIcon";
 import { LargeLogoUp, LargeLogoDown } from "./LargeLogo";
 import { selectUser } from "../../redux/auth/selectors";
 import { pages } from "@/defaults";
-import imgUa from "@assets/images/imgUa.png";
-import imgGirl from "@assets/images/imgGirl.png";
+import imgUa from "@assets/images/imgUa.webp";
+import imgGirl from "@assets/images/imgGirl.webp";
 
 export function AboutUsPage() {
   const intl = useIntl();
@@ -915,6 +915,7 @@ export function AboutUsPage() {
             >
               <CardMedia
                 component="img"
+                loading="lazy"
                 sx={{
                   width: { xs: "134px", md: "167px", lg: "187px" },
                 }}
@@ -954,6 +955,7 @@ export function AboutUsPage() {
                       src={`https://flagcdn.com/w40/fr.png`}
                       srcSet={`https://flagcdn.com/w80/fr.png 2x`}
                       alt="fr flag"
+                      loading="lazy"
                       style={{
                         width: "28px",
                         height: "20px",
@@ -1056,6 +1058,7 @@ export function AboutUsPage() {
               >
                 <CardMedia
                   component="img"
+                  loading="lazy"
                   sx={{
                     width: { xs: "134px", md: "167px", lg: "187px" },
                   }}
@@ -1100,6 +1103,7 @@ export function AboutUsPage() {
                         src={`https://flagcdn.com/w40/ua.png`}
                         srcSet={`https://flagcdn.com/w80/ua.png 2x`}
                         alt="ua flag"
+                        loading="lazy"
                         style={{
                           width: "28px",
                           height: "20px",

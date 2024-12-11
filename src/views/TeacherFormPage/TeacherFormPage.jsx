@@ -17,7 +17,7 @@ import {
   FormLabel,
   FormControlLabel,
 } from "@mui/material";
-import mainBg from "@assets/images/bg.png";
+import mainBg from "@assets/images/bg.webp";
 import { postAdvert } from "@/redux/marketplace/adverts/operations";
 import { selectToken, selectUser } from "@/redux/auth/selectors";
 import { SignUp } from "@/views";
@@ -549,6 +549,7 @@ export const TeacherFormPage = () => {
             >
               <img
                 src={image ? image : null}
+                loading="lazy"
                 style={{
                   minHeidth: "100%",
                   width: "100%",

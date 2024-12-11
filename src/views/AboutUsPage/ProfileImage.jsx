@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
-import profileImageLight from "@assets/images/profile_light.png";
-import profileImageDark from "@assets/images/profile_dark.png";
+import profileImageLight from "@assets/images/profile_light.webp";
+import profileImageDark from "@assets/images/profile_dark.webp";
 
 export function ProfileImage() {
   const theme = useTheme();
@@ -11,6 +11,7 @@ export function ProfileImage() {
   return (
     <Box
       component="img"
+      loading="lazy"
       src={profileImage}
       alt="user profile"
       sx={{
