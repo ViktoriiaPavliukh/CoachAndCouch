@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useIntl } from "react-intl";
 import { Box, Typography, Button, useTheme } from "@mui/material/";
-import mainBg from "@assets/images/bg.png";
+import mainBg from "@assets/images/bg.webp";
 import ZeroIcon from "@/assets/icons/ZeroIcon";
 import FourIcon from "@/assets/icons/FourIcon";
 

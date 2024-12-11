@@ -14,7 +14,7 @@ import { useIntl } from "react-intl";
 import { useFormik } from "formik";
 import { loginSchema } from "@/defaults";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import mainBg from "@assets/images/bg.png";
+import mainBg from "@assets/images/bg.webp";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/redux/auth/operations";
 import { selectIsLoggedIn } from "@/redux/auth/selectors";
